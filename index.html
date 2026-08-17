@@ -6,16 +6,17 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#14110F">
-<title>System Basith · GlowUp Tracker</title>
+<title>GLOWUP · Basith</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --ink:#14110F;
   --surface:#1E1A17;
   --surface2:#272220;
+  --surface3:#322B28;
   --line:rgba(242,235,224,.10);
   --line2:rgba(242,235,224,.16);
   --paper:#F2EBE0;
@@ -32,19 +33,19 @@ html{background:var(--ink)}
 body{
   background:var(--ink);color:var(--paper);
   font-family:'Instrument Sans',system-ui,sans-serif;
-  font-size:15px;line-height:1.5;
+  font-size:14.5px;line-height:1.5;
   padding:0 0 96px;
   -webkit-font-smoothing:antialiased;
   overscroll-behavior-y:none;
 }
-.wrap{max-width:560px;margin:0 auto;padding:0 16px}
+.wrap{max-width:580px;margin:0 auto;padding:0 16px}
 
 /* ---------- header ---------- */
-header{padding:22px 0 14px}
+header{padding:18px 0 12px}
 .brandrow{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
 h1{
   font-family:'Fraunces',serif;font-weight:800;
-  font-size:31px;letter-spacing:-.025em;line-height:.95;
+  font-size:30px;letter-spacing:-.025em;line-height:.95;
   font-variation-settings:'SOFT' 0,'WONK' 1;
 }
 h1 em{font-style:italic;color:var(--turmeric)}
@@ -55,11 +56,11 @@ h1 em{font-style:italic;color:var(--turmeric)}
 .datechip b{color:var(--paper);display:block;font-weight:700}
 .subline{
   margin-top:9px;font-family:'JetBrains Mono',monospace;
-  font-size:11px;color:var(--muted);letter-spacing:.01em;display:flex;align-items:center;justify-content:space-between;
+  font-size:10.5px;color:var(--muted);letter-spacing:.01em;display:flex;align-items:center;justify-content:space-between;
 }
 .subline b{color:var(--paper)}
-.subline .sep{opacity:.35;padding:0 5px}
-.sync-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;padding:2px 7px;border-radius:12px;background:var(--surface2);border:.5px solid var(--line2);cursor:pointer}
+.subline .sep{opacity:.35;padding:0 4px}
+.sync-badge{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;padding:3px 8px;border-radius:12px;background:var(--surface2);border:.5px solid var(--line2);cursor:pointer}
 .sync-badge.online{color:var(--sage)}
 .sync-badge.syncing{color:var(--turmeric)}
 .sync-badge.offline{color:var(--vermilion)}
@@ -67,128 +68,138 @@ h1 em{font-style:italic;color:var(--turmeric)}
 
 /* ---------- tabs ---------- */
 nav{
-  position:sticky;top:0;z-index:40;background:rgba(20,17,15,.93);
+  position:sticky;top:0;z-index:40;background:rgba(20,17,15,.95);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border-bottom:.5px solid var(--line);margin-bottom:18px;
+  border-bottom:.5px solid var(--line);margin-bottom:16px;
 }
-.tabs{display:flex;gap:2px;max-width:560px;margin:0 auto;padding:0 10px;overflow-x:auto;scrollbar-width:none}
+.tabs{display:flex;gap:2px;max-width:580px;margin:0 auto;padding:0 8px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{
   flex:0 0 auto;background:none;border:0;color:var(--muted);
-  font-family:'JetBrains Mono',monospace;font-size:10.5px;
-  letter-spacing:.1em;text-transform:uppercase;
-  padding:14px 11px 12px;cursor:pointer;border-bottom:2px solid transparent;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.09em;text-transform:uppercase;
+  padding:13px 9px 11px;cursor:pointer;border-bottom:2px solid transparent;
 }
-.tab[aria-selected="true"]{color:var(--turmeric);border-bottom-color:var(--turmeric)}
+.tab[aria-selected="true"]{color:var(--turmeric);border-bottom-color:var(--turmeric);font-weight:700}
 
 /* ---------- primitives ---------- */
-.card{background:var(--surface);border:.5px solid var(--line);border-radius:var(--r);padding:14px 15px;margin-bottom:9px}
+.card{background:var(--surface);border:.5px solid var(--line);border-radius:var(--r);padding:14px 15px;margin-bottom:10px}
+.card.highlight{background:linear-gradient(170deg,#2A231E 0%,#1E1A17 100%);border-color:rgba(232,163,61,.3)}
 .eyebrow{
-  font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:11px;
-  display:flex;align-items:center;gap:9px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
 }
 .eyebrow::after{content:'';flex:1;height:.5px;background:var(--line)}
 .eyebrow .n{color:var(--turmeric)}
-h2{font-family:'Fraunces',serif;font-size:19px;font-weight:600;letter-spacing:-.015em;margin-bottom:3px}
-.note{font-size:12.5px;color:var(--muted);line-height:1.6}
+h2{font-family:'Fraunces',serif;font-size:18.5px;font-weight:600;letter-spacing:-.015em;margin-bottom:3px}
+.note{font-size:12px;color:var(--muted);line-height:1.6}
 .note b{color:var(--paper);font-weight:500}
 .mono{font-family:'JetBrains Mono',monospace}
 .hide{display:none !important}
 
 /* ---------- rings / stats ---------- */
 .ringrow{display:flex;gap:10px;align-items:center}
-.ring{position:relative;width:104px;height:104px;flex:0 0 auto}
+.ring{position:relative;width:98px;height:98px;flex:0 0 auto}
 .ring svg{transform:rotate(-90deg)}
 .ringmid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ringnum{font-family:'JetBrains Mono',monospace;font-size:21px;font-weight:700;line-height:1}
-.ringlab{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.ringnum{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;line-height:1}
+.ringlab{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
 .ringside{flex:1;min-width:0}
-.statline{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:.5px solid var(--line)}
+.statline{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:.5px solid var(--line)}
 .statline:last-child{border:0}
-.statk{font-size:12.5px;color:var(--muted)}
-.statv{font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:700}
+.statk{font-size:12px;color:var(--muted)}
+.statv{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
 
-.macrobar{display:flex;height:7px;border-radius:4px;overflow:hidden;background:var(--surface2);margin:11px 0 7px}
+.macrobar{display:flex;height:6px;border-radius:4px;overflow:hidden;background:var(--surface2);margin:10px 0 6px}
 .macrobar i{display:block;height:100%}
-.macrokey{display:flex;gap:13px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
+.macrokey{display:flex;gap:12px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--muted)}
 .macrokey span{display:flex;align-items:center;gap:4px}
-.dot{width:7px;height:7px;border-radius:2px;display:inline-block}
+.dot{width:6px;height:6px;border-radius:2px;display:inline-block}
 
 /* ---------- blister strip ---------- */
 .strip{
   display:grid;grid-template-columns:repeat(7,1fr);gap:4px;
-  padding:7px;border-radius:12px;
+  padding:6px;border-radius:12px;
   background:linear-gradient(160deg,#3A322C 0%,#241F1C 42%,#3A322C 100%);
   border:.5px solid var(--line2);
 }
 .pill{
-  position:relative;border-radius:9px;padding:9px 3px 8px;text-align:center;
+  position:relative;border-radius:8px;padding:8px 2px 7px;text-align:center;
   background:linear-gradient(170deg,rgba(242,235,224,.09),rgba(242,235,224,.02));
-  border:.5px solid rgba(242,235,224,.07);min-height:74px;
+  border:.5px solid rgba(242,235,224,.07);min-height:70px;
   display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;
 }
-.pill .d{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.06em}
-.pill .g{width:15px;height:15px;border-radius:50%;border:1.5px solid currentColor;opacity:.5}
-.pill .t{font-size:8.5px;line-height:1.2;color:var(--muted);padding:0 1px}
+.pill .d{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--muted);letter-spacing:.05em}
+.pill .g{width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;opacity:.5}
+.pill .t{font-size:8px;line-height:1.2;color:var(--muted);padding:0 1px}
 .pill.today{
-  background:linear-gradient(170deg,rgba(232,163,61,.22),rgba(232,163,61,.05));
-  border-color:rgba(232,163,61,.5);
+  background:linear-gradient(170deg,rgba(232,163,61,.24),rgba(232,163,61,.06));
+  border-color:rgba(232,163,61,.55);
 }
-.pill.today .d{color:var(--turmeric)}
+.pill.today .d{color:var(--turmeric);font-weight:700}
 .pill.today .g{opacity:1}
-.pill.today .t{color:var(--paper)}
+.pill.today .t{color:var(--paper);font-weight:600}
 .pill.peel .g{border-style:double;border-width:3px}
 
 /* ---------- checklist ---------- */
-.chk{display:flex;align-items:flex-start;gap:11px;padding:9px 0;border-bottom:.5px solid var(--line);cursor:pointer}
+.chk{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:.5px solid var(--line);cursor:pointer}
 .chk:last-child{border:0}
 .box{
-  width:19px;height:19px;border-radius:6px;border:1.5px solid var(--muted);
-  flex:0 0 auto;margin-top:1px;position:relative;transition:.14s;
+  width:18px;height:18px;border-radius:5px;border:1.5px solid var(--muted);
+  flex:0 0 auto;margin-top:1px;position:relative;transition:.12s;
 }
 .chk.on .box{background:var(--sage);border-color:var(--sage)}
-.chk.on .box::after{content:'';position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid var(--ink);border-width:0 2px 2px 0;transform:rotate(43deg)}
-.chk .lbl{font-size:13.5px;line-height:1.4}
-.chk .sub{font-size:11.5px;color:var(--muted);margin-top:1px}
+.chk.on .box::after{content:'';position:absolute;left:5px;top:2px;width:5px;height:9px;border:solid var(--ink);border-width:0 2px 2px 0;transform:rotate(43deg)}
+.chk .lbl{font-size:13px;line-height:1.4}
+.chk .sub{font-size:11px;color:var(--muted);margin-top:1px}
 .chk.on .lbl{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(140,129,119,.5)}
-.chk.key .lbl::after{content:'★';font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--turmeric);vertical-align:super;margin-left:4px;letter-spacing:0}
+.chk.key .lbl::after{content:'★';font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--turmeric);vertical-align:super;margin-left:4px}
 
 /* ---------- buttons / inputs ---------- */
 button{font-family:inherit}
 .btn{
   background:var(--surface2);border:.5px solid var(--line2);border-radius:9px;
-  color:var(--paper);font-size:12.5px;padding:9px 13px;cursor:pointer;transition:.14s;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  color:var(--paper);font-size:12px;padding:9px 12px;cursor:pointer;transition:.12s;display:inline-flex;align-items:center;justify-content:center;gap:6px;
 }
 .btn:active{transform:scale(.97)}
 .btn.primary{background:var(--turmeric);border-color:var(--turmeric);color:#1A1206;font-weight:600}
 .btn.sage{background:var(--sage);border-color:var(--sage);color:#1A1206;font-weight:600}
 .btn.ghost{background:none}
-.btn.sm{padding:6px 10px;font-size:11.5px;border-radius:7px}
+.btn.sm{padding:5px 9px;font-size:11px;border-radius:6px}
 input,select,textarea{
   background:var(--surface2);border:.5px solid var(--line2);border-radius:9px;
-  color:var(--paper);font-family:'JetBrains Mono',monospace;font-size:14px;
-  padding:9px 11px;width:100%;
+  color:var(--paper);font-family:'JetBrains Mono',monospace;font-size:13.5px;
+  padding:8px 10px;width:100%;
 }
 input:focus,select:focus,textarea:focus,button:focus-visible,.chk:focus-visible{outline:2px solid var(--turmeric);outline-offset:2px}
-label.fl{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.frow{display:flex;gap:7px;margin-bottom:9px}
+label.fl{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.frow{display:flex;gap:6px;margin-bottom:8px}
 .frow>div{flex:1;min-width:0}
+
+/* ---------- content power block ---------- */
+.content-hero{
+  background:linear-gradient(160deg,#30261C 0%,#1E1A17 100%);
+  border:1px solid rgba(232,163,61,.35);border-radius:var(--r);padding:16px;margin-bottom:12px;
+}
+.content-timer{
+  font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:800;color:var(--turmeric);text-align:center;margin:8px 0;letter-spacing:-.02em;
+}
 
 /* ---------- food ---------- */
 .foods{display:flex;flex-wrap:wrap;gap:6px}
 .food{
-  background:var(--surface2);border:.5px solid var(--line2);border-radius:20px;
-  padding:7px 12px;font-size:12.5px;cursor:pointer;color:var(--paper);transition:.14s;
+  background:var(--surface2);border:.5px solid var(--line2);border-radius:18px;
+  padding:6px 11px;font-size:12px;cursor:pointer;color:var(--paper);transition:.12s;
 }
 .food:active{background:var(--turmeric);color:#1A1206}
-.food i{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:5px}
+.food i{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--muted);margin-left:4px}
 .food:active i{color:rgba(26,18,6,.65)}
-.logrow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:.5px solid var(--line);gap:10px}
+.logrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:.5px solid var(--line);gap:8px}
 .logrow:last-child{border:0}
-.logname{font-size:13.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.logmac{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap}
-.del{background:none;border:0;color:var(--muted);font-size:19px;line-height:1;padding:0 3px;cursor:pointer}
+.logname{font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logmac{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);white-space:nowrap}
+.del{background:none;border:0;color:var(--muted);font-size:18px;line-height:1;padding:0 3px;cursor:pointer}
 
 /* ---------- charts ---------- */
 .chart{width:100%;height:auto;display:block;overflow:visible}
@@ -196,36 +207,36 @@ label.fl{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;le
 .vall{font-family:'JetBrains Mono',monospace;font-size:8.5px;fill:var(--paper)}
 
 /* ---------- goals ---------- */
-.goal{border-left:2px solid var(--line2);padding:0 0 0 13px;margin-bottom:16px}
+.goal{border-left:2px solid var(--line2);padding:0 0 0 12px;margin-bottom:14px}
 .goal.g1{border-color:var(--turmeric)}
 .goal.g2{border-color:var(--rose)}
 .goal.g3{border-color:var(--indigo)}
 .goal.g4{border-color:var(--sage)}
 .goal.g5{border-color:var(--vermilion)}
-.goalhead{display:flex;justify-content:space-between;align-items:baseline;gap:9px;margin-bottom:4px}
-.goaltitle{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;letter-spacing:-.01em}
-.goalweeks{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap}
-.prog{height:4px;border-radius:3px;background:var(--surface2);overflow:hidden;margin:8px 0 7px}
+.goalhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:3px}
+.goaltitle{font-family:'Fraunces',serif;font-size:16px;font-weight:600;letter-spacing:-.01em}
+.goalweeks{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--muted);white-space:nowrap}
+.prog{height:4px;border-radius:3px;background:var(--surface2);overflow:hidden;margin:7px 0 6px}
 .prog i{display:block;height:100%;border-radius:3px}
-.goalnote{font-size:12px;color:var(--muted);line-height:1.6}
+.goalnote{font-size:11.5px;color:var(--muted);line-height:1.55}
 .goalnote b{color:var(--paper);font-weight:500}
 
 /* ---------- lifts ---------- */
-.liftrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:.5px solid var(--line);gap:9px}
+.liftrow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:.5px solid var(--line);gap:8px}
 .liftrow:last-child{border:0}
-.liftname{font-size:13.5px;flex:1;min-width:0}
-.liftprev{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted)}
-.liftnow{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700}
+.liftname{font-size:13px;flex:1;min-width:0}
+.liftprev{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
+.liftnow{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}
 .up{color:var(--sage)}
 .same{color:var(--muted)}
 
 /* ---------- tables ---------- */
 .table-wrap{overflow-x:auto;margin:8px 0;border-radius:8px;border:.5px solid var(--line)}
-table.data-tbl{width:100%;border-collapse:collapse;font-size:12px;text-align:left}
-table.data-tbl th{background:var(--surface2);color:var(--muted);padding:8px 10px;font-family:'JetBrains Mono',monospace;font-weight:500;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
-table.data-tbl td{padding:8px 10px;border-bottom:.5px solid var(--line)}
+table.data-tbl{width:100%;border-collapse:collapse;font-size:11.5px;text-align:left}
+table.data-tbl th{background:var(--surface2);color:var(--muted);padding:7px 9px;font-family:'JetBrains Mono',monospace;font-weight:500;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase}
+table.data-tbl td{padding:7px 9px;border-bottom:.5px solid var(--line)}
 table.data-tbl tr:last-child td{border:0}
-.tag-badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:9.5px;font-family:'JetBrains Mono',monospace;font-weight:700}
+.tag-badge{display:inline-block;padding:2px 5px;border-radius:4px;font-size:9px;font-family:'JetBrains Mono',monospace;font-weight:700}
 .tag-best{background:rgba(138,168,95,.2);color:var(--sage)}
 .tag-mid{background:rgba(232,163,61,.2);color:var(--turmeric)}
 .tag-prem{background:rgba(201,80,58,.2);color:var(--vermilion)}
@@ -237,21 +248,21 @@ table.data-tbl tr:last-child td{border:0}
 }
 .auth-box{
   background:var(--surface);border:.5px solid var(--line2);border-radius:18px;
-  padding:28px 24px;max-width:380px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.6);
+  padding:26px 22px;max-width:360px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.6);
 }
-.auth-box h2{font-size:24px;margin-bottom:6px}
-.auth-box p{color:var(--muted);font-size:13px;margin-bottom:20px}
-.auth-box input{margin-bottom:12px;text-align:center;font-size:18px;letter-spacing:.2em}
+.auth-box h2{font-size:22px;margin-bottom:5px}
+.auth-box p{color:var(--muted);font-size:12.5px;margin-bottom:18px}
+.auth-box input{margin-bottom:10px;text-align:center;font-size:16px;letter-spacing:.2em}
 
-.empty{text-align:center;padding:26px 14px;color:var(--muted);font-size:12.5px;line-height:1.7}
+.empty{text-align:center;padding:22px 12px;color:var(--muted);font-size:12px;line-height:1.6}
 .toast{
-  position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(80px);
-  background:var(--paper);color:var(--ink);font-size:13px;font-weight:600;
-  padding:11px 19px;border-radius:30px;z-index:99;transition:transform .26s cubic-bezier(.2,.9,.3,1.2);
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);
+  background:var(--paper);color:var(--ink);font-size:12.5px;font-weight:600;
+  padding:10px 18px;border-radius:30px;z-index:99;transition:transform .24s cubic-bezier(.2,.9,.3,1.2);
   box-shadow:0 8px 28px rgba(0,0,0,.45);
 }
 .toast.show{transform:translateX(-50%) translateY(0)}
-footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--muted);letter-spacing:.08em}
+footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.08em}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
 </style>
 </head>
@@ -260,24 +271,24 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
 <!-- ============ AUTH MODAL ============ -->
 <div id="authModal">
   <div class="auth-box">
-    <div style="font-size:32px;margin-bottom:12px">🔒</div>
-    <h2>System <em>Basith</em></h2>
-    <p>Enter passcode to access your personal GlowUp hub.</p>
+    <div style="font-size:30px;margin-bottom:10px">🔒</div>
+    <h2>GLOWUP</h2>
+    <p>Enter passcode to unlock your system.</p>
     <input type="password" id="authPass" placeholder="•••••" autofocus autocomplete="current-password">
-    <button class="btn primary" style="width:100%" id="authBtn">Unlock System</button>
-    <p id="authError" class="note" style="color:var(--vermilion);margin-top:12px;display:none">Incorrect passcode</p>
+    <button class="btn primary" style="width:100%" id="authBtn">Unlock</button>
+    <p id="authError" class="note" style="color:var(--vermilion);margin-top:10px;display:none">Incorrect passcode</p>
   </div>
 </div>
 
 <div class="wrap">
   <header>
     <div class="brandrow">
-      <h1>System <em>Basith</em></h1>
+      <h1>GLOW<em>UP</em></h1>
       <div class="datechip"><b id="hDay">—</b><span id="hDate">—</span></div>
     </div>
     <div class="subline">
       <span id="hSub">—</span>
-      <span class="sync-badge" id="syncStatus" title="Cloud status"><i class="sync-dot"></i><span id="syncText">Syncing...</span></span>
+      <span class="sync-badge" id="syncStatus" title="Supabase Cloud Live Status"><i class="sync-dot"></i><span id="syncText">Syncing...</span></span>
     </div>
   </header>
 </div>
@@ -285,9 +296,12 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
 <nav>
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" aria-selected="true" data-tab="today">Today</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="content">Content ⚡</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="sleep">Sleep 🌙</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="grooming">Grooming &amp; Style</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="skin">Skin &amp; Peel</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="food">Food</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="protein">Protein ₹/g</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="skin">Skin</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="lifts">Lifts</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="body">Body</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="goals">Goals</button>
@@ -302,10 +316,10 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
   <div class="card">
     <div class="ringrow">
       <div class="ring">
-        <svg width="104" height="104" viewBox="0 0 104 104">
-          <circle cx="52" cy="52" r="44" fill="none" stroke="#272220" stroke-width="9"/>
-          <circle id="ringKcal" cx="52" cy="52" r="44" fill="none" stroke="#E8A33D" stroke-width="9"
-                  stroke-linecap="round" stroke-dasharray="276.5" stroke-dashoffset="276.5"/>
+        <svg width="98" height="98" viewBox="0 0 98 98">
+          <circle cx="49" cy="49" r="41" fill="none" stroke="#272220" stroke-width="8"/>
+          <circle id="ringKcal" cx="49" cy="49" r="41" fill="none" stroke="#E8A33D" stroke-width="8"
+                  stroke-linecap="round" stroke-dasharray="257.6" stroke-dashoffset="257.6"/>
         </svg>
         <div class="ringmid">
           <span class="ringnum" id="rKcal">0</span>
@@ -315,8 +329,8 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
       <div class="ringside">
         <div class="statline"><span class="statk">Protein</span><span class="statv" id="sProt">0 / 170g</span></div>
         <div class="statline"><span class="statk">Remaining</span><span class="statv" id="sRem">2000</span></div>
-        <div class="statline"><span class="statk">Deficit</span><span class="statv" id="sDef">—</span></div>
-        <div class="statline"><span class="statk">Habits</span><span class="statv" id="sHab">0 / 17</span></div>
+        <div class="statline"><span class="statk">Sleep</span><span class="statv" id="sSleepToday">—</span></div>
+        <div class="statline"><span class="statk">Habits</span><span class="statv" id="sHab">0 / 22</span></div>
       </div>
     </div>
     <div class="macrobar" id="macroBar">
@@ -330,22 +344,111 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
   </div>
 
   <div class="card">
-    <p class="eyebrow"><span class="n">rx</span> this week's actives</p>
+    <p class="eyebrow"><span class="n">rx</span> actives &amp; skincare rotation</p>
     <div class="strip" id="strip"></div>
-    <p class="note" style="margin-top:11px" id="stripNote">—</p>
+    <p class="note" style="margin-top:10px" id="stripNote">—</p>
   </div>
 
   <div class="card">
-    <p class="eyebrow">morning</p>
+    <p class="eyebrow"><span class="n">am</span> morning glow routine</p>
     <div id="chkAM"></div>
   </div>
   <div class="card">
-    <p class="eyebrow">day</p>
+    <p class="eyebrow"><span class="n">day</span> midday disciplines &amp; posture</p>
     <div id="chkDay"></div>
   </div>
   <div class="card">
-    <p class="eyebrow">night</p>
+    <p class="eyebrow"><span class="n">pm</span> evening &amp; night protocol</p>
     <div id="chkPM"></div>
+  </div>
+</section>
+
+<!-- ============ CONTENT CREATION POWER BLOCK ============ -->
+<section id="p-content" class="hide">
+  <div class="content-hero">
+    <p class="eyebrow" style="color:var(--turmeric)"><span class="n">⚡</span> dedicated deep work block</p>
+    <h2>Content Production (#basithladdu)</h2>
+    <p class="note">60–90 min non-negotiable daily output. Phone outside room. Ship one concrete piece of creative leverage daily.</p>
+    
+    <div class="content-timer" id="timerDisplay">60:00</div>
+    
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <button class="btn primary" style="flex:1" id="btnTimerStart">Start Block</button>
+      <button class="btn" style="flex:1" id="btnTimerPause">Pause</button>
+      <button class="btn" id="btnTimerReset">Reset</button>
+    </div>
+
+    <div class="frow">
+      <div style="flex:2"><label class="fl">Today's Topic / Deliverable</label><input id="cntTopic" placeholder="e.g. YouTube script, Thread, Reel"></div>
+      <div><label class="fl">Minutes Done</label><input id="cntMins" type="number" inputmode="numeric" placeholder="60" value="60"></div>
+    </div>
+    <button class="btn sage" style="width:100%" id="btnLogContent">Log Completed Block</button>
+  </div>
+
+  <div class="card">
+    <p class="eyebrow">past 14 days content streak</p>
+    <div id="contentHistory"></div>
+  </div>
+</section>
+
+<!-- ============ SLEEP TRACKER ============ -->
+<section id="p-sleep" class="hide">
+  <div class="card">
+    <p class="eyebrow"><span class="n">🌙</span> sleep architecture &amp; recovery</p>
+    <h2>Log Last Night's Sleep</h2>
+    <p class="note" style="margin-bottom:12px">7.5–8.5h uninterrupted sleep directly dictates testosterone, facial cortisol bloat, and skin cell turnover.</p>
+    
+    <div class="frow">
+      <div><label class="fl">Bedtime</label><input id="slpBed" type="time" value="23:30"></div>
+      <div><label class="fl">Wake Time</label><input id="slpWake" type="time" value="07:00"></div>
+    </div>
+    <div class="frow">
+      <div><label class="fl">Total Hours</label><input id="slpHours" type="number" step="0.1" placeholder="7.5"></div>
+      <div><label class="fl">Quality (1-10)</label><input id="slpQual" type="number" min="1" max="10" placeholder="8"></div>
+    </div>
+    <button class="btn primary" style="width:100%" id="btnSaveSleep">Save Sleep Entry</button>
+  </div>
+
+  <div class="card">
+    <p class="eyebrow">sleep trend</p>
+    <div id="chartSleep"></div>
+    <p class="note" style="margin-top:10px" id="sleepAvgNote">—</p>
+  </div>
+
+  <div class="card">
+    <p class="eyebrow">sleep discipline rules</p>
+    <p class="note">
+      1. <b>Phone parked outside bedroom</b> 45 min before sleep (prevents blue light melatonin suppression).<br>
+      2. <b>Ashwagandha 400mg</b> with dinner (regulates nighttime cortisol).<br>
+      3. <b>Tape/Nasal breathing:</b> Clear nasal passages before bed; mouth breathing causes morning facial puffiness and dry lips.
+    </p>
+  </div>
+</section>
+
+<!-- ============ GROOMING, NAILS, LEGS & STYLE ============ -->
+<section id="p-grooming" class="hide">
+  <div class="card">
+    <p class="eyebrow"><span class="n">✨</span> head-to-toe micro details</p>
+    <h2>Grooming &amp; Aesthetics Matrix</h2>
+    <p class="note" style="margin-bottom:12px">The small 1% details that separate average from top-tier polish.</p>
+    <div id="chkGrooming"></div>
+  </div>
+
+  <div class="card">
+    <p class="eyebrow">weekly schedule for physical maintenance</p>
+    <div class="statline"><span class="statk">Sunday</span><span class="statv">Dermaroll beard 0.5mm · Full body hair/leg groom · Hair mask</span></div>
+    <div class="statline"><span class="statk">Tuesday</span><span class="statv">Ketoconazole shampoo · Lip scrub · Nail file &amp; cuticles</span></div>
+    <div class="statline"><span class="statk">Thursday</span><span class="statv">Ketoconazole shampoo · Glyco 12 body on neck &amp; arms</span></div>
+    <div class="statline"><span class="statk">Saturday</span><span class="statv">Beard neckline razor sharp · Eyebrow stray cleanup · Lip scrub · Peel night</span></div>
+  </div>
+
+  <div class="card">
+    <p class="eyebrow">facial asymmetry &amp; posture framework</p>
+    <p class="note">
+      <b>Chewing:</b> Strictly chew 50/50 on both sides. Chewing predominantly on one side builds asymmetrical masseter bulk.<br><br>
+      <b>Neckline:</b> Set neckline exactly 2 fingers above Adam's apple in a gentle U-curve. A beard line on the jawline looks messy; a defined neck line creates an immediate square jaw illusion.<br><br>
+      <b>Nails:</b> Trim short, file edges, push back cuticles with warm oil. Ragged or dirty nails instantly ruin any fashion look.
+    </p>
   </div>
 </section>
 
@@ -357,7 +460,7 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
   </div>
 
   <div class="card">
-    <p class="eyebrow">something else</p>
+    <p class="eyebrow">custom food entry</p>
     <div class="frow">
       <div style="flex:2"><label class="fl">Food</label><input id="cName" placeholder="name" autocomplete="off"></div>
       <div><label class="fl">Kcal</label><input id="cKcal" type="number" inputmode="numeric" placeholder="0"></div>
@@ -378,9 +481,9 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
   <div class="card">
     <p class="eyebrow">last 14 days</p>
     <h2 style="font-size:15px;margin-bottom:2px">Calories</h2>
-    <p class="note" style="margin-bottom:10px">bar under the line = deficit hit</p>
+    <p class="note" style="margin-bottom:10px">bar under line = deficit hit</p>
     <div id="chartKcal"></div>
-    <h2 style="font-size:15px;margin:18px 0 2px">Protein</h2>
+    <h2 style="font-size:15px;margin:16px 0 2px">Protein</h2>
     <p class="note" style="margin-bottom:10px">line = 170g floor</p>
     <div id="chartProt"></div>
   </div>
@@ -488,7 +591,7 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
     <div class="statline"><span class="statk">Next peel</span><span class="statv" id="peelNext">—</span></div>
     <div class="statline"><span class="statk">Days out</span><span class="statv" id="peelDays">—</span></div>
     <button class="btn sm" style="margin-top:11px" id="peelDone">I peeled today</button>
-    <p class="note" style="margin-top:10px">Peel night: cleanser → peel → thick B12. Nothing else. No minoxidil, no azelaic, no kojic. Skip azelaic 2 nights after.</p>
+    <p class="note" style="margin-top:10px">Peel night: cleanser → peel (10 min) → thick B12. Nothing else. No minoxidil, no azelaic, no kojic. Skip azelaic 2 nights after.</p>
   </div>
 
   <div class="card">
@@ -592,7 +695,7 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
     <div class="goal g2">
       <div class="goalhead"><span class="goaltitle">Lighter lips</span><span class="goalweeks" id="gw2">—</span></div>
       <div class="prog"><i id="gp2" style="background:var(--rose);width:0"></i></div>
-      <p class="goalnote"><b>6–8 weeks for the dark dehydrated layer, 3–6 months for real change.</b> SPF lip balm every day (sun darkens lips — most people never know this), scrub Tue + Sat, occlusive nightly, stop licking them. Honest limit: if your natural pigment is dark you'll get healthier and less dark, not pink.</p>
+      <p class="goalnote"><b>6–8 weeks for the dark dehydrated layer, 3–6 months for real change.</b> SPF lip balm every day (sun darkens lips — most people never know this), scrub Tue + Sat, occlusive nightly, stop licking them.</p>
     </div>
 
     <div class="goal g3">
@@ -602,48 +705,33 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
     </div>
 
     <div class="goal g4">
-      <div class="goalhead"><span class="goaltitle">Beard density</span><span class="goalweeks" id="gw4">—</span></div>
+      <div class="goalhead"><span class="goaltitle">Beard density &amp; Stubble Sharpness</span><span class="goalweeks" id="gw4">—</span></div>
       <div class="prog"><i id="gp4" style="background:var(--sage);width:0"></i></div>
-      <p class="goalnote"><b>Shedding weeks 2–4 (normal, don't panic). First real growth 3–4 months. Fill 9–12 months.</b> Tugain 5% Mon–Fri, dermaroll Sunday, minoxidil 24h after rolling — never the same day. Meanwhile the "clean but could grow it" look is grooming, not growth: 1–3mm stubble, sharp neckline two fingers above the Adam's apple.</p>
+      <p class="goalnote"><b>Shedding weeks 2–4 (normal, don't panic). First real growth 3–4 months. Fill 9–12 months.</b> Tugain 5% Mon–Fri, dermaroll Sunday, minoxidil 24h after rolling — never the same day. Keep neckline 2 fingers above Adam's apple.</p>
     </div>
 
     <div class="goal g5">
       <div class="goalhead"><span class="goaltitle">Lean</span><span class="goalweeks" id="gw5">—</span></div>
       <div class="prog"><i id="gp5" style="background:var(--vermilion);width:0"></i></div>
-      <p class="goalnote"><b>0.4–0.6 kg/week.</b> Leanness is also the quiet lever on three of the goals above — it sharpens the jaw, makes asymmetry less readable, and makes the taper visible. It's not a separate project.</p>
+      <p class="goalnote"><b>0.4–0.6 kg/week.</b> Leanness is also the quiet lever on three of the goals above — it sharpens the jaw, makes asymmetry less readable, and makes the taper visible.</p>
     </div>
   </div>
 
   <div class="card">
     <p class="eyebrow"><span class="n">02</span> what won't move</p>
     <p class="note">Saying this once so you don't waste money on it later.<br><br>
-    <b>Facial asymmetry is bone.</b> Exercises and mewing won't restructure it. What actually reduces how visible it is: lower body fat, even chewing, posture, and framing with hair + stubble. Manage the expectation, run the free habits, skip anything sold as a fix.<br><br>
-    <b>You won't grow taller at 22.</b> Growth plates are fused. But the "compressed when I wake up" feeling is real — dead hangs, chin tucks and chest opening recover 1–3cm of <em>visible</em> height you're losing to slouching. That's a genuine win, just not the one people advertise.<br><br>
-    <b>Pores don't close permanently.</b> They look 40–60% smaller with consistent exfoliation and SPF. Anything promising to shrink them is lying.<br><br>
-    <b>Hydroquinone is off the list.</b> It's a real drug for patches, not full-face tan, and on Indian skin unsupervised use risks ochronosis — permanent blue-black darkening. Azelaic 10% does the job you actually want with none of that. If 12 weeks of the current stack doesn't close the gap, that's a dermatologist conversation, not a self-prescription.</p>
-  </div>
-
-  <div class="card">
-    <p class="eyebrow"><span class="n">03</span> the stack, final</p>
-    <p class="note">
-      <b>Skin AM</b> AHA Glow · Pilgrim Vit C · Minimalist B12 · Lakmé SPF 50 · WishCare lip SPF<br>
-      <b>Skin PM</b> Aziderm 10% (3×) · Kojic+Arbutin (2×) · Minimalist Peel 30% (q14d) · Niacinamide<br>
-      <b>Body</b> Glyco 12 — neck, arms, hands only<br>
-      <b>Hair</b> Ketoconazole 2× · gentle shampoo · Redensyl nightly<br>
-      <b>Beard</b> Tugain 5% Mon–Fri · dermaroller 0.5mm Sunday<br>
-      <b>Lips</b> Nicole scrub Tue + Sat · occlusive nightly<br>
-      <b>Supplements</b> creatine 5g daily · ashwagandha at dinner · L-theanine 200mg with coffee (5 on, 2 off) · flaxseed 2 tsp in oats<br><br>
-      Nothing left to buy. Additions from here are noise until 12 weeks are on the board.
-    </p>
+    <b>Facial asymmetry is bone.</b> Exercises and mewing won't restructure bone. What actually reduces how visible it is: lower body fat, even chewing, posture, and framing with hair + stubble.<br><br>
+    <b>You won't grow taller at 22.</b> Growth plates are fused. But dead hangs, chin tucks and chest opening recover 1–3cm of <em>visible</em> height lost to slouching.<br><br>
+    <b>Hydroquinone is off the list.</b> It risks ochronosis (permanent blue-black staining) on Indian skin. Azelaic 10% + Kojic is the safe path.</p>
   </div>
 </section>
 
 <!-- ============ AI & SYNC ============ -->
 <section id="p-sync" class="hide">
   <div class="card">
-    <p class="eyebrow"><span class="n">ai</span> export for llms &amp; local analysis</p>
-    <h2>AI Model Ready Exporters</h2>
-    <p class="note" style="margin-bottom:14px">Export your full metrics and history formatted specifically for Claude, ChatGPT, Gemini, or local python analysis scripts.</p>
+    <p class="eyebrow"><span class="n">ai</span> export for llms &amp; local models</p>
+    <h2>AI Model Dossier &amp; Cloud Sync</h2>
+    <p class="note" style="margin-bottom:14px">Export your logs, sleep, macros, and PRs formatted specifically for Claude, ChatGPT, Gemini, or local models.</p>
     
     <button class="btn sage" style="width:100%;margin-bottom:8px" id="btnExportAI">📄 Download AI Analysis Prompt (.md)</button>
     <button class="btn primary" style="width:100%;margin-bottom:8px" id="btnCopyAIPrompt">📋 Copy AI Prompt to Clipboard</button>
@@ -655,7 +743,7 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
     <p class="eyebrow">security &amp; lock</p>
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div>
-        <div style="font-weight:600;font-size:13.5px">Lock Session</div>
+        <div style="font-weight:600;font-size:13px">Lock Session</div>
         <div class="note">Password protection active (pass: laddu)</div>
       </div>
       <button class="btn sm" id="btnLockNow">Lock Now</button>
@@ -664,7 +752,7 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
 
   <div class="card">
     <p class="eyebrow">ai context preview</p>
-    <pre id="aiPreview" class="mono" style="font-size:11px;color:var(--muted);max-height:260px;overflow-y:auto;white-space:pre-wrap;word-break:break-all"></pre>
+    <pre id="aiPreview" class="mono" style="font-size:10.5px;color:var(--muted);max-height:260px;overflow-y:auto;white-space:pre-wrap;word-break:break-all"></pre>
   </div>
 </section>
 
@@ -727,7 +815,8 @@ document.getElementById('btnLockNow').onclick = () => {
 
 /* ---------------- storage state ---------------- */
 const KEY='system-basith-v1';
-let S={days:{},weights:{},meas:[],peel:'2026-08-01',start:'2026-08-05'};
+// Starting today: Tuesday 2026-08-18 (last peel was 2026-08-15 Saturday)
+let S={days:{},weights:{},sleep:{},content:{},meas:[],peel:'2026-08-15',start:'2026-08-18'};
 
 function updateSyncBadge(state, text){
   const badge = document.getElementById('syncStatus');
@@ -748,7 +837,6 @@ async function load(){
     try{
       const { data, error } = await sbClient.from('glowup_state').select('data, updated_at').eq('id', 'basith').single();
       if(!error && data && data.data){
-        // Merge cloud data if available
         S = Object.assign(S, data.data);
         localStorage.setItem(KEY, JSON.stringify(S));
         updateSyncBadge('online', 'Cloud Synced');
@@ -778,7 +866,6 @@ function save(eventMeta){
           updated_at: new Date().toISOString()
         });
 
-        // If discrete event passed, record to glowup_events table
         if(eventMeta){
           await sbClient.from('glowup_events').insert([{
             schema: 'glowup-event-v1',
@@ -803,7 +890,7 @@ function save(eventMeta){
       updateSyncBadge('online', 'Saved Locally');
     }
     renderAIContextPreview();
-  },240);
+  },200);
 }
 
 /* ---------------- dates ---------------- */
@@ -819,9 +906,9 @@ function shift(s,n){const d=parse(s);d.setDate(d.getDate()+n);return iso(d);}
 const fmt=s=>{const d=parse(s);return `${d.getDate()} ${MON[d.getMonth()]}`;};
 
 function day(d){
-  if(!S.days[d])S.days[d]={food:[],habits:{},lifts:[]};
+  if(!S.days[d])S.days[d]={food:[],habits:{},lifts:[],grooming:{}};
   const x=S.days[d];
-  x.food=x.food||[];x.habits=x.habits||{};x.lifts=x.lifts||[];
+  x.food=x.food||[];x.habits=x.habits||{};x.lifts=x.lifts||[];x.grooming=x.grooming||{};
   return x;
 }
 
@@ -857,15 +944,15 @@ const ROT=[
   {d:'Mon',active:'Aziderm 10% (azelaic)',short:'Azelaic',color:'--turmeric',
    extra:'Minoxidil · niacinamide if skin is calm · castor oil on lashes'},
   {d:'Tue',active:'Repair only — B12, nothing active',short:'Repair',color:'--muted',
-   extra:'Glyco 12 on neck/arms/hands · ketoconazole shampoo · lip scrub + balm · minoxidil · call a relative'},
+   extra:'Glyco 12 on neck/arms/hands · ketoconazole shampoo · lip scrub + balm · minoxidil · nails filed'},
   {d:'Wed',active:'Kojic + Arbutin',short:'Kojic',color:'--indigo',
    extra:'Minoxidil · face symmetry 5 min · castor oil on lashes'},
   {d:'Thu',active:'Aziderm 10% (azelaic)',short:'Azelaic',color:'--turmeric',
-   extra:'Glyco 12 on neck/arms/hands · ketoconazole shampoo · minoxidil · call a relative'},
+   extra:'Glyco 12 on neck/arms/hands · ketoconazole shampoo · minoxidil'},
   {d:'Fri',active:'Repair only — B12, nothing active',short:'Repair',color:'--muted',
    extra:'Minoxidil · face symmetry 5 min · castor oil on lashes'},
   {d:'Sat',active:'Minimalist Peel 30%',short:'PEEL',color:'--vermilion',
-   extra:'Peel week: no minoxidil, no azelaic, no kojic — peel then thick B12 only · lip scrub · stubble line-up, nails, brows · progress photo'}
+   extra:'Peel night: cleanser then peel then thick B12 only · lip scrub · razor sharp neckline, nails, brows'}
 ];
 function isPeelDay(dstr){
   if(parse(dstr).getDay()!==6)return false;
@@ -883,38 +970,50 @@ function activeFor(dstr){
   const lastPeelGap=daysBetween(S.peel,dstr);
   if(r.short==='Azelaic'&&lastPeelGap>=0&&lastPeelGap<=2&&lastPeelGap!==0){
     r.active='Repair only — recovering from peel';r.short='Repair';r.color='--muted';
-    r.extra='Skin is still recovering. Cleanser, B12, SPF. Nothing active for 2 nights after a peel.';
+    r.extra='Skin is recovering from peel. Cleanser, B12, SPF only. Nothing active for 2 nights post-peel.';
   }
   return r;
 }
 
-/* ---------------- habits ---------------- */
+/* ---------------- comprehensive habits ---------------- */
 const HABITS={
   am:[
-    ['am_skin','AM skincare','AHA Glow → Pilgrim Vit C → B12'],
-    ['am_spf','SPF 50 — face, neck, arms','Lakmé Ultra Matte Lotion. The one that matters most.',1],
-    ['am_lip','WishCare lip balm SPF 50','Sun is what darkens lips'],
-    ['am_cre','Creatine 5g','Never skip, including rest days',1],
-    ['am_walk','15-min sunlight walk','Steps + circadian + vitamin D']
+    ['am_skin','AM Skincare','AHA Glow facewash → Pilgrim Vit C → Minimalist B12',1],
+    ['am_spf','SPF 50 (Face, Neck, Arms, Hands)','Lakmé Ultra Matte Lotion. Non-negotiable.',1],
+    ['am_lip','WishCare Lip Balm SPF 50','Prevents lip melanin darkening',1],
+    ['am_cre','Creatine 5g','ATP power & cell volumization (do not skip)',1],
+    ['am_walk','15-min Morning Sunlight Walk','Circadian wake, vitamin D, 2k steps']
   ],
   day:[
-    ['d_spf','Reapply SPF','Midday. Half the job is the reapply.',1],
-    ['d_post','Posture drill','Chin tucks 3×15 · chest stretch · dead hang 2×30s'],
-    ['d_slow','Ate slow, chewed both sides','15 min minimum per meal'],
-    ['d_steps','8–10k steps','Split walks, no dedicated cardio needed']
+    ['d_spf','Midday SPF Reapply','Crucial for closing the face-to-body tone gap',1],
+    ['d_post','Posture & Height Decompression','Wall chin tucks 3×15 · doorway chest stretch · dead hang 2×30s',1],
+    ['d_jaw','Symmetrical Chewing (50/50)','Consciously chew evenly on left & right sides for jaw balance',1],
+    ['d_steps','8,000 – 10,000 Steps','Total daily steps logged']
   ],
   pm:[
-    ['p_gym','Gym — PPL + the four accessories','Face pulls · rear delts · farmer carries · dead hang',1],
-    ['p_skin','PM skincare','Cleanser → tonight\'s active → B12',1],
-    ['p_beard','Beard protocol','Minoxidil or dermaroll, per the day'],
-    ['p_lip','Lip occlusive','Scrub first on Tue + Sat'],
-    ['p_ash','Ashwagandha with dinner',''],
-    ['p_hair','Redensyl on scalp',''],
-    ['p_content','Content block 45–60 min','#basithladdu — non-negotiable',1],
-    ['p_sleep','Phone out of the bedroom','7–8h, same time nightly']
+    ['p_content','Content Deep Work Block 60–90 min','#basithladdu creative output',1],
+    ['p_gym','Gym (PPL + Core 4 Accessories)','Face pulls · rear delts · farmer carry · dead hang',1],
+    ['p_skin','PM Skincare Rotation','Cleanser → tonight\'s active → B12',1],
+    ['p_beard','Beard Protocol (Tugain 5% / Dermaroll)','1ml liquid or 0.5mm roll per schedule',1],
+    ['p_lip','Nightly Lip Occlusive Barrier','Scrub on Tue/Sat, thick occlusive every night',1],
+    ['p_hair','Redensyl Scalp Serum','Targeted application at roots',1],
+    ['p_ash','Ashwagandha with Dinner','Cortisol drop, deep sleep architecture',1],
+    ['p_phone','Phone Parked Outside Bedroom','7.5–8.5h sleep environment',1]
   ]
 };
 const ALLH=[...HABITS.am,...HABITS.day,...HABITS.pm];
+
+/* ---------------- grooming micro details ---------------- */
+const GROOMING_ITEMS=[
+  ['g_nails','Nails Cleaned, Trimmed & Filed','Cuticles pushed back, no jagged or dirty edges',1],
+  ['g_beard_neck','Sharp Beard Neckline','2 fingers above Adam\'s apple in crisp U-shape',1],
+  ['g_stubble','1–3mm Clean Groomed Stubble','Even trimming, cheeks lined up cleanly'],
+  ['g_brows','Eyebrow Unibrow & Stray Cleanup','Pluck bridge strays, brush arch upwards'],
+  ['g_bodyhair','Body Hair Grooming (Legs/Torso/Groin)','Neat, trimmed, hygienic; keep groin completely dry'],
+  ['g_scent','Signature Fragrance / Deodorant','Clean musk/wood notes, pulse points'],
+  ['g_teeth','Tongue Scraped & Flossed','Morning + night oral hygiene'],
+  ['g_fashion','Clean Ironed Minimalist Wardrobe','Fitted shoulder seam, clean footwear, no logos']
+];
 
 /* ---------------- lifts ---------------- */
 const LIFTS=['Bench press','Overhead press','Incline DB press','Squat','Deadlift','Romanian deadlift','Barbell row','Lat pulldown','Chest supported row','Leg press','Leg curl','Face pull','Rear delt fly','Lateral raise','Hammer curl','DB curl','Tricep pushdown','Farmer carry','Calf raise'];
@@ -942,7 +1041,7 @@ function renderHeader(){
 function renderToday(){
   const t=totals(TODAY);
   const pct=Math.min(1,t.k/KCAL);
-  const C=2*Math.PI*44;
+  const C=2*Math.PI*41;
   const ring=$('#ringKcal');
   ring.style.strokeDashoffset=C*(1-pct);
   ring.setAttribute('stroke',t.k>KCAL?'var(--vermilion)':'var(--turmeric)');
@@ -950,9 +1049,10 @@ function renderToday(){
   $('#sProt').textContent=`${Math.round(t.p)} / ${PROT}g`;
   $('#sProt').style.color=t.p>=PROT?'var(--sage)':'var(--paper)';
   $('#sRem').textContent=Math.round(KCAL-t.k);
-  const def=MAINT-t.k;
-  $('#sDef').textContent=t.k?`${def>0?'−':'+'}${Math.abs(Math.round(def))}`:'—';
-  $('#sDef').style.color=def>=400?'var(--sage)':def>0?'var(--paper)':'var(--vermilion)';
+  
+  const sl = S.sleep[TODAY];
+  $('#sSleepToday').textContent = sl ? `${sl.hours}h (${sl.qual}/10)` : 'Not logged';
+  $('#sSleepToday').style.color = sl && sl.hours >= 7.5 ? 'var(--sage)' : 'var(--paper)';
 
   const h=day(TODAY).habits;
   const done=ALLH.filter(x=>h[x[0]]).length;
@@ -1005,6 +1105,130 @@ function renderChecks(){
   build(HABITS.am,'#chkAM');
   build(HABITS.day,'#chkDay');
   build(HABITS.pm,'#chkPM');
+}
+
+/* ---------------- render: grooming tab ---------------- */
+function renderGrooming(){
+  const gm = day(TODAY).grooming;
+  const mount = $('#chkGrooming'); mount.innerHTML = '';
+  GROOMING_ITEMS.forEach(([k,lbl,sub,key])=>{
+    const row=el('div','chk'+(gm[k]?' on':'')+(key?' key':''));
+    row.setAttribute('role','button');row.tabIndex=0;
+    row.innerHTML=`<span class="box"></span><span><span class="lbl">${lbl}</span>${sub?`<span class="sub" style="display:block">${sub}</span>`:''}</span>`;
+    const go=()=>{
+      gm[k]=!gm[k];
+      save({area:'grooming',item:k,exact_update:`Grooming ${lbl}: ${gm[k]?'done':'undone'}`});
+      renderGrooming();
+    };
+    row.onclick=go;
+    row.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();go();}};
+    mount.appendChild(row);
+  });
+}
+
+/* ---------------- render: content timer & history ---------------- */
+let timerInt = null, timerSeconds = 3600;
+function updateTimerDisplay(){
+  const m = Math.floor(timerSeconds/60);
+  const s = timerSeconds%60;
+  $('#timerDisplay').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+$('#btnTimerStart').onclick = () => {
+  if(timerInt) return;
+  timerInt = setInterval(()=>{
+    if(timerSeconds > 0){
+      timerSeconds--;
+      updateTimerDisplay();
+    } else {
+      clearInterval(timerInt);
+      timerInt = null;
+      toast('Content Deep Work Block Completed!');
+    }
+  }, 1000);
+  toast('Timer started');
+};
+$('#btnTimerPause').onclick = () => {
+  clearInterval(timerInt);
+  timerInt = null;
+  toast('Timer paused');
+};
+$('#btnTimerReset').onclick = () => {
+  clearInterval(timerInt);
+  timerInt = null;
+  timerSeconds = 3600;
+  updateTimerDisplay();
+};
+
+$('#btnLogContent').onclick = () => {
+  const topic = $('#cntTopic').value.trim() || 'General content production';
+  const mins = +$('#cntMins').value || 60;
+  S.content[TODAY] = { topic, mins, date: TODAY };
+  save({area:'content',item:'content-block',value:mins,unit:'min',exact_update:`Completed ${mins}m content: ${topic}`});
+  $('#cntTopic').value = '';
+  renderContentTab();
+  toast(`Logged ${mins}m for #basithladdu`);
+};
+
+function renderContentTab(){
+  updateTimerDisplay();
+  const hist = $('#contentHistory'); hist.innerHTML = '';
+  const days = Object.keys(S.content).sort().reverse().slice(0,14);
+  if(!days.length){ hist.appendChild(el('div','empty','No content blocks logged yet. Start your first 60m block above.')); return; }
+  days.forEach(d=>{
+    const c = S.content[d];
+    const r = el('div','logrow');
+    r.innerHTML = `<span class="logname"><b>${fmt(d)}</b> · ${c.topic}</span><span class="logmac" style="color:var(--turmeric);font-weight:700">${c.mins} mins</span>`;
+    hist.appendChild(r);
+  });
+}
+
+/* ---------------- render: sleep tab ---------------- */
+$('#btnSaveSleep').onclick = () => {
+  const bed = $('#slpBed').value;
+  const wake = $('#slpWake').value;
+  const hours = +$('#slpHours').value;
+  const qual = +$('#slpQual').value || 8;
+  if(!hours){ toast('Enter total hours slept'); return; }
+  S.sleep[TODAY] = { bed, wake, hours, qual };
+  save({area:'sleep',item:'sleep-entry',value:hours,unit:'h',exact_update:`Slept ${hours}h (${bed} to ${wake}), quality ${qual}/10`});
+  renderSleepTab();
+  renderToday();
+  toast('Sleep entry saved & synced');
+};
+
+function renderSleepTab(){
+  const s = S.sleep[TODAY];
+  if(s){
+    $('#slpBed').value = s.bed || '23:30';
+    $('#slpWake').value = s.wake || '07:00';
+    $('#slpHours').value = s.hours || 7.5;
+    $('#slpQual').value = s.qual || 8;
+  }
+  
+  // draw 14-day sleep chart
+  const days=[];for(let i=13;i>=0;i--)days.push(shift(TODAY,-i));
+  const W=520,H=110,pad=14,gap=4;
+  const bw=(W-pad*2-gap*13)/14;
+  let max=10;
+  let svg=`<svg class="chart" viewBox="0 0 ${W} ${H+22}" preserveAspectRatio="none" role="img" aria-label="Sleep last 14 days">`;
+  const targetY = H - (7.5/max)*(H-16);
+  svg+=`<line x1="${pad}" y1="${targetY}" x2="${W-pad}" y2="${targetY}" stroke="#8AA85F" stroke-width="1" stroke-dasharray="3 3" opacity=".8"/>`;
+  let totalH = 0, loggedCount = 0;
+  days.forEach((d,i)=>{
+    const sl = S.sleep[d];
+    const v = sl ? sl.hours : 0;
+    if(v){ totalH += v; loggedCount++; }
+    const x=pad+i*(bw+gap);
+    const hgt=v?Math.max(2,(v/max)*(H-16)):0;
+    const col=!v?'#272220':v>=7.5?'#8AA85F':'#E8A33D';
+    svg+=`<rect x="${x}" y="${H-hgt}" width="${bw}" height="${hgt}" rx="2.5" fill="${col}"/>`;
+    if(i%3===0||i===13)svg+=`<text class="axl" x="${x+bw/2}" y="${H+13}" text-anchor="middle">${fmt(d).split(' ')[0]}</text>`;
+  });
+  svg+=`</svg>`;
+  $('#chartSleep').innerHTML = svg;
+
+  const avgH = loggedCount ? (totalH/loggedCount).toFixed(1) : '—';
+  $('#sleepAvgNote').innerHTML = `<b>${avgH} hrs/night average</b> across logged days. Target: 7.5h–8.5h floor.`;
 }
 
 /* ---------------- render: food ---------------- */
@@ -1165,7 +1389,7 @@ function updateHint(){
   const n=$('#liftPick').value;
   const l=lastFor(n);
   $('#liftHint').innerHTML=l
-    ? `Last time (${fmt(l.d)}): <b>${l.set.kg}kg × ${l.set.reps}</b>. Beat the reps first, then the weight.`
+    ? `Last time (${fmt(l.d)}): <b>${l.set.kg}kg × ${l.set.reps}</b>. Beat reps first, then weight.`
     : `No history for ${n} yet. This session becomes the baseline.`;
 }
 function renderLifts(){
@@ -1277,7 +1501,7 @@ function generateAIMarkdown(){
     const dy = S.days[d] || {};
     const habDone = Object.keys(dy.habits||{}).filter(k=>dy.habits[k]).length;
     const liftsCount = (dy.lifts||[]).length;
-    md += `| ${d} | ${Math.round(t.k)} kcal | ${Math.round(t.p)}g | ${Math.round(t.c)}g | ${Math.round(t.f)}g | ${habDone}/17 | ${liftsCount} sets |\n`;
+    md += `| ${d} | ${Math.round(t.k)} kcal | ${Math.round(t.p)}g | ${Math.round(t.c)}g | ${Math.round(t.f)}g | ${habDone}/22 | ${liftsCount} sets |\n`;
   });
   md += `\n`;
 
@@ -1295,12 +1519,16 @@ function generateAIMarkdown(){
   });
   md += `\n`;
 
-  md += `## 5. Instructions for the AI Model\n`;
-  md += `Please perform a systematic, evidence-based review of my logs against my stated goals:\n`;
-  md += `1. **Rate of Fat Loss & Muscle Retention:** Analyze my weight slope vs calorie intake. Am I in the 0.4–0.6 kg/week sweet spot?\n`;
-  md += `2. **Protein Quality & Cost Efficiency:** Assess my staple food selections (Soya chunks, eggs, milk, oats, whey, paneer, chicken).\n`;
+  md += `## 5. Sleep & Deep Work Productivity\n`;
+  md += `\`\`\`json\n` + JSON.stringify({ sleep: S.sleep, content: S.content }, null, 2) + `\n\`\`\`\n\n`;
+
+  md += `## 6. Instructions for the AI Model\n`;
+  md += `Please perform an evidence-based review of my logs against my stated goals:\n`;
+  md += `1. **Rate of Fat Loss & Muscle Retention:** Analyze weight slope vs calorie intake (target: 0.4–0.6 kg/wk).\n`;
+  md += `2. **Protein Quality & Cost Efficiency:** Assess staple food selections (Soya chunks, eggs, milk, oats, whey, paneer, chicken).\n`;
   md += `3. **Skincare & Peel Recovery:** Check active compliance and safety intervals.\n`;
-  md += `4. **Hypertrophy & V-Taper Trajectory:** Review lift progression and accessory movements (face pulls, rear delts, farmer carries, dead hangs).\n`;
+  md += `4. **Hypertrophy & V-Taper Trajectory:** Review lift progression and Core 4 accessory movements.\n`;
+  md += `5. **Recovery & Output:** Audit sleep architecture and content creation consistency.\n`;
 
   return md;
 }
@@ -1387,11 +1615,14 @@ document.querySelectorAll('.tab').forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
     b.setAttribute('aria-selected','true');
-    ['today','food','protein','skin','lifts','body','goals','sync'].forEach(t=>$('#p-'+t).classList.add('hide'));
+    ['today','content','sleep','grooming','skin','food','protein','lifts','body','goals','sync'].forEach(t=>$('#p-'+t).classList.add('hide'));
     $('#p-'+b.dataset.tab).classList.remove('hide');
     window.scrollTo({top:0,behavior:'instant'});
     if(b.dataset.tab==='food')renderFood();
     if(b.dataset.tab==='skin')renderSkin();
+    if(b.dataset.tab==='grooming')renderGrooming();
+    if(b.dataset.tab==='content')renderContentTab();
+    if(b.dataset.tab==='sleep')renderSleepTab();
     if(b.dataset.tab==='lifts')renderLifts();
     if(b.dataset.tab==='body')renderBody();
     if(b.dataset.tab==='goals')renderGoals();
