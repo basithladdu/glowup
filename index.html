@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#14110F">
-<title>GLOWUP · Basith</title>
+<title>GLOWUP · Action Matrix</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -33,19 +33,19 @@ html{background:var(--ink)}
 body{
   background:var(--ink);color:var(--paper);
   font-family:'Instrument Sans',system-ui,sans-serif;
-  font-size:14.5px;line-height:1.5;
+  font-size:14px;line-height:1.45;
   padding:0 0 100px;
   -webkit-font-smoothing:antialiased;
   overscroll-behavior-y:none;
 }
-.wrap{max-width:580px;margin:0 auto;padding:0 16px}
+.wrap{max-width:600px;margin:0 auto;padding:0 16px}
 
 /* ---------- header ---------- */
-header{padding:18px 0 12px}
+header{padding:16px 0 10px}
 .brandrow{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
 h1{
   font-family:'Fraunces',serif;font-weight:800;
-  font-size:29px;letter-spacing:-.025em;line-height:.95;
+  font-size:28px;letter-spacing:-.025em;line-height:.95;
 }
 h1 em{font-style:italic;color:var(--turmeric)}
 
@@ -53,7 +53,7 @@ h1 em{font-style:italic;color:var(--turmeric)}
 .date-nav{
   display:flex;align-items:center;justify-content:space-between;
   background:var(--surface2);border:.5px solid var(--line2);border-radius:12px;
-  padding:7px 12px;margin:10px 0 14px;
+  padding:6px 12px;margin:10px 0 12px;
 }
 .date-nav button{
   background:none;border:0;color:var(--turmeric);font-size:16px;cursor:pointer;padding:2px 8px;font-weight:700;
@@ -80,84 +80,84 @@ h1 em{font-style:italic;color:var(--turmeric)}
 nav{
   position:sticky;top:0;z-index:40;background:rgba(20,17,15,.96);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border-bottom:.5px solid var(--line);margin-bottom:16px;
+  border-bottom:.5px solid var(--line);margin-bottom:14px;
 }
-.tabs{display:flex;gap:2px;max-width:580px;margin:0 auto;padding:0 8px;overflow-x:auto;scrollbar-width:none}
+.tabs{display:flex;gap:2px;max-width:600px;margin:0 auto;padding:0 8px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{
   flex:0 0 auto;background:none;border:0;color:var(--muted);
-  font-family:'JetBrains Mono',monospace;font-size:10px;
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;
   letter-spacing:.08em;text-transform:uppercase;
-  padding:13px 8px 11px;cursor:pointer;border-bottom:2px solid transparent;
+  padding:12px 8px 10px;cursor:pointer;border-bottom:2px solid transparent;
 }
 .tab[aria-selected="true"]{color:var(--turmeric);border-bottom-color:var(--turmeric);font-weight:700}
 
 /* ---------- cards & primitives ---------- */
-.card{background:var(--surface);border:.5px solid var(--line);border-radius:var(--r);padding:14px 15px;margin-bottom:10px}
+.card{background:var(--surface);border:.5px solid var(--line);border-radius:var(--r);padding:13px 14px;margin-bottom:10px}
 .card.nextup{
   background:linear-gradient(165deg,#32271D 0%,#201B17 100%);
   border:1.5px solid var(--turmeric);box-shadow:0 8px 24px rgba(232,163,61,.12);
 }
 .eyebrow{
   font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:10px;
+  text-transform:uppercase;color:var(--muted);margin-bottom:9px;
   display:flex;align-items:center;gap:8px;
 }
 .eyebrow::after{content:'';flex:1;height:.5px;background:var(--line)}
 .eyebrow .n{color:var(--turmeric)}
 h2{font-family:'Fraunces',serif;font-size:18px;font-weight:600;letter-spacing:-.015em;margin-bottom:3px}
-.note{font-size:12px;color:var(--muted);line-height:1.6}
+.note{font-size:11.5px;color:var(--muted);line-height:1.55}
 .note b{color:var(--paper);font-weight:500}
 .mono{font-family:'JetBrains Mono',monospace}
 .hide{display:none !important}
 
 /* ---------- ADHD Next Up Hero ---------- */
-.next-title{font-size:16px;font-weight:700;color:var(--paper);margin-bottom:4px}
-.next-sub{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.4}
+.next-title{font-size:15.5px;font-weight:700;color:var(--paper);margin-bottom:3px}
+.next-sub{font-size:11.5px;color:var(--muted);margin-bottom:11px;line-height:1.4}
 .next-btn{
-  background:var(--turmeric);color:#1A1206;border:0;border-radius:10px;
-  font-family:'Instrument Sans',sans-serif;font-weight:700;font-size:14px;
-  padding:12px 18px;width:100%;cursor:pointer;transition:.12s;display:flex;align-items:center;justify-content:center;gap:8px;
-  box-shadow:0 4px 16px rgba(232,163,61,.28);
+  background:var(--turmeric);color:#1A1206;border:0;border-radius:9px;
+  font-family:'Instrument Sans',sans-serif;font-weight:700;font-size:13.5px;
+  padding:11px 16px;width:100%;cursor:pointer;transition:.12s;display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 4px 16px rgba(232,163,61,.25);
 }
 .next-btn:active{transform:scale(.98)}
 
 /* ---------- stats & rings ---------- */
 .ringrow{display:flex;gap:10px;align-items:center}
-.ring{position:relative;width:96px;height:96px;flex:0 0 auto}
+.ring{position:relative;width:92px;height:92px;flex:0 0 auto}
 .ring svg{transform:rotate(-90deg)}
 .ringmid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ringnum{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;line-height:1}
+.ringnum{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;line-height:1}
 .ringlab{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
 .ringside{flex:1;min-width:0}
-.statline{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:.5px solid var(--line)}
+.statline{display:flex;justify-content:space-between;align-items:baseline;padding:4.5px 0;border-bottom:.5px solid var(--line)}
 .statline:last-child{border:0}
-.statk{font-size:12px;color:var(--muted)}
-.statv{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
+.statk{font-size:11.5px;color:var(--muted)}
+.statv{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700}
 
-.macrobar{display:flex;height:6px;border-radius:4px;overflow:hidden;background:var(--surface2);margin:10px 0 6px}
+.macrobar{display:flex;height:6px;border-radius:4px;overflow:hidden;background:var(--surface2);margin:9px 0 5px}
 .macrobar i{display:block;height:100%}
-.macrokey{display:flex;gap:12px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--muted)}
+.macrokey{display:flex;gap:11px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)}
 .macrokey span{display:flex;align-items:center;gap:4px}
 .dot{width:6px;height:6px;border-radius:2px;display:inline-block}
 
 /* ---------- blister strip ---------- */
 .strip{
   display:grid;grid-template-columns:repeat(7,1fr);gap:4px;
-  padding:6px;border-radius:12px;
+  padding:5px;border-radius:12px;
   background:linear-gradient(160deg,#3A322C 0%,#241F1C 42%,#3A322C 100%);
   border:.5px solid var(--line2);
 }
 .pill{
-  position:relative;border-radius:8px;padding:8px 2px 7px;text-align:center;
+  position:relative;border-radius:8px;padding:7px 2px 6px;text-align:center;
   background:linear-gradient(170deg,rgba(242,235,224,.09),rgba(242,235,224,.02));
-  border:.5px solid rgba(242,235,224,.07);min-height:68px;
+  border:.5px solid rgba(242,235,224,.07);min-height:66px;
   display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;cursor:pointer;transition:.12s;
 }
 .pill:active{transform:scale(.96)}
 .pill .d{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.05em}
 .pill .g{width:13px;height:13px;border-radius:50%;border:1.5px solid currentColor;opacity:.5}
-.pill .t{font-size:8px;line-height:1.2;color:var(--muted);padding:0 1px}
+.pill .t{font-size:7.5px;line-height:1.2;color:var(--muted);padding:0 1px}
 .pill.selected{
   background:linear-gradient(170deg,rgba(232,163,61,.28),rgba(232,163,61,.08));
   border-color:rgba(232,163,61,.6);
@@ -167,76 +167,65 @@ h2{font-family:'Fraunces',serif;font-size:18px;font-weight:600;letter-spacing:-.
 .pill.selected .t{color:var(--paper);font-weight:600}
 .pill.peel .g{border-style:double;border-width:3px}
 
-/* ---------- routine timeline item ---------- */
-.timeline-item{
-  display:flex;gap:12px;padding:10px 0;border-bottom:.5px solid var(--line);align-items:flex-start;
+/* ---------- action task items ---------- */
+.task-item{
+  display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:.5px solid var(--line);gap:10px;
 }
-.timeline-item:last-child{border:0}
-.tl-time{
-  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);width:55px;flex:0 0 auto;padding-top:2px;
+.task-item:last-child{border:0}
+.task-left{display:flex;align-items:flex-start;gap:9px;flex:1;min-width:0}
+.task-badge{font-family:'JetBrains Mono',monospace;font-size:8.5px;padding:2px 5px;border-radius:4px;background:var(--surface2);color:var(--muted);margin-right:4px}
+.task-title{font-size:13px;font-weight:600;color:var(--paper);line-height:1.3}
+.task-sub{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.35}
+.task-item.done .task-title{text-decoration:line-through;color:var(--muted)}
+.task-btn{
+  background:var(--surface2);border:.5px solid var(--line2);border-radius:7px;
+  color:var(--turmeric);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  padding:5px 9px;cursor:pointer;white-space:nowrap;flex:0 0 auto;transition:.12s;
 }
-.tl-body{flex:1;min-width:0}
-.tl-title{font-size:13.5px;font-weight:600;color:var(--paper);line-height:1.3}
-.tl-sub{font-size:11.5px;color:var(--muted);margin-top:2px}
-.tl-act{margin-top:6px}
-
-/* ---------- checklist ---------- */
-.chk{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:.5px solid var(--line);cursor:pointer}
-.chk:last-child{border:0}
-.box{
-  width:18px;height:18px;border-radius:5px;border:1.5px solid var(--muted);
-  flex:0 0 auto;margin-top:1px;position:relative;transition:.12s;
-}
-.chk.on .box{background:var(--sage);border-color:var(--sage)}
-.chk.on .box::after{content:'';position:absolute;left:5px;top:2px;width:5px;height:9px;border:solid var(--ink);border-width:0 2px 2px 0;transform:rotate(43deg)}
-.chk .lbl{font-size:13px;line-height:1.4}
-.chk .sub{font-size:11px;color:var(--muted);margin-top:1px}
-.chk.on .lbl{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(140,129,119,.5)}
-.chk.key .lbl::after{content:'★';font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--turmeric);vertical-align:super;margin-left:4px}
+.task-btn:active{transform:scale(.95)}
+.task-item.done .task-btn{background:var(--sage);color:#1A1206;border-color:var(--sage)}
 
 /* ---------- buttons & inputs ---------- */
 button{font-family:inherit}
 .btn{
-  background:var(--surface2);border:.5px solid var(--line2);border-radius:9px;
-  color:var(--paper);font-size:12px;padding:9px 12px;cursor:pointer;transition:.12s;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  background:var(--surface2);border:.5px solid var(--line2);border-radius:8px;
+  color:var(--paper);font-size:11.5px;padding:8px 11px;cursor:pointer;transition:.12s;display:inline-flex;align-items:center;justify-content:center;gap:5px;
 }
 .btn:active{transform:scale(.97)}
 .btn.primary{background:var(--turmeric);border-color:var(--turmeric);color:#1A1206;font-weight:600}
 .btn.sage{background:var(--sage);border-color:var(--sage);color:#1A1206;font-weight:600}
 .btn.indigo{background:var(--indigo);border-color:var(--indigo);color:#1A1206;font-weight:600}
-.btn.sm{padding:5px 9px;font-size:11px;border-radius:6px}
+.btn.sm{padding:5px 8px;font-size:10.5px;border-radius:6px}
 input,select,textarea{
-  background:var(--surface2);border:.5px solid var(--line2);border-radius:9px;
-  color:var(--paper);font-family:'JetBrains Mono',monospace;font-size:13.5px;
-  padding:8px 10px;width:100%;
+  background:var(--surface2);border:.5px solid var(--line2);border-radius:8px;
+  color:var(--paper);font-family:'JetBrains Mono',monospace;font-size:13px;
+  padding:7px 9px;width:100%;
 }
-input:focus,select:focus,textarea:focus,button:focus-visible,.chk:focus-visible{outline:2px solid var(--turmeric);outline-offset:2px}
-label.fl{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.frow{display:flex;gap:6px;margin-bottom:8px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--turmeric);outline-offset:2px}
+label.fl{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.frow{display:flex;gap:6px;margin-bottom:7px}
 .frow>div{flex:1;min-width:0}
 
-/* ---------- content timer block ---------- */
+/* ---------- content & sleep hero blocks ---------- */
 .content-hero{
   background:linear-gradient(160deg,#30261C 0%,#1E1A17 100%);
-  border:1px solid rgba(232,163,61,.35);border-radius:var(--r);padding:16px;margin-bottom:12px;
+  border:1px solid rgba(232,163,61,.35);border-radius:var(--r);padding:14px;margin-bottom:10px;
 }
 .content-timer{
-  font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:800;color:var(--turmeric);text-align:center;margin:8px 0;letter-spacing:-.02em;
+  font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:800;color:var(--turmeric);text-align:center;margin:6px 0;letter-spacing:-.02em;
 }
-
-/* ---------- live sleep card ---------- */
 .sleep-hero{
   background:linear-gradient(160deg,#1C2433 0%,#1E1A17 100%);
-  border:1px solid rgba(110,143,196,.35);border-radius:var(--r);padding:16px;margin-bottom:12px;
+  border:1px solid rgba(110,143,196,.35);border-radius:var(--r);padding:14px;margin-bottom:10px;
 }
 .sleep-clock{
-  font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:800;color:var(--indigo);text-align:center;margin:8px 0;
+  font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:800;color:var(--indigo);text-align:center;margin:6px 0;
 }
 
-/* ---------- github activity grid ---------- */
-.heatmap-wrap{overflow-x:auto;padding:8px 0}
-.heatmap{display:grid;grid-template-rows:repeat(7,11px);grid-auto-flow:column;gap:3px;margin-bottom:6px}
-.hm-cell{width:11px;height:11px;border-radius:2.5px;background:var(--surface2);cursor:pointer;transition:.1s}
+/* ---------- heatmap ---------- */
+.heatmap-wrap{overflow-x:auto;padding:6px 0}
+.heatmap{display:grid;grid-template-rows:repeat(7,10px);grid-auto-flow:column;gap:3px;margin-bottom:4px}
+.hm-cell{width:10px;height:10px;border-radius:2px;background:var(--surface2);cursor:pointer;transition:.1s}
 .hm-cell:hover{transform:scale(1.3);z-index:2}
 .hm-l1{background:#3B3224}
 .hm-l2{background:#755624}
@@ -244,51 +233,50 @@ label.fl{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;lett
 .hm-l4{background:#E8A33D}
 
 /* ---------- food & meals ---------- */
-.foods{display:flex;flex-wrap:wrap;gap:6px}
+.foods{display:flex;flex-wrap:wrap;gap:5px}
 .food{
-  background:var(--surface2);border:.5px solid var(--line2);border-radius:18px;
-  padding:6px 11px;font-size:12px;cursor:pointer;color:var(--paper);transition:.12s;
+  background:var(--surface2);border:.5px solid var(--line2);border-radius:16px;
+  padding:5px 10px;font-size:11.5px;cursor:pointer;color:var(--paper);transition:.12s;
 }
 .food:active{background:var(--turmeric);color:#1A1206}
-.food i{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--muted);margin-left:4px}
-.logrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:.5px solid var(--line);gap:8px}
+.food i{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-left:4px}
+.logrow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:.5px solid var(--line);gap:8px}
 .logrow:last-child{border:0}
-.logname{font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.logmac{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);white-space:nowrap}
-.del{background:none;border:0;color:var(--muted);font-size:18px;line-height:1;padding:0 3px;cursor:pointer}
+.logname{font-size:12.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logmac{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+.del{background:none;border:0;color:var(--muted);font-size:16px;line-height:1;padding:0 3px;cursor:pointer}
 
 /* ---------- lifts & goals ---------- */
-.liftrow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:.5px solid var(--line);gap:8px}
+.liftrow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:.5px solid var(--line);gap:8px}
 .liftrow:last-child{border:0}
-.liftname{font-size:13px;flex:1;min-width:0}
-.liftprev{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
-.liftnow{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}
+.liftname{font-size:12.5px;flex:1;min-width:0}
+.liftprev{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--muted)}
+.liftnow{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700}
 .up{color:var(--sage)}
 .same{color:var(--muted)}
 
-.goal{border-left:2px solid var(--line2);padding:0 0 0 12px;margin-bottom:14px}
+.goal{border-left:2px solid var(--line2);padding:0 0 0 11px;margin-bottom:12px}
 .goal.g1{border-color:var(--turmeric)}
 .goal.g2{border-color:var(--rose)}
 .goal.g3{border-color:var(--indigo)}
 .goal.g4{border-color:var(--sage)}
 .goal.g5{border-color:var(--vermilion)}
-.goalhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:3px}
-.goaltitle{font-family:'Fraunces',serif;font-size:16px;font-weight:600;letter-spacing:-.01em}
-.goalweeks{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--muted);white-space:nowrap}
-.prog{height:4px;border-radius:3px;background:var(--surface2);overflow:hidden;margin:7px 0 6px}
+.goalhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:2px}
+.goaltitle{font-family:'Fraunces',serif;font-size:15.5px;font-weight:600;letter-spacing:-.01em}
+.goalweeks{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);white-space:nowrap}
+.prog{height:4px;border-radius:3px;background:var(--surface2);overflow:hidden;margin:6px 0 5px}
 .prog i{display:block;height:100%;border-radius:3px}
-.goalnote{font-size:11.5px;color:var(--muted);line-height:1.55}
 
-/* ---------- charts & tables ---------- */
+/* ---------- tables & charts ---------- */
 .chart{width:100%;height:auto;display:block;overflow:visible}
-.axl{font-family:'JetBrains Mono',monospace;font-size:8px;fill:var(--muted)}
-.vall{font-family:'JetBrains Mono',monospace;font-size:8.5px;fill:var(--paper)}
-.table-wrap{overflow-x:auto;margin:8px 0;border-radius:8px;border:.5px solid var(--line)}
-table.data-tbl{width:100%;border-collapse:collapse;font-size:11.5px;text-align:left}
-table.data-tbl th{background:var(--surface2);color:var(--muted);padding:7px 9px;font-family:'JetBrains Mono',monospace;font-weight:500;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase}
-table.data-tbl td{padding:7px 9px;border-bottom:.5px solid var(--line)}
+.axl{font-family:'JetBrains Mono',monospace;font-size:7.5px;fill:var(--muted)}
+.vall{font-family:'JetBrains Mono',monospace;font-size:8px;fill:var(--paper)}
+.table-wrap{overflow-x:auto;margin:6px 0;border-radius:8px;border:.5px solid var(--line)}
+table.data-tbl{width:100%;border-collapse:collapse;font-size:11px;text-align:left}
+table.data-tbl th{background:var(--surface2);color:var(--muted);padding:6px 8px;font-family:'JetBrains Mono',monospace;font-weight:500;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+table.data-tbl td{padding:6px 8px;border-bottom:.5px solid var(--line)}
 table.data-tbl tr:last-child td{border:0}
-.tag-badge{display:inline-block;padding:2px 5px;border-radius:4px;font-size:9px;font-family:'JetBrains Mono',monospace;font-weight:700}
+.tag-badge{display:inline-block;padding:2px 5px;border-radius:4px;font-size:8.5px;font-family:'JetBrains Mono',monospace;font-weight:700}
 .tag-best{background:rgba(138,168,95,.2);color:var(--sage)}
 .tag-mid{background:rgba(232,163,61,.2);color:var(--turmeric)}
 .tag-prem{background:rgba(201,80,58,.2);color:var(--vermilion)}
@@ -299,22 +287,22 @@ table.data-tbl tr:last-child td{border:0}
   backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:20px;
 }
 .auth-box{
-  background:var(--surface);border:.5px solid var(--line2);border-radius:18px;
-  padding:26px 22px;max-width:360px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.6);
+  background:var(--surface);border:.5px solid var(--line2);border-radius:16px;
+  padding:24px 20px;max-width:340px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.6);
 }
-.auth-box h2{font-size:22px;margin-bottom:5px}
-.auth-box p{color:var(--muted);font-size:12.5px;margin-bottom:18px}
-.auth-box input{margin-bottom:10px;text-align:center;font-size:16px;letter-spacing:.2em}
+.auth-box h2{font-size:21px;margin-bottom:4px}
+.auth-box p{color:var(--muted);font-size:12px;margin-bottom:16px}
+.auth-box input{margin-bottom:10px;text-align:center;font-size:15px;letter-spacing:.2em}
 
-.empty{text-align:center;padding:22px 12px;color:var(--muted);font-size:12px;line-height:1.6}
+.empty{text-align:center;padding:20px 10px;color:var(--muted);font-size:11.5px;line-height:1.55}
 .toast{
   position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);
-  background:var(--paper);color:var(--ink);font-size:12.5px;font-weight:600;
-  padding:10px 18px;border-radius:30px;z-index:99;transition:transform .24s cubic-bezier(.2,.9,.3,1.2);
+  background:var(--paper);color:var(--ink);font-size:12px;font-weight:600;
+  padding:9px 16px;border-radius:30px;z-index:99;transition:transform .24s cubic-bezier(.2,.9,.3,1.2);
   box-shadow:0 8px 28px rgba(0,0,0,.45);
 }
 .toast.show{transform:translateX(-50%) translateY(0)}
-footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.08em}
+footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--muted);letter-spacing:.08em}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
 </style>
 </head>
@@ -323,12 +311,12 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
 <!-- ============ AUTH MODAL ============ -->
 <div id="authModal">
   <div class="auth-box">
-    <div style="font-size:30px;margin-bottom:10px">🔒</div>
+    <div style="font-size:28px;margin-bottom:8px">🔒</div>
     <h2>GLOWUP</h2>
-    <p>Enter passcode to unlock your system.</p>
+    <p>Enter passcode to unlock your personal system.</p>
     <input type="password" id="authPass" placeholder="•••••" autofocus autocomplete="current-password">
-    <button class="btn primary" style="width:100%" id="authBtn">Unlock</button>
-    <p id="authError" class="note" style="color:var(--vermilion);margin-top:10px;display:none">Incorrect passcode</p>
+    <button class="btn primary" style="width:100%" id="authBtn">Unlock Matrix</button>
+    <p id="authError" class="note" style="color:var(--vermilion);margin-top:8px;display:none">Incorrect passcode</p>
   </div>
 </div>
 
@@ -346,7 +334,7 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
         Tuesday, 18 Aug 2026
         <small id="navDayStatus">Viewing Today</small>
       </div>
-      <div style="display:flex;align-items:center;gap:6px">
+      <div style="display:flex;align-items:center;gap:5px">
         <button id="btnNextDay" title="Next Day">›</button>
         <span class="today-badge" id="btnJumpToday">TODAY</span>
       </div>
@@ -357,10 +345,11 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
 <nav>
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" aria-selected="true" data-tab="today">Today &amp; Flow</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="calendar">Master Calendar 📅</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="content">Content ⚡</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="sleep">Sleep 🌙</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="grooming">Grooming &amp; Micro</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="meals">Meal Schedule</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="grooming">Grooming &amp; Oil</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="milestones">Milestones</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="food">Food Bank</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="protein">Protein ₹/g</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="skin">Skin &amp; Peel</button>
@@ -387,10 +376,10 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
   <div class="card">
     <div class="ringrow">
       <div class="ring">
-        <svg width="96" height="96" viewBox="0 0 96 96">
-          <circle cx="48" cy="48" r="40" fill="none" stroke="#272220" stroke-width="8"/>
-          <circle id="ringKcal" cx="48" cy="48" r="40" fill="none" stroke="#E8A33D" stroke-width="8"
-                  stroke-linecap="round" stroke-dasharray="251.3" stroke-dashoffset="251.3"/>
+        <svg width="92" height="92" viewBox="0 0 92 92">
+          <circle cx="46" cy="46" r="38" fill="none" stroke="#272220" stroke-width="8"/>
+          <circle id="ringKcal" cx="46" cy="46" r="38" fill="none" stroke="#E8A33D" stroke-width="8"
+                  stroke-linecap="round" stroke-dasharray="238.7" stroke-dashoffset="238.7"/>
         </svg>
         <div class="ringmid">
           <span class="ringnum" id="rKcal">0</span>
@@ -400,7 +389,7 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
       <div class="ringside">
         <div class="statline"><span class="statk">Protein Floor</span><span class="statv" id="sProt">0 / 170g</span></div>
         <div class="statline"><span class="statk">Deficit</span><span class="statv" id="sDef">—</span></div>
-        <div class="statline"><span class="statk">Routine Flow</span><span class="statv" id="sFlowProgress">0 / 10</span></div>
+        <div class="statline"><span class="statk">Actions Done</span><span class="statv" id="sFlowProgress">0 / 12</span></div>
         <div class="statline"><span class="statk">Sleep</span><span class="statv" id="sSleepToday">—</span></div>
       </div>
     </div>
@@ -418,26 +407,36 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
   <div class="card">
     <p class="eyebrow"><span class="n">rx</span> actives &amp; skincare rotation</p>
     <div class="strip" id="strip"></div>
-    <p class="note" style="margin-top:10px" id="stripNote">—</p>
+    <p class="note" style="margin-top:8px" id="stripNote">—</p>
   </div>
 
   <!-- CHRONOLOGICAL ROUTINE TIMELINE -->
   <div class="card">
-    <p class="eyebrow"><span class="n">flow</span> daily sequential timeline</p>
-    <div id="timelineContainer"></div>
+    <p class="eyebrow"><span class="n">tasks</span> today's action checklist</p>
+    <div id="todayTaskList"></div>
+  </div>
+</section>
+
+<!-- ============ MASTER CALENDAR 📅 ============ -->
+<section id="p-calendar" class="hide">
+  <div class="card">
+    <p class="eyebrow"><span class="n">📅</span> quiet master schedule</p>
+    <h2>7-Day Weekly Master Calendar</h2>
+    <p class="note" style="margin-bottom:12px">Every recurring hygiene, oiling, haircut, actives, and workout protocol laid out cleanly.</p>
+    <div id="masterCalendarList"></div>
   </div>
 </section>
 
 <!-- ============ CONTENT ⚡ ============ -->
 <section id="p-content" class="hide">
   <div class="content-hero">
-    <p class="eyebrow" style="color:var(--turmeric)"><span class="n">⚡</span> dedicated deep work block</p>
+    <p class="eyebrow" style="color:var(--turmeric)"><span class="n">⚡</span> deep work power block</p>
     <h2>Content Production (#basithladdu)</h2>
-    <p class="note">60–90 min non-negotiable daily output. Phone outside room. Ship one concrete piece of creative leverage daily.</p>
+    <p class="note">60–90 min non-negotiable daily output. Phone outside room. Ship one concrete deliverable daily.</p>
     
     <div class="content-timer" id="timerDisplay">60:00</div>
     
-    <div style="display:flex;gap:8px;margin-bottom:14px">
+    <div style="display:flex;gap:6px;margin-bottom:12px">
       <button class="btn primary" style="flex:1" id="btnTimerStart">▶ Start Block</button>
       <button class="btn" style="flex:1" id="btnTimerPause">⏸ Pause</button>
       <button class="btn" id="btnTimerReset">↺ Reset</button>
@@ -462,9 +461,9 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
     <p class="eyebrow" style="color:var(--indigo)"><span class="n">🌙</span> live sleep tracking</p>
     <div id="sleepLiveState">
       <h2>One-Tap Sleep Stopwatch</h2>
-      <p class="note" style="margin-bottom:12px">Tap when hitting the pillow, tap when waking up. Automatic duration calculation &amp; cloud logging.</p>
+      <p class="note" style="margin-bottom:10px">Tap when hitting the pillow, tap when waking up. Automatic duration calculation &amp; cloud logging.</p>
       <div class="sleep-clock" id="sleepStopwatch">00:00:00</div>
-      <button class="btn indigo" style="width:100%;font-size:14px;padding:12px" id="btnToggleSleep">🛌 Going to Sleep Now</button>
+      <button class="btn indigo" style="width:100%;font-size:13.5px;padding:11px" id="btnToggleSleep">🛌 Going to Sleep Now</button>
     </div>
   </div>
 
@@ -484,79 +483,46 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
   <div class="card">
     <p class="eyebrow">14-day sleep duration trend</p>
     <div id="chartSleep"></div>
-    <p class="note" style="margin-top:10px" id="sleepAvgNote">—</p>
+    <p class="note" style="margin-top:8px" id="sleepAvgNote">—</p>
   </div>
 </section>
 
-<!-- ============ GROOMING & MICRO DETAILS ============ -->
+<!-- ============ GROOMING, OIL & POLISH ============ -->
 <section id="p-grooming" class="hide">
   <div class="card">
-    <p class="eyebrow"><span class="n">✨</span> head-to-toe micro details</p>
-    <h2>Grooming &amp; Polish Matrix</h2>
-    <p class="note" style="margin-bottom:12px">The micro-habits that build effortless magnetism and sharp presentation.</p>
-    <div id="chkGrooming"></div>
-  </div>
-
-  <div class="card">
-    <p class="eyebrow">weekly physical maintenance schedule</p>
-    <div class="statline"><span class="statk">Sunday</span><span class="statv">Dermaroll 0.5mm · Full body groom / legs · Scalp mask</span></div>
-    <div class="statline"><span class="statk">Tuesday (Tonight)</span><span class="statv">Ketoconazole shampoo · Lip scrub · Nail file &amp; cuticles · B12 repair</span></div>
-    <div class="statline"><span class="statk">Thursday</span><span class="statv">Ketoconazole shampoo · Glyco 12 body on neck/arms</span></div>
-    <div class="statline"><span class="statk">Saturday</span><span class="statv">Beard neckline sharp · Eyebrow stray cleanup · Lip scrub · Peel night</span></div>
-  </div>
-
-  <div class="card">
-    <p class="eyebrow">jaw balance &amp; posture rules</p>
-    <p class="note">
-      <b>50/50 Chewing:</b> Always chew equally on left and right sides to balance masseter muscle development.<br><br>
-      <b>Neckline Razor Line:</b> Shave neckline 2 fingers above Adam's apple in a gentle U-curve.<br><br>
-      <b>Nails:</b> Trim short, file edges, push cuticles back. Zero dirt or jagged edges.
+    <p class="eyebrow"><span class="n">💆‍♂️</span> scalp oiling &amp; health calendar</p>
+    <h2>Scalp Oiling Protocol (Sun &amp; Wed)</h2>
+    <p class="note" style="margin-bottom:10px">
+      <b>The Mix:</b> 3–4 drops Rosemary Essential Oil + 1 tsp Jojoba Oil + ½ tsp Castor Oil.<br>
+      <b>Schedule:</b> Sunday AM (2h pre-wash) &amp; Wednesday PM (overnight or 2h pre-wash).<br>
+      <b>Technique:</b> Warm between palms, massage scalp with fingertips for 5 minutes (stimulates dermal papilla microcirculation).
     </p>
+    <button class="btn sage" style="width:100%" id="btnLogHairOil">✓ Log Hair Oiling Completed</button>
+  </div>
+
+  <div class="card">
+    <p class="eyebrow"><span class="n">✨</span> daily &amp; recurring grooming tasks</p>
+    <h2>Grooming Action Matrix</h2>
+    <div id="groomingActionList"></div>
   </div>
 </section>
 
-<!-- ============ TIMED MEAL & PROTEIN SCHEDULE ============ -->
-<section id="p-meals" class="hide">
+<!-- ============ ONE-TIME & SPECIAL MILESTONES ============ -->
+<section id="p-milestones" class="hide">
   <div class="card">
-    <p class="eyebrow"><span class="n">timing</span> 170g protein milestone schedule</p>
-    <h2>Timed Meal Stack</h2>
-    <p class="note" style="margin-bottom:12px">Tap the action button at each scheduled milestone to automatically log your macros.</p>
-    
-    <div class="timeline-item">
-      <div class="tl-time">08:30 AM</div>
-      <div class="tl-body">
-        <div class="tl-title">Breakfast Power Oats + Milk + Creatine</div>
-        <div class="tl-sub">70g Oats + 250ml Milk + 5g Creatine + 2 tsp Flaxseed (17.3g P · 416 kcal)</div>
-        <div class="tl-act"><button class="btn sm primary" id="btnEatBreakfast">✓ Log Breakfast</button></div>
-      </div>
-    </div>
+    <p class="eyebrow"><span class="n">🎯</span> milestone events &amp; appointments</p>
+    <h2>Special Milestones (One-Time &amp; Bi-Weekly)</h2>
+    <p class="note" style="margin-bottom:12px">Track one-time appointments (dermatologist, haircuts, blood panels, progress photos).</p>
+    <div id="milestonesList"></div>
+  </div>
 
-    <div class="timeline-item">
-      <div class="tl-time">01:30 PM</div>
-      <div class="tl-body">
-        <div class="tl-title">Lunch Soya Chunks &amp; Base Diet</div>
-        <div class="tl-sub">80g Soya Chunks + 150g Rice + Dal + Curd (55.6g P · 677 kcal)</div>
-        <div class="tl-act"><button class="btn sm primary" id="btnEatLunch">✓ Log Lunch</button></div>
-      </div>
+  <div class="card">
+    <p class="eyebrow">add custom milestone</p>
+    <div class="frow">
+      <div style="flex:2"><label class="fl">Milestone Title</label><input id="newMileTitle" placeholder="e.g. Dermatologist Consultation"></div>
+      <div><label class="fl">Target Date</label><input id="newMileDate" type="date"></div>
     </div>
-
-    <div class="timeline-item">
-      <div class="tl-time">06:00 PM</div>
-      <div class="tl-body">
-        <div class="tl-title">Post-Workout Whey Isolate Hit</div>
-        <div class="tl-sub">1 Scoop Nakpro Whey in cold water (24.0g P · 160 kcal)</div>
-        <div class="tl-act"><button class="btn sm primary" id="btnEatWhey">✓ Log Whey</button></div>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="tl-time">08:30 PM</div>
-      <div class="tl-body">
-        <div class="tl-title">Dinner Whole Eggs / Chicken + Roti</div>
-        <div class="tl-sub">4 Whole Eggs (or 130g Chicken) + 2 Roti + 100g Curd (34.7g P · 556 kcal)</div>
-        <div class="tl-act"><button class="btn sm primary" id="btnEatDinner">✓ Log Dinner</button></div>
-      </div>
-    </div>
+    <button class="btn primary" style="width:100%" id="btnAddMilestone">+ Add Milestone</button>
   </div>
 </section>
 
@@ -588,9 +554,9 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
 
   <div class="card">
     <p class="eyebrow">last 14 days macro trends</p>
-    <h2 style="font-size:15px;margin-bottom:2px">Calories (2,000 Deficit Target)</h2>
+    <h2 style="font-size:14.5px;margin-bottom:2px">Calories (2,000 Deficit Target)</h2>
     <div id="chartKcal"></div>
-    <h2 style="font-size:15px;margin:16px 0 2px">Protein (170g Floor)</h2>
+    <h2 style="font-size:14.5px;margin:14px 0 2px">Protein (170g Floor)</h2>
     <div id="chartProt"></div>
   </div>
 </section>
@@ -603,13 +569,7 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
     <div class="table-wrap">
       <table class="data-tbl">
         <thead>
-          <tr>
-            <th>Source</th>
-            <th>Portion</th>
-            <th>Protein</th>
-            <th>Cost</th>
-            <th>₹ / g Prot</th>
-          </tr>
+          <tr><th>Source</th><th>Portion</th><th>Protein</th><th>Cost</th><th>₹ / g Prot</th></tr>
         </thead>
         <tbody id="protTbl">
           <tr><td><b>Soya Chunks</b></td><td>80g</td><td>41.6g</td><td>₹19.5</td><td><span class="tag-badge tag-best">₹0.47 / g</span></td></tr>
@@ -638,8 +598,8 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
     <div class="statline"><span class="statk">Last peel</span><span class="statv" id="peelLast">—</span></div>
     <div class="statline"><span class="statk">Next peel</span><span class="statv" id="peelNext">—</span></div>
     <div class="statline"><span class="statk">Days out</span><span class="statv" id="peelDays">—</span></div>
-    <button class="btn sm" style="margin-top:11px" id="peelDone">I peeled today</button>
-    <p class="note" style="margin-top:10px">Peel night: cleanser → peel (10 min) → thick B12. No minoxidil, no actives. Skip azelaic 2 nights after.</p>
+    <button class="btn sm" style="margin-top:10px" id="peelDone">I peeled today</button>
+    <p class="note" style="margin-top:8px">Peel night: cleanser → peel (10 min) → thick B12. No minoxidil, no actives. Skip azelaic 2 nights after.</p>
   </div>
 
   <div class="card">
@@ -661,7 +621,7 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
       <div><label class="fl">Sets</label><input id="liftSets" type="number" inputmode="numeric" placeholder="1" value="1"></div>
     </div>
     <button class="btn primary" style="width:100%" id="addLift">Log it</button>
-    <p class="note" style="margin-top:10px" id="liftHint">—</p>
+    <p class="note" style="margin-top:8px" id="liftHint">—</p>
   </div>
 
   <div class="card">
@@ -684,7 +644,7 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
       <div style="flex:0 0 auto;display:flex;align-items:flex-end"><button class="btn primary" id="addW">Save</button></div>
     </div>
     <div id="chartW"></div>
-    <p class="note" style="margin-top:10px" id="wNote">—</p>
+    <p class="note" style="margin-top:8px" id="wNote">—</p>
   </div>
 
   <div class="card">
@@ -695,7 +655,7 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
       <div><label class="fl">Arm cm</label><input id="mArm" type="number" inputmode="decimal" placeholder="—"></div>
     </div>
     <button class="btn primary" style="width:100%" id="addM">Save measurements</button>
-    <div style="margin-top:13px">
+    <div style="margin-top:10px">
       <div class="statline"><span class="statk">Shoulder : waist ratio</span><span class="statv" id="vtRatio">—</span></div>
       <div class="statline"><span class="statk">V-taper target</span><span class="statv">1.60</span></div>
     </div>
@@ -707,7 +667,7 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
   <div class="card">
     <p class="eyebrow"><span class="n">activity</span> 12-week consistency matrix</p>
     <h2>Never-Zero Momentum Grid</h2>
-    <p class="note" style="margin-bottom:12px">Missing one day does not reset your journey. Cumulative consistency compounds.</p>
+    <p class="note" style="margin-bottom:10px">Missing one day does not reset your journey. Cumulative consistency compounds.</p>
     <div class="heatmap-wrap">
       <div class="heatmap" id="heatmapGrid"></div>
     </div>
@@ -718,20 +678,8 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
   <div class="card">
     <p class="eyebrow">adhd resilience framework</p>
     <p class="note">
-      <b>The 2-Day Rule:</b> Never miss two days in a row. If life happens and you drop calories or skip gym one day, do not abandon the week. Complete the very next micro-task (even just 1 glass of water or 1 SPF application) to immediately restore momentum.
+      <b>The 2-Day Rule:</b> Never miss two days in a row. If life happens, do not abandon the week. Complete the very next micro-task (even just 1 glass of water or 1 SPF application) to immediately restore momentum.
     </p>
-  </div>
-</section>
-
-<!-- ============ GOALS ============ -->
-<section id="p-goals" class="hide">
-  <div class="card">
-    <p class="eyebrow"><span class="n">01</span> priority order</p>
-    <div class="goal g1"><div class="goalhead"><span class="goaltitle">Even out face vs body</span><span class="goalweeks" id="gw1">—</span></div><div class="prog"><i id="gp1" style="background:var(--turmeric);width:0"></i></div><p class="goalnote"><b>8–12 weeks.</b> SPF 50 morning + midday is 80% of it.</p></div>
-    <div class="goal g2"><div class="goalhead"><span class="goaltitle">Lighter lips</span><span class="goalweeks" id="gw2">—</span></div><div class="prog"><i id="gp2" style="background:var(--rose);width:0"></i></div><p class="goalnote"><b>6–8 weeks.</b> SPF lip balm + Tue/Sat scrub + nightly occlusive.</p></div>
-    <div class="goal g3"><div class="goalhead"><span class="goaltitle">Big back &amp; V-taper</span><span class="goalweeks" id="gw3">—</span></div><div class="prog"><i id="gp3" style="background:var(--indigo);width:0"></i></div><p class="goalnote"><b>3–6 months.</b> Shoulder:waist 1.60 goal. Core 4 accessories every session.</p></div>
-    <div class="goal g4"><div class="goalhead"><span class="goaltitle">Beard density</span><span class="goalweeks" id="gw4">—</span></div><div class="prog"><i id="gp4" style="background:var(--sage);width:0"></i></div><p class="goalnote"><b>3–6 months.</b> Tugain 5% + Dermaroll Sunday.</p></div>
-    <div class="goal g5"><div class="goalhead"><span class="goaltitle">Lean</span><span class="goalweeks" id="gw5">—</span></div><div class="prog"><i id="gp5" style="background:var(--vermilion);width:0"></i></div><p class="goalnote"><b>0.4–0.6 kg/week.</b> 2,000 kcal deficit.</p></div>
   </div>
 </section>
 
@@ -740,7 +688,7 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
   <div class="card">
     <p class="eyebrow"><span class="n">ai</span> export for llms &amp; local models</p>
     <h2>AI Model Dossier &amp; Cloud Sync</h2>
-    <p class="note" style="margin-bottom:14px">Export your logs, sleep, macros, and PRs formatted specifically for Claude, ChatGPT, Gemini, or local models.</p>
+    <p class="note" style="margin-bottom:12px">Export your logs, sleep, macros, and PRs formatted specifically for Claude, ChatGPT, Gemini, or local models.</p>
     
     <button class="btn sage" style="width:100%;margin-bottom:8px" id="btnExportAI">📄 Download AI Analysis Prompt (.md)</button>
     <button class="btn primary" style="width:100%;margin-bottom:8px" id="btnCopyAIPrompt">📋 Copy AI Prompt to Clipboard</button>
@@ -752,7 +700,7 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
     <p class="eyebrow">security &amp; lock</p>
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div>
-        <div style="font-weight:600;font-size:13px">Lock Session</div>
+        <div style="font-weight:600;font-size:12.5px">Lock Session</div>
         <div class="note">Password protection active (pass: laddu)</div>
       </div>
       <button class="btn sm" id="btnLockNow">Lock Now</button>
@@ -761,7 +709,7 @@ footer{text-align:center;padding:22px 0 8px;font-family:'JetBrains Mono',monospa
 
   <div class="card">
     <p class="eyebrow">ai context preview</p>
-    <pre id="aiPreview" class="mono" style="font-size:10.5px;color:var(--muted);max-height:260px;overflow-y:auto;white-space:pre-wrap;word-break:break-all"></pre>
+    <pre id="aiPreview" class="mono" style="font-size:10px;color:var(--muted);max-height:260px;overflow-y:auto;white-space:pre-wrap;word-break:break-all"></pre>
   </div>
 </section>
 
@@ -852,7 +800,7 @@ const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${Str
 const parse=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c);};
 const realToday = new Date();
 const REAL_TODAY = iso(realToday);
-let selectedDate = REAL_TODAY; // Current viewed date
+let selectedDate = REAL_TODAY;
 
 function daysBetween(a,b){return Math.round((parse(b)-parse(a))/864e5);}
 function shift(s,n){const d=parse(s);d.setDate(d.getDate()+n);return iso(d);}
@@ -860,7 +808,22 @@ const fmt=s=>{const d=parse(s);return `${d.getDate()} ${MON[d.getMonth()]}`;};
 
 /* ---------------- storage state ---------------- */
 const KEY='system-basith-v1';
-let S={days:{},weights:{},sleep:{},content:{},liveSleep:null,meas:[],peel:'2026-08-15',start:'2026-08-18'};
+let S={
+  days:{},
+  weights:{},
+  sleep:{},
+  content:{},
+  liveSleep:null,
+  meas:[],
+  milestones:[
+    { id:'m_derm', title:'Dermatologist Skin Assessment (12-Week Check)', date:'2026-09-15', done:false },
+    { id:'m_fade', title:'Beard & Hair Clean Taper Fade', date:'2026-08-22', done:false },
+    { id:'m_photo', title:'Fortnightly Progress Photos (Front/Side/Back)', date:'2026-08-29', done:false },
+    { id:'m_blood', title:'Complete Blood Panel (Vit D, B12, Test, Lipids)', date:'2026-10-01', done:false }
+  ],
+  peel:'2026-08-15',
+  start:'2026-08-18'
+};
 
 function updateSyncBadge(state, text){
   const badge = document.getElementById('syncStatus');
@@ -931,7 +894,7 @@ function save(eventMeta){
     }
     renderAIContextPreview();
     renderHeatmap();
-  },200);
+  },180);
 }
 
 function day(d){
@@ -969,19 +932,19 @@ const FOODS=[
 /* ---------------- skincare rotation ---------------- */
 const ROT=[
   {d:'Sun',active:'Kojic + Arbutin',short:'Kojic',color:'--indigo',
-   extra:'Dermaroll 0.5mm in the morning · no minoxidil today · gentle shampoo + mask · rest day, long walk'},
+   extra:'Dermaroll 0.5mm in the morning · no minoxidil today · Rosemary+Castor Scalp Oil pre-wash · Rest day walk'},
   {d:'Mon',active:'Aziderm 10% (azelaic)',short:'Azelaic',color:'--turmeric',
-   extra:'Minoxidil · niacinamide if skin is calm · castor oil on lashes'},
+   extra:'Minoxidil on beard · Niacinamide if calm · Castor oil on lashes · Push Day'},
   {d:'Tue',active:'Repair only — B12, nothing active',short:'Repair',color:'--muted',
-   extra:'Glyco 12 on neck/arms/hands · ketoconazole shampoo · lip scrub + balm · minoxidil · nails filed'},
+   extra:'Glyco 12 on neck/arms/hands · Ketoconazole shampoo · Nicole lip scrub · Minoxidil · Nails filed · Pull Day'},
   {d:'Wed',active:'Kojic + Arbutin',short:'Kojic',color:'--indigo',
-   extra:'Minoxidil · face symmetry 5 min · castor oil on lashes'},
+   extra:'Minoxidil on beard · Rosemary Scalp Oil 5m massage · 50/50 chewing check · Legs Day'},
   {d:'Thu',active:'Aziderm 10% (azelaic)',short:'Azelaic',color:'--turmeric',
-   extra:'Glyco 12 on neck/arms/hands · ketoconazole shampoo · minoxidil'},
+   extra:'Glyco 12 on neck/arms/hands · Ketoconazole shampoo · Minoxidil · Beard neckline razor line · Push Day'},
   {d:'Fri',active:'Repair only — B12, nothing active',short:'Repair',color:'--muted',
-   extra:'Minoxidil · face symmetry 5 min · castor oil on lashes'},
+   extra:'Minoxidil · Castor oil on lashes · Fitted fashion & clean scent · Pull Day'},
   {d:'Sat',active:'Minimalist Peel 30%',short:'PEEL',color:'--vermilion',
-   extra:'Peel night: cleanser then peel then thick B12 only · lip scrub · razor sharp neckline, nails, brows'}
+   extra:'Peel night: cleanser → peel (10 min) → thick B12 only. Nicole lip scrub · Razor sharp neckline & brows · Legs Day'}
 ];
 function isPeelDay(dstr){
   if(parse(dstr).getDay()!==6)return false;
@@ -994,7 +957,7 @@ function activeFor(dstr){
   if(dw===6){
     if(isPeelDay(dstr)){r.active='Minimalist Peel 30%';r.short='PEEL';r.color='--vermilion';}
     else{r.active='Aziderm 10% (azelaic)';r.short='Azelaic';r.color='--turmeric';
-         r.extra='Off-week Saturday: minoxidil is fine · lip scrub · stubble line-up, nails, brows';}
+         r.extra='Off-week Saturday: minoxidil is fine · Nicole lip scrub · Stubble line-up, nails, brows';}
   }
   const lastPeelGap=daysBetween(S.peel,dstr);
   if(r.short==='Azelaic'&&lastPeelGap>=0&&lastPeelGap<=2&&lastPeelGap!==0){
@@ -1004,36 +967,35 @@ function activeFor(dstr){
   return r;
 }
 
-/* ---------------- sequential adhd routine timeline ---------------- */
-const SEQUENTIAL_ROUTINE = [
-  { id:'rt_wake', time:'07:15 AM', title:'Wake Up & Tongue Scraping', sub:'Oral scrape + 500ml cold water + sunlight exposure', tag:'AM Foundation' },
-  { id:'rt_skin_am', time:'07:45 AM', title:'AM Skincare & SPF 50 Shield', sub:'AHA Glow facewash → Pilgrim Vit C → Minimalist B12 → Lakmé SPF 50 on face, neck, arms & hands → WishCare Lip Balm SPF 50', tag:'Skincare' },
-  { id:'rt_walk', time:'08:15 AM', title:'15-min Morning Sunlight Walk', sub:'Vitamin D synthesis, circadian timing, early 2,000 steps baseline', tag:'Circadian' },
-  { id:'rt_bfast', time:'08:45 AM', title:'Breakfast Power Oats & Creatine', sub:'70g Oats + 250ml Milk + 5g Creatine + 2 tsp Flaxseed (17.3g protein)', tag:'Nutrition' },
-  { id:'rt_spf_mid', time:'01:00 PM', title:'Midday SPF Reapply & 50/50 Chewing', sub:'Reapply Lakmé SPF 50. Chew lunch evenly on both left & right sides for jaw symmetry', tag:'Aesthetics' },
-  { id:'rt_lunch', time:'01:30 PM', title:'Lunch Soya Chunks Powerhouse', sub:'80g Soya Chunks + 150g Rice + Dal + Curd (55.6g protein hit)', tag:'Nutrition' },
-  { id:'rt_gym', time:'05:30 PM', title:'Gym PPL + Core 4 Non-Negotiables', sub:'Face pulls · Rear delts · Farmer carries · Dead hang 2×30s', tag:'Training' },
-  { id:'rt_whey', time:'06:45 PM', title:'Post-Workout Whey Isolate', sub:'1 Scoop Nakpro Whey in cold water (24g protein)', tag:'Nutrition' },
-  { id:'rt_content', time:'07:15 PM', title:'Content Deep Work Block (#basithladdu)', sub:'60 min dedicated creative production. Phone outside room.', tag:'Deep Work' },
-  { id:'rt_dinner', time:'08:45 PM', title:'Dinner Eggs/Chicken + Ashwagandha', sub:'4 Whole Eggs (or 130g Chicken) + 2 Roti + Ashwagandha 400mg with meal', tag:'Nutrition' },
-  { id:'rt_skin_pm', time:'10:00 PM', title:'Tonight\'s Active & Grooming Matrix', sub:'Cleanser → Tonight active → B12. Tugain 5% / Lip scrub / Nails as scheduled.', tag:'PM Glow' },
-  { id:'rt_sleep', time:'10:45 PM', title:'Phone Parked Outside & Sleep Mode', sub:'Park phone out of bedroom. Target: 7.5h–8.5h uninterrupted deep sleep.', tag:'Recovery' }
+/* ---------------- full daily action schedule ---------------- */
+const FULL_DAILY_SCHEDULE = [
+  { id:'t_wake', time:'07:15 AM', cat:'Morning Foundation', title:'Wake Up, Scrape Tongue & 500ml Water', sub:'Eliminates morning oral bacteria, activates digestive motility.', cta:'✓ Done' },
+  { id:'t_spf_am', time:'07:45 AM', cat:'Skincare', title:'AM Skincare + Lakmé SPF 50 Shield', sub:'AHA Glow facewash → Pilgrim Vit C → Minimalist B12 → Lakmé SPF 50 on face, neck, arms, hands → WishCare Lip Balm SPF 50.', cta:'✓ Applied SPF' },
+  { id:'t_walk', time:'08:15 AM', cat:'Circadian', title:'15-min Morning Sunlight Walk', sub:'Circadian cortisol spike, vitamin D synthesis, early 2,000 steps.', cta:'✓ Walked' },
+  { id:'t_bfast', time:'08:45 AM', cat:'Nutrition', title:'Breakfast Power Oats + Milk + Creatine 5g', sub:'70g Oats + 250ml Milk + 5g Creatine + 2 tsp Flaxseed (17.3g P · 416 kcal).', cta:'✓ Log Breakfast', macro:{n:'Oats+Milk+Creatine',k:416,p:17.3,c:59,f:11.3} },
+  { id:'t_spf_mid', time:'01:00 PM', cat:'Skincare', title:'Midday SPF Reapply', sub:'The single step responsible for 80% of closing the face-to-body tone gap.', cta:'✓ Reapplied SPF' },
+  { id:'t_lunch', time:'01:30 PM', cat:'Nutrition', title:'Lunch Soya Chunks + 50/50 Chewing', sub:'80g Soya Chunks + 150g Rice + Dal + Curd (55.6g P · 677 kcal). Chew evenly 50/50 on left and right for masseter symmetry.', cta:'✓ Log Lunch', macro:{n:'Soya Chunks+Rice+Dal',k:677,p:55.6,c:91,f:8.6} },
+  { id:'t_posture', time:'04:30 PM', cat:'Posture', title:'Posture & Height Decompression Drill', sub:'Wall chin tucks 3×15 · Doorway chest stretch 3×30s · Dead hang 2×30s (reclaims 1–3cm visible height).', cta:'✓ Decompressed' },
+  { id:'t_gym', time:'05:30 PM', cat:'Training', title:'Gym Workout + Core 4 Non-Negotiables', sub:'Push/Pull/Legs + Face pulls (3×15), Rear delt fly (3×15), Farmer carries (3×40m), Dead hangs (2×30s).', cta:'✓ Log Session' },
+  { id:'t_whey', time:'06:45 PM', cat:'Nutrition', title:'Post-Workout Nakpro Whey Isolate', sub:'1 Scoop Nakpro Whey in cold water (24.0g P · 160 kcal).', cta:'✓ Drank Whey', macro:{n:'Nakpro Whey Isolate',k:160,p:24.0,c:8,f:2.5} },
+  { id:'t_content', time:'07:15 PM', cat:'Deep Work', title:'Content Creation Block 60–90 min', sub:'Focused creative output for #basithladdu. Phone outside bedroom.', cta:'✓ Completed Deep Work' },
+  { id:'t_dinner', time:'08:45 PM', cat:'Nutrition', title:'Dinner Eggs/Chicken + Ashwagandha 400mg', sub:'4 Whole Eggs (or 130g Chicken) + 2 Roti + 100g Curd (34.7g P · 556 kcal). Ashwagandha with meal.', cta:'✓ Log Dinner', macro:{n:'4 Whole Eggs+Roti',k:556,p:34.7,c:44,f:26.7} },
+  { id:'t_pm_skin', time:'10:00 PM', cat:'PM Glow', title:'Tonight\'s Active + Beard Protocol + Lip Occlusive', sub:'Cleanser → Tonight active → B12. Tugain 5% Minoxidil on beard. Scrub on Tue/Sat, thick occlusive nightly.', cta:'✓ Done PM Routine' },
+  { id:'t_sleep', time:'10:45 PM', cat:'Recovery', title:'Phone Parked Outside & Sleep Mode', sub:'Park phone out of bedroom. Target 7.5h–8.5h uninterrupted deep sleep architecture.', cta:'🛌 Sleep Mode' }
 ];
 
-/* ---------------- grooming micro items ---------------- */
-const GROOMING_ITEMS=[
-  ['g_nails','Nails Cleaned, Trimmed & Filed','Cuticles pushed back, no jagged or dirty edges',1],
-  ['g_beard_neck','Sharp Beard Neckline','2 fingers above Adam\'s apple in crisp U-shape',1],
-  ['g_stubble','1–3mm Clean Groomed Stubble','Even trimming, cheeks lined up cleanly'],
-  ['g_brows','Eyebrow Unibrow & Stray Cleanup','Pluck bridge strays, brush arch upwards'],
-  ['g_bodyhair','Body Hair Grooming (Legs/Torso/Groin)','Neat, trimmed, hygienic; keep groin completely dry'],
-  ['g_scent','Signature Fragrance / Deodorant','Clean musk/wood notes, pulse points'],
-  ['g_teeth','Tongue Scraped & Flossed','Morning + night oral hygiene'],
-  ['g_fashion','Clean Ironed Minimalist Wardrobe','Fitted shoulder seam, clean footwear']
+/* ---------------- grooming action items ---------------- */
+const GROOMING_ACTIONS = [
+  { id:'ga_oil', freq:'Sunday & Wednesday', title:'Rosemary + Castor + Jojoba Scalp Oiling', sub:'5-min fingertip scalp massage before deep wash. Stimulates follicles and hair density.', cta:'✓ Done Oiling' },
+  { id:'ga_keto', freq:'Tuesday & Thursday', title:'Ketoconazole 2% Anti-Dandruff Shampoo', sub:'Scalp lather 5 min before rinse. Eliminates scalp yeast and stabilizes 5-alpha-reductase.', cta:'✓ Shampooed' },
+  { id:'ga_nails', freq:'Tuesday & Saturday', title:'Nail Trimming, Clean Cuticles & Filing', sub:'Keep short, neat, square-round filed, zero jagged edges.', cta:'✓ Nails Clean' },
+  { id:'ga_beard_line', freq:'Tue, Thu, Sat', title:'Sharp Beard Neckline Razor Line-Up', sub:'Shave 2 fingers above Adam\'s apple in crisp U-curve. Instantly frames square jaw.', cta:'✓ Lined Up' },
+  { id:'ga_derma', freq:'Sunday AM Only', title:'0.5mm Dermarolling on Beard Patch Areas', sub:'Disinfect roller, cross-hatch gentle roll. Wait 24 hours before applying minoxidil.', cta:'✓ Rolled' },
+  { id:'ga_lip_scrub', freq:'Tuesday & Saturday PM', title:'Nicole Lip Exfoliation Scrub', sub:'Gently buff away melanin-darkened dehydrated dead skin layer before thick balm.', cta:'✓ Lips Scrubbed' },
+  { id:'ga_glyco', freq:'Tuesday & Thursday PM', title:'Glyco 12 Body Acid (Neck, Arms & Hands)', sub:'AHA exfoliation to match body skin tone to facial tone. Do not apply to face.', cta:'✓ Applied Body' },
+  { id:'ga_fragrance', freq:'Daily AM', title:'Signature Fragrance & Pulse Points Scent', sub:'Clean wood/musk scent behind ears & wrists + clinical antiperspirant.', cta:'✓ Scent Ready' },
+  { id:'ga_bodyhair', freq:'Sunday', title:'Full Body & Leg Hair Hygiene Groom', sub:'Neat, trimmed, hygienic. Keep groin completely dry with antifungal powder.', cta:'✓ Groomed' }
 ];
-
-/* ---------------- lifts ---------------- */
-const LIFTS=['Bench press','Overhead press','Incline DB press','Squat','Deadlift','Romanian deadlift','Barbell row','Lat pulldown','Chest supported row','Leg press','Leg curl','Face pull','Rear delt fly','Lateral raise','Hammer curl','DB curl','Tricep pushdown','Farmer carry','Calf raise'];
 
 /* ---------------- helpers ---------------- */
 const $=s=>document.querySelector(s);
@@ -1044,7 +1006,7 @@ function totals(d){
   return day(d).food.reduce((a,f)=>({k:a.k+f.k,p:a.p+f.p,c:a.c+f.c,f:a.f+f.f}),{k:0,p:0,c:0,f:0});
 }
 
-/* ---------------- render: date navigator ---------------- */
+/* ---------------- date navigator ---------------- */
 function renderDateNav(){
   const d = parse(selectedDate);
   const dow = DAYS[d.getDay()];
@@ -1053,27 +1015,18 @@ function renderDateNav(){
   $('#btnJumpToday').style.opacity = isT ? '0.4' : '1';
 }
 
-$('#btnPrevDay').onclick = () => {
-  selectedDate = shift(selectedDate, -1);
-  renderAll();
-};
-$('#btnNextDay').onclick = () => {
-  selectedDate = shift(selectedDate, 1);
-  renderAll();
-};
-$('#btnJumpToday').onclick = () => {
-  selectedDate = REAL_TODAY;
-  renderAll();
-};
+$('#btnPrevDay').onclick = () => { selectedDate = shift(selectedDate, -1); renderAll(); };
+$('#btnNextDay').onclick = () => { selectedDate = shift(selectedDate, 1); renderAll(); };
+$('#btnJumpToday').onclick = () => { selectedDate = REAL_TODAY; renderAll(); };
 
-/* ---------------- render: ADHD Next Up & Timeline ---------------- */
-function renderRoutineFlow(){
+/* ---------------- render: ADHD Next Up & Today's Actions ---------------- */
+function renderTodayActions(){
   const dy = day(selectedDate);
   const tl = dy.timeline;
   
-  // Find next pending task
+  // Find immediate next pending task
   let nextTask = null;
-  for(const step of SEQUENTIAL_ROUTINE){
+  for(const step of FULL_DAILY_SCHEDULE){
     if(!tl[step.id]){
       nextTask = step;
       break;
@@ -1085,53 +1038,65 @@ function renderRoutineFlow(){
     nextCard.style.display = 'block';
     $('#nextUpTitle').textContent = `${nextTask.time} · ${nextTask.title}`;
     $('#nextUpSub').textContent = nextTask.sub;
+    $('#btnCompleteNext').textContent = `✓ Mark Done: ${nextTask.cta}`;
     $('#btnCompleteNext').onclick = () => {
-      tl[nextTask.id] = true;
-      playSuccessChime();
-      save({area:'routine',item:nextTask.id,exact_update:`Completed routine step: ${nextTask.title}`});
-      renderRoutineFlow();
-      renderTodayStats();
-      toast(`✓ ${nextTask.title}`);
+      executeTask(nextTask);
     };
   } else {
-    $('#nextUpTitle').textContent = '🎉 All Tasks Smashed Today!';
-    $('#nextUpSub').textContent = 'Full routine complete. Consistency locked in for today.';
+    $('#nextUpTitle').textContent = '🎉 All Smashed Today!';
+    $('#nextUpSub').textContent = 'Full daily action routine completed. Momentum preserved.';
     $('#btnCompleteNext').style.display = 'none';
   }
 
-  // Render chronological timeline
-  const container = $('#timelineContainer'); container.innerHTML = '';
-  let completedCount = 0;
-  SEQUENTIAL_ROUTINE.forEach(step=>{
-    const done = !!tl[step.id];
-    if(done) completedCount++;
-    const row = el('div','timeline-item'+(done?' chk on':''));
+  // Render task list
+  const container = $('#todayTaskList'); container.innerHTML = '';
+  let doneCount = 0;
+  FULL_DAILY_SCHEDULE.forEach(task=>{
+    const done = !!tl[task.id];
+    if(done) doneCount++;
+    const row = el('div','task-item'+(done?' done':''));
     row.innerHTML = `
-      <div class="tl-time">${step.time}</div>
-      <div class="tl-body">
-        <div class="tl-title" style="${done?'text-decoration:line-through;color:var(--muted)':''}">${step.title}</div>
-        <div class="tl-sub">${step.sub}</div>
+      <div class="task-left">
+        <div>
+          <div><span class="task-badge">${task.time}</span><span class="task-title">${task.title}</span></div>
+          <div class="task-sub">${task.sub}</div>
+        </div>
       </div>
-      <div class="box" style="margin-top:2px;cursor:pointer"></div>
+      <button class="task-btn">${done ? '✓ Completed' : task.cta}</button>
     `;
-    row.querySelector('.box').onclick = () => {
-      tl[step.id] = !tl[step.id];
-      if(tl[step.id]) playSuccessChime();
-      save({area:'routine',item:step.id,exact_update:`Routine ${step.title}: ${tl[step.id]?'done':'undone'}`});
-      renderRoutineFlow();
-      renderTodayStats();
+    row.querySelector('.task-btn').onclick = () => {
+      executeTask(task);
     };
     container.appendChild(row);
   });
 
-  $('#sFlowProgress').textContent = `${completedCount} / ${SEQUENTIAL_ROUTINE.length}`;
+  $('#sFlowProgress').textContent = `${doneCount} / ${FULL_DAILY_SCHEDULE.length}`;
+}
+
+function executeTask(task){
+  const tl = day(selectedDate).timeline;
+  tl[task.id] = !tl[task.id];
+  
+  if(tl[task.id]){
+    playSuccessChime();
+    // If task has macro attached, auto add to food log
+    if(task.macro){
+      day(selectedDate).food.push(task.macro);
+    }
+  }
+  
+  save({area:'task',item:task.id,exact_update:`Task ${task.title}: ${tl[task.id]?'done':'undone'}`});
+  renderTodayActions();
+  renderTodayStats();
+  renderFood();
+  toast(tl[task.id] ? `✓ Done: ${task.title}` : `Undone: ${task.title}`);
 }
 
 /* ---------------- render: today stats ---------------- */
 function renderTodayStats(){
   const t = totals(selectedDate);
   const pct = Math.min(1,t.k/KCAL);
-  const C = 2*Math.PI*40;
+  const C = 2*Math.PI*38;
   const ring = $('#ringKcal');
   ring.style.strokeDashoffset = C*(1-pct);
   ring.setAttribute('stroke',t.k>KCAL?'var(--vermilion)':'var(--turmeric)');
@@ -1177,16 +1142,104 @@ function renderTodayStats(){
   $('#stripNote').innerHTML = `<b>Active on ${fmt(selectedDate)}:</b> ${at.active}. ${at.extra}`;
 }
 
-/* ---------------- render: live sleep & manual sleep ---------------- */
+/* ---------------- render: master calendar 📅 ---------------- */
+function renderMasterCalendar(){
+  const container = $('#masterCalendarList'); container.innerHTML = '';
+  ROT.forEach((r, idx)=>{
+    const d = parse(shift(selectedDate, idx - parse(selectedDate).getDay()));
+    const item = el('div','card');
+    item.style.marginBottom = '8px';
+    item.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--turmeric)">${r.d}</span>
+        <span class="tag-badge" style="background:rgba(232,163,61,.2);color:var(--turmeric)">${r.short}</span>
+      </div>
+      <div style="font-size:12.5px;color:var(--paper);margin-bottom:4px"><b>Active:</b> ${r.active}</div>
+      <div class="note">${r.extra}</div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+/* ---------------- render: grooming & hair oiling ---------------- */
+$('#btnLogHairOil').onclick = () => {
+  day(selectedDate).grooming['ga_oil'] = true;
+  playSuccessChime();
+  save({area:'grooming',item:'hair-oil',exact_update:'Completed Rosemary + Castor Scalp Oiling & Massage'});
+  renderGroomingActions();
+  toast('✓ Scalp Oiling Logged');
+};
+
+function renderGroomingActions(){
+  const container = $('#groomingActionList'); container.innerHTML = '';
+  const gm = day(selectedDate).grooming;
+  GROOMING_ACTIONS.forEach(item=>{
+    const done = !!gm[item.id];
+    const row = el('div','task-item'+(done?' done':''));
+    row.innerHTML = `
+      <div class="task-left">
+        <div>
+          <div><span class="task-badge">${item.freq}</span><span class="task-title">${item.title}</span></div>
+          <div class="task-sub">${item.sub}</div>
+        </div>
+      </div>
+      <button class="task-btn">${done ? '✓ Done' : item.cta}</button>
+    `;
+    row.querySelector('.task-btn').onclick = () => {
+      gm[item.id] = !gm[item.id];
+      if(gm[item.id]) playSuccessChime();
+      save({area:'grooming',item:item.id,exact_update:`Grooming ${item.title}: ${gm[item.id]?'done':'undone'}`});
+      renderGroomingActions();
+      toast(gm[item.id] ? `✓ ${item.title}` : `Undone: ${item.title}`);
+    };
+    container.appendChild(row);
+  });
+}
+
+/* ---------------- render: milestones ---------------- */
+function renderMilestones(){
+  const container = $('#milestonesList'); container.innerHTML = '';
+  S.milestones.forEach((m, idx)=>{
+    const row = el('div','task-item'+(m.done?' done':''));
+    row.innerHTML = `
+      <div class="task-left">
+        <div>
+          <div><span class="task-badge">${fmt(m.date)}</span><span class="task-title">${m.title}</span></div>
+          <div class="task-sub">Target: ${m.date}</div>
+        </div>
+      </div>
+      <button class="task-btn">${m.done ? '✓ Completed' : 'Mark Done'}</button>
+    `;
+    row.querySelector('.task-btn').onclick = () => {
+      m.done = !m.done;
+      if(m.done) playSuccessChime();
+      save({area:'milestone',item:m.id,exact_update:`Milestone ${m.title}: ${m.done?'completed':'pending'}`});
+      renderMilestones();
+    };
+    container.appendChild(row);
+  });
+}
+
+$('#btnAddMilestone').onclick = () => {
+  const title = $('#newMileTitle').value.trim();
+  const date = $('#newMileDate').value;
+  if(!title || !date){ toast('Enter title and date'); return; }
+  S.milestones.push({ id:'m_'+Date.now(), title, date, done:false });
+  save({area:'milestone',item:'new-milestone',exact_update:`Added milestone ${title} for ${date}`});
+  $('#newMileTitle').value = '';
+  $('#newMileDate').value = '';
+  renderMilestones();
+  toast('Milestone added');
+};
+
+/* ---------------- live sleep stopwatch ---------------- */
 let liveSleepInt = null;
 function updateLiveSleepUI(){
   if(S.liveSleep){
     $('#sleepStopwatch').style.color = 'var(--sage)';
     $('#btnToggleSleep').textContent = '☀️ Good Morning, I\'m Awake!';
     $('#btnToggleSleep').className = 'btn sage';
-    if(!liveSleepInt){
-      liveSleepInt = setInterval(tickSleepStopwatch, 1000);
-    }
+    if(!liveSleepInt){ liveSleepInt = setInterval(tickSleepStopwatch, 1000); }
   } else {
     $('#sleepStopwatch').textContent = '00:00:00';
     $('#sleepStopwatch').style.color = 'var(--indigo)';
@@ -1206,13 +1259,11 @@ function tickSleepStopwatch(){
 
 $('#btnToggleSleep').onclick = () => {
   if(!S.liveSleep){
-    // Start sleep
     S.liveSleep = { startTime: Date.now(), bedDate: REAL_TODAY };
     save({area:'sleep',item:'sleep-start',exact_update:'Started bedtime sleep stopwatch'});
     updateLiveSleepUI();
     toast('Sleep timer started. Rest well.');
   } else {
-    // Stop sleep & calculate
     const durationHours = +((Date.now() - S.liveSleep.startTime)/(1000*3600)).toFixed(1);
     const bedTimeStr = new Date(S.liveSleep.startTime).toTimeString().slice(0,5);
     const wakeTimeStr = new Date().toTimeString().slice(0,5);
@@ -1255,7 +1306,7 @@ function renderSleepTab(){
   const W=520,H=110,pad=14,gap=4;
   const bw=(W-pad*2-gap*13)/14;
   let max=10;
-  let svg=`<svg class="chart" viewBox="0 0 ${W} ${H+22}" preserveAspectRatio="none" role="img" aria-label="Sleep last 14 days">`;
+  let svg=`<svg class="chart" viewBox="0 0 ${W} ${H+22}" preserveAspectRatio="none" role="img">`;
   const targetY = H - (7.5/max)*(H-16);
   svg+=`<line x1="${pad}" y1="${targetY}" x2="${W-pad}" y2="${targetY}" stroke="#8AA85F" stroke-width="1" stroke-dasharray="3 3" opacity=".8"/>`;
   let totalH = 0, loggedCount = 0;
@@ -1274,56 +1325,6 @@ function renderSleepTab(){
 
   const avgH = loggedCount ? (totalH/loggedCount).toFixed(1) : '—';
   $('#sleepAvgNote').innerHTML = `<b>${avgH} hrs/night average</b> across logged days. Target: 7.5h–8.5h recovery floor.`;
-}
-
-/* ---------------- render: timed meal milestones ---------------- */
-$('#btnEatBreakfast').onclick = () => {
-  day(selectedDate).food.push({n:'Power Oats 70g + Milk 250ml + Creatine 5g', k:416, p:17.3, c:59, f:11.3});
-  day(selectedDate).timeline['rt_bfast'] = true;
-  playSuccessChime();
-  save({area:'nutrition',item:'breakfast',value:17.3,unit:'g',exact_update:'Ate Oats + Milk + Creatine (17.3g P)'});
-  renderFood();renderTodayStats();renderRoutineFlow();toast('+ Breakfast logged');
-};
-$('#btnEatLunch').onclick = () => {
-  day(selectedDate).food.push({n:'Soya Chunks 80g + Rice 150g + Dal + Curd', k:677, p:55.6, c:91, f:8.6});
-  day(selectedDate).timeline['rt_lunch'] = true;
-  playSuccessChime();
-  save({area:'nutrition',item:'lunch',value:55.6,unit:'g',exact_update:'Ate Soya Chunks + Rice + Dal (55.6g P)'});
-  renderFood();renderTodayStats();renderRoutineFlow();toast('+ Lunch logged');
-};
-$('#btnEatWhey').onclick = () => {
-  day(selectedDate).food.push({n:'Nakpro Whey Isolate 1 Scoop', k:160, p:24.0, c:8, f:2.5});
-  day(selectedDate).timeline['rt_whey'] = true;
-  playSuccessChime();
-  save({area:'nutrition',item:'whey',value:24.0,unit:'g',exact_update:'Drank Whey Isolate (24g P)'});
-  renderFood();renderTodayStats();renderRoutineFlow();toast('+ Whey logged');
-};
-$('#btnEatDinner').onclick = () => {
-  day(selectedDate).food.push({n:'4 Whole Eggs + 2 Roti + 100g Curd', k:556, p:34.7, c:44, f:26.7});
-  day(selectedDate).timeline['rt_dinner'] = true;
-  playSuccessChime();
-  save({area:'nutrition',item:'dinner',value:34.7,unit:'g',exact_update:'Ate 4 Eggs + Roti (34.7g P)'});
-  renderFood();renderTodayStats();renderRoutineFlow();toast('+ Dinner logged');
-};
-
-/* ---------------- render: grooming tab ---------------- */
-function renderGrooming(){
-  const gm = day(selectedDate).grooming;
-  const mount = $('#chkGrooming'); mount.innerHTML = '';
-  GROOMING_ITEMS.forEach(([k,lbl,sub,key])=>{
-    const row=el('div','chk'+(gm[k]?' on':'')+(key?' key':''));
-    row.setAttribute('role','button');row.tabIndex=0;
-    row.innerHTML=`<span class="box"></span><span><span class="lbl">${lbl}</span>${sub?`<span class="sub" style="display:block">${sub}</span>`:''}</span>`;
-    const go=()=>{
-      gm[k]=!gm[k];
-      if(gm[k]) playSuccessChime();
-      save({area:'grooming',item:k,exact_update:`Grooming ${lbl}: ${gm[k]?'done':'undone'}`});
-      renderGrooming();
-    };
-    row.onclick=go;
-    row.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();go();}};
-    mount.appendChild(row);
-  });
 }
 
 /* ---------------- render: content timer ---------------- */
@@ -1364,12 +1365,12 @@ $('#btnLogContent').onclick = () => {
   const topic = $('#cntTopic').value.trim() || 'General content output';
   const mins = +$('#cntMins').value || 60;
   S.content[selectedDate] = { topic, mins, date: selectedDate };
-  day(selectedDate).timeline['rt_content'] = true;
+  day(selectedDate).timeline['t_content'] = true;
   playSuccessChime();
   save({area:'content',item:'content-block',value:mins,unit:'min',exact_update:`Completed ${mins}m content: ${topic}`});
   $('#cntTopic').value = '';
   renderContentTab();
-  renderRoutineFlow();
+  renderTodayActions();
   toast(`Logged ${mins}m for #basithladdu`);
 };
 
@@ -1391,7 +1392,6 @@ function renderHeatmap(){
   const grid = $('#heatmapGrid'); if(!grid) return;
   grid.innerHTML = '';
   
-  // 12 weeks = 84 days
   const days = [];
   for(let i=83; i>=0; i--){
     days.push(shift(REAL_TODAY, -i));
@@ -1618,7 +1618,7 @@ function renderLifts(){
   });
 }
 
-/* ---------------- render: body & goals ---------------- */
+/* ---------------- render: body ---------------- */
 function renderBody(){
   drawWeight();
   const ms=S.meas;
@@ -1630,14 +1630,6 @@ function renderBody(){
       $('#vtRatio').style.color=r>=1.6?'var(--sage)':'var(--paper)';
     }
   }
-}
-function renderGoals(){
-  const wk=Math.max(0,Math.floor(daysBetween(S.start,REAL_TODAY)/7));
-  const set=(n,weeks,target)=>{
-    $('#gw'+n).textContent=`week ${wk} / ${target}`;
-    $('#gp'+n).style.width=Math.min(100,(wk/target)*100)+'%';
-  };
-  set(1,wk,12); set(2,wk,24); set(3,wk,24); set(4,wk,48); set(5,wk,16);
 }
 
 /* ---------------- AI prompt dossier ---------------- */
@@ -1674,7 +1666,11 @@ function generateAIMarkdown(){
   md += `- **Peel Cycle Status:** Last Peel: ${S.peel} | Next Peel: ${nextPeel()}\n\n`;
 
   md += `## 2. Weight Trajectory\n`;
-  md += `\`\`\`json\n` + JSON.stringify(S.weights, null, 2) + `\n\`\`\`\n\n`;
+  if(wKeys.length){
+    md += `\`\`\`json\n` + JSON.stringify(S.weights, null, 2) + `\n\`\`\`\n\n`;
+  } else {
+    md += `*No weight entries logged yet.*\n\n`;
+  }
 
   md += `## 3. Sleep & Deep Work\n`;
   md += `\`\`\`json\n` + JSON.stringify({ sleep: S.sleep, content: S.content }, null, 2) + `\n\`\`\`\n\n`;
@@ -1719,7 +1715,7 @@ $('#btnExportJSONL').onclick=()=>{
       events.push({
         schema:'glowup-event-v1',date:d,time:null,source:'client',area:'nutrition',
         item:f.n,status:'done',value:f.p,unit:'g',
-        exact_update:`Ate ${f.n}`,notes:`${f.k}kcal, ${f.p}p, ${f.c}c, ${f.f}f`
+        exact_update:`Ate ${f.n}`,notes:`${f.k}kcal, ${f.p}p, ${c}c, ${f.f}f`
       });
     });
     (dy.lifts||[]).forEach(l=>{
@@ -1790,23 +1786,24 @@ $('#peelDone').onclick=()=>{
   renderSkin();renderTodayStats();toast('Peel logged · next in 14 days');
 };
 
-/* ---------------- tabs ---------------- */
+/* ---------------- tab router ---------------- */
 document.querySelectorAll('.tab').forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
     b.setAttribute('aria-selected','true');
-    ['today','content','sleep','grooming','meals','food','protein','skin','lifts','body','momentum','goals','sync'].forEach(t=>$('#p-'+t).classList.add('hide'));
+    ['today','calendar','content','sleep','grooming','milestones','food','protein','skin','lifts','body','momentum','sync'].forEach(t=>$('#p-'+t).classList.add('hide'));
     $('#p-'+b.dataset.tab).classList.remove('hide');
     window.scrollTo({top:0,behavior:'instant'});
     if(b.dataset.tab==='food')renderFood();
+    if(b.dataset.tab==='calendar')renderMasterCalendar();
     if(b.dataset.tab==='skin')renderSkin();
-    if(b.dataset.tab==='grooming')renderGrooming();
+    if(b.dataset.tab==='grooming')renderGroomingActions();
+    if(b.dataset.tab==='milestones')renderMilestones();
     if(b.dataset.tab==='content')renderContentTab();
     if(b.dataset.tab==='sleep')renderSleepTab();
     if(b.dataset.tab==='lifts')renderLifts();
     if(b.dataset.tab==='body')renderBody();
     if(b.dataset.tab==='momentum')renderHeatmap();
-    if(b.dataset.tab==='goals')renderGoals();
     if(b.dataset.tab==='sync')renderAIContextPreview();
   };
 });
@@ -1814,9 +1811,11 @@ document.querySelectorAll('.tab').forEach(b=>{
 function renderAll(){
   renderDateNav();
   renderTodayStats();
-  renderRoutineFlow();
+  renderTodayActions();
   renderFood();
-  renderGrooming();
+  renderGroomingActions();
+  renderMilestones();
+  renderMasterCalendar();
   renderHeatmap();
 }
 
