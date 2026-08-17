@@ -188,6 +188,23 @@ h2{font-family:'Fraunces',serif;font-size:18px;font-weight:600;letter-spacing:-.
 .task-btn:active{transform:scale(.95)}
 .task-item.done .task-btn{background:var(--sage);color:#1A1206;border-color:var(--sage)}
 
+/* ---------- combo stack cards ---------- */
+.combo-card{
+  background:var(--surface2);border:1px solid var(--line2);border-radius:10px;
+  padding:12px;margin-bottom:10px;transition:.12s;
+}
+.combo-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:4px}
+.combo-name{font-size:13.5px;font-weight:700;color:var(--paper)}
+.combo-cost{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sage);font-weight:700}
+.combo-desc{font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.4}
+.combo-macros{display:flex;gap:10px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--paper);margin-bottom:8px}
+.combo-btn{
+  background:var(--turmeric);color:#1A1206;border:0;border-radius:7px;
+  font-family:'Instrument Sans',sans-serif;font-weight:700;font-size:12px;
+  padding:8px 12px;width:100%;cursor:pointer;transition:.12s;display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.combo-btn:active{transform:scale(.98)}
+
 /* ---------- buttons & inputs ---------- */
 button{font-family:inherit}
 .btn{
@@ -336,12 +353,12 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
 <nav>
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" aria-selected="true" data-tab="today">Today &amp; Flow</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="food">Food &amp; Stacks 🥪</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="calendar">Master Calendar 📅</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="content">Content ⚡</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="sleep">Sleep 🌙</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="grooming">Grooming &amp; Oil</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="milestones">Milestones</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="food">Food Bank</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="protein">Protein ₹/g</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="skin">Skin &amp; Peel</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="lifts">Lifts</button>
@@ -405,6 +422,78 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
   <div class="card">
     <p class="eyebrow"><span class="n">tasks</span> today's action checklist</p>
     <div id="todayTaskList"></div>
+  </div>
+</section>
+
+<!-- ============ FOOD & MEAL STACKS ============ -->
+<section id="p-food" class="hide">
+  <!-- 4 SWAPPABLE PRESET COMBOS -->
+  <div class="card">
+    <p class="eyebrow"><span class="n">stacks</span> 4 price &amp; gram balanced combos</p>
+    <h2>1-Tap Daily Recipe Stacks (~172g Protein)</h2>
+    <p class="note" style="margin-bottom:12px">Different day, different budget? Swap your entire daily nutrition stack in one tap.</p>
+    <div id="presetCombosList"></div>
+  </div>
+
+  <!-- DYNAMIC LIVE RECIPE & PRICE BALANCER -->
+  <div class="card">
+    <p class="eyebrow"><span class="n">calc</span> live recipe &amp; price balancer</p>
+    <h2>Custom Recipe Gram Balancer</h2>
+    <p class="note" style="margin-bottom:12px">Dial in grams of soya, eggs, chicken, curd &amp; milk. Live protein, calorie, and rupee breakdown.</p>
+    
+    <div class="frow">
+      <div><label class="fl">Soya Chunks (g)</label><input id="bSoya" type="number" value="80" step="10"></div>
+      <div><label class="fl">Whole Eggs</label><input id="bEggs" type="number" value="4" step="1"></div>
+      <div><label class="fl">Chicken (g)</label><input id="bChk" type="number" value="0" step="10"></div>
+    </div>
+    <div class="frow">
+      <div><label class="fl">Milk / Curd (ml)</label><input id="bDairy" type="number" value="350" step="50"></div>
+      <div><label class="fl">Paneer (g)</label><input id="bPan" type="number" value="0" step="10"></div>
+      <div><label class="fl">Whey Scoops</label><input id="bWhey" type="number" value="1" step="1"></div>
+    </div>
+    
+    <div class="card" style="background:var(--surface2);border-color:var(--line2);margin:8px 0 10px;padding:10px">
+      <div class="statline"><span class="statk">Total Protein</span><span class="statv" id="bTotProt" style="color:var(--sage)">0g</span></div>
+      <div class="statline"><span class="statk">Total Calories</span><span class="statv" id="bTotKcal">0 kcal</span></div>
+      <div class="statline"><span class="statk">Estimated Daily Cost</span><span class="statv" id="bTotCost" style="color:var(--turmeric)">₹0 / day</span></div>
+    </div>
+    <button class="btn primary" style="width:100%" id="btnApplyBalancer">✓ Log This Balanced Stack Today</button>
+  </div>
+
+  <!-- STAPLES QUICK ADDER -->
+  <div class="card">
+    <p class="eyebrow"><span class="n">tap</span> individual staple adder</p>
+    <div class="foods" id="foodBank"></div>
+  </div>
+
+  <!-- CUSTOM FOOD ENTRY -->
+  <div class="card">
+    <p class="eyebrow">custom food entry</p>
+    <div class="frow">
+      <div style="flex:2"><label class="fl">Food</label><input id="cName" placeholder="name" autocomplete="off"></div>
+      <div><label class="fl">Kcal</label><input id="cKcal" type="number" inputmode="numeric" placeholder="0"></div>
+    </div>
+    <div class="frow">
+      <div><label class="fl">Protein</label><input id="cP" type="number" inputmode="decimal" placeholder="0"></div>
+      <div><label class="fl">Carbs</label><input id="cC" type="number" inputmode="decimal" placeholder="0"></div>
+      <div><label class="fl">Fat</label><input id="cF" type="number" inputmode="decimal" placeholder="0"></div>
+    </div>
+    <button class="btn primary" style="width:100%" id="addCustom">Add to selected date</button>
+  </div>
+
+  <!-- LOGGED FOODS -->
+  <div class="card">
+    <p class="eyebrow">eaten on selected date</p>
+    <div id="logList"></div>
+  </div>
+
+  <!-- 14-DAY MACRO TRENDS -->
+  <div class="card">
+    <p class="eyebrow">last 14 days macro trends</p>
+    <h2 style="font-size:14.5px;margin-bottom:2px">Calories (2,000 Deficit Target)</h2>
+    <div id="chartKcal"></div>
+    <h2 style="font-size:14.5px;margin:14px 0 2px">Protein (170g Floor)</h2>
+    <div id="chartProt"></div>
   </div>
 </section>
 
@@ -514,41 +603,6 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
       <div><label class="fl">Target Date</label><input id="newMileDate" type="date"></div>
     </div>
     <button class="btn primary" style="width:100%" id="btnAddMilestone">+ Add Milestone</button>
-  </div>
-</section>
-
-<!-- ============ FOOD BANK ============ -->
-<section id="p-food" class="hide">
-  <div class="card">
-    <p class="eyebrow"><span class="n">tap</span> staple quick adder</p>
-    <div class="foods" id="foodBank"></div>
-  </div>
-
-  <div class="card">
-    <p class="eyebrow">custom food entry</p>
-    <div class="frow">
-      <div style="flex:2"><label class="fl">Food</label><input id="cName" placeholder="name" autocomplete="off"></div>
-      <div><label class="fl">Kcal</label><input id="cKcal" type="number" inputmode="numeric" placeholder="0"></div>
-    </div>
-    <div class="frow">
-      <div><label class="fl">Protein</label><input id="cP" type="number" inputmode="decimal" placeholder="0"></div>
-      <div><label class="fl">Carbs</label><input id="cC" type="number" inputmode="decimal" placeholder="0"></div>
-      <div><label class="fl">Fat</label><input id="cF" type="number" inputmode="decimal" placeholder="0"></div>
-    </div>
-    <button class="btn primary" style="width:100%" id="addCustom">Add to selected date</button>
-  </div>
-
-  <div class="card">
-    <p class="eyebrow">eaten on selected date</p>
-    <div id="logList"></div>
-  </div>
-
-  <div class="card">
-    <p class="eyebrow">last 14 days macro trends</p>
-    <h2 style="font-size:14.5px;margin-bottom:2px">Calories (2,000 Deficit Target)</h2>
-    <div id="chartKcal"></div>
-    <h2 style="font-size:14.5px;margin:14px 0 2px">Protein (170g Floor)</h2>
-    <div id="chartProt"></div>
   </div>
 </section>
 
@@ -811,6 +865,66 @@ const LIFTS = [
   'Incline Bicep Curl',
   'Overhead Tricep Extension',
   'Farmer Carries'
+];
+
+/* ---------------- 4 preset swappable meal combos ---------------- */
+const MEAL_COMBOS = [
+  {
+    id: 'combo_std',
+    name: 'Stack A: Standard Omnivore (Balanced ₹185)',
+    cost: 185,
+    prot: 172,
+    kcal: 2009,
+    desc: 'Oats 70g + Milk 250ml + Soya 80g + 4 Eggs + 1 Scoop Whey + Rice + Dal + Curd',
+    foods: [
+      { n:'Oats 70g + Milk 250ml', k:416, p:17.3, c:59, f:11.3 },
+      { n:'Soya Chunks 80g + Rice + Dal + Curd', k:677, p:55.6, c:91, f:8.6 },
+      { n:'Nakpro Whey Isolate 1 Scoop', k:160, p:24.0, c:8, f:2.5 },
+      { n:'4 Whole Eggs + 2 Roti', k:556, p:34.7, c:44, f:26.7 }
+    ]
+  },
+  {
+    id: 'combo_veg',
+    name: 'Stack B: Ultra-Budget Pure-Veg (₹135 No Meat/Egg)',
+    cost: 135,
+    prot: 173,
+    kcal: 1980,
+    desc: 'High Soya 100g + Curd 300g + Heritage Paneer 100g + 1 Scoop Whey + Oats 80g + Dal',
+    foods: [
+      { n:'Oats 80g + Milk 250ml', k:440, p:18.5, c:64, f:11.8 },
+      { n:'Soya Chunks 100g + Rice + Dal + Curd 200g', k:760, p:68.0, c:96, f:9.2 },
+      { n:'Nakpro Whey Isolate 1 Scoop', k:160, p:24.0, c:8, f:2.5 },
+      { n:'Heritage Paneer 100g + 2 Roti + Curd 100g', k:620, p:62.5, c:44, f:24.0 }
+    ]
+  },
+  {
+    id: 'combo_egg',
+    name: 'Stack C: High-Egg & Dairy (₹180 Soya-Reset)',
+    cost: 180,
+    prot: 174,
+    kcal: 2040,
+    desc: '6 Whole Eggs + Paneer 150g + Curd 200g + Milk 300ml + Whey 1 Scoop + Oats 70g (0g Soya Chunks)',
+    foods: [
+      { n:'Oats 70g + Milk 300ml + 2 Boiled Eggs', k:560, p:22.5, c:63, f:20.5 },
+      { n:'4 Whole Eggs Curry + Rice + Dal + Curd', k:720, p:42.0, c:68, f:30.0 },
+      { n:'Nakpro Whey Isolate 1 Scoop', k:160, p:24.0, c:8, f:2.5 },
+      { n:'Heritage Paneer 150g + 2 Roti + Salad', k:600, p:45.0, c:44, f:26.0 }
+    ]
+  },
+  {
+    id: 'combo_chk',
+    name: 'Stack D: Fresh Chicken Feast (₹220 Lean Meat)',
+    cost: 220,
+    prot: 174,
+    kcal: 1950,
+    desc: 'Fresh Chicken Breast 260g + 2 Whole Eggs + Milk 250ml + Whey 1 Scoop + Oats 70g + Rice',
+    foods: [
+      { n:'Oats 70g + Milk 250ml + Creatine', k:416, p:17.3, c:59, f:11.3 },
+      { n:'Chicken Breast 130g + Rice + Salad', k:338, p:34.0, c:43, f:2.5 },
+      { n:'Nakpro Whey Isolate 1 Scoop', k:160, p:24.0, c:8, f:2.5 },
+      { n:'Chicken Breast 130g + 2 Whole Eggs + 2 Roti', k:636, p:58.7, c:41, f:13.7 }
+    ]
+  }
 ];
 
 /* ---------------- storage state ---------------- */
@@ -1444,6 +1558,117 @@ function renderHeatmap(){
   $('#totalActionsCount').textContent = `${totalActions} items`;
 }
 
+/* ---------------- render: 4 preset combos & balancer ---------------- */
+function renderPresetCombos(){
+  const container = $('#presetCombosList');
+  if(!container) return;
+  container.innerHTML = '';
+  
+  MEAL_COMBOS.forEach(combo => {
+    const card = el('div','combo-card');
+    card.innerHTML = `
+      <div class="combo-head">
+        <span class="combo-name">${combo.name}</span>
+        <span class="combo-cost">₹${combo.cost} / day</span>
+      </div>
+      <div class="combo-desc">${combo.desc}</div>
+      <div class="combo-macros">
+        <span style="color:var(--indigo)"><b>${combo.prot}g</b> Protein</span>
+        <span style="color:var(--sage)"><b>${combo.kcal}</b> Kcal</span>
+      </div>
+      <button class="combo-btn">✓ Load &amp; Log This Combo</button>
+    `;
+    card.querySelector('.combo-btn').onclick = () => {
+      // Append all items in combo to today's food log
+      combo.foods.forEach(f => {
+        day(selectedDate).food.push(f);
+      });
+      playSuccessChime();
+      save({area:'nutrition',item:combo.id,exact_update:`Loaded full combo: ${combo.name}`,notes:`${combo.prot}g P, ${combo.kcal}kcal, ₹${combo.cost}`});
+      renderFood();
+      renderTodayStats();
+      toast(`✓ Loaded ${combo.name}`);
+    };
+    container.appendChild(card);
+  });
+}
+
+function updateBalancerCalc(){
+  const soya = +$('#bSoya').value || 0;
+  const eggs = +$('#bEggs').value || 0;
+  const chk = +$('#bChk').value || 0;
+  const dairy = +$('#bDairy').value || 0;
+  const pan = +$('#bPan').value || 0;
+  const whey = +$('#bWhey').value || 0;
+
+  // Base carbs/rice/dal/oats staple floor
+  let prot = 35.0, kcal = 750, cost = 30; // base rice, dal, oats, flaxseed
+
+  // Soya: 52% protein, ~3.45 kcal/g, ₹19.5 per 80g (₹0.244/g)
+  prot += (soya * 0.52);
+  kcal += (soya * 3.45);
+  cost += (soya * 0.244);
+
+  // Eggs: 6.3g P, 72 kcal, ₹7.5 each
+  prot += (eggs * 6.3);
+  kcal += (eggs * 72);
+  cost += (eggs * 7.5);
+
+  // Chicken: 23% protein, ~1.1 kcal/g, ₹300/kg (₹0.30/g)
+  prot += (chk * 0.23);
+  kcal += (chk * 1.1);
+  cost += (chk * 0.30);
+
+  // Dairy (Milk/Curd): 3.5% protein, 0.6 kcal/ml, ₹70/L (₹0.07/ml)
+  prot += (dairy * 0.035);
+  kcal += (dairy * 0.60);
+  cost += (dairy * 0.07);
+
+  // Paneer: 25% protein, 1.8 kcal/g, ₹130/240g (₹0.54/g)
+  prot += (pan * 0.25);
+  kcal += (pan * 1.8);
+  cost += (pan * 0.54);
+
+  // Whey: 24g protein, 160 kcal, ₹56 per scoop
+  prot += (whey * 24.0);
+  kcal += (whey * 160);
+  cost += (whey * 56.0);
+
+  $('#bTotProt').textContent = `${prot.toFixed(1)}g / 170g Floor`;
+  $('#bTotProt').style.color = prot >= 170 ? 'var(--sage)' : 'var(--vermilion)';
+  $('#bTotKcal').textContent = `${Math.round(kcal)} kcal (${2000 - Math.round(kcal) > 0 ? 'Deficit' : 'Surplus'})`;
+  $('#bTotCost').textContent = `₹${Math.round(cost)} / day`;
+}
+
+['#bSoya','#bEggs','#bChk','#bDairy','#bPan','#bWhey'].forEach(id => {
+  const elInput = $(id);
+  if(elInput) elInput.oninput = updateBalancerCalc;
+});
+
+$('#btnApplyBalancer').onclick = () => {
+  const soya = +$('#bSoya').value || 0;
+  const eggs = +$('#bEggs').value || 0;
+  const chk = +$('#bChk').value || 0;
+  const dairy = +$('#bDairy').value || 0;
+  const pan = +$('#bPan').value || 0;
+  const whey = +$('#bWhey').value || 0;
+
+  // Base staples
+  day(selectedDate).food.push({ n:'Base Oats 70g + Rice 150g + Dal', k:577, p:20.3, c:110, f:5.6 });
+  if(soya > 0) day(selectedDate).food.push({ n:`Soya Chunks ${soya}g`, k:Math.round(soya*3.45), p:+(soya*0.52).toFixed(1), c:Math.round(soya*0.33), f:1 });
+  if(eggs > 0) day(selectedDate).food.push({ n:`${eggs} Whole Eggs`, k:eggs*72, p:+(eggs*6.3).toFixed(1), c:eggs*0.4, f:eggs*4.8 });
+  if(chk > 0) day(selectedDate).food.push({ n:`Chicken Breast ${chk}g`, k:Math.round(chk*1.1), p:+(chk*0.23).toFixed(1), c:0, f:Math.round(chk*0.02) });
+  if(dairy > 0) day(selectedDate).food.push({ n:`Milk/Curd ${dairy}ml`, k:Math.round(dairy*0.6), p:+(dairy*0.035).toFixed(1), c:Math.round(dairy*0.04), f:Math.round(dairy*0.035) });
+  if(pan > 0) day(selectedDate).food.push({ n:`Heritage Paneer ${pan}g`, k:Math.round(pan*1.8), p:+(pan*0.25).toFixed(1), c:Math.round(pan*0.03), f:Math.round(pan*0.09) });
+  if(whey > 0) day(selectedDate).food.push({ n:`Whey ${whey} Scoop`, k:whey*160, p:whey*24, c:whey*8, f:whey*2.5 });
+
+  playSuccessChime();
+  save({area:'nutrition',item:'custom-balancer',exact_update:'Loaded custom balanced nutrition stack'});
+  renderFood();
+  renderTodayStats();
+  toast('✓ Balanced stack loaded & synced');
+};
+
 /* ---------------- render: food bank & charts ---------------- */
 function renderFoodBank(){
   const b=$('#foodBank');b.innerHTML='';
@@ -1458,7 +1683,10 @@ function renderFoodBank(){
     b.appendChild(el2);
   });
 }
+
 function renderFood(){
+  renderPresetCombos();
+  updateBalancerCalc();
   const list=$('#logList');list.innerHTML='';
   const f=day(selectedDate).food;
   if(!f.length){list.appendChild(el('div','empty','Nothing logged on this date.'));}
@@ -1807,7 +2035,7 @@ document.querySelectorAll('.tab').forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
     b.setAttribute('aria-selected','true');
-    ['today','calendar','content','sleep','grooming','milestones','food','protein','skin','lifts','body','momentum','sync'].forEach(t=>$('#p-'+t).classList.add('hide'));
+    ['today','food','calendar','content','sleep','grooming','milestones','protein','skin','lifts','body','momentum','sync'].forEach(t=>$('#p-'+t).classList.add('hide'));
     $('#p-'+b.dataset.tab).classList.remove('hide');
     window.scrollTo({top:0,behavior:'instant'});
     if(b.dataset.tab==='food')renderFood();
