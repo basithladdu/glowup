@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --ink:#14110F;
@@ -54,10 +55,15 @@ h1 em{font-style:italic;color:var(--turmeric)}
 .datechip b{color:var(--paper);display:block;font-weight:700}
 .subline{
   margin-top:9px;font-family:'JetBrains Mono',monospace;
-  font-size:11px;color:var(--muted);letter-spacing:.01em;
+  font-size:11px;color:var(--muted);letter-spacing:.01em;display:flex;align-items:center;justify-content:space-between;
 }
 .subline b{color:var(--paper)}
 .subline .sep{opacity:.35;padding:0 5px}
+.sync-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;padding:2px 7px;border-radius:12px;background:var(--surface2);border:.5px solid var(--line2);cursor:pointer}
+.sync-badge.online{color:var(--sage)}
+.sync-badge.syncing{color:var(--turmeric)}
+.sync-badge.offline{color:var(--vermilion)}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
 
 /* ---------- tabs ---------- */
 nav{
@@ -152,18 +158,19 @@ h2{font-family:'Fraunces',serif;font-size:19px;font-weight:600;letter-spacing:-.
 button{font-family:inherit}
 .btn{
   background:var(--surface2);border:.5px solid var(--line2);border-radius:9px;
-  color:var(--paper);font-size:12.5px;padding:9px 13px;cursor:pointer;transition:.14s;
+  color:var(--paper);font-size:12.5px;padding:9px 13px;cursor:pointer;transition:.14s;display:inline-flex;align-items:center;justify-content:center;gap:6px;
 }
 .btn:active{transform:scale(.97)}
 .btn.primary{background:var(--turmeric);border-color:var(--turmeric);color:#1A1206;font-weight:600}
+.btn.sage{background:var(--sage);border-color:var(--sage);color:#1A1206;font-weight:600}
 .btn.ghost{background:none}
 .btn.sm{padding:6px 10px;font-size:11.5px;border-radius:7px}
-input,select{
+input,select,textarea{
   background:var(--surface2);border:.5px solid var(--line2);border-radius:9px;
   color:var(--paper);font-family:'JetBrains Mono',monospace;font-size:14px;
   padding:9px 11px;width:100%;
 }
-input:focus,select:focus,button:focus-visible,.chk:focus-visible{outline:2px solid var(--turmeric);outline-offset:2px}
+input:focus,select:focus,textarea:focus,button:focus-visible,.chk:focus-visible{outline:2px solid var(--turmeric);outline-offset:2px}
 label.fl{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
 .frow{display:flex;gap:7px;margin-bottom:9px}
 .frow>div{flex:1;min-width:0}
@@ -212,7 +219,7 @@ label.fl{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;le
 .up{color:var(--sage)}
 .same{color:var(--muted)}
 
-/* ---------- protein calculator & cost table ---------- */
+/* ---------- tables ---------- */
 .table-wrap{overflow-x:auto;margin:8px 0;border-radius:8px;border:.5px solid var(--line)}
 table.data-tbl{width:100%;border-collapse:collapse;font-size:12px;text-align:left}
 table.data-tbl th{background:var(--surface2);color:var(--muted);padding:8px 10px;font-family:'JetBrains Mono',monospace;font-weight:500;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
@@ -222,6 +229,19 @@ table.data-tbl tr:last-child td{border:0}
 .tag-best{background:rgba(138,168,95,.2);color:var(--sage)}
 .tag-mid{background:rgba(232,163,61,.2);color:var(--turmeric)}
 .tag-prem{background:rgba(201,80,58,.2);color:var(--vermilion)}
+
+/* ---------- password modal ---------- */
+#authModal{
+  position:fixed;inset:0;background:rgba(20,17,15,.96);z-index:9999;
+  backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.auth-box{
+  background:var(--surface);border:.5px solid var(--line2);border-radius:18px;
+  padding:28px 24px;max-width:380px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.6);
+}
+.auth-box h2{font-size:24px;margin-bottom:6px}
+.auth-box p{color:var(--muted);font-size:13px;margin-bottom:20px}
+.auth-box input{margin-bottom:12px;text-align:center;font-size:18px;letter-spacing:.2em}
 
 .empty{text-align:center;padding:26px 14px;color:var(--muted);font-size:12.5px;line-height:1.7}
 .toast{
@@ -237,13 +257,28 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
 </head>
 <body>
 
+<!-- ============ AUTH MODAL ============ -->
+<div id="authModal">
+  <div class="auth-box">
+    <div style="font-size:32px;margin-bottom:12px">🔒</div>
+    <h2>System <em>Basith</em></h2>
+    <p>Enter passcode to access your personal GlowUp hub.</p>
+    <input type="password" id="authPass" placeholder="•••••" autofocus autocomplete="current-password">
+    <button class="btn primary" style="width:100%" id="authBtn">Unlock System</button>
+    <p id="authError" class="note" style="color:var(--vermilion);margin-top:12px;display:none">Incorrect passcode</p>
+  </div>
+</div>
+
 <div class="wrap">
   <header>
     <div class="brandrow">
       <h1>System <em>Basith</em></h1>
       <div class="datechip"><b id="hDay">—</b><span id="hDate">—</span></div>
     </div>
-    <p class="subline" id="hSub">—</p>
+    <div class="subline">
+      <span id="hSub">—</span>
+      <span class="sync-badge" id="syncStatus" title="Cloud status"><i class="sync-dot"></i><span id="syncText">Syncing...</span></span>
+    </div>
   </header>
 </div>
 
@@ -256,7 +291,7 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
     <button class="tab" role="tab" aria-selected="false" data-tab="lifts">Lifts</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="body">Body</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="goals">Goals</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="sync">Log/Sync</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="sync">AI &amp; Sync</button>
   </div>
 </nav>
 
@@ -351,7 +386,7 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
   </div>
 </section>
 
-<!-- ============ PROTEIN ₹/G CALCULATOR ============ -->
+<!-- ============ PROTEIN ₹/G ============ -->
 <section id="p-protein" class="hide">
   <div class="card">
     <p class="eyebrow"><span class="n">cost</span> protein rank per rupee</p>
@@ -434,7 +469,7 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
     <div class="statline"><span class="statk">Rice + Dal + Curd baseline</span><span class="statv">~32.0g (₹20)</span></div>
     <div class="statline" style="border-top:1px solid var(--line2);margin-top:6px;padding-top:8px">
       <span class="statk" style="color:var(--turmeric);font-weight:600">Total Hit</span>
-      <span class="statv" style="color:var(--sage)">~170g @ ~₹200/day</span>
+      <span class="statv" style="color:var(--sage)">~170g @ ~₹190/day</span>
     </div>
   </div>
 </section>
@@ -603,18 +638,33 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
   </div>
 </section>
 
-<!-- ============ SYNC / EXPORT ============ -->
+<!-- ============ AI & SYNC ============ -->
 <section id="p-sync" class="hide">
   <div class="card">
-    <p class="eyebrow"><span class="n">export</span> glowup-event-v1 jsonl</p>
-    <h2>Backup &amp; Sync Tracker</h2>
-    <p class="note" style="margin-bottom:12px">Export your local actions into `tracker/daily-log.jsonl` format or copy raw JSON.</p>
-    <button class="btn primary" style="width:100%;margin-bottom:8px" id="btnExportJSONL">Export Daily Log (.jsonl)</button>
-    <button class="btn" style="width:100%" id="btnCopyJSON">Copy Local Storage JSON</button>
+    <p class="eyebrow"><span class="n">ai</span> export for llms &amp; local analysis</p>
+    <h2>AI Model Ready Exporters</h2>
+    <p class="note" style="margin-bottom:14px">Export your full metrics and history formatted specifically for Claude, ChatGPT, Gemini, or local python analysis scripts.</p>
+    
+    <button class="btn sage" style="width:100%;margin-bottom:8px" id="btnExportAI">📄 Download AI Analysis Prompt (.md)</button>
+    <button class="btn primary" style="width:100%;margin-bottom:8px" id="btnCopyAIPrompt">📋 Copy AI Prompt to Clipboard</button>
+    <button class="btn" style="width:100%;margin-bottom:8px" id="btnExportJSONL">📊 Download Structured Events (.jsonl)</button>
+    <button class="btn" style="width:100%" id="btnForceCloudSync">☁ Force Supabase Cloud Sync</button>
   </div>
+
   <div class="card">
-    <p class="eyebrow">raw storage view</p>
-    <pre id="rawPreview" class="mono" style="font-size:11px;color:var(--muted);max-height:220px;overflow-y:auto;white-space:pre-wrap;word-break:break-all"></pre>
+    <p class="eyebrow">security &amp; lock</p>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-weight:600;font-size:13.5px">Lock Session</div>
+        <div class="note">Password protection active (pass: laddu)</div>
+      </div>
+      <button class="btn sm" id="btnLockNow">Lock Now</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="eyebrow">ai context preview</p>
+    <pre id="aiPreview" class="mono" style="font-size:11px;color:var(--muted);max-height:260px;overflow-y:auto;white-space:pre-wrap;word-break:break-all"></pre>
   </div>
 </section>
 
@@ -626,31 +676,134 @@ footer{text-align:center;padding:26px 0 8px;font-family:'JetBrains Mono',monospa
 <script>
 'use strict';
 
-/* ---------------- storage ---------------- */
+/* ---------------- supabase cloud init ---------------- */
+const SUPABASE_URL = "https://kircxokjlqguyzlkhmop.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtpcmN4b2tqbHFndXl6bGtobW9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5OTI1MTQsImV4cCI6MjEwMjU2ODUxNH0.zU6f3TqyhHHGFxrMFM55JH-c8Jn7T2FbByIxDGUOZ8k";
+let sbClient = null;
+try{
+  if(window.supabase){
+    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  }
+}catch(e){console.error("Supabase init error:", e);}
+
+/* ---------------- password protection ---------------- */
+const PASSCODE = 'laddu';
+const AUTH_KEY = 'glowup-auth-v1';
+
+function checkAuth(){
+  const authed = sessionStorage.getItem(AUTH_KEY) === 'true' || localStorage.getItem(AUTH_KEY) === 'true';
+  const modal = document.getElementById('authModal');
+  if(authed){
+    modal.style.display = 'none';
+  } else {
+    modal.style.display = 'flex';
+    document.getElementById('authPass').value = '';
+    document.getElementById('authPass').focus();
+  }
+}
+
+document.getElementById('authBtn').onclick = () => {
+  const input = document.getElementById('authPass').value.trim();
+  if(input.toLowerCase() === PASSCODE.toLowerCase()){
+    localStorage.setItem(AUTH_KEY, 'true');
+    sessionStorage.setItem(AUTH_KEY, 'true');
+    document.getElementById('authModal').style.display = 'none';
+    document.getElementById('authError').style.display = 'none';
+    toast('Welcome back, Basith');
+  } else {
+    document.getElementById('authError').style.display = 'block';
+  }
+};
+
+document.getElementById('authPass').onkeydown = (e) => {
+  if(e.key === 'Enter') document.getElementById('authBtn').click();
+};
+
+document.getElementById('btnLockNow').onclick = () => {
+  localStorage.removeItem(AUTH_KEY);
+  sessionStorage.removeItem(AUTH_KEY);
+  checkAuth();
+};
+
+/* ---------------- storage state ---------------- */
 const KEY='system-basith-v1';
 let S={days:{},weights:{},meas:[],peel:'2026-08-01',start:'2026-08-05'};
 
+function updateSyncBadge(state, text){
+  const badge = document.getElementById('syncStatus');
+  const txt = document.getElementById('syncText');
+  if(!badge || !txt) return;
+  badge.className = 'sync-badge ' + state;
+  txt.textContent = text;
+}
+
 async function load(){
-  try{
-    if(window.storage){
-      const r=await window.storage.get(KEY);
-      if(r&&r.value){S=Object.assign(S,JSON.parse(r.value));return;}
-    }
-  }catch(e){}
+  updateSyncBadge('syncing', 'Syncing...');
   try{
     const v=localStorage.getItem(KEY);
-    if(v)S=Object.assign(S,JSON.parse(v));
+    if(v) S=Object.assign(S,JSON.parse(v));
   }catch(e){}
+
+  if(sbClient){
+    try{
+      const { data, error } = await sbClient.from('glowup_state').select('data, updated_at').eq('id', 'basith').single();
+      if(!error && data && data.data){
+        // Merge cloud data if available
+        S = Object.assign(S, data.data);
+        localStorage.setItem(KEY, JSON.stringify(S));
+        updateSyncBadge('online', 'Cloud Synced');
+        return;
+      }
+    }catch(err){
+      console.warn("Cloud load fallback to local:", err);
+    }
+  }
+  updateSyncBadge('online', 'Local Storage');
 }
+
 let saveTimer=null;
-function save(){
+function save(eventMeta){
   clearTimeout(saveTimer);
+  updateSyncBadge('syncing', 'Saving...');
   saveTimer=setTimeout(async()=>{
     const str=JSON.stringify(S);
-    try{ if(window.storage){await window.storage.set(KEY,str);return;} }catch(e){}
     try{ localStorage.setItem(KEY,str); }catch(e){}
-    renderSyncPreview();
-  },220);
+    
+    // Save to Supabase Cloud
+    if(sbClient){
+      try{
+        await sbClient.from('glowup_state').upsert({
+          id: 'basith',
+          data: S,
+          updated_at: new Date().toISOString()
+        });
+
+        // If discrete event passed, record to glowup_events table
+        if(eventMeta){
+          await sbClient.from('glowup_events').insert([{
+            schema: 'glowup-event-v1',
+            date: TODAY,
+            time: new Date().toTimeString().slice(0,5),
+            source: 'web',
+            area: eventMeta.area || 'general',
+            item: eventMeta.item || '',
+            status: 'done',
+            value: eventMeta.value || null,
+            unit: eventMeta.unit || null,
+            exact_update: eventMeta.exact_update || '',
+            notes: eventMeta.notes || ''
+          }]);
+        }
+        updateSyncBadge('online', 'Cloud Synced');
+      }catch(err){
+        console.warn("Supabase background sync error:", err);
+        updateSyncBadge('offline', 'Saved Locally');
+      }
+    } else {
+      updateSyncBadge('online', 'Saved Locally');
+    }
+    renderAIContextPreview();
+  },240);
 }
 
 /* ---------------- dates ---------------- */
@@ -839,7 +992,11 @@ function renderChecks(){
       const row=el('div','chk'+(h[k]?' on':'')+(key?' key':''));
       row.setAttribute('role','button');row.tabIndex=0;
       row.innerHTML=`<span class="box"></span><span><span class="lbl">${lbl}</span>${sub?`<span class="sub" style="display:block">${sub}</span>`:''}</span>`;
-      const go=()=>{h[k]=!h[k];save();renderToday();};
+      const go=()=>{
+        h[k]=!h[k];
+        save({area:'habit',item:k,exact_update:`Habit ${lbl}: ${h[k]?'done':'undone'}`});
+        renderToday();
+      };
       row.onclick=go;
       row.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();go();}};
       m.appendChild(row);
@@ -855,7 +1012,11 @@ function renderFoodBank(){
   const b=$('#foodBank');b.innerHTML='';
   FOODS.forEach(([n,k,p,c,f])=>{
     const el2=el('button','food',`${n}<i>${k}·${p}p</i>`);
-    el2.onclick=()=>{day(TODAY).food.push({n,k,p,c,f});save();renderFood();renderToday();renderHeader();toast(`+ ${n}`);};
+    el2.onclick=()=>{
+      day(TODAY).food.push({n,k,p,c,f});
+      save({area:'nutrition',item:n,value:p,unit:'g',exact_update:`Ate ${n}`,notes:`${k}kcal, ${p}p, ${c}c, ${f}f`});
+      renderFood();renderToday();renderHeader();toast(`+ ${n}`);
+    };
     b.appendChild(el2);
   });
 }
@@ -868,7 +1029,11 @@ function renderFood(){
     r.innerHTML=`<span class="logname">${x.n}</span><span class="logmac">${Math.round(x.k)} · ${Math.round(x.p)}p</span>`;
     const d=el('button','del','×');
     d.setAttribute('aria-label','Remove '+x.n);
-    d.onclick=()=>{f.splice(i,1);save();renderFood();renderToday();renderHeader();};
+    d.onclick=()=>{
+      f.splice(i,1);
+      save({area:'nutrition',item:x.n,exact_update:`Removed food ${x.n}`});
+      renderFood();renderToday();renderHeader();
+    };
     r.appendChild(d);list.appendChild(r);
   });
   drawBars();
@@ -1021,7 +1186,11 @@ function renderLifts(){
                  <span class="liftnow">${l.kg}kg × ${l.reps} × ${l.sets}${tag}</span>`;
     const d=el('button','del','×');
     d.setAttribute('aria-label','Remove set');
-    d.onclick=()=>{ls.splice(i,1);save();renderLifts();};
+    d.onclick=()=>{
+      ls.splice(i,1);
+      save({area:'training',item:l.n,exact_update:`Removed lift ${l.n}`});
+      renderLifts();
+    };
     r.appendChild(d);m.appendChild(r);
   });
 
@@ -1067,11 +1236,98 @@ function renderGoals(){
   set(1,wk,12); set(2,wk,24); set(3,wk,24); set(4,wk,48); set(5,wk,16);
 }
 
-/* ---------------- sync tab ---------------- */
-function renderSyncPreview(){
-  const raw=$('#rawPreview');
-  if(raw) raw.textContent=JSON.stringify(S,null,2);
+/* ---------------- AI prompt & export engine ---------------- */
+function generateAIMarkdown(){
+  const daysSorted = Object.keys(S.days).sort();
+  const recentDays = daysSorted.slice(-14);
+  
+  let totalKcal = 0, totalP = 0, daysCount = 0;
+  recentDays.forEach(d=>{
+    const t = totals(d);
+    if(t.k > 0){
+      totalKcal += t.k;
+      totalP += t.p;
+      daysCount++;
+    }
+  });
+  const avgKcal = daysCount ? Math.round(totalKcal/daysCount) : 0;
+  const avgP = daysCount ? Math.round(totalP/daysCount) : 0;
+
+  const wKeys = Object.keys(S.weights).sort();
+  const latestWeight = wKeys.length ? S.weights[wKeys[wKeys.length-1]] : 85.0;
+  const initialWeight = wKeys.length ? S.weights[wKeys[0]] : 85.0;
+  const weightDelta = (latestWeight - initialWeight).toFixed(2);
+
+  let md = `# GLOWUP PROGRESS REPORT & AI AUDIT PROMPT\n`;
+  md += `**Subject:** Basith | **Age:** 22 | **Height:** 5'7" (170cm) | **Location:** Kurnool, India\n`;
+  md += `**Current Weight:** ${latestWeight} kg | **Baseline Start:** ${initialWeight} kg (Delta: ${weightDelta > 0 ? '+' : ''}${weightDelta} kg)\n`;
+  md += `**Target Weight:** 72.0 kg | **Deficit Target:** 2,000 kcal / 170g protein floor | **Maintenance:** 2,500 kcal\n`;
+  md += `**Generated Date:** ${TODAY}\n\n`;
+  
+  md += `## 1. 14-Day Macro & Deficit Summary\n`;
+  md += `- **Average Daily Intake (Logged Days):** ${avgKcal} kcal / ${avgP}g Protein\n`;
+  md += `- **Protein Compliance Target:** ${avgP >= PROT ? 'PASS (>= 170g)' : 'DEFICIT ALERT (< 170g)'}\n`;
+  md += `- **Peel Cycle Status:** Last Peel: ${S.peel} | Next Peel: ${nextPeel()}\n\n`;
+
+  md += `## 2. Daily Log History (Last 14 Days)\n`;
+  md += `| Date | Calories | Protein | Carbs | Fat | Habits Done | Lifts |\n`;
+  md += `| :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n`;
+  recentDays.forEach(d=>{
+    const t = totals(d);
+    const dy = S.days[d] || {};
+    const habDone = Object.keys(dy.habits||{}).filter(k=>dy.habits[k]).length;
+    const liftsCount = (dy.lifts||[]).length;
+    md += `| ${d} | ${Math.round(t.k)} kcal | ${Math.round(t.p)}g | ${Math.round(t.c)}g | ${Math.round(t.f)}g | ${habDone}/17 | ${liftsCount} sets |\n`;
+  });
+  md += `\n`;
+
+  md += `## 3. Weight Trajectory\n`;
+  if(wKeys.length){
+    md += `\`\`\`json\n` + JSON.stringify(S.weights, null, 2) + `\n\`\`\`\n\n`;
+  } else {
+    md += `*No weight entries logged yet.*\n\n`;
+  }
+
+  md += `## 4. Personal Best Lifts\n`;
+  LIFTS.forEach(l=>{
+    const b = bestFor(l);
+    if(b) md += `- **${l}:** ${b.kg}kg × ${b.reps} reps (on ${b.d})\n`;
+  });
+  md += `\n`;
+
+  md += `## 5. Instructions for the AI Model\n`;
+  md += `Please perform a systematic, evidence-based review of my logs against my stated goals:\n`;
+  md += `1. **Rate of Fat Loss & Muscle Retention:** Analyze my weight slope vs calorie intake. Am I in the 0.4–0.6 kg/week sweet spot?\n`;
+  md += `2. **Protein Quality & Cost Efficiency:** Assess my staple food selections (Soya chunks, eggs, milk, oats, whey, paneer, chicken).\n`;
+  md += `3. **Skincare & Peel Recovery:** Check active compliance and safety intervals.\n`;
+  md += `4. **Hypertrophy & V-Taper Trajectory:** Review lift progression and accessory movements (face pulls, rear delts, farmer carries, dead hangs).\n`;
+
+  return md;
 }
+
+function renderAIContextPreview(){
+  const preview = $('#aiPreview');
+  if(preview) preview.textContent = generateAIMarkdown();
+}
+
+$('#btnExportAI').onclick=()=>{
+  const md = generateAIMarkdown();
+  const blob = new Blob([md], {type:'text/markdown'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `glowup-ai-prompt-${TODAY}.md`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Downloaded AI Analysis Prompt');
+};
+
+$('#btnCopyAIPrompt').onclick=()=>{
+  const md = generateAIMarkdown();
+  navigator.clipboard.writeText(md).then(()=>{
+    toast('Copied AI prompt to clipboard');
+  }).catch(()=>toast('Copy failed'));
+};
 
 $('#btnExportJSONL').onclick=()=>{
   const events=[];
@@ -1115,16 +1371,15 @@ $('#btnExportJSONL').onclick=()=>{
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
   a.href=url;
-  a.download=`glowup-export-${TODAY}.jsonl`;
+  a.download=`glowup-events-${TODAY}.jsonl`;
   a.click();
   URL.revokeObjectURL(url);
   toast('Exported daily-log.jsonl');
 };
 
-$('#btnCopyJSON').onclick=()=>{
-  navigator.clipboard.writeText(JSON.stringify(S)).then(()=>{
-    toast('Copied to clipboard');
-  }).catch(()=>toast('Copy failed'));
+$('#btnForceCloudSync').onclick=async()=>{
+  toast('Syncing with Supabase...');
+  save({area:'system',item:'manual-sync',exact_update:'Triggered manual cloud sync'});
 };
 
 /* ---------------- tabs ---------------- */
@@ -1140,7 +1395,7 @@ document.querySelectorAll('.tab').forEach(b=>{
     if(b.dataset.tab==='lifts')renderLifts();
     if(b.dataset.tab==='body')renderBody();
     if(b.dataset.tab==='goals')renderGoals();
-    if(b.dataset.tab==='sync')renderSyncPreview();
+    if(b.dataset.tab==='sync')renderAIContextPreview();
   };
 });
 
@@ -1148,35 +1403,46 @@ document.querySelectorAll('.tab').forEach(b=>{
 $('#addCustom').onclick=()=>{
   const n=$('#cName').value.trim();const k=+$('#cKcal').value;
   if(!n||!k){toast('Name and calories needed');return;}
-  day(TODAY).food.push({n,k,p:+$('#cP').value||0,c:+$('#cC').value||0,f:+$('#cF').value||0});
+  const p=+$('#cP').value||0,c=+$('#cC').value||0,f=+$('#cF').value||0;
+  day(TODAY).food.push({n,k,p,c,f});
   ['#cName','#cKcal','#cP','#cC','#cF'].forEach(s=>$(s).value='');
-  save();renderFood();renderToday();renderHeader();toast('Added');
+  save({area:'nutrition',item:n,value:p,unit:'g',exact_update:`Ate custom food ${n}`,notes:`${k}kcal, ${p}p, ${c}c, ${f}f`});
+  renderFood();renderToday();renderHeader();toast('Added');
 };
 $('#addLift').onclick=()=>{
   const n=$('#liftPick').value,kg=+$('#liftKg').value,reps=+$('#liftReps').value,sets=+$('#liftSets').value||1;
   if(!kg||!reps){toast('Weight and reps needed');return;}
   day(TODAY).lifts.push({n,kg,reps,sets});
   $('#liftKg').value='';$('#liftReps').value='';
-  save();renderLifts();toast('Logged');
+  save({area:'training',item:n,value:kg,unit:'kg',exact_update:`Logged lift ${n}: ${kg}kg x ${reps} x ${sets}`});
+  renderLifts();toast('Logged');
 };
 $('#addW').onclick=()=>{
   const v=+$('#wKg').value;
   if(!v){toast('Enter a weight');return;}
-  S.weights[TODAY]=v;$('#wKg').value='';save();drawWeight();toast('Saved');
+  S.weights[TODAY]=v;$('#wKg').value='';
+  save({area:'body',item:'morning-weigh-in',value:v,unit:'kg',exact_update:`Morning weigh-in: ${v} kg`});
+  drawWeight();toast('Saved');
 };
 $('#addM').onclick=()=>{
   const waist=+$('#mWaist').value,shoulders=+$('#mShould').value,arm=+$('#mArm').value;
   if(!waist&&!shoulders&&!arm){toast('Enter at least one');return;}
   S.meas.push({d:TODAY,waist,shoulders,arm});
   ['#mWaist','#mShould','#mArm'].forEach(s=>$(s).value='');
-  save();renderBody();toast('Saved');
+  save({area:'body',item:'tape-measurement',exact_update:`Tape measurements: waist=${waist}, shoulders=${shoulders}, arm=${arm}`});
+  renderBody();toast('Saved');
 };
-$('#peelDone').onclick=()=>{S.peel=TODAY;save();renderSkin();renderToday();renderHeader();toast('Peel logged · next in 14 days');};
+$('#peelDone').onclick=()=>{
+  S.peel=TODAY;
+  save({area:'skincare',item:'peel-30',exact_update:'Completed Minimalist 30% chemical peel'});
+  renderSkin();renderToday();renderHeader();toast('Peel logged · next in 14 days');
+};
 
 /* ---------------- boot ---------------- */
 (async function(){
+  checkAuth();
   await load();
-  renderHeader();renderFoodBank();renderToday();renderSyncPreview();
+  renderHeader();renderFoodBank();renderToday();renderAIContextPreview();
 })();
 </script>
 </body>
