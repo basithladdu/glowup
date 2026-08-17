@@ -176,7 +176,13 @@ try {
   logContentEntry(60);
   console.log('✅ Content timer and history logging verified.');
 
-  // 10. Test Markdown & JSON Export
+  // 10. Test Metallicadpa PPL & Abstinence Tracker
+  console.log('Testing Metallicadpa PPL & Abstinence Tracker...');
+  renderMetallicadpa();
+  confirmCleanToday();
+  console.log('✅ Metallicadpa PPL & Abstinence Tracker verified.');
+
+  // 11. Test Markdown & JSON Export
   console.log('Testing AI Export Generator...');
   const prompt = generateAIMarkdown();
   if (prompt && prompt.length > 200) {
