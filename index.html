@@ -753,9 +753,38 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
 
     <div class="frow">
       <div style="flex:2"><label class="fl">Today's Deliverable</label><input id="cntTopic" placeholder="e.g. YouTube script, Thread, Reel"></div>
-      <div><label class="fl">Minutes Done</label><input id="cntMins" type="number" inputmode="numeric" placeholder="60" value="60"></div>
+      <div><label class="fl">Minutes Done</label><input id="cntMins" type="number" inputmode="numeric" placeholder="45" value="45"></div>
     </div>
     <button class="btn sage" style="width:100%" id="btnLogContent">✓ Log Completed Deep Work</button>
+  </div>
+
+  <!-- VIDEO PUBLISHING CADENCE MATRIX -->
+  <div class="card">
+    <p class="eyebrow"><span class="n">🎬</span> video publishing cadence &amp; rhythm</p>
+    <h2>#basithladdu Publishing Schedule</h2>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+      <div style="background:var(--surface2);padding:10px;border-radius:8px;border:1px solid var(--line2)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+          <span style="font-weight:700;color:var(--turmeric)">Daily 45m Focused Sprint</span>
+          <span class="tag-badge tag-best">Daily</span>
+        </div>
+        <div class="note">Script hooks, record b-roll, or ship one concrete thread/post. Consistent daily output.</div>
+      </div>
+      <div style="background:var(--surface2);padding:10px;border-radius:8px;border:1px solid var(--line2)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+          <span style="font-weight:700;color:var(--indigo)">Short-Form Reel / Short</span>
+          <span class="tag-badge tag-mid">Every 2 Days</span>
+        </div>
+        <div class="note">High-retention 30–60s video with dynamic subtitles and strong educational/lifestyle hook.</div>
+      </div>
+      <div style="background:var(--surface2);padding:10px;border-radius:8px;border:1px solid var(--line2)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+          <span style="font-weight:700;color:var(--sage)">Pillar YouTube Deep-Dive Video</span>
+          <span class="tag-badge tag-prem">Every 14–15 Days</span>
+        </div>
+        <div class="note">Full 8–15 min comprehensive project / technical breakdown video drop. High production value.</div>
+      </div>
+    </div>
   </div>
 
   <div class="card">
@@ -1216,6 +1245,7 @@ const STYLE_ACTIONS = [
 
 /* ---------------- grooming action items ---------------- */
 const GROOMING_ACTIONS = [
+  { id:'ga_temples', freq:'Daily PM & Sun Roll', title:'Temple Hairline Shield & Minoxidil 5%', sub:'Target 0.5ml Tugain 5% directly at temple hairline corners. Sunday 0.5mm dermaroll to stimulate follicular density & never recede.', cta:'✓ Temples Shielded' },
   { id:'ga_oil', freq:'Sun & Wed', title:'Rosemary + Castor Scalp Oiling & Massage', sub:'Apply warm blend to scalp roots, massage 5 mins with fingertips, leave for 45–60 mins pre-wash.', cta:'✓ Log Oiling' },
   { id:'ga_keto', freq:'Tue & Thu', title:'Ketoconazole 2% Anti-Dandruff Scalp Treatment', sub:'Lather into scalp, leave active for 5 full minutes before rinsing. Eliminates flaking and fungal irritation.', cta:'✓ Washed Keto' },
   { id:'ga_beard', freq:'Every 2–3 Days', title:'Beard Line & Neck Line Razor Sharp Line-up', sub:'Shave below 2 fingers above Adam\'s apple. Keep clean top cheeks and sharp sideburn taper.', cta:'✓ Beard Lined' },
@@ -1235,9 +1265,11 @@ let S={
   liveSleep:null,
   meas:[],
   milestones:[
-    { id:'m_derm', title:'Dermatologist Skin Assessment (12-Week Check)', date:'2026-09-15', done:false },
+    { id:'m_temple_check', title:'Temple Hairline & Crown Density Macro Photos', date:'2026-08-30', done:false },
+    { id:'m_video_14d', title:'Pillar YouTube Deep-Dive Video Drop (15-Day Milestone)', date:'2026-09-01', done:false },
     { id:'m_fade', title:'Beard & Hair Clean Taper Fade', date:'2026-08-22', done:false },
     { id:'m_photo', title:'Fortnightly Progress Photos (Front/Side/Back)', date:'2026-08-29', done:false },
+    { id:'m_derm', title:'Dermatologist Skin Assessment (12-Week Check)', date:'2026-09-15', done:false },
     { id:'m_blood', title:'Complete Blood Panel (Vit D, B12, Test, Lipids)', date:'2026-10-01', done:false }
   ],
   peel:'2026-08-15',
@@ -1433,23 +1465,67 @@ function get24HourCalendarSchedule(dow){
 
   return [
     { startHour:0, endHour:7, id:'ev_sleep_am', time:'00:00 – 07:00', cls:'ev-sleep', title:'😴 Deep Sleep Recovery Window', sub:'Target 7.5h–8.5h uninterrupted sleep architecture. Live sleep stopwatch active.', cta:'✓ Slept' },
-    { startHour:7, endHour:7, id:'ev_wake', time:'07:00 – 07:15', cls:'ev-morning', title:'🌅 Wake Up, Scrape Tongue & 500ml Water', sub:'Eliminates oral bacteria, stimulates digestive motility & peristalsis.', cta:'✓ Hydrated' },
-    { startHour:7, endHour:8, id:'ev_am_skin', time:'07:15 – 07:45', cls:'ev-skin', title:'🧴 AM Skincare Shield + SPF 50', sub:'AHA Glow facewash → Pilgrim Vit C → Minimalist B12 → Lakmé SPF 50 (face/neck/arms/hands) → Lip Balm SPF 50.', cta:'✓ Applied SPF' },
+    { startHour:7, endHour:7, id:'ev_wake', time:'07:00 – 07:20', cls:'ev-morning', title:'🌅 Wake Up, Scrape Tongue & 500ml Water', sub:'Eliminates oral bacteria, stimulates digestive motility & peristalsis.', cta:'✓ Hydrated' },
+    { startHour:7, endHour:8, id:'ev_am_skin', time:'07:20 – 07:45', cls:'ev-skin', title:'🧴 AM Skincare Shield + SPF 50', sub:'AHA Glow facewash → Pilgrim Vit C → Minimalist B12 → Lakmé SPF 50 (face/neck/arms/hands) → Lip Balm SPF 50.', cta:'✓ Applied SPF' },
     { startHour:7, endHour:8, id:'ev_walk', time:'07:45 – 08:15', cls:'ev-walk', title:'🚶 Morning Sunlight Walk Block', sub:'Circadian cortisol spike, Vitamin D synthesis, early 2,000 steps.', cta:'✓ Walked' },
     { startHour:8, endHour:9, id:'ev_bfast', time:'08:30 – 09:00', cls:'ev-nutrition', title:'🍽️ Breakfast Power Oats + Buffalo Milk + Creatine', sub:'70g Oats + 250ml Milk + 5g Creatine + 2 tsp Flaxseed (17.3g P · 416 kcal).', cta:'✓ Log Breakfast', macro:{n:'Oats 70g + Milk 250ml + Creatine',k:416,p:17.3,c:59,f:11.3} },
-    { startHour:9, endHour:13, id:'ev_work_am', time:'09:00 – 13:00', cls:'ev-work', title:'💼 Morning Deep Focus Work Block', sub:'Posture check, nose breathing posture, 1L hydration pacing. High-leverage execution.', cta:'✓ Deep Work Done' },
-    { startHour:13, endHour:13, id:'ev_spf_mid', time:'13:00 – 13:15', cls:'ev-skin', title:'🧴 Midday SPF 50 Reapply Shield', sub:'Reapply Lakmé SPF 50 on face, neck, arms, and hands (closes face vs body tone gap).', cta:'✓ Reapplied SPF' },
-    { startHour:13, endHour:14, id:'ev_lunch', time:'13:30 – 14:00', cls:'ev-nutrition', title:'🍽️ Lunch Soya Chunks + 50/50 Chewing Balance', sub:'80g Soya Chunks + 150g Rice + Dal + Curd (55.6g P · 677 kcal). Chew 50/50 on left and right for masseter symmetry.', cta:'✓ Log Lunch', macro:{n:'Soya Chunks 80g + Rice + Dal',k:677,p:55.6,c:91,f:8.6} },
-    { startHour:14, endHour:16, id:'ev_work_pm', time:'14:00 – 16:30', cls:'ev-work', title:'💼 Afternoon Strategy & Execution Block', sub:'Nasal breathing check, posture decompression, hydrated mental focus.', cta:'✓ Completed' },
-    { startHour:16, endHour:17, id:'ev_posture', time:'16:30 – 16:45', cls:'ev-posture', title:'🧍 Spine Decompression & Height Drill', sub:'Wall chin tucks 3×15, doorway chest stretch 3×30s, dead hang 2×30s (reclaims 1–3cm visible height).', cta:'✓ Decompressed' },
+    { startHour:9, endHour:11, id:'ev_work_am', time:'09:30 – 11:30', cls:'ev-work', title:'💼 Morning Deep Focus Sprint (2h)', sub:'High-energy execution sprint. Nose breathing posture, 1L hydration pacing.', cta:'✓ Focus Done' },
+    { startHour:11, endHour:12, id:'ev_taekwondo', time:'11:30 – 12:00', cls:'ev-posture', title:'🥋 Midday Reset: Taekwondo & Dance Mobility Drill', sub:'30-min footwork, dynamic hip openers & dance coordination. Physical and mental energizer.', cta:'✓ Reset Done' },
+    { startHour:13, endHour:13, id:'ev_lunch', time:'13:00 – 13:30', cls:'ev-nutrition', title:'🍽️ Lunch Soya Chunks + 50/50 Chewing Balance', sub:'80g Soya Chunks + 150g Rice + Dal + Curd (55.6g P · 677 kcal). Chew 50/50 on left and right for masseter symmetry.', cta:'✓ Log Lunch', macro:{n:'Soya Chunks 80g + Rice + Dal',k:677,p:55.6,c:91,f:8.6} },
+    { startHour:13, endHour:14, id:'ev_spf_mid', time:'13:30 – 13:45', cls:'ev-skin', title:'🧴 Midday SPF 50 Reapply Shield', sub:'Reapply Lakmé SPF 50 on face, neck, arms, and hands (closes face vs body tone gap).', cta:'✓ Reapplied SPF' },
+    { startHour:14, endHour:16, id:'ev_work_pm', time:'14:30 – 16:30', cls:'ev-work', title:'💼 Afternoon Strategy & Execution Sprint (2h)', sub:'Punchy, focused sprint. High-leverage deliverables with zero distractions.', cta:'✓ Sprint Done' },
+    { startHour:16, endHour:17, id:'ev_posture', time:'16:30 – 17:00', cls:'ev-posture', title:'🧍 Spine Decompression & Height Drill', sub:'Wall chin tucks 3×15, doorway chest stretch 3×30s, dead hang 2×30s (reclaims 1–3cm visible height).', cta:'✓ Decompressed' },
     { startHour:17, endHour:19, id:'ev_gym', time:'17:30 – 18:45', cls:'ev-gym', title:gymTitle, sub:gymSub, cta:'✓ Log Workout' },
     { startHour:18, endHour:19, id:'ev_whey', time:'18:45 – 19:00', cls:'ev-nutrition', title:'🍽️ Post-Workout Nakpro Whey Isolate Shake', sub:'1 Scoop Nakpro Whey Isolate in cold water (24.0g P · 160 kcal).', cta:'✓ Drank Whey', macro:{n:'Nakpro Whey Isolate',k:160,p:24.0,c:8,f:2.5} },
-    { startHour:19, endHour:21, id:'ev_content', time:'19:15 – 20:30', cls:'ev-content', title:'⚡ Content Production Deep Work Block (#basithladdu)', sub:'60–75 min focused creative output. Phone outside room. Ship one concrete deliverable.', cta:'✓ Shipped Content' },
-    { startHour:20, endHour:21, id:'ev_dinner', time:'20:45 – 21:15', cls:'ev-nutrition', title:'🍽️ Dinner Eggs/Chicken + Ashwagandha 400mg', sub:'4 Whole Eggs (or 130g Chicken) + 2 Roti + 100g Curd + 400mg Ashwagandha (34.7g P · 556 kcal).', cta:'✓ Log Dinner', macro:{n:'4 Whole Eggs + 2 Roti',k:556,p:34.7,c:44,f:26.7} },
-    { startHour:21, endHour:22, id:'ev_pm_groom', time:'21:45 – 22:15', cls:'ev-groom', title:pmSkinTitle, sub:pmSkinSub, cta:'✓ Night Protocol Done' },
-    { startHour:22, endHour:23, id:'ev_lockdown', time:'22:30 – 22:45', cls:'ev-sleep', title:'🌙 Sleep Sanctuary Lockdown', sub:'Park phone outside bedroom. Room cool & pitch dark. Nasal breathing & mouth tape check.', cta:'✓ Locked Down' },
-    { startHour:22, endHour:24, id:'ev_sleep_pm', time:'22:45 – 07:00', cls:'ev-sleep', title:'😴 Deep Sleep Block Starts', sub:'Target uninterrupted slow-wave sleep. Live sleep stopwatch active.', cta:'🛌 Slept' }
+    { startHour:19, endHour:20, id:'ev_content', time:'19:15 – 20:00', cls:'ev-content', title:'⚡ Content Production Sprint (45m - #basithladdu)', sub:'45 min focused creative output. Phone outside room. Ship one concrete deliverable.', cta:'✓ Shipped Content' },
+    { startHour:20, endHour:21, id:'ev_dinner', time:'20:30 – 21:00', cls:'ev-nutrition', title:'🍽️ Dinner Eggs/Chicken + Ashwagandha 400mg', sub:'4 Whole Eggs (or 130g Chicken) + 2 Roti + 100g Curd + 400mg Ashwagandha (34.7g P · 556 kcal).', cta:'✓ Log Dinner', macro:{n:'4 Whole Eggs + 2 Roti',k:556,p:34.7,c:44,f:26.7} },
+    { startHour:21, endHour:22, id:'ev_pm_groom', time:'21:30 – 22:00', cls:'ev-groom', title:pmSkinTitle, sub:pmSkinSub, cta:'✓ Night Protocol Done' },
+    { startHour:22, endHour:23, id:'ev_lockdown', time:'22:30 – 23:00', cls:'ev-sleep', title:'🌙 Sleep Sanctuary Lockdown & Wind-Down', sub:'Park phone outside bedroom. Room cool & pitch dark. Nasal breathing & mouth tape check.', cta:'✓ Locked Down' },
+    { startHour:23, endHour:24, id:'ev_sleep_pm', time:'23:00 – 07:00', cls:'ev-sleep', title:'😴 Deep Sleep Mode Active', sub:'Target uninterrupted slow-wave sleep. Live sleep stopwatch active.', cta:'🛌 Slept' }
   ];
+}
+
+/* ---------------- date navigator header ---------------- */
+function renderDateNavHeader(){
+  const curD = parse(selectedDate);
+  const isToday = selectedDate === REAL_TODAY;
+  if($('#navDateDisplay')){
+    $('#navDateDisplay').innerHTML = `
+      ${DAYS[curD.getDay()]}, ${curD.getDate()} ${MON[curD.getMonth()]} ${curD.getFullYear()}
+      <small id="navDayStatus">${isToday ? '● Active Today' : `● ${daysBetween(REAL_TODAY, selectedDate)}d from today`}</small>
+    `;
+  }
+  if($('#btnJumpToday')){
+    $('#btnJumpToday').style.opacity = isToday ? '0.5' : '1';
+    $('#btnJumpToday').style.cursor = isToday ? 'default' : 'pointer';
+  }
+}
+
+if($('#btnPrevDay')){
+  $('#btnPrevDay').onclick = () => {
+    selectedDate = shift(selectedDate, -1);
+    calSelectedDay = parse(selectedDate).getDay();
+    renderAll();
+    toast(`Viewing ${fmt(selectedDate)}`);
+  };
+}
+
+if($('#btnNextDay')){
+  $('#btnNextDay').onclick = () => {
+    selectedDate = shift(selectedDate, 1);
+    calSelectedDay = parse(selectedDate).getDay();
+    renderAll();
+    toast(`Viewing ${fmt(selectedDate)}`);
+  };
+}
+
+if($('#btnJumpToday')){
+  $('#btnJumpToday').onclick = () => {
+    selectedDate = REAL_TODAY;
+    calSelectedDay = parse(REAL_TODAY).getDay();
+    renderAll();
+    toast('Jumped to Today');
+  };
 }
 
 /* ---------------- 1. render: Google Calendar 24h Day Grid ---------------- */
@@ -2751,6 +2827,7 @@ document.querySelectorAll('.tab').forEach(b => {
 });
 
 function renderAll(){
+  renderDateNavHeader();
   renderTodayStats();
   renderTodayActions();
   renderFood();
