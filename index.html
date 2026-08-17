@@ -355,6 +355,8 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
     <button class="tab" role="tab" aria-selected="true" data-tab="today">Today &amp; Flow</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="food">Food &amp; Stacks 🥪</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="calendar">Master Calendar 📅</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="symmetry">Symmetry &amp; Jaw 🪞</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="style">Style &amp; Scent 👔</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="content">Content ⚡</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="sleep">Sleep 🌙</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="grooming">Grooming &amp; Oil</button>
@@ -397,10 +399,17 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
       <div class="ringside">
         <div class="statline"><span class="statk">Protein Floor</span><span class="statv" id="sProt">0 / 170g</span></div>
         <div class="statline"><span class="statk">Deficit</span><span class="statv" id="sDef">—</span></div>
+        <div class="statline"><span class="statk">Hydration</span><span class="statv" id="sWater">0 / 3.0L</span></div>
         <div class="statline"><span class="statk">Actions Done</span><span class="statv" id="sFlowProgress">0 / 13</span></div>
-        <div class="statline"><span class="statk">Sleep</span><span class="statv" id="sSleepToday">—</span></div>
       </div>
     </div>
+    
+    <!-- HYDRATION QUICK TRACKER -->
+    <div style="display:flex;gap:6px;margin:10px 0 4px">
+      <button class="btn sm" style="flex:1" id="btnAddWater">+ 750ml Water 💧</button>
+      <button class="btn sm" id="btnResetWater">↺</button>
+    </div>
+
     <div class="macrobar" id="macroBar">
       <i style="background:var(--indigo);width:0"></i><i style="background:var(--sage);width:0"></i><i style="background:var(--turmeric);width:0"></i>
     </div>
@@ -501,9 +510,50 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
 <section id="p-calendar" class="hide">
   <div class="card">
     <p class="eyebrow"><span class="n">📅</span> quiet master schedule</p>
-    <h2>7-Day Weekly Master Calendar</h2>
-    <p class="note" style="margin-bottom:12px">Every recurring hygiene, oiling, haircut, actives, and workout protocol laid out cleanly.</p>
+    <h2>24-Hour Master Calendar Timelines</h2>
+    <p class="note" style="margin-bottom:12px">Every hour of your day time-blocked with direct 1-tap checkmark completion.</p>
     <div id="masterCalendarList"></div>
+  </div>
+</section>
+
+<!-- ============ SYMMETRY & JAW 🪞 ============ -->
+<section id="p-symmetry" class="hide">
+  <div class="card">
+    <p class="eyebrow"><span class="n">jaw</span> masseter &amp; facial architecture</p>
+    <h2>Facial Symmetry &amp; Jawline Matrix</h2>
+    <p class="note" style="margin-bottom:12px">Correct unilateral chewing, tongue posture, and sleeping compression to square jawline symmetry.</p>
+    <div id="symmetryActionList"></div>
+  </div>
+
+  <div class="card">
+    <p class="eyebrow">unilateral body &amp; arm balance</p>
+    <h2>Arm &amp; Shoulder Symmetry Rules</h2>
+    <p class="note">
+      <b>1. Weaker Side First:</b> Always start unilateral dumbbell sets (DB curls, lateral raises, split squats) on your non-dominant side.<br>
+      <b>2. Match Reps Exactly:</b> Stop dominant side as soon as weaker side hits technical failure. Never do bonus reps on dominant arm.<br>
+      <b>3. Scapular Decompression:</b> 2×30s Dead hangs daily balance lat flare and shoulder height asymmetry.
+    </p>
+  </div>
+</section>
+
+<!-- ============ STYLE & SCENT 👔 ============ -->
+<section id="p-style" class="hide">
+  <div class="card">
+    <p class="eyebrow"><span class="n">scent</span> pulse points &amp; fresh breath</p>
+    <h2>Signature Scent &amp; Fresh Breath Protocol</h2>
+    <p class="note" style="margin-bottom:12px">Eliminate mouth odor, secure 12-hour clean musk sillage, and maintain pristine grooming.</p>
+    <div id="styleActionList"></div>
+  </div>
+
+  <div class="card">
+    <p class="eyebrow">5'7" v-taper proportion architecture</p>
+    <h2>Wardrobe Fit Rules for V-Taper Frame</h2>
+    <p class="note">
+      <b>1. Strict Shoulder Seams:</b> Seam must sit directly on acromion bone—avoid sloppy oversized drop shoulders that shorten width.<br>
+      <b>2. Monochrome Verticality:</b> Black-on-black, charcoal, olive, or cream palettes elongate vertical line by 2–3 inches.<br>
+      <b>3. Tapered Pant Ankle Break:</b> Zero break or slight break at ankle bone. Never let fabric puddle over shoes.<br>
+      <b>4. Minimalist Footwear:</b> Clean low-profile leather white sneakers or structured black chelsea/derby shoes.
+    </p>
   </div>
 </section>
 
@@ -927,6 +977,24 @@ const MEAL_COMBOS = [
   }
 ];
 
+/* ---------------- symmetry action items ---------------- */
+const SYMMETRY_ACTIONS = [
+  { id:'sym_chew', cat:'Jawline Symmetry', title:'50/50 Chewing Balance Drill', sub:'Chew 15 bites on left, 15 bites on right. Over time balances masseter muscle thickness and jaw squareness.', cta:'✓ Chewed 50/50' },
+  { id:'sym_tongue', cat:'Palatal Posture', title:'Mewing & Palatal Tongue Posture', sub:'Rest entire tongue blade against roof of palate, lips sealed, breathe 100% through nose. Prevents elongated face.', cta:'✓ Posture Checked' },
+  { id:'sym_sleep', cat:'Facial Compression', title:'Back Sleeping & Cervical Alignment', sub:'Sleep on back using contoured neck support. Eliminates asymmetric cheek/eye compression and sleep lines.', cta:'✓ Back Slept' },
+  { id:'sym_unilateral', cat:'Arm & Body Symmetry', title:'Unilateral DB Lifting Protocol', sub:'Start with weaker arm/leg first. Stop dominant side as soon as weaker side reaches failure.', cta:'✓ Lifts Balanced' },
+  { id:'sym_hang', cat:'Spine & Scapula', title:'Dead Hang 2×30s Scapular Reset', sub:'Decompresses spine, squares uneven shoulder blades, and adds 1–2cm visible posture height.', cta:'✓ Hung' }
+];
+
+/* ---------------- style & scent action items ---------------- */
+const STYLE_ACTIONS = [
+  { id:'sty_breath', cat:'Fresh Breath', title:'Copper Tongue Scrape + CPC Antibacterial Rinse', sub:'Scrape from back to front 5 times. Rinse with alcohol-free antibacterial mouthwash.', cta:'✓ Breath Pristine' },
+  { id:'sty_scent', cat:'Signature Fragrance', title:'3-Point Pulse Fragrance Application', sub:'1 spray behind each ear + 1 spray base of neck. Woody/amber base notes last 10+ hours without overwhelming.', cta:'✓ Scent Applied' },
+  { id:'sty_antipersp', cat:'Hygiene Shield', title:'Nightly Clinical Antiperspirant Application', sub:'Apply before bed so active ingredients plug sweat ducts overnight. Zero day sweat marks.', cta:'✓ Applied Nightly' },
+  { id:'sty_fit', cat:'V-Taper Styling', title:'Monochrome Fit & Exact Shoulder Seams', sub:'Ensure shirt seams hit strictly on acromion bone. Tapered pant ankles with zero bunching over shoes.', cta:'✓ Fit Locked' },
+  { id:'sty_shoes', cat:'Footwear Polish', title:'Crisp Minimalist Footwear Wipe-Down', sub:'Keep white leather sneakers or dark structured footwear spotless with a 30-second wipe.', cta:'✓ Shoes Clean' }
+];
+
 /* ---------------- storage state ---------------- */
 const KEY='system-basith-v1';
 let S={
@@ -934,6 +1002,7 @@ let S={
   weights:{},
   sleep:{},
   content:{},
+  water:{},
   liveSleep:null,
   meas:[],
   milestones:[
@@ -1019,9 +1088,10 @@ function save(eventMeta){
 }
 
 function day(d){
-  if(!S.days[d])S.days[d]={food:[],habits:{},lifts:[],grooming:{},timeline:{}};
+  if(!S.days[d])S.days[d]={food:[],habits:{},lifts:[],grooming:{},timeline:{},symmetry:{},style:{}};
   const x=S.days[d];
-  x.food=x.food||[];x.habits=x.habits||{};x.lifts=x.lifts||[];x.grooming=x.grooming||{};x.timeline=x.timeline||{};
+  x.food=x.food||[];x.habits=x.habits||{};x.lifts=x.lifts||[];x.grooming=x.grooming||{};
+  x.timeline=x.timeline||{};x.symmetry=x.symmetry||{};x.style=x.style||{};
   return x;
 }
 
@@ -1217,7 +1287,7 @@ function executeTask(task){
   toast(tl[task.id] ? `✓ Done: ${task.title}` : `Undone: ${task.title}`);
 }
 
-/* ---------------- render: today stats ---------------- */
+/* ---------------- render: today stats & water ---------------- */
 function renderTodayStats(){
   const t = totals(selectedDate);
   const pct = Math.min(1,t.k/KCAL);
@@ -1232,6 +1302,10 @@ function renderTodayStats(){
   const def = MAINT-t.k;
   $('#sDef').textContent = t.k?`${def>0?'−':'+'}${Math.abs(Math.round(def))}`:'—';
   $('#sDef').style.color = def>=400?'var(--sage)':def>0?'var(--paper)':'var(--vermilion)';
+
+  const w = S.water[selectedDate] || 0;
+  $('#sWater').textContent = `${(w/1000).toFixed(2)} / 3.0L`;
+  $('#sWater').style.color = w >= 3000 ? 'var(--sage)' : 'var(--paper)';
 
   const sl = S.sleep[selectedDate];
   $('#sSleepToday').textContent = sl ? `${sl.hours}h (${sl.qual}/10)` : 'Not logged';
@@ -1266,6 +1340,21 @@ function renderTodayStats(){
   const at = activeFor(selectedDate);
   $('#stripNote').innerHTML = `<b>Active on ${fmt(selectedDate)}:</b> ${at.active}. ${at.extra}`;
 }
+
+$('#btnAddWater').onclick = () => {
+  S.water[selectedDate] = (S.water[selectedDate] || 0) + 750;
+  playSuccessChime();
+  save({area:'hydration',item:'water-750ml',value:750,unit:'ml',exact_update:`Logged 750ml water (Total: ${S.water[selectedDate]}ml)`});
+  renderTodayStats();
+  toast(`💧 +750ml (Total: ${(S.water[selectedDate]/1000).toFixed(2)}L)`);
+};
+
+$('#btnResetWater').onclick = () => {
+  S.water[selectedDate] = 0;
+  save({area:'hydration',item:'water-reset',exact_update:'Reset water tracker'});
+  renderTodayStats();
+  toast('Water reset');
+};
 
 /* ---------------- 24-hour master calendar schedule generator ---------------- */
 let calSelectedDay = parse(selectedDate).getDay();
@@ -1374,6 +1463,70 @@ function renderMasterCalendar(){
       };
     }
     container.appendChild(item);
+  });
+}
+
+/* ---------------- render: symmetry & jaw 🪞 ---------------- */
+function renderSymmetryTab(){
+  const container = $('#symmetryActionList');
+  if(!container) return;
+  container.innerHTML = '';
+  const sym = day(selectedDate).symmetry;
+  SYMMETRY_ACTIONS.forEach(item => {
+    const done = !!sym[item.id];
+    const row = el('div','task-item'+(done?' done':''));
+    row.innerHTML = `
+      <div class="task-left">
+        <div>
+          <div><span class="task-badge">${item.cat}</span><span class="task-title">${item.title}</span></div>
+          <div class="task-sub">${item.sub}</div>
+        </div>
+      </div>
+      <button class="task-btn">${done ? '✓ Completed' : item.cta}</button>
+    `;
+    const btn = row.querySelector('.task-btn');
+    if(btn){
+      btn.onclick = () => {
+        sym[item.id] = !sym[item.id];
+        if(sym[item.id]) playSuccessChime();
+        save({area:'symmetry',item:item.id,exact_update:`Symmetry ${item.title}: ${sym[item.id]?'done':'undone'}`});
+        renderSymmetryTab();
+        toast(sym[item.id] ? `✓ ${item.title}` : `Undone: ${item.title}`);
+      };
+    }
+    container.appendChild(row);
+  });
+}
+
+/* ---------------- render: style & scent 👔 ---------------- */
+function renderStyleTab(){
+  const container = $('#styleActionList');
+  if(!container) return;
+  container.innerHTML = '';
+  const sty = day(selectedDate).style;
+  STYLE_ACTIONS.forEach(item => {
+    const done = !!sty[item.id];
+    const row = el('div','task-item'+(done?' done':''));
+    row.innerHTML = `
+      <div class="task-left">
+        <div>
+          <div><span class="task-badge">${item.cat}</span><span class="task-title">${item.title}</span></div>
+          <div class="task-sub">${item.sub}</div>
+        </div>
+      </div>
+      <button class="task-btn">${done ? '✓ Completed' : item.cta}</button>
+    `;
+    const btn = row.querySelector('.task-btn');
+    if(btn){
+      btn.onclick = () => {
+        sty[item.id] = !sty[item.id];
+        if(sty[item.id]) playSuccessChime();
+        save({area:'style',item:item.id,exact_update:`Style ${item.title}: ${sty[item.id]?'done':'undone'}`});
+        renderStyleTab();
+        toast(sty[item.id] ? `✓ ${item.title}` : `Undone: ${item.title}`);
+      };
+    }
+    container.appendChild(row);
   });
 }
 
@@ -1694,34 +1847,28 @@ function updateBalancerCalc(){
   const whey = +$('#bWhey').value || 0;
 
   // Base carbs/rice/dal/oats staple floor
-  let prot = 35.0, kcal = 750, cost = 30; // base rice, dal, oats, flaxseed
+  let prot = 35.0, kcal = 750, cost = 30;
 
-  // Soya: 52% protein, ~3.45 kcal/g, ₹19.5 per 80g (₹0.244/g)
   prot += (soya * 0.52);
   kcal += (soya * 3.45);
   cost += (soya * 0.244);
 
-  // Eggs: 6.3g P, 72 kcal, ₹7.5 each
   prot += (eggs * 6.3);
   kcal += (eggs * 72);
   cost += (eggs * 7.5);
 
-  // Chicken: 23% protein, ~1.1 kcal/g, ₹300/kg (₹0.30/g)
   prot += (chk * 0.23);
   kcal += (chk * 1.1);
   cost += (chk * 0.30);
 
-  // Dairy (Milk/Curd): 3.5% protein, 0.6 kcal/ml, ₹70/L (₹0.07/ml)
   prot += (dairy * 0.035);
   kcal += (dairy * 0.60);
   cost += (dairy * 0.07);
 
-  // Paneer: 25% protein, 1.8 kcal/g, ₹130/240g (₹0.54/g)
   prot += (pan * 0.25);
   kcal += (pan * 1.8);
   cost += (pan * 0.54);
 
-  // Whey: 24g protein, 160 kcal, ₹56 per scoop
   prot += (whey * 24.0);
   kcal += (whey * 160);
   cost += (whey * 56.0);
@@ -2009,7 +2156,7 @@ function generateAIMarkdown(){
   }
 
   md += `## 3. Sleep & Deep Work\n`;
-  md += `\`\`\`json\n` + JSON.stringify({ sleep: S.sleep, content: S.content }, null, 2) + `\n\`\`\`\n\n`;
+  md += `\`\`\`json\n` + JSON.stringify({ sleep: S.sleep, content: S.content, water: S.water }, null, 2) + `\n\`\`\`\n\n`;
 
   md += `## 4. Personal Best Lifts\n`;
   LIFTS.forEach(l=>{
@@ -2127,11 +2274,13 @@ document.querySelectorAll('.tab').forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
     b.setAttribute('aria-selected','true');
-    ['today','food','calendar','content','sleep','grooming','milestones','protein','skin','lifts','body','momentum','sync'].forEach(t=>$('#p-'+t).classList.add('hide'));
+    ['today','food','calendar','symmetry','style','content','sleep','grooming','milestones','protein','skin','lifts','body','momentum','sync'].forEach(t=>$('#p-'+t).classList.add('hide'));
     $('#p-'+b.dataset.tab).classList.remove('hide');
     window.scrollTo({top:0,behavior:'instant'});
     if(b.dataset.tab==='food')renderFood();
     if(b.dataset.tab==='calendar')renderMasterCalendar();
+    if(b.dataset.tab==='symmetry')renderSymmetryTab();
+    if(b.dataset.tab==='style')renderStyleTab();
     if(b.dataset.tab==='skin')renderSkin();
     if(b.dataset.tab==='grooming')renderGroomingActions();
     if(b.dataset.tab==='milestones')renderMilestones();
@@ -2152,6 +2301,8 @@ function renderAll(){
   renderGroomingActions();
   renderMilestones();
   renderMasterCalendar();
+  renderSymmetryTab();
+  renderStyleTab();
   renderHeatmap();
 }
 
