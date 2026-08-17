@@ -1,4 +1,6 @@
 {
+  "name": "glowup",
+  "cleanUrls": true,
   "headers": [
     {
       "source": "/(.*)",
