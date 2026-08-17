@@ -147,12 +147,21 @@ h2{font-family:'Fraunces',serif;font-size:18px;font-weight:600;letter-spacing:-.
   flex:1;min-width:0;padding:2px 8px;display:flex;flex-direction:column;gap:4px;justify-content:center;
 }
 
-/* Event chip */
+/* Event chip - Dynamic Proportional Heights */
 .gcal-event{
   border-radius:8px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;
-  transition:.12s;border-left:4px solid transparent;cursor:pointer;position:relative;
+  transition:all .18s cubic-bezier(0.16, 1, 0.3, 1);border-left:4px solid transparent;cursor:pointer;position:relative;
 }
-.gcal-event:active{transform:scale(.99)}
+.gcal-event:active{transform:scale(.98)}
+.gcal-event.dur-15{min-height:38px;padding:4px 8px;font-size:11.5px}
+.gcal-event.dur-20{min-height:44px;padding:5px 9px}
+.gcal-event.dur-30{min-height:54px;padding:7px 10px}
+.gcal-event.dur-45{min-height:68px;padding:9px 12px}
+.gcal-event.dur-60{min-height:82px;padding:11px 13px}
+.gcal-event.dur-75{min-height:96px;padding:12px 14px}
+.gcal-event.dur-120{min-height:128px;padding:14px 16px;border-left-width:5px}
+.gcal-event.dur-sleep{min-height:115px;padding:13px 15px}
+
 .gcal-event.ev-sleep{background:rgba(110,143,196,.12);border-left-color:var(--indigo)}
 .gcal-event.ev-morning{background:rgba(232,163,61,.14);border-left-color:var(--turmeric)}
 .gcal-event.ev-skin{background:rgba(201,123,142,.14);border-left-color:var(--rose)}
@@ -187,6 +196,36 @@ h2{font-family:'Fraunces',serif;font-size:18px;font-weight:600;letter-spacing:-.
   font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
   background:var(--vermilion);color:#FFF;padding:2px 6px;border-radius:4px;
   margin-left:6px;flex:0 0 auto;letter-spacing:.03em;
+}
+
+/* Fluid Motion & Micro-Animations */
+section:not(.hide) {
+  animation: tabFadeIn .22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+button:active {
+  transform: scale(.96) !important;
+  transition: transform .06s ease;
+}
+.abstinence-card {
+  background: linear-gradient(145deg, #2D1D16 0%, #1C1815 100%);
+  border: 1.5px solid var(--turmeric);
+  box-shadow: 0 8px 24px rgba(232,163,61,.14);
+  border-radius: var(--r);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.abstinence-fire {
+  font-size: 30px;
+  display: inline-block;
+  animation: firePulse 2s infinite ease-in-out;
+}
+@keyframes firePulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(232,163,61,.4)); }
+  50% { transform: scale(1.12); filter: drop-shadow(0 0 10px rgba(201,80,58,.8)); }
 }
 
 .gcal-ev-info{flex:1;min-width:0}
@@ -913,6 +952,17 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
 
 <!-- ============ LIFTS ============ -->
 <section id="p-lifts" class="hide">
+  <!-- METALLICADPA 6-DAY PPL PROGRAM CARD -->
+  <div class="card">
+    <p class="eyebrow" style="color:var(--turmeric)"><span class="n">🏋️</span> r/fitness 6-day ppl program</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <h2 id="pplDayTitle">Today: Push A Workout</h2>
+      <span class="tag-badge tag-best" id="pplDayBadge">Metallicadpa Linear Progression</span>
+    </div>
+    <p class="note" id="pplDayDesc" style="margin-bottom:10px">Heavy 5x5+ AMRAP main compound + 3x8–12 accessory volume. Add +2.5kg when hitting all reps.</p>
+    <div id="pplDayRoutineList" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px"></div>
+  </div>
+
   <div class="card">
     <p class="eyebrow"><span class="n">ppl</span> log a set</p>
     <div class="frow">
@@ -967,6 +1017,26 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
 
 <!-- ============ MOMENTUM & GITHUB HEATMAP ============ -->
 <section id="p-momentum" class="hide">
+  <!-- DOPAMINE & ABSTINENCE RETENTION SHIELD -->
+  <div class="abstinence-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="abstinence-fire">🔥</span>
+        <div>
+          <h2 style="font-size:18px;margin:0" id="abstinenceStreakTitle">14 Days Clean &amp; Transmuted</h2>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--turmeric)" id="abstinenceMilestoneBadge">Phase 2: Androgen Receptor Upregulation</span>
+        </div>
+      </div>
+      <span class="tag-badge tag-best" id="abstinenceStatusTag">LOCKED IN</span>
+    </div>
+    <p class="note" style="margin-bottom:12px" id="abstinenceNote">Dopamine sensitivity restored, brain fog eliminated, high mental drive and magnetic confidence.</p>
+    
+    <div style="display:flex;gap:8px">
+      <button class="btn sage" style="flex:2" id="btnConfirmClean">✓ Confirm Clean Today (+1 Day)</button>
+      <button class="btn sm" style="flex:1;background:var(--surface3)" id="btnResetClean">↺ Reset</button>
+    </div>
+  </div>
+
   <div class="card">
     <p class="eyebrow"><span class="n">activity</span> 12-week consistency matrix</p>
     <h2>Never-Zero Momentum Grid</h2>
@@ -1150,20 +1220,125 @@ if(document.getElementById('btnLockNow')){
   };
 }
 
-/* ---------------- lifts array ---------------- */
+/* ---------------- lifts array (Metallicadpa 6-Day PPL) ---------------- */
 const LIFTS = [
+  'Flat Barbell Bench Press',
+  'Conventional Deadlift',
+  'Barbell Back Squat',
+  'Standing Barbell OHP',
+  'Barbell Bent-Over Row',
   'Incline DB Bench Press',
-  'Barbell Overhead Press',
-  'Lat Pulldown',
+  'Lat Pulldowns',
   'Chest Supported Row',
-  'Bulgarian Split Squat',
   'Romanian Deadlift (RDL)',
+  'Bulgarian Split Squat',
+  'Leg Press',
   'Face Pulls',
-  'Lateral Raises',
+  'Dumbbell Lateral Raises',
   'Incline Bicep Curl',
+  'Dumbbell Hammer Curls',
+  'Tricep Rope Pushdowns',
   'Overhead Tricep Extension',
+  'Hamstring Leg Curls',
+  'Standing Calf Raises',
   'Farmer Carries'
 ];
+
+const METALLICADPA_PPL = {
+  0: {
+    name: 'Active Rest & Recovery',
+    split: 'Mobility & Spinal Decompression',
+    badge: 'Rest & Decompression',
+    desc: 'Circadian sunlight walk (60m) + spine decompression + dead hangs. Zero heavy loading.',
+    exercises: [
+      { name: 'Outdoor Sunlight Walk', sets: '1×60m', cue: 'Circadian reset & 5,000+ steps' },
+      { name: 'Dead Hangs (Scapular Decompression)', sets: '3×30s', cue: 'Reclaims spinal disc height' },
+      { name: 'Doorway Pec & Hip Flexor Stretch', sets: '3×45s', cue: 'Chest expansion & posture realignment' }
+    ]
+  },
+  1: {
+    name: 'Pull A (Deadlift Focus)',
+    split: 'Back, Rear Delts & Biceps',
+    badge: 'Pull A · Heavy Deadlift',
+    desc: 'Heavy Deadlift (1x5+ AMRAP) + Back Hypertrophy & Bicep Volume',
+    exercises: [
+      { name: 'Conventional Deadlift', sets: '1×5+ (AMRAP)', cue: 'Heavy top set. +5kg when hitting 5+ clean reps.' },
+      { name: 'Lat Pulldowns', sets: '3×8–12', cue: 'Full stretch at top, pull to upper chest.' },
+      { name: 'Chest Supported Row', sets: '3×8–12', cue: 'Squeeze scapulae together for 1 sec.' },
+      { name: 'Face Pulls', sets: '3×15–20', cue: 'Pull rope to eye level, externally rotate wrists.' },
+      { name: 'Incline Bicep Curl', sets: '3×8–12', cue: 'Strict form, no torso swing.' },
+      { name: 'Dumbbell Hammer Curls', sets: '3×8–12', cue: 'Brachialis & forearm thickness.' }
+    ]
+  },
+  2: {
+    name: 'Push A (Bench Press Focus)',
+    split: 'Chest, Shoulders & Triceps',
+    badge: 'Push A · Heavy Bench',
+    desc: 'Heavy Flat Bench (5x5+ AMRAP) + Overhead Press & Tricep Hypertrophy',
+    exercises: [
+      { name: 'Flat Barbell Bench Press', sets: '5×5+ (AMRAP)', cue: '4 sets of 5, final set AMRAP. +2.5kg when hitting 5+ reps.' },
+      { name: 'Standing Barbell OHP', sets: '3×8–12', cue: 'Full lockout overhead, tight glutes.' },
+      { name: 'Incline DB Bench Press', sets: '3×8–12', cue: 'Upper chest clavicular head emphasis.' },
+      { name: 'Dumbbell Lateral Raises', sets: '3×15–20', cue: 'Superset with triceps. Lead with elbows for side delt cap.' },
+      { name: 'Tricep Rope Pushdowns', sets: '3×8–12', cue: 'Flaring rope at bottom for lateral head.' },
+      { name: 'Overhead Tricep Extension', sets: '3×8–12', cue: 'Full long head tricep stretch behind head.' }
+    ]
+  },
+  3: {
+    name: 'Legs A (Squat Focus)',
+    split: 'Quads, Hamstrings & Calves',
+    badge: 'Legs A · Heavy Squat',
+    desc: 'Heavy Barbell Back Squat (5x5+ AMRAP) + Romanian Deadlift (RDL)',
+    exercises: [
+      { name: 'Barbell Back Squat', sets: '5×5+ (AMRAP)', cue: '4 sets of 5, final set AMRAP. +2.5kg progression.' },
+      { name: 'Romanian Deadlift (RDL)', sets: '3×8–12', cue: 'Hinge at hips until hamstring stretch, neutral spine.' },
+      { name: 'Leg Press', sets: '3×8–12', cue: 'Deep knee flexion, controlled eccentric.' },
+      { name: 'Hamstring Leg Curls', sets: '3×8–12', cue: 'Hamstring isolation, 2-sec eccentric.' },
+      { name: 'Standing Calf Raises', sets: '3×15–20', cue: '2-sec pause at bottom stretch, 1-sec peak squeeze.' }
+    ]
+  },
+  4: {
+    name: 'Pull B (Barbell Row Focus)',
+    split: 'Back Thickness & Biceps',
+    badge: 'Pull B · Heavy Row',
+    desc: 'Heavy Barbell Row (5x5+ AMRAP) + High-Volume Back & Arms',
+    exercises: [
+      { name: 'Barbell Bent-Over Row', sets: '5×5+ (AMRAP)', cue: '4 sets of 5, final set AMRAP. +2.5kg progression.' },
+      { name: 'Lat Pulldowns', sets: '3×8–12', cue: 'V-taper lat width driver.' },
+      { name: 'Chest Supported Row', sets: '3×8–12', cue: 'Rhomboid and mid-trap thickness.' },
+      { name: 'Face Pulls', sets: '3×15–20', cue: 'Shoulder health, rear delt hypertrophy.' },
+      { name: 'Incline Bicep Curl', sets: '3×8–12', cue: 'Long head bicep stretch & peak.' },
+      { name: 'Dumbbell Hammer Curls', sets: '3×8–12', cue: 'Brachialis & forearm thickness.' }
+    ]
+  },
+  5: {
+    name: 'Push B (Overhead Press Focus)',
+    split: 'Delts, Chest & Triceps',
+    badge: 'Push B · Heavy OHP',
+    desc: 'Heavy Overhead Press (5x5+ AMRAP) + Flat Bench Volume (3x8-12)',
+    exercises: [
+      { name: 'Standing Barbell OHP', sets: '5×5+ (AMRAP)', cue: '4 sets of 5, final set AMRAP. +2.5kg progression.' },
+      { name: 'Flat Barbell Bench Press', sets: '3×8–12', cue: 'Controlled 2-sec eccentric tempo.' },
+      { name: 'Incline DB Bench Press', sets: '3×8–12', cue: 'Upper chest clavicular head.' },
+      { name: 'Dumbbell Lateral Raises', sets: '3×15–20', cue: 'Strict 15-20 reps with light weight & control.' },
+      { name: 'Tricep Rope Pushdowns', sets: '3×8–12', cue: 'Lockout and hold for 1 second.' },
+      { name: 'Overhead Tricep Extension', sets: '3×8–12', cue: 'Deep elbow flexion behind neck.' }
+    ]
+  },
+  6: {
+    name: 'Legs B (Squat & Hamstring Focus)',
+    split: 'Quads, Posterior Chain & Calves',
+    badge: 'Legs B · Heavy Squat',
+    desc: 'Heavy Squat (5x5+ AMRAP) + Romanian Deadlifts & Isolation',
+    exercises: [
+      { name: 'Barbell Back Squat', sets: '5×5+ (AMRAP)', cue: 'Depth below parallel, chest tall.' },
+      { name: 'Romanian Deadlift (RDL)', sets: '3×8–12', cue: 'Deep posterior chain stretch.' },
+      { name: 'Leg Press', sets: '3×8–12', cue: 'Quad burn and glute stability.' },
+      { name: 'Hamstring Leg Curls', sets: '3×8–12', cue: 'Isolation contraction.' },
+      { name: 'Standing Calf Raises', sets: '3×15–20', cue: 'Calf muscle belly volume.' }
+    ]
+  }
+};
 
 /* ---------------- 4 preset swappable meal combos ---------------- */
 const MEAL_COMBOS = [
@@ -2559,6 +2734,34 @@ function renderSkin(){
 }
 
 /* ---------------- render: lifts ---------------- */
+/* ---------------- render: lifts & metallicadpa ppl ---------------- */
+function renderMetallicadpa(){
+  const dow = parse(selectedDate).getDay();
+  const routine = METALLICADPA_PPL[dow] || METALLICADPA_PPL[0];
+  if($('#pplDayTitle')) $('#pplDayTitle').textContent = `Today: ${routine.name}`;
+  if($('#pplDayBadge')) $('#pplDayBadge').textContent = routine.badge;
+  if($('#pplDayDesc')) $('#pplDayDesc').textContent = routine.desc;
+  
+  const list = $('#pplDayRoutineList');
+  if(!list) return;
+  list.innerHTML = '';
+  routine.exercises.forEach(ex => {
+    const row = el('div', 'logrow');
+    row.style.background = 'var(--surface2)';
+    row.style.padding = '8px 10px';
+    row.style.borderRadius = '6px';
+    row.style.border = '1px solid var(--line)';
+    row.innerHTML = `
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:700;font-size:13px;color:var(--paper)">${ex.name}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">${ex.cue}</div>
+      </div>
+      <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--turmeric);font-size:12px">${ex.sets}</span>
+    `;
+    list.appendChild(row);
+  });
+}
+
 function renderLiftPick(){
   const s=$('#liftPick');
   if(s.children.length)return;
@@ -2589,6 +2792,7 @@ function updateHint(){
     : `No history for ${n} yet.`;
 }
 function renderLifts(){
+  renderMetallicadpa();
   renderLiftPick();
   const m=$('#liftToday');m.innerHTML='';
   const ls=day(selectedDate).lifts;
@@ -2622,6 +2826,54 @@ function renderLifts(){
     pb.appendChild(r);
   });
 }
+
+/* ---------------- render: dopamine & abstinence retention ---------------- */
+function renderAbstinence(){
+  S.abstinence = S.abstinence || { start: '2026-08-04', lastConfirm: '2026-08-18' };
+  const cleanDays = Math.max(1, daysBetween(S.abstinence.start, selectedDate) + 1);
+  
+  let phase = 'Phase 1: Dopamine Baseline Reset (Days 1–3)';
+  let note = 'Dopamine receptor sensitivity recovering. Keep urges away with pushups and cold showers.';
+  if(cleanDays >= 90){
+    phase = 'Phase 5: Dopamine Mastery & Unshakable Will (90+ Days)';
+    note = 'Complete dopamine reboot. Unshakable internal focus, effortless discipline, elite androgen sensitivity.';
+  } else if(cleanDays >= 30){
+    phase = 'Phase 4: Full Neurochemical Baseline Restored (30–89 Days)';
+    note = 'Deep baseline confidence, high social magnetism, relentless drive to execute without friction.';
+  } else if(cleanDays >= 14){
+    phase = 'Phase 3: Cognitive Clarity & Energy Surge (14–29 Days)';
+    note = 'Brain fog eliminated, sleep architecture deepened, physical endurance and vocal resonance elevated.';
+  } else if(cleanDays >= 7){
+    phase = 'Phase 2: Androgen Receptor Upregulation (7–13 Days)';
+    note = 'Natural testosterone surge and androgen receptor density peaking in brain and muscle tissue.';
+  }
+
+  if($('#abstinenceStreakTitle')) $('#abstinenceStreakTitle').textContent = `${cleanDays} Days Clean & Transmuted`;
+  if($('#abstinenceMilestoneBadge')) $('#abstinenceMilestoneBadge').textContent = phase;
+  if($('#abstinenceNote')) $('#abstinenceNote').textContent = note;
+  if($('#abstinenceStatusTag')) $('#abstinenceStatusTag').textContent = cleanDays >= 14 ? 'ELITE STREAK' : 'DISCIPLINE ACTIVE';
+}
+
+function confirmCleanToday(){
+  S.abstinence = S.abstinence || { start: '2026-08-04', lastConfirm: '2026-08-18' };
+  S.abstinence.lastConfirm = selectedDate;
+  playSuccessChime();
+  save({area:'abstinence',item:'clean-day',exact_update:`Confirmed day ${daysBetween(S.abstinence.start, selectedDate) + 1} clean`});
+  renderAbstinence();
+  toast('🔥 Clean Day Confirmed! Energy Transmuted.');
+}
+
+function resetAbstinence(){
+  if(confirm('Reset abstinence streak to Day 1? (Remember: Relapse is just a data point, get right back on track!)')){
+    S.abstinence = { start: selectedDate, lastConfirm: selectedDate };
+    save({area:'abstinence',item:'reset',exact_update:'Reset abstinence streak'});
+    renderAbstinence();
+    toast('Streak reset to Day 1. Stand tall and rebuild.');
+  }
+}
+
+if($('#btnConfirmClean')) $('#btnConfirmClean').onclick = confirmCleanToday;
+if($('#btnResetClean')) $('#btnResetClean').onclick = resetAbstinence;
 
 /* ---------------- render: body ---------------- */
 function renderBody(){
@@ -2838,7 +3090,9 @@ function renderAll(){
   renderMonthCalendar();
   renderSymmetryTab();
   renderStyleTab();
+  renderLifts();
   renderHeatmap();
+  renderAbstinence();
 }
 
 /* ---------------- boot ---------------- */
