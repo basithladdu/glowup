@@ -4,9 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#14110F">
 <title>GLOWUP · Action Matrix &amp; 24h Google Calendar</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -148,7 +150,7 @@ h2{font-family:'Fraunces',serif;font-size:18px;font-weight:600;letter-spacing:-.
 /* Event chip */
 .gcal-event{
   border-radius:8px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;
-  transition:.12s;border-left:4px solid transparent;cursor:pointer;
+  transition:.12s;border-left:4px solid transparent;cursor:pointer;position:relative;
 }
 .gcal-event:active{transform:scale(.99)}
 .gcal-event.ev-sleep{background:rgba(110,143,196,.12);border-left-color:var(--indigo)}
@@ -166,6 +168,26 @@ h2{font-family:'Fraunces',serif;font-size:18px;font-weight:600;letter-spacing:-.
   opacity:.55;background:rgba(37,32,28,.8);border-left-color:var(--sage);
 }
 .gcal-event.done .gcal-ev-title{text-decoration:line-through;color:var(--muted)}
+
+.gcal-event.now-active{
+  box-shadow:0 0 0 1.5px var(--turmeric), 0 4px 14px rgba(232,163,61,.22);
+}
+
+.gcal-now-line{
+  display:flex;align-items:center;position:relative;margin:4px 0 6px;z-index:2;
+}
+.gcal-now-dot{
+  width:9px;height:9px;border-radius:50%;background:var(--vermilion);box-shadow:0 0 8px var(--vermilion);
+  margin-right:2px;flex:0 0 auto;
+}
+.gcal-now-rule{
+  height:2px;background:var(--vermilion);flex:1;opacity:.85;
+}
+.gcal-now-tag{
+  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
+  background:var(--vermilion);color:#FFF;padding:2px 6px;border-radius:4px;
+  margin-left:6px;flex:0 0 auto;letter-spacing:.03em;
+}
 
 .gcal-ev-info{flex:1;min-width:0}
 .gcal-ev-time{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.04em;margin-bottom:2px}
@@ -973,7 +995,53 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
 <script>
 'use strict';
 
-/* ---------------- audio synth & haptic feedback ---------------- */
+/* ---------------- DOM Helpers, Elements & Toast ---------------- */
+const $ = (id) => {
+  if (typeof id !== 'string') return id;
+  if (id.startsWith('#') || id.startsWith('.')) return document.querySelector(id);
+  return document.getElementById(id);
+};
+const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+function el(tag, cls, html){
+  const elem = document.createElement(tag);
+  if(cls) elem.className = cls;
+  if(html !== undefined && html !== null) elem.innerHTML = html;
+  return elem;
+}
+
+function toast(msg, ms = 2400){
+  const t = document.getElementById('toast');
+  if(!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), ms);
+}
+
+/* ---------------- Date Engine ---------------- */
+const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const parse = s => {
+  if(!s) return new Date();
+  const [a,b,c] = s.split('-').map(Number);
+  return new Date(a, b-1, c);
+};
+const realToday = new Date();
+const REAL_TODAY = iso(realToday);
+let selectedDate = REAL_TODAY;
+let calViewingMonth = new Date(realToday.getFullYear(), realToday.getMonth(), 1);
+
+function daysBetween(a,b){ return Math.round((parse(b)-parse(a))/864e5); }
+function shift(s,n){ const d=parse(s); d.setDate(d.getDate()+n); return iso(d); }
+const fmt = s => {
+  if(!s) return '';
+  const d = parse(s);
+  return `${d.getDate()} ${MON[d.getMonth()]}`;
+};
+
+/* ---------------- Audio Synth & Haptic Feedback ---------------- */
 function playSuccessChime(){
   try{
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -995,7 +1063,7 @@ function playSuccessChime(){
   }catch(e){}
 }
 
-/* ---------------- supabase cloud init ---------------- */
+/* ---------------- Supabase Cloud Init ---------------- */
 const SUPABASE_URL = "https://kircxokjlqguyzlkhmop.supabase.co";
 const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtpcmN4b2tqbHFndXl6bGtobW9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5OTI1MTQsImV4cCI6MjEwMjU2ODUxNH0.zU6f3TqyhHHGFxrMFM55JH-c8Jn7T2FbByIxDGUOZ8k";
 let sbClient = null;
@@ -1005,7 +1073,7 @@ try{
   }
 }catch(e){}
 
-/* ---------------- password protection ---------------- */
+/* ---------------- Password Protection ---------------- */
 const PASSCODE = 'laddu';
 const AUTH_KEY = 'glowup-auth-v1';
 
@@ -1022,43 +1090,36 @@ function checkAuth(){
   }
 }
 
-document.getElementById('authBtn').onclick = () => {
-  const input = document.getElementById('authPass').value.trim();
-  if(input.toLowerCase() === PASSCODE.toLowerCase()){
-    localStorage.setItem(AUTH_KEY, 'true');
-    sessionStorage.setItem(AUTH_KEY, 'true');
-    document.getElementById('authModal').style.display = 'none';
-    document.getElementById('authError').style.display = 'none';
-    playSuccessChime();
-    toast('Welcome back, Basith');
-  } else {
-    document.getElementById('authError').style.display = 'block';
-  }
-};
+if(document.getElementById('authBtn')){
+  document.getElementById('authBtn').onclick = () => {
+    const input = (document.getElementById('authPass').value || '').trim();
+    if(input.toLowerCase() === PASSCODE.toLowerCase()){
+      localStorage.setItem(AUTH_KEY, 'true');
+      sessionStorage.setItem(AUTH_KEY, 'true');
+      document.getElementById('authModal').style.display = 'none';
+      document.getElementById('authError').style.display = 'none';
+      playSuccessChime();
+      toast('Welcome back, Basith');
+      renderAll();
+    } else {
+      document.getElementById('authError').style.display = 'block';
+    }
+  };
+}
 
-document.getElementById('authPass').onkeydown = (e) => {
-  if(e.key === 'Enter') document.getElementById('authBtn').click();
-};
+if(document.getElementById('authPass')){
+  document.getElementById('authPass').onkeydown = (e) => {
+    if(e.key === 'Enter') document.getElementById('authBtn').click();
+  };
+}
 
-document.getElementById('btnLockNow').onclick = () => {
-  localStorage.removeItem(AUTH_KEY);
-  sessionStorage.removeItem(AUTH_KEY);
-  checkAuth();
-};
-
-/* ---------------- date engine ---------------- */
-const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-const parse=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c);};
-const realToday = new Date();
-const REAL_TODAY = iso(realToday);
-let selectedDate = REAL_TODAY;
-let calViewingMonth = new Date(realToday.getFullYear(), realToday.getMonth(), 1);
-
-function daysBetween(a,b){return Math.round((parse(b)-parse(a))/864e5);}
-function shift(s,n){const d=parse(s);d.setDate(d.getDate()+n);return iso(d);}
-const fmt=s=>{const d=parse(s);return `${d.getDate()} ${MON[d.getMonth()]}`;};
+if(document.getElementById('btnLockNow')){
+  document.getElementById('btnLockNow').onclick = () => {
+    localStorage.removeItem(AUTH_KEY);
+    sessionStorage.removeItem(AUTH_KEY);
+    checkAuth();
+  };
+}
 
 /* ---------------- lifts array ---------------- */
 const LIFTS = [
@@ -1151,6 +1212,16 @@ const STYLE_ACTIONS = [
   { id:'sty_antipersp', cat:'Hygiene Shield', title:'Nightly Clinical Antiperspirant Application', sub:'Apply before bed so active ingredients plug sweat ducts overnight. Zero day sweat marks.', cta:'✓ Applied Nightly' },
   { id:'sty_fit', cat:'V-Taper Styling', title:'Monochrome Fit & Exact Shoulder Seams', sub:'Ensure shirt seams hit strictly on acromion bone. Tapered pant ankles with zero bunching over shoes.', cta:'✓ Fit Locked' },
   { id:'sty_shoes', cat:'Footwear Polish', title:'Crisp Minimalist Footwear Wipe-Down', sub:'Keep white leather sneakers or dark structured footwear spotless with a 30-second wipe.', cta:'✓ Shoes Clean' }
+];
+
+/* ---------------- grooming action items ---------------- */
+const GROOMING_ACTIONS = [
+  { id:'ga_oil', freq:'Sun & Wed', title:'Rosemary + Castor Scalp Oiling & Massage', sub:'Apply warm blend to scalp roots, massage 5 mins with fingertips, leave for 45–60 mins pre-wash.', cta:'✓ Log Oiling' },
+  { id:'ga_keto', freq:'Tue & Thu', title:'Ketoconazole 2% Anti-Dandruff Scalp Treatment', sub:'Lather into scalp, leave active for 5 full minutes before rinsing. Eliminates flaking and fungal irritation.', cta:'✓ Washed Keto' },
+  { id:'ga_beard', freq:'Every 2–3 Days', title:'Beard Line & Neck Line Razor Sharp Line-up', sub:'Shave below 2 fingers above Adam\'s apple. Keep clean top cheeks and sharp sideburn taper.', cta:'✓ Beard Lined' },
+  { id:'ga_nails', freq:'Every Tue & Sat', title:'Nail Trim, File & Hand Cream', sub:'Cut straight across, smooth sharp edges with glass file, apply moisturiser on cuticles and knuckles.', cta:'✓ Nails Clean' },
+  { id:'ga_lip', freq:'Tue & Sat', title:'Nicole / WishCare Exfoliating Lip Scrub + Occlusive', sub:'Gently scrub dead skin flakes off lips for 60s, rinse, seal immediately with thick lip balm/Vaseline.', cta:'✓ Lips Scrubbed' },
+  { id:'ga_brows', freq:'Weekly', title:'Eyebrow Unibrow Pluck & Clean Taper', sub:'Pluck stray hairs between eyebrows above nasal bridge. Do not over-thin natural arch.', cta:'✓ Brows Clean' }
 ];
 
 /* ---------------- storage state ---------------- */
@@ -1253,6 +1324,16 @@ function day(d){
   x.food=x.food||[];x.habits=x.habits||{};x.lifts=x.lifts||[];x.grooming=x.grooming||{};
   x.timeline=x.timeline||{};x.symmetry=x.symmetry||{};x.style=x.style||{};
   return x;
+}
+
+function totals(d){
+  const f = day(d).food || [];
+  return f.reduce((acc, item) => ({
+    k: acc.k + (Number(item.k) || 0),
+    p: acc.p + (Number(item.p) || 0),
+    c: acc.c + (Number(item.c) || 0),
+    f: acc.f + (Number(item.f) || 0)
+  }), { k:0, p:0, c:0, f:0 });
 }
 
 /* ---------------- targets ---------------- */
@@ -1410,6 +1491,11 @@ function renderMasterCalendar(){
   const dy = day(targetDateForDow);
   const tl = dy.timeline;
 
+  const now = new Date();
+  const isViewingRealToday = targetDateForDow === REAL_TODAY;
+  const currentHour = now.getHours();
+  const currentMin = now.getMinutes();
+
   // Render all 24 hours (00:00 to 23:00) like Google Calendar
   let tickedCount = 0;
   for(let hour = 0; hour < 24; hour++){
@@ -1426,10 +1512,20 @@ function renderMasterCalendar(){
     `;
     const lane = row.querySelector(`#gcalLane_${hour}`);
 
+    if(isViewingRealToday && hour === currentHour){
+      const ampm = currentHour >= 12 ? 'PM' : 'AM';
+      const dispH = currentHour === 0 ? 12 : currentHour > 12 ? currentHour - 12 : currentHour;
+      const dispTime = `${dispH}:${String(currentMin).padStart(2,'0')} ${ampm}`;
+      const nowLine = el('div', 'gcal-now-line');
+      nowLine.innerHTML = `<span class="gcal-now-dot"></span><div class="gcal-now-rule"></div><span class="gcal-now-tag">${dispTime} · CURRENT</span>`;
+      lane.appendChild(nowLine);
+    }
+
     matchingEvents.forEach(ev => {
       const done = !!tl[ev.id];
       if(done) tickedCount++;
-      const evBox = el('div', `gcal-event ${ev.cls}` + (done ? ' done' : ''));
+      const isNowActive = isViewingRealToday && hour === currentHour && !done;
+      const evBox = el('div', `gcal-event ${ev.cls}` + (done ? ' done' : '') + (isNowActive ? ' now-active' : ''));
       evBox.innerHTML = `
         <div class="gcal-ev-info">
           <div class="gcal-ev-time">⏱️ ${ev.time}</div>
@@ -1442,19 +1538,7 @@ function renderMasterCalendar(){
       if(btn){
         btn.onclick = (e) => {
           e.stopPropagation();
-          tl[ev.id] = !tl[ev.id];
-          if(tl[ev.id]){
-            playSuccessChime();
-            if(ev.macro){
-              day(targetDateForDow).food.push(ev.macro);
-            }
-          }
-          save({area:'calendar',item:ev.id,exact_update:`Calendar ${ev.title}: ${tl[ev.id]?'done':'undone'}`});
-          renderMasterCalendar();
-          renderTodayActions();
-          renderTodayStats();
-          renderFood();
-          toast(tl[ev.id] ? `✓ Done: ${ev.title}` : `Undone: ${ev.title}`);
+          toggleCalendarEvent(ev.id, targetDateForDow);
         };
       }
       lane.appendChild(evBox);
@@ -1463,7 +1547,27 @@ function renderMasterCalendar(){
     mount.appendChild(row);
   }
 
-  $('#gcalDayProgress').textContent = `${tickedCount} / ${schedule.length} Tasks Ticked`;
+  if($('#gcalDayProgress')) $('#gcalDayProgress').textContent = `${tickedCount} / ${schedule.length} Tasks Ticked`;
+}
+
+function toggleCalendarEvent(evId, targetDate = selectedDate){
+  const dy = day(targetDate);
+  const tl = dy.timeline;
+  const schedule = get24HourCalendarSchedule(parse(targetDate).getDay());
+  const ev = schedule.find(x => x.id === evId) || { id: evId, title: evId, cta: '✓ Done' };
+  tl[evId] = !tl[evId];
+  if(tl[evId]){
+    playSuccessChime();
+    if(ev.macro){
+      dy.food.push(ev.macro);
+    }
+  }
+  save({area:'calendar',item:evId,exact_update:`Calendar ${ev.title}: ${tl[evId]?'done':'undone'}`});
+  renderMasterCalendar();
+  renderTodayActions();
+  renderTodayStats();
+  renderFood();
+  toast(tl[evId] ? `✓ Done: ${ev.title}` : `Undone: ${ev.title}`);
 }
 
 /* ---------------- 2. render: 7-Day Week Google Calendar View ---------------- */
@@ -1712,56 +1816,69 @@ function executeTask(task){
 /* ---------------- render: today stats & water ---------------- */
 function renderTodayStats(){
   const t = totals(selectedDate);
-  const pct = Math.min(1,t.k/KCAL);
-  const C = 2*Math.PI*38;
+  const pct = Math.min(1, t.k / KCAL);
+  const C = 2 * Math.PI * 38;
   const ring = $('#ringKcal');
-  ring.style.strokeDashoffset = C*(1-pct);
-  ring.setAttribute('stroke',t.k>KCAL?'var(--vermilion)':'var(--turmeric)');
-  $('#rKcal').textContent = Math.round(t.k);
-  $('#sProt').textContent = `${Math.round(t.p)} / ${PROT}g`;
-  $('#sProt').style.color = t.p>=PROT?'var(--sage)':'var(--paper)';
+  if(ring){
+    ring.style.strokeDashoffset = C * (1 - pct);
+    ring.setAttribute('stroke', t.k > KCAL ? 'var(--vermilion)' : 'var(--turmeric)');
+  }
+  if($('#rKcal')) $('#rKcal').textContent = Math.round(t.k);
+  if($('#sProt')){
+    $('#sProt').textContent = `${Math.round(t.p)} / ${PROT}g`;
+    $('#sProt').style.color = t.p >= PROT ? 'var(--sage)' : 'var(--paper)';
+  }
   
-  const def = MAINT-t.k;
-  $('#sDef').textContent = t.k?`${def>0?'−':'+'}${Math.abs(Math.round(def))}`:'—';
-  $('#sDef').style.color = def>=400?'var(--sage)':def>0?'var(--paper)':'var(--vermilion)';
+  const def = MAINT - t.k;
+  if($('#sDef')){
+    $('#sDef').textContent = t.k ? `${def > 0 ? '−' : '+'}${Math.abs(Math.round(def))}` : '—';
+    $('#sDef').style.color = def >= 400 ? 'var(--sage)' : def > 0 ? 'var(--paper)' : 'var(--vermilion)';
+  }
 
   const w = S.water[selectedDate] || 0;
-  $('#sWater').textContent = `${(w/1000).toFixed(2)} / 3.0L`;
-  $('#sWater').style.color = w >= 3000 ? 'var(--sage)' : 'var(--paper)';
+  if($('#sWater')){
+    $('#sWater').textContent = `${(w / 1000).toFixed(2)} / 3.0L`;
+    $('#sWater').style.color = w >= 3000 ? 'var(--sage)' : 'var(--paper)';
+  }
 
   const sl = S.sleep[selectedDate];
   if($('#sSleepToday')) $('#sSleepToday').textContent = sl ? `${sl.hours}h (${sl.qual}/10)` : 'Not logged';
 
-  const kc = t.p*4+t.c*4+t.f*9||1;
-  const bar = $('#macroBar').children;
-  bar[0].style.width = (t.p*4/kc*100)+'%';
-  bar[1].style.width = (t.c*4/kc*100)+'%';
-  bar[2].style.width = (t.f*9/kc*100)+'%';
-  $('#kP').textContent = Math.round(t.p)+'g';
-  $('#kC').textContent = Math.round(t.c)+'g';
-  $('#kF').textContent = Math.round(t.f)+'g';
+  const kc = t.p * 4 + t.c * 4 + t.f * 9 || 1;
+  const macroBar = $('#macroBar');
+  if(macroBar && macroBar.children && macroBar.children.length >= 3){
+    macroBar.children[0].style.width = (t.p * 4 / kc * 100) + '%';
+    macroBar.children[1].style.width = (t.c * 4 / kc * 100) + '%';
+    macroBar.children[2].style.width = (t.f * 9 / kc * 100) + '%';
+  }
+  if($('#kP')) $('#kP').textContent = Math.round(t.p) + 'g';
+  if($('#kC')) $('#kC').textContent = Math.round(t.c) + 'g';
+  if($('#kF')) $('#kF').textContent = Math.round(t.f) + 'g';
 
   // Blister strip
-  const strip = $('#strip'); strip.innerHTML = '';
-  const selDOW = parse(selectedDate).getDay();
-  const weekStart = shift(selectedDate, -selDOW);
-  for(let i=0;i<7;i++){
-    const ds = shift(weekStart,i);
-    const a = activeFor(ds);
-    const isSel = ds === selectedDate;
-    const p = el('div','pill'+(isSel?' selected':'')+(a.short==='PEEL'?' peel':''));
-    p.innerHTML = `<span class="d">${DAYS[i].toUpperCase()}</span>
-      <span class="g" style="color:var(${a.color})"></span>
-      <span class="t">${a.short}</span>`;
-    p.onclick = () => {
-      selectedDate = ds;
-      calSelectedDay = i;
-      renderAll();
-    };
-    strip.appendChild(p);
+  const strip = $('#strip');
+  if(strip){
+    strip.innerHTML = '';
+    const selDOW = parse(selectedDate).getDay();
+    const weekStart = shift(selectedDate, -selDOW);
+    for(let i = 0; i < 7; i++){
+      const ds = shift(weekStart, i);
+      const a = activeFor(ds);
+      const isSel = ds === selectedDate;
+      const p = el('div', 'pill' + (isSel ? ' selected' : '') + (a.short === 'PEEL' ? ' peel' : ''));
+      p.innerHTML = `<span class="d">${DAYS[i].toUpperCase()}</span>
+        <span class="g" style="color:var(${a.color})"></span>
+        <span class="t">${a.short}</span>`;
+      p.onclick = () => {
+        selectedDate = ds;
+        calSelectedDay = i;
+        renderAll();
+      };
+      strip.appendChild(p);
+    }
   }
   const at = activeFor(selectedDate);
-  $('#stripNote').innerHTML = `<b>Active on ${fmt(selectedDate)}:</b> ${at.active}. ${at.extra}`;
+  if($('#stripNote')) $('#stripNote').innerHTML = `<b>Active on ${fmt(selectedDate)}:</b> ${at.active}. ${at.extra}`;
 }
 
 $('#btnAddWater').onclick = () => {
@@ -1780,6 +1897,16 @@ $('#btnResetWater').onclick = () => {
 };
 
 /* ---------------- render: symmetry & jaw 🪞 ---------------- */
+function toggleSymmetryItem(itemId, targetDate = selectedDate){
+  const sym = day(targetDate).symmetry;
+  const item = SYMMETRY_ACTIONS.find(x => x.id === itemId) || { id: itemId, title: itemId };
+  sym[itemId] = !sym[itemId];
+  if(sym[itemId]) playSuccessChime();
+  save({area:'symmetry',item:itemId,exact_update:`Symmetry ${item.title}: ${sym[itemId]?'done':'undone'}`});
+  renderSymmetryTab();
+  toast(sym[itemId] ? `✓ ${item.title}` : `Undone: ${item.title}`);
+}
+
 function renderSymmetryTab(){
   const container = $('#symmetryActionList'); if(!container) return;
   container.innerHTML = '';
@@ -1797,20 +1924,22 @@ function renderSymmetryTab(){
       <button class="task-btn">${done ? '✓ Completed' : item.cta}</button>
     `;
     const btn = row.querySelector('.task-btn');
-    if(btn){
-      btn.onclick = () => {
-        sym[item.id] = !sym[item.id];
-        if(sym[item.id]) playSuccessChime();
-        save({area:'symmetry',item:item.id,exact_update:`Symmetry ${item.title}: ${sym[item.id]?'done':'undone'}`});
-        renderSymmetryTab();
-        toast(sym[item.id] ? `✓ ${item.title}` : `Undone: ${item.title}`);
-      };
-    }
+    if(btn) btn.onclick = () => toggleSymmetryItem(item.id);
     container.appendChild(row);
   });
 }
 
 /* ---------------- render: style & scent 👔 ---------------- */
+function toggleStyleItem(itemId, targetDate = selectedDate){
+  const sty = day(targetDate).style;
+  const item = STYLE_ACTIONS.find(x => x.id === itemId) || { id: itemId, title: itemId };
+  sty[itemId] = !sty[itemId];
+  if(sty[itemId]) playSuccessChime();
+  save({area:'style',item:itemId,exact_update:`Style ${item.title}: ${sty[itemId]?'done':'undone'}`});
+  renderStyleTab();
+  toast(sty[itemId] ? `✓ ${item.title}` : `Undone: ${item.title}`);
+}
+
 function renderStyleTab(){
   const container = $('#styleActionList'); if(!container) return;
   container.innerHTML = '';
@@ -1828,15 +1957,7 @@ function renderStyleTab(){
       <button class="task-btn">${done ? '✓ Completed' : item.cta}</button>
     `;
     const btn = row.querySelector('.task-btn');
-    if(btn){
-      btn.onclick = () => {
-        sty[item.id] = !sty[item.id];
-        if(sty[item.id]) playSuccessChime();
-        save({area:'style',item:item.id,exact_update:`Style ${item.title}: ${sty[item.id]?'done':'undone'}`});
-        renderStyleTab();
-        toast(sty[item.id] ? `✓ ${item.title}` : `Undone: ${item.title}`);
-      };
-    }
+    if(btn) btn.onclick = () => toggleStyleItem(item.id);
     container.appendChild(row);
   });
 }
@@ -1943,7 +2064,7 @@ function tickSleepStopwatch(){
   $('#sleepStopwatch').textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
-$('#btnToggleSleep').onclick = () => {
+function toggleSleepTimer(){
   if(!S.liveSleep){
     S.liveSleep = { startTime: Date.now(), bedDate: REAL_TODAY };
     save({area:'sleep',item:'sleep-start',exact_update:'Started bedtime sleep stopwatch'});
@@ -1962,7 +2083,9 @@ $('#btnToggleSleep').onclick = () => {
     renderTodayStats();
     toast(`Woke up! Logged ${durationHours} hrs sleep.`);
   }
-};
+}
+
+if($('#btnToggleSleep')) $('#btnToggleSleep').onclick = toggleSleepTimer;
 
 $('#btnSaveSleep').onclick = () => {
   const bed = $('#slpBed').value;
@@ -2020,7 +2143,7 @@ function updateTimerDisplay(){
   const s = timerSeconds%60;
   $('#timerDisplay').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
-$('#btnTimerStart').onclick = () => {
+function startContentTimer(){
   if(timerInt) return;
   timerInt = setInterval(()=>{
     if(timerSeconds > 0){
@@ -2034,31 +2157,40 @@ $('#btnTimerStart').onclick = () => {
     }
   }, 1000);
   toast('Timer started');
-};
-$('#btnTimerPause').onclick = () => {
+}
+
+function pauseContentTimer(){
   clearInterval(timerInt);
   timerInt = null;
   toast('Timer paused');
-};
-$('#btnTimerReset').onclick = () => {
+}
+
+function resetContentTimer(){
   clearInterval(timerInt);
   timerInt = null;
   timerSeconds = 3600;
   updateTimerDisplay();
-};
+}
 
-$('#btnLogContent').onclick = () => {
-  const topic = $('#cntTopic').value.trim() || 'General content output';
-  const mins = +$('#cntMins').value || 60;
+function logContentEntry(topic = 'General content output', mins = 60){
   S.content[selectedDate] = { topic, mins, date: selectedDate };
   day(selectedDate).timeline['ev_content'] = true;
   playSuccessChime();
   save({area:'content',item:'content-block',value:mins,unit:'min',exact_update:`Completed ${mins}m content: ${topic}`});
-  $('#cntTopic').value = '';
+  if($('#cntTopic')) $('#cntTopic').value = '';
   renderContentTab();
   renderTodayActions();
   renderMasterCalendar();
   toast(`Logged ${mins}m for #basithladdu`);
+}
+
+if($('#btnTimerStart')) $('#btnTimerStart').onclick = startContentTimer;
+if($('#btnTimerPause')) $('#btnTimerPause').onclick = pauseContentTimer;
+if($('#btnTimerReset')) $('#btnTimerReset').onclick = resetContentTimer;
+if($('#btnLogContent')) $('#btnLogContent').onclick = () => {
+  const topic = ($('#cntTopic') ? $('#cntTopic').value.trim() : '') || 'General content output';
+  const mins = +($('#cntMins') ? $('#cntMins').value : 60) || 60;
+  logContentEntry(topic, mins);
 };
 
 function renderContentTab(){
@@ -2117,6 +2249,19 @@ function renderHeatmap(){
 }
 
 /* ---------------- render: 4 preset combos & balancer ---------------- */
+function loadMealCombo(comboIdOrIndex, targetDate = selectedDate){
+  const combo = typeof comboIdOrIndex === 'number' ? MEAL_COMBOS[comboIdOrIndex] : MEAL_COMBOS.find(c => c.id === comboIdOrIndex) || MEAL_COMBOS[0];
+  if(!combo) return;
+  combo.foods.forEach(f => {
+    day(targetDate).food.push(f);
+  });
+  playSuccessChime();
+  save({area:'nutrition',item:combo.id,exact_update:`Loaded full combo: ${combo.name}`,notes:`${combo.prot}g P, ${combo.kcal}kcal, ₹${combo.cost}`});
+  renderFood();
+  renderTodayStats();
+  toast(`✓ Loaded ${combo.name}`);
+}
+
 function renderPresetCombos(){
   const container = $('#presetCombosList'); if(!container) return;
   container.innerHTML = '';
@@ -2135,16 +2280,8 @@ function renderPresetCombos(){
       </div>
       <button class="combo-btn">✓ Load &amp; Log This Combo</button>
     `;
-    card.querySelector('.combo-btn').onclick = () => {
-      combo.foods.forEach(f => {
-        day(selectedDate).food.push(f);
-      });
-      playSuccessChime();
-      save({area:'nutrition',item:combo.id,exact_update:`Loaded full combo: ${combo.name}`,notes:`${combo.prot}g P, ${combo.kcal}kcal, ₹${combo.cost}`});
-      renderFood();
-      renderTodayStats();
-      toast(`✓ Loaded ${combo.name}`);
-    };
+    const btn = card.querySelector('.combo-btn');
+    if(btn) btn.onclick = () => loadMealCombo(combo.id);
     container.appendChild(card);
   });
 }
@@ -2579,32 +2716,41 @@ $('#peelDone').onclick=()=>{
 };
 
 /* ---------------- tab router ---------------- */
-document.querySelectorAll('.tab').forEach(b=>{
-  b.onclick=()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
-    b.setAttribute('aria-selected','true');
-    ['calendar','today','food','symmetry','style','content','sleep','grooming','milestones','protein','skin','lifts','body','momentum','sync'].forEach(t=>$('#p-'+t).classList.add('hide'));
-    $('#p-'+b.dataset.tab).classList.remove('hide');
-    window.scrollTo({top:0,behavior:'instant'});
-    if(b.dataset.tab==='calendar')setCalMode(currentCalMode);
-    if(b.dataset.tab==='today'){renderTodayStats();renderTodayActions();}
-    if(b.dataset.tab==='food')renderFood();
-    if(b.dataset.tab==='symmetry')renderSymmetryTab();
-    if(b.dataset.tab==='style')renderStyleTab();
-    if(b.dataset.tab==='skin')renderSkin();
-    if(b.dataset.tab==='grooming')renderGroomingActions();
-    if(b.dataset.tab==='milestones')renderMilestones();
-    if(b.dataset.tab==='content')renderContentTab();
-    if(b.dataset.tab==='sleep')renderSleepTab();
-    if(b.dataset.tab==='lifts')renderLifts();
-    if(b.dataset.tab==='body')renderBody();
-    if(b.dataset.tab==='momentum')renderHeatmap();
-    if(b.dataset.tab==='sync')renderAIContextPreview();
-  };
+function switchTab(tabName){
+  const allTabs = ['calendar','today','food','symmetry','style','content','sleep','grooming','milestones','protein','skin','lifts','body','momentum','sync'];
+  document.querySelectorAll('.tab').forEach(x => {
+    const isTarget = x.dataset.tab === tabName;
+    x.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+  });
+  allTabs.forEach(t => {
+    const p = $('#p-' + t);
+    if(p) p.classList.add('hide');
+  });
+  const targetPage = $('#p-' + tabName);
+  if(targetPage) targetPage.classList.remove('hide');
+  try{ window.scrollTo({top:0,behavior:'instant'}); }catch(e){}
+
+  if(tabName==='calendar') setCalMode(currentCalMode);
+  if(tabName==='today'){ renderTodayStats(); renderTodayActions(); }
+  if(tabName==='food') renderFood();
+  if(tabName==='symmetry') renderSymmetryTab();
+  if(tabName==='style') renderStyleTab();
+  if(tabName==='skin') renderSkin();
+  if(tabName==='grooming') renderGroomingActions();
+  if(tabName==='milestones') renderMilestones();
+  if(tabName==='content') renderContentTab();
+  if(tabName==='sleep') renderSleepTab();
+  if(tabName==='lifts') renderLifts();
+  if(tabName==='body') renderBody();
+  if(tabName==='momentum') renderHeatmap();
+  if(tabName==='sync') renderAIContextPreview();
+}
+
+document.querySelectorAll('.tab').forEach(b => {
+  b.onclick = () => switchTab(b.dataset.tab);
 });
 
 function renderAll(){
-  renderDateNav();
   renderTodayStats();
   renderTodayActions();
   renderFood();
@@ -2625,6 +2771,11 @@ function renderAll(){
   renderAll();
   renderFoodBank();
   renderAIContextPreview();
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(()=>{});
+    });
+  }
 })();
 </script>
 </body>
