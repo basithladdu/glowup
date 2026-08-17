@@ -1267,20 +1267,112 @@ function renderTodayStats(){
   $('#stripNote').innerHTML = `<b>Active on ${fmt(selectedDate)}:</b> ${at.active}. ${at.extra}`;
 }
 
+/* ---------------- 24-hour master calendar schedule generator ---------------- */
+let calSelectedDay = parse(selectedDate).getDay();
+
+function getCalendarScheduleForDay(dow){
+  const rot = ROT[dow];
+  let gymText = 'Push Day (Incline DB Bench, Overhead Press, Lateral Raises, Core 4)';
+  if(dow===0) gymText = 'Rest Day Active Recovery & Long Sunlight Walk (No heavy lifting)';
+  else if(dow===1||dow===4) gymText = 'Push Day (Incline DB Bench, Overhead Press, Lateral Raises, Face Pulls, Dead Hangs)';
+  else if(dow===2||dow===5) gymText = 'Pull Day (Lat Pulldowns, Chest Supported Rows, Incline Bicep Curls, Face Pulls, Farmer Carries)';
+  else if(dow===3||dow===6) gymText = 'Legs Day (Bulgarian Split Squats, RDL, Calves, Rear Delt Fly, Dead Hangs)';
+
+  let pmGroomText = `Night Protocol: ${rot.active} on face. ${rot.extra}. Nicole lip scrub, minoxidil on beard.`;
+  if(dow===0) pmGroomText = 'Scalp Rosemary+Castor Oil pre-wash + 0.5mm Dermaroll AM (no minoxidil today) + Kojic Acid PM.';
+  else if(dow===2) pmGroomText = 'Barrier Repair Night (B12 only) + Glyco 12 Body on neck/arms + Ketoconazole Shampoo + Nicole Lip Scrub + Nail trim & file.';
+  else if(dow===4) pmGroomText = 'Aziderm 10% on face + Ketoconazole Shampoo + Glyco 12 Body + Razor sharp beard neckline line-up.';
+  else if(dow===6) pmGroomText = 'Minimalist 30% Peel (10 min) OR Aziderm + Nicole Lip Scrub + Stubble & Brow clean-up.';
+
+  return [
+    { id:'cb_wake', time:'07:00 AM – 07:15 AM', cat:'🌅 Morning', title:'Wake Up & Hydration Core', sub:'Tongue scraping, antibacterial rinse, 500ml water (activates digestive motility).' },
+    { id:'cb_am_skin', time:'07:15 AM – 07:45 AM', cat:'🧴 Skincare', title:'AM Skincare Shield Protocol', sub:'AHA Glow facewash → Pilgrim Vit C → Minimalist B12 → Lakmé SPF 50 (face/neck/arms/hands) → Lip balm SPF 50.' },
+    { id:'cb_walk', time:'07:45 AM – 08:15 AM', cat:'🚶 Circadian', title:'Morning Sunlight Walk', sub:'15–20 min outdoor walk for circadian cortisol spike & vitamin D synthesis (2,000 steps).' },
+    { id:'cb_bfast', time:'08:30 AM – 09:00 AM', cat:'🍽️ Nutrition', title:'Breakfast Power Oats & Creatine', sub:'70g Oats + 250ml Buffalo Milk + 5g Creatine + 2 tsp Flaxseed (17.3g P · 416 kcal).' },
+    { id:'cb_work_am', time:'09:00 AM – 01:00 PM', cat:'💼 Execution', title:'Morning Deep Focus Work Block', sub:'Posture decompression check, nasal breathing posture, hydration pacing (1L water).' },
+    { id:'cb_spf_mid', time:'01:00 PM – 01:15 PM', cat:'🧴 Skincare', title:'Midday SPF Reapplication', sub:'Reapply Lakmé SPF 50 on face, neck and hands (critical for closing face-to-body tone gap).' },
+    { id:'cb_lunch', time:'01:30 PM – 02:00 PM', cat:'🍽️ Nutrition', title:'Lunch Soya Chunks & 50/50 Chewing', sub:'80g Soya Chunks + 150g Rice + Dal + Curd (55.6g P · 677 kcal). Chew evenly 50/50 for jawline symmetry.' },
+    { id:'cb_posture', time:'04:30 PM – 04:45 PM', cat:'🧍 Posture', title:'Height & Spine Decompression Drill', sub:'Wall chin tucks 3×15, doorway chest stretch 3×30s, dead hang 2×30s (reclaims 1–3cm posture height).' },
+    { id:'cb_gym', time:'05:30 PM – 06:45 PM', cat:'🏋️ Training', title:'Gym Workout Session', sub:gymText },
+    { id:'cb_whey', time:'06:45 PM – 07:00 PM', cat:'🍽️ Nutrition', title:'Post-Workout Whey Isolate', sub:'1 Scoop Nakpro Whey Isolate in cold water (24.0g P · 160 kcal).' },
+    { id:'cb_content', time:'07:15 PM – 08:30 PM', cat:'⚡ Content', title:'Deep Work Content Production (#basithladdu)', sub:'60–75 min focused creative output. Phone outside room. Ship one concrete deliverable.' },
+    { id:'cb_dinner', time:'08:45 PM – 09:15 PM', cat:'🍽️ Nutrition', title:'Dinner Eggs/Chicken + Ashwagandha', sub:'4 Whole Eggs / 130g Chicken + 2 Roti + Curd + 400mg Ashwagandha (34.7g P · 556 kcal).' },
+    { id:'cb_pm_groom', time:'09:45 PM – 10:15 PM', cat:'💅 Grooming', title:'Night Actives & Grooming Routine', sub:pmGroomText },
+    { id:'cb_lockdown', time:'10:30 PM – 10:45 PM', cat:'🌙 Lockdown', title:'Sleep Sanctuary Mode', sub:'Park phone outside bedroom. Room cool & pitch dark. Nasal breathing & mouth tape check.' },
+    { id:'cb_sleep', time:'10:45 PM – 07:00 AM', cat:'😴 Sleep', title:'Deep Sleep Recovery Block (7.5h–8.5h)', sub:'Target uninterrupted slow-wave sleep. Live sleep stopwatch active.' }
+  ];
+}
+
 /* ---------------- render: master calendar 📅 ---------------- */
 function renderMasterCalendar(){
-  const container = $('#masterCalendarList'); container.innerHTML = '';
-  ROT.forEach((r, idx)=>{
-    const item = el('div','card');
-    item.style.marginBottom = '8px';
+  const container = $('#masterCalendarList');
+  if(!container) return;
+  container.innerHTML = '';
+
+  // Day selector strip
+  const strip = el('div','strip');
+  strip.style.marginBottom = '12px';
+  for(let i=0; i<7; i++){
+    const isSel = i === calSelectedDay;
+    const a = ROT[i];
+    const p = el('div','pill'+(isSel?' selected':''));
+    p.innerHTML = `<span class="d">${DAYS[i].toUpperCase()}</span>
+      <span class="g" style="color:var(${a.color})"></span>
+      <span class="t">${a.short}</span>`;
+    p.onclick = () => {
+      calSelectedDay = i;
+      renderMasterCalendar();
+    };
+    strip.appendChild(p);
+  }
+  container.appendChild(strip);
+
+  // Header for selected day
+  const headerCard = el('div','card');
+  headerCard.style.background = 'var(--surface2)';
+  headerCard.style.marginBottom = '10px';
+  const targetDateForDow = shift(selectedDate, calSelectedDay - parse(selectedDate).getDay());
+  headerCard.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:var(--turmeric)">${DAYS[calSelectedDay]} Master Timeline</span>
+      <span class="tag-badge" style="background:rgba(232,163,61,.2);color:var(--turmeric)">${ROT[calSelectedDay].short} NIGHT</span>
+    </div>
+    <div class="note" style="margin-top:4px"><b>Active Protocol:</b> ${ROT[calSelectedDay].active}. ${ROT[calSelectedDay].extra}</div>
+  `;
+  container.appendChild(headerCard);
+
+  // Time-blocked list
+  const schedule = getCalendarScheduleForDay(calSelectedDay);
+  const dy = day(targetDateForDow);
+  const tl = dy.timeline;
+
+  schedule.forEach(block => {
+    const done = !!tl[block.id];
+    const item = el('div','task-item'+(done?' done':''));
     item.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <span style="font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--turmeric)">${r.d}</span>
-        <span class="tag-badge" style="background:rgba(232,163,61,.2);color:var(--turmeric)">${r.short}</span>
+      <div class="task-left">
+        <div>
+          <div>
+            <span class="task-badge">${block.time}</span>
+            <span class="tag-badge" style="background:var(--surface2);color:var(--paper);margin-left:4px">${block.cat}</span>
+          </div>
+          <div class="task-title" style="margin-top:2px">${block.title}</div>
+          <div class="task-sub">${block.sub}</div>
+        </div>
       </div>
-      <div style="font-size:12.5px;color:var(--paper);margin-bottom:4px"><b>Active:</b> ${r.active}</div>
-      <div class="note">${r.extra}</div>
+      <button class="task-btn">${done ? '✓ Completed' : '✓ Tick Mark'}</button>
     `;
+    const btn = item.querySelector('.task-btn');
+    if(btn){
+      btn.onclick = () => {
+        tl[block.id] = !tl[block.id];
+        if(tl[block.id]) playSuccessChime();
+        save({area:'calendar',item:block.id,exact_update:`Calendar ${block.title}: ${tl[block.id]?'done':'undone'}`});
+        renderMasterCalendar();
+        renderTodayActions();
+        toast(tl[block.id] ? `✓ Ticked: ${block.title}` : `Undone: ${block.title}`);
+      };
+    }
     container.appendChild(item);
   });
 }
