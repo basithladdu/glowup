@@ -53,17 +53,17 @@ h1 em{font-style:italic;color:var(--turmeric)}
 .date-nav{
   display:flex;align-items:center;justify-content:space-between;
   background:var(--surface2);border:.5px solid var(--line2);border-radius:12px;
-  padding:6px 12px;margin:10px 0 12px;
+  padding:8px 12px;margin:10px 0 12px;
 }
 .date-nav button{
-  background:none;border:0;color:var(--turmeric);font-size:16px;cursor:pointer;padding:2px 8px;font-weight:700;
+  background:none;border:0;color:var(--turmeric);font-size:18px;cursor:pointer;padding:2px 8px;font-weight:700;
 }
 .date-nav .curr-date{
   font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--paper);text-align:center;
 }
 .date-nav .curr-date small{display:block;font-size:9.5px;color:var(--muted);font-weight:400}
 .today-badge{
-  font-family:'JetBrains Mono',monospace;font-size:9px;color:#1A1206;background:var(--turmeric);padding:2px 6px;border-radius:6px;font-weight:700;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#1A1206;background:var(--turmeric);padding:3px 8px;border-radius:6px;font-weight:700;cursor:pointer;
 }
 
 .subline{
@@ -93,10 +93,10 @@ nav{
 .tab[aria-selected="true"]{color:var(--turmeric);border-bottom-color:var(--turmeric);font-weight:700}
 
 /* ---------- cards & primitives ---------- */
-.card{background:var(--surface);border:.5px solid var(--line);border-radius:var(--r);padding:13px 14px;margin-bottom:10px}
+.card{background:var(--surface);border:.5px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:10px}
 .card.nextup{
-  background:linear-gradient(165deg,#32271D 0%,#201B17 100%);
-  border:1.5px solid var(--turmeric);box-shadow:0 8px 24px rgba(232,163,61,.12);
+  background:linear-gradient(165deg,#3A2D20 0%,#201B17 100%);
+  border:1.5px solid var(--turmeric);box-shadow:0 8px 24px rgba(232,163,61,.14);
 }
 .eyebrow{
   font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;
@@ -112,18 +112,18 @@ h2{font-family:'Fraunces',serif;font-size:18px;font-weight:600;letter-spacing:-.
 .hide{display:none !important}
 
 /* ---------- ADHD Next Up Hero ---------- */
-.next-title{font-size:15.5px;font-weight:700;color:var(--paper);margin-bottom:3px}
-.next-sub{font-size:11.5px;color:var(--muted);margin-bottom:11px;line-height:1.4}
+.next-title{font-size:16px;font-weight:700;color:var(--paper);margin-bottom:4px}
+.next-sub{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.4}
 .next-btn{
-  background:var(--turmeric);color:#1A1206;border:0;border-radius:9px;
-  font-family:'Instrument Sans',sans-serif;font-weight:700;font-size:13.5px;
-  padding:11px 16px;width:100%;cursor:pointer;transition:.12s;display:flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--turmeric);color:#1A1206;border:0;border-radius:10px;
+  font-family:'Instrument Sans',sans-serif;font-weight:700;font-size:14px;
+  padding:12px 16px;width:100%;cursor:pointer;transition:.12s;display:flex;align-items:center;justify-content:center;gap:8px;
   box-shadow:0 4px 16px rgba(232,163,61,.25);
 }
 .next-btn:active{transform:scale(.98)}
 
 /* ---------- stats & rings ---------- */
-.ringrow{display:flex;gap:10px;align-items:center}
+.ringrow{display:flex;gap:12px;align-items:center}
 .ring{position:relative;width:92px;height:92px;flex:0 0 auto}
 .ring svg{transform:rotate(-90deg)}
 .ringmid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
@@ -169,18 +169,21 @@ h2{font-family:'Fraunces',serif;font-size:18px;font-weight:600;letter-spacing:-.
 
 /* ---------- action task items ---------- */
 .task-item{
-  display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:.5px solid var(--line);gap:10px;
+  display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:.5px solid var(--line);gap:12px;
 }
 .task-item:last-child{border:0}
-.task-left{display:flex;align-items:flex-start;gap:9px;flex:1;min-width:0}
-.task-badge{font-family:'JetBrains Mono',monospace;font-size:8.5px;padding:2px 5px;border-radius:4px;background:var(--surface2);color:var(--muted);margin-right:4px}
-.task-title{font-size:13px;font-weight:600;color:var(--paper);line-height:1.3}
-.task-sub{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.35}
+.task-left{display:flex;align-items:flex-start;gap:8px;flex:1;min-width:0}
+.task-badge{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;padding:3px 6px;border-radius:4px;
+  background:var(--surface2);color:var(--turmeric);font-weight:700;display:inline-block;margin-bottom:3px;
+}
+.task-title{font-size:13.5px;font-weight:600;color:var(--paper);line-height:1.3}
+.task-sub{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
 .task-item.done .task-title{text-decoration:line-through;color:var(--muted)}
 .task-btn{
-  background:var(--surface2);border:.5px solid var(--line2);border-radius:7px;
-  color:var(--turmeric);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
-  padding:5px 9px;cursor:pointer;white-space:nowrap;flex:0 0 auto;transition:.12s;
+  background:var(--surface2);border:1px solid var(--turmeric);border-radius:8px;
+  color:var(--turmeric);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  padding:7px 11px;cursor:pointer;white-space:nowrap;flex:0 0 auto;transition:.12s;
 }
 .task-btn:active{transform:scale(.95)}
 .task-item.done .task-btn{background:var(--sage);color:#1A1206;border-color:var(--sage)}
@@ -189,7 +192,7 @@ h2{font-family:'Fraunces',serif;font-size:18px;font-weight:600;letter-spacing:-.
 button{font-family:inherit}
 .btn{
   background:var(--surface2);border:.5px solid var(--line2);border-radius:8px;
-  color:var(--paper);font-size:11.5px;padding:8px 11px;cursor:pointer;transition:.12s;display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  color:var(--paper);font-size:12px;padding:8px 12px;cursor:pointer;transition:.12s;display:inline-flex;align-items:center;justify-content:center;gap:5px;
 }
 .btn:active{transform:scale(.97)}
 .btn.primary{background:var(--turmeric);border-color:var(--turmeric);color:#1A1206;font-weight:600}
@@ -254,18 +257,6 @@ label.fl{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;le
 .liftnow{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700}
 .up{color:var(--sage)}
 .same{color:var(--muted)}
-
-.goal{border-left:2px solid var(--line2);padding:0 0 0 11px;margin-bottom:12px}
-.goal.g1{border-color:var(--turmeric)}
-.goal.g2{border-color:var(--rose)}
-.goal.g3{border-color:var(--indigo)}
-.goal.g4{border-color:var(--sage)}
-.goal.g5{border-color:var(--vermilion)}
-.goalhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:2px}
-.goaltitle{font-family:'Fraunces',serif;font-size:15.5px;font-weight:600;letter-spacing:-.01em}
-.goalweeks{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);white-space:nowrap}
-.prog{height:4px;border-radius:3px;background:var(--surface2);overflow:hidden;margin:6px 0 5px}
-.prog i{display:block;height:100%;border-radius:3px}
 
 /* ---------- tables & charts ---------- */
 .chart{width:100%;height:auto;display:block;overflow:visible}
@@ -389,7 +380,7 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
       <div class="ringside">
         <div class="statline"><span class="statk">Protein Floor</span><span class="statv" id="sProt">0 / 170g</span></div>
         <div class="statline"><span class="statk">Deficit</span><span class="statv" id="sDef">—</span></div>
-        <div class="statline"><span class="statk">Actions Done</span><span class="statv" id="sFlowProgress">0 / 12</span></div>
+        <div class="statline"><span class="statk">Actions Done</span><span class="statv" id="sFlowProgress">0 / 13</span></div>
         <div class="statline"><span class="statk">Sleep</span><span class="statv" id="sSleepToday">—</span></div>
       </div>
     </div>
@@ -760,12 +751,13 @@ const AUTH_KEY = 'glowup-auth-v1';
 function checkAuth(){
   const authed = sessionStorage.getItem(AUTH_KEY) === 'true' || localStorage.getItem(AUTH_KEY) === 'true';
   const modal = document.getElementById('authModal');
+  if(!modal) return;
   if(authed){
     modal.style.display = 'none';
   } else {
     modal.style.display = 'flex';
-    document.getElementById('authPass').value = '';
-    document.getElementById('authPass').focus();
+    const p = document.getElementById('authPass');
+    if(p){ p.value = ''; try{ p.focus(); }catch(e){} }
   }
 }
 
@@ -805,6 +797,21 @@ let selectedDate = REAL_TODAY;
 function daysBetween(a,b){return Math.round((parse(b)-parse(a))/864e5);}
 function shift(s,n){const d=parse(s);d.setDate(d.getDate()+n);return iso(d);}
 const fmt=s=>{const d=parse(s);return `${d.getDate()} ${MON[d.getMonth()]}`;};
+
+/* ---------------- lifts array ---------------- */
+const LIFTS = [
+  'Incline DB Bench Press',
+  'Barbell Overhead Press',
+  'Lat Pulldown',
+  'Chest Supported Row',
+  'Bulgarian Split Squat',
+  'Romanian Deadlift (RDL)',
+  'Face Pulls',
+  'Lateral Raises',
+  'Incline Bicep Curl',
+  'Overhead Tricep Extension',
+  'Farmer Carries'
+];
 
 /* ---------------- storage state ---------------- */
 const KEY='system-basith-v1';
@@ -1038,6 +1045,7 @@ function renderTodayActions(){
     nextCard.style.display = 'block';
     $('#nextUpTitle').textContent = `${nextTask.time} · ${nextTask.title}`;
     $('#nextUpSub').textContent = nextTask.sub;
+    $('#btnCompleteNext').style.display = 'flex';
     $('#btnCompleteNext').textContent = `✓ Mark Done: ${nextTask.cta}`;
     $('#btnCompleteNext').onclick = () => {
       executeTask(nextTask);
@@ -1064,9 +1072,12 @@ function renderTodayActions(){
       </div>
       <button class="task-btn">${done ? '✓ Completed' : task.cta}</button>
     `;
-    row.querySelector('.task-btn').onclick = () => {
-      executeTask(task);
-    };
+    const btn = row.querySelector('.task-btn');
+    if(btn){
+      btn.onclick = () => {
+        executeTask(task);
+      };
+    }
     container.appendChild(row);
   });
 
@@ -1146,7 +1157,6 @@ function renderTodayStats(){
 function renderMasterCalendar(){
   const container = $('#masterCalendarList'); container.innerHTML = '';
   ROT.forEach((r, idx)=>{
-    const d = parse(shift(selectedDate, idx - parse(selectedDate).getDay()));
     const item = el('div','card');
     item.style.marginBottom = '8px';
     item.innerHTML = `
@@ -1185,13 +1195,16 @@ function renderGroomingActions(){
       </div>
       <button class="task-btn">${done ? '✓ Done' : item.cta}</button>
     `;
-    row.querySelector('.task-btn').onclick = () => {
-      gm[item.id] = !gm[item.id];
-      if(gm[item.id]) playSuccessChime();
-      save({area:'grooming',item:item.id,exact_update:`Grooming ${item.title}: ${gm[item.id]?'done':'undone'}`});
-      renderGroomingActions();
-      toast(gm[item.id] ? `✓ ${item.title}` : `Undone: ${item.title}`);
-    };
+    const btn = row.querySelector('.task-btn');
+    if(btn){
+      btn.onclick = () => {
+        gm[item.id] = !gm[item.id];
+        if(gm[item.id]) playSuccessChime();
+        save({area:'grooming',item:item.id,exact_update:`Grooming ${item.title}: ${gm[item.id]?'done':'undone'}`});
+        renderGroomingActions();
+        toast(gm[item.id] ? `✓ ${item.title}` : `Undone: ${item.title}`);
+      };
+    }
     container.appendChild(row);
   });
 }
@@ -1210,12 +1223,15 @@ function renderMilestones(){
       </div>
       <button class="task-btn">${m.done ? '✓ Completed' : 'Mark Done'}</button>
     `;
-    row.querySelector('.task-btn').onclick = () => {
-      m.done = !m.done;
-      if(m.done) playSuccessChime();
-      save({area:'milestone',item:m.id,exact_update:`Milestone ${m.title}: ${m.done?'completed':'pending'}`});
-      renderMilestones();
-    };
+    const btn = row.querySelector('.task-btn');
+    if(btn){
+      btn.onclick = () => {
+        m.done = !m.done;
+        if(m.done) playSuccessChime();
+        save({area:'milestone',item:m.id,exact_update:`Milestone ${m.title}: ${m.done?'completed':'pending'}`});
+        renderMilestones();
+      };
+    }
     container.appendChild(row);
   });
 }
@@ -1715,7 +1731,7 @@ $('#btnExportJSONL').onclick=()=>{
       events.push({
         schema:'glowup-event-v1',date:d,time:null,source:'client',area:'nutrition',
         item:f.n,status:'done',value:f.p,unit:'g',
-        exact_update:`Ate ${f.n}`,notes:`${f.k}kcal, ${f.p}p, ${c}c, ${f.f}f`
+        exact_update:`Ate ${f.n}`,notes:`${f.k}kcal, ${f.p}p, ${f.c}c, ${f.f}f`
       });
     });
     (dy.lifts||[]).forEach(l=>{
