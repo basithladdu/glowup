@@ -1870,7 +1870,10 @@ function get24HourCalendarSchedule(dow){
       help:{why:'<b>WHY MORNING WATER:</b> You lose ~500ml of water overnight through respiration and passive sweat. Rehydrating before eating speeds intestinal motility, raises metabolic rate by 24% for 60 minutes, and reduces cortisol spike from dehydration stress.', desc:'Drink 500ml room temperature water immediately on waking. Add a pinch of salt and squeeze of lemon to replenish electrolytes. Track in the hydration logger.'} },
     { startHour:7, endHour:8, id:'ev_shower_am', durClass:'dur-20', time:'07:15 – 07:30', cls:'ev-morning', title:'🚿 Morning Awakening Shower', sub:'Warm-to-cool rinse. Preps skin for facewash, stimulates central nervous system alertness.', cta:'✓ Showered AM',
       help:{why:'<b>WHY MORNING SHOWER:</b> Warm water opens skin pores and removes overnight sebum, sweat, and dead cells — preparing a clean canvas for your skincare actives (Vitamin C, SPF). Ending cold for 30s releases norepinephrine = natural focus and alertness without caffeine.', desc:'Warm shower for body wash. End with 30s cool-to-cold rinse. Pat dry gently — do not rub face. Apply skincare immediately (within 60s while skin is still slightly damp for better absorption).'} },
-    { startHour:7, endHour:8, id:'ev_am_skin', durClass:'dur-20', time:'07:30 – 07:45', cls:'ev-skin', title:'🧴 AM Skincare Shield + SPF 50', sub:'AHA Glow facewash → Pilgrim Vit C → Minimalist B12 → Lakmé SPF 50 (Face, Neck, Arms, Hands) → Lip Balm SPF 50.', cta:'✓ Applied SPF',
+    { startHour:7, endHour:8, id:'ev_lymph_massage', durClass:'dur-15', time:'07:30 – 07:35', cls:'ev-skin', title:'💆 Face De-Bloat Lymphatic Massage (1 min)', sub:'5 cold water face splashes → 60s upward lymph drain strokes on jaw/cheeks/forehead. Reduces morning puffiness.', cta:'✓ Massaged',
+      help:{why:'<b>WHY FACE LYMPHATIC MASSAGE:</b> The lymphatic system has no pump (unlike blood which has the heart). Lymph fluid that pools overnight in the face — causing morning puffiness, eye bags, and forehead heaviness — can only drain via manual massage or gravity. 60 seconds of upward strokes clears visible facial puffiness by 30–60% within 5 minutes. Cold water additionally triggers vasoconstriction — tightening pores and reducing skin inflammation.', desc:'1. Splash face 5× with the coldest water available (reduces inflammation immediately). 2. Upward strokes on jaw: use fingertips from chin up to ear (5 reps each side). 3. Cheek drain: flat hand strokes upward-outward from nasal bridge to temples (5 reps). 4. Forehead: upward strokes from brow to hairline (5 reps). 5. Temple drain: circular pressure at temples → down to neck lymph nodes. Total: 60 seconds. Do immediately post-shower every morning — it works best on warm, just-washed skin.'} },
+    { startHour:7, endHour:8, id:'ev_am_skin', durClass:'dur-20', time:'07:35 – 07:50', cls:'ev-skin', title:'🧴 AM Skincare Shield + SPF 50', sub:'AHA Glow facewash → Pilgrim Vit C → Minimalist B12 → Lakmé SPF 50 (Face, Neck, Arms, Hands) → Lip Balm SPF 50.', cta:'✓ Applied SPF',
+
       help:{why:'<b>WHY THIS EXACT ORDER:</b> Facewash removes overnight bacteria. Vitamin C (L-Ascorbic acid) neutralizes UV free radicals and brightens melanin — must be applied before SPF. B12 (cobalamin) strengthens barrier lipids. SPF 50 is your #1 anti-ageing tool — UV is 80% of premature ageing.', desc:'Step 1: AHA facewash (double cleanse neck too). Step 2: 3–5 drops Pilgrim Vit C serum on damp face. Step 3: Minimalist B12 as moisturiser. Step 4: Lakmé SPF 50 on face, neck, arms, and hands. Step 5: Lip Balm SPF 50.'} },
     { startHour:7, endHour:8, id:'ev_walk', durClass:'dur-30', time:'07:45 – 08:15', cls:'ev-walk', title:'🚶 Morning Sunlight Walk Block', sub:'Circadian cortisol spike, natural Vitamin D synthesis, early 2,000 steps.', cta:'✓ Walked',
       help:{why:'<b>WHY MORNING SUNLIGHT:</b> The first 30–60 minutes of outdoor light sets your circadian clock via ipRGC photoreceptors in your eyes. This determines cortisol timing, sleep quality 16h later, and dopamine baseline. Cannot be replicated by indoor light or screens.', desc:'Walk outdoors within 30 min of waking. No sunglasses (let light hit your eyes). Minimum 15 min outdoors, ideally 30 min. Also accumulates 2,000+ steps toward daily target. Also reduces morning facial puffiness through vasodilation.'} },
@@ -2271,11 +2274,25 @@ function renderTodayActions(){
     $('#btnCompleteNext').onclick = () => {
       executeTask(nextTask);
     };
+    // Add/update help button on the next-up card
+    let existHelpBtn = $('#nextUpCard').querySelector('.next-help-btn');
+    if(!existHelpBtn && nextTask.help){
+      existHelpBtn = document.createElement('button');
+      existHelpBtn.className = 'btn sm next-help-btn';
+      existHelpBtn.style.cssText = 'position:absolute;top:12px;right:12px;font-size:10px;padding:4px 8px;';
+      existHelpBtn.textContent = '? Why this task';
+      nextCard.style.position = 'relative';
+      nextCard.appendChild(existHelpBtn);
+    }
+    if(existHelpBtn && nextTask.help){
+      existHelpBtn.onclick = () => showHelp(nextTask.title, nextTask.help.why, nextTask.help.desc);
+    }
   } else {
     $('#nextUpTitle').textContent = '🎉 All Smashed Today!';
     $('#nextUpSub').textContent = 'Full daily action routine completed. Momentum preserved.';
     $('#btnCompleteNext').style.display = 'none';
   }
+
 
   // Render task list
   const container = $('#todayTaskList'); container.innerHTML = '';
