@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export type TabType = 
   | 'calendar' 
@@ -26,7 +26,27 @@ interface NavigationProps {
 }
 
 export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
-  const tabs: Array<{ id: TabType; label: string }> = [
+  const [mode, setMode] = useState<'calm' | 'all'>(() => {
+    return (localStorage.getItem('glowup_nav_mode') as 'calm' | 'all') || 'calm';
+  });
+
+  const handleToggleMode = (newMode: 'calm' | 'all') => {
+    setMode(newMode);
+    localStorage.setItem('glowup_nav_mode', newMode);
+  };
+
+  // Calm essential tabs (Zero Overwhelm)
+  const essentialTabs: Array<{ id: TabType; label: string }> = [
+    { id: 'calendar', label: '📅 24h Calendar' },
+    { id: 'habitkit', label: '⚡ HabitKit' },
+    { id: 'food', label: '🥪 Food & AI' },
+    { id: 'shopping', label: '🛒 To Buy' },
+    { id: 'lifts', label: '🏋️ Lifts' },
+    { id: 'body', label: '📊 88kg Cut' }
+  ];
+
+  // Full ecosystem tabs
+  const allTabs: Array<{ id: TabType; label: string }> = [
     { id: 'calendar', label: '📅 24h Google Calendar' },
     { id: 'today', label: 'Today & Flow ⚡' },
     { id: 'habitkit', label: '⚡ HabitKit Grid' },
@@ -47,10 +67,34 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
     { id: 'sync', label: 'AI & Sync ☁️' },
   ];
 
+  const visibleTabs = mode === 'calm' ? essentialTabs : allTabs;
+
   return (
-    <nav className="nav-strip">
+    <nav className="nav-strip" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 4px' }}>
+        <span style={{ fontSize: '10px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>
+          {mode === 'calm' ? '🧘 CALM ESSENTIALS MODE' : '✨ FULL MATRIX VIEW'}
+        </span>
+        <div style={{ display: 'flex', gap: '4px' }}>
+          <button
+            className={`tab-btn ${mode === 'calm' ? 'active' : ''}`}
+            style={{ fontSize: '9.5px', padding: '2px 8px', borderRadius: '4px' }}
+            onClick={() => handleToggleMode('calm')}
+          >
+            🧘 Essentials
+          </button>
+          <button
+            className={`tab-btn ${mode === 'all' ? 'active' : ''}`}
+            style={{ fontSize: '9.5px', padding: '2px 8px', borderRadius: '4px' }}
+            onClick={() => handleToggleMode('all')}
+          >
+            ✨ All Tools
+          </button>
+        </div>
+      </div>
+
       <div className="tabs-list" role="tablist">
-        {tabs.map((t) => (
+        {visibleTabs.map((t) => (
           <button
             key={t.id}
             role="tab"
