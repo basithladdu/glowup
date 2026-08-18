@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { GlowUpState, MacroItem, LiftSet, GoalMilestone, DayState } from '../types';
 import { DEFAULT_GOALS } from '../lib/constants';
 import { supabase } from '../lib/supabase';
+import { playSuccessChime } from '../lib/sound';
 
 const STORAGE_KEY = 'glowup-modular-v1';
 
@@ -153,6 +154,7 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     state.days[d] = state.days[d] || getInitialDayState();
     state.days[d].food = [...state.days[d].food, ...items];
     set({ state });
+    playSuccessChime();
     get().saveState({ area: 'nutrition', item: 'food-log', exact_update: `Logged ${items.length} items` });
   },
 
@@ -173,6 +175,7 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     state.days[d].timeline = state.days[d].timeline || {};
     state.days[d].timeline[eventId] = !state.days[d].timeline[eventId];
     set({ state });
+    if (state.days[d].timeline[eventId]) playSuccessChime();
     get().saveState({ area: 'timeline', item: eventId, exact_update: `Toggled ${eventId}` });
   },
 
@@ -183,6 +186,7 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     state.days[d].habits = state.days[d].habits || {};
     state.days[d].habits[habitId] = !state.days[d].habits[habitId];
     set({ state });
+    if (state.days[d].habits[habitId]) playSuccessChime();
     get().saveState({ area: 'habits', item: habitId, exact_update: `Toggled habit ${habitId}` });
   },
 
@@ -193,6 +197,7 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     state.days[d].grooming = state.days[d].grooming || {};
     state.days[d].grooming[id] = !state.days[d].grooming[id];
     set({ state });
+    if (state.days[d].grooming[id]) playSuccessChime();
     get().saveState({ area: 'grooming', item: id, exact_update: `Toggled grooming ${id}` });
   },
 
@@ -202,6 +207,7 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     state.days[d] = state.days[d] || getInitialDayState();
     state.days[d].lifts = [...state.days[d].lifts, { ...liftSet, d }];
     set({ state });
+    playSuccessChime();
     get().saveState({ area: 'lifts', item: liftSet.n, exact_update: `Logged set ${liftSet.kg}kg x ${liftSet.reps}` });
   },
 
@@ -211,6 +217,7 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     state.days[d] = state.days[d] || getInitialDayState();
     state.days[d].workoutRoutine = routineId;
     set({ state });
+    playSuccessChime();
     get().saveState({ area: 'lifts', item: 'routine-select', exact_update: `Selected workout routine ${routineId || 'auto'}` });
   },
 
@@ -220,6 +227,7 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     if (goal) {
       goal.done = !goal.done;
       set({ state });
+      if (goal.done) playSuccessChime();
       get().saveState({ area: 'goals', item: goalId, exact_update: `Toggled goal ${goal.title}: ${goal.done ? 'completed' : 'pending'}` });
     }
   },
@@ -228,6 +236,7 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     const state = { ...get().state };
     state.milestones = [...state.milestones, goal];
     set({ state });
+    playSuccessChime();
     get().saveState({ area: 'goals', item: goal.id, exact_update: `Added goal ${goal.title}` });
   },
 
@@ -245,6 +254,7 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     state.abstinence.bankedDays = (state.abstinence.bankedDays || 14) + 1;
     state.abstinence.lastConfirm = d;
     set({ state });
+    playSuccessChime();
     get().saveState({ area: 'abstinence', item: 'bank-day', exact_update: `Banked day ${state.abstinence.bankedDays} (+100 XP)` });
   },
 
