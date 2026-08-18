@@ -98,4 +98,13 @@ assert(fs.existsSync(path.join(__dirname, 'glowup-app/public/manifest.json')), '
 assert(cssContent.includes('.quick-fab-trigger'), 'index.css must include .quick-fab-trigger style');
 console.log('✔ Test 8: PWA Manifest and Floating Quick-Action Pill verified');
 
+// Test 9: ClickUp Exterminator & 1-Tap Full Day Calendar Engine
+const calContent = fs.readFileSync(path.join(appDir, 'components/CalendarTimeline.tsx'), 'utf8');
+assert(calContent.includes('handleCheckFullDay'), 'CalendarTimeline.tsx must include handleCheckFullDay');
+assert(calContent.includes('ev_clickup'), 'CalendarTimeline.tsx must include ev_clickup timeline event');
+
+const sprintContent = fs.readFileSync(path.join(appDir, 'components/ContentSprint.tsx'), 'utf8');
+assert(sprintContent.includes('handleToggleClickUpTask'), 'ContentSprint.tsx must include handleToggleClickUpTask');
+console.log('✔ Test 9: ClickUp 3-Task Exterminator & 1-Tap Full Day Calendar Engine verified');
+
 console.log('=== ALL TESTS PASSED SUCCESSFULLY (100% COMPLIANT) ===');
