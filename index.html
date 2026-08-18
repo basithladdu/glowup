@@ -489,22 +489,33 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
   display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
   transition:.12s;line-height:1;
 }
-.help-btn:hover{background:var(--surface3);color:var(--paper)}
+.help-btn:hover{background:var(--turmeric);color:#000;border-color:var(--turmeric)}
 .help-overlay{
-  position:fixed;inset:0;z-index:9000;background:rgba(12,10,8,.72);
-  backdrop-filter:blur(10px);display:flex;align-items:flex-end;justify-content:center;padding:0 0 32px;
+  position:fixed;inset:0;z-index:9000;background:rgba(12,10,8,.78);
+  backdrop-filter:blur(12px);display:flex;align-items:flex-end;justify-content:center;
+  animation:fadeInOverlay .18s ease forwards;
 }
+@keyframes fadeInOverlay{from{opacity:0}to{opacity:1}}
 .help-sheet{
-  background:var(--surface);border:.5px solid var(--line2);border-radius:16px 16px 12px 12px;
-  padding:20px 18px 24px;max-width:480px;width:100%;box-shadow:0 -8px 40px rgba(0,0,0,.55);
+  background:var(--surface);border:.5px solid var(--line2);border-radius:20px 20px 0 0;
+  padding:22px 20px 36px;max-width:500px;width:100%;box-shadow:0 -12px 50px rgba(0,0,0,.65);
+  animation:slideUpSheet .24s cubic-bezier(0.16,1,0.3,1) forwards;
 }
-.help-sheet h3{font-family:'Fraunces',serif;font-size:18px;font-weight:700;margin-bottom:8px;line-height:1.2}
-.help-sheet p{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+@keyframes slideUpSheet{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+.help-sheet-drag{width:40px;height:4px;background:var(--line2);border-radius:2px;margin:0 auto 18px}
+.help-sheet h3{font-family:'Fraunces',serif;font-size:17px;font-weight:700;margin-bottom:10px;line-height:1.2;color:var(--paper)}
+.help-sheet p{font-size:12.5px;color:var(--muted);line-height:1.65;margin-bottom:14px}
+.help-label{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--turmeric);margin-bottom:4px;font-weight:600}
 .help-sheet .help-why{
-  background:var(--surface2);border:.5px solid var(--line2);border-radius:8px;
-  padding:10px 12px;font-size:11.5px;color:var(--paper);line-height:1.5;margin-bottom:14px;
+  background:var(--surface2);border:.5px solid rgba(232,163,61,.3);border-radius:10px;
+  padding:11px 13px;font-size:12px;color:var(--paper);line-height:1.6;margin-bottom:14px;
 }
 .help-sheet .help-why b{color:var(--turmeric)}
+.help-how{
+  background:var(--surface2);border:.5px solid rgba(138,168,95,.3);border-radius:10px;
+  padding:11px 13px;font-size:12px;color:var(--paper);line-height:1.6;margin-bottom:16px;
+}
+
 
 /* ---------- sleep editor ---------- */
 .sleep-edit-row{
@@ -1265,15 +1276,19 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
 <!-- HELP OVERLAY SHEET -->
 <div id="helpOverlay" class="help-overlay" style="display:none" onclick="closeHelp()">
   <div class="help-sheet" onclick="event.stopPropagation()">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+    <div class="help-sheet-drag"></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
       <h3 id="helpTitle">—</h3>
-      <button class="btn sm" onclick="closeHelp()" style="flex:0 0 auto">✕ Close</button>
+      <button class="btn sm" onclick="closeHelp()" style="flex:0 0 auto;opacity:.7">✕</button>
     </div>
+    <div class="help-label">🔬 WHY THIS MATTERS</div>
     <div class="help-why" id="helpWhy">—</div>
-    <p id="helpDesc">—</p>
-    <p style="font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace">💡 Tap anywhere outside to dismiss</p>
+    <div class="help-label">📋 HOW TO DO IT</div>
+    <div class="help-how" id="helpDesc">—</div>
+    <p style="font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin:0;text-align:center">Tap outside or press Esc to dismiss</p>
   </div>
 </div>
+
 
 <script>
 'use strict';
@@ -1308,7 +1323,7 @@ function showHelp(title, why, desc){
   if(!overlay) return;
   document.getElementById('helpTitle').textContent = title;
   document.getElementById('helpWhy').innerHTML = why;
-  document.getElementById('helpDesc').textContent = desc;
+  document.getElementById('helpDesc').innerHTML = desc; // allow step-by-step HTML rendering
   overlay.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
