@@ -11,9 +11,11 @@ export type TabType =
   | 'grooming' 
   | 'symmetry'
   | 'style'
+  | 'protein'
   | 'body' 
   | 'content' 
-  | 'sleep';
+  | 'sleep'
+  | 'sync';
 
 interface NavigationProps {
   activeTab: TabType;
@@ -30,9 +32,13 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
     { id: 'momentum', label: '🔥 Habit Graph & Momentum' },
     { id: 'skin', label: 'Skin & Peel 💅' },
     { id: 'grooming', label: 'Grooming & Hair 💈' },
+    { id: 'symmetry', label: 'Symmetry & Jaw 🪞' },
+    { id: 'style', label: 'Style & Scent 👔' },
+    { id: 'protein', label: 'Protein ₹/g Bank' },
     { id: 'body', label: 'Body & Weight 📊' },
     { id: 'content', label: 'Content ⚡' },
     { id: 'sleep', label: 'Sleep 🌙' },
+    { id: 'sync', label: 'AI & Sync ☁️' },
   ];
 
   return (
