@@ -170,6 +170,33 @@ body {
 }
 
 /* Cards & Components */
+.desktop-grid-2 {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.desktop-grid-equal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 900px) {
+  .desktop-grid-2 {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .desktop-grid-equal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+}
+
 .card {
   background: var(--surface);
   border: 0.5px solid var(--line2);

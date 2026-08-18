@@ -113,7 +113,7 @@ export const GoalsMatrix: React.FC = () => {
       </div>
 
       {/* GOAL CARDS LIST */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <div className="desktop-grid-equal">
         {filteredGoals.map((m) => {
           const badge = getCatLabel(m.category);
           return (

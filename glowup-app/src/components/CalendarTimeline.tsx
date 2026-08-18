@@ -52,40 +52,68 @@ export const CalendarTimeline: React.FC = () => {
         </button>
       </div>
 
-      {/* 24-HOUR DAY TIME-BLOCKED SCHEDULE */}
-      <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-          <div>
-            <p className="eyebrow"><span className="n">gcal</span> master time-blocked schedule</p>
-            <h2 style={{ fontSize: '16px', margin: 0 }}>24-Hour Master Google Calendar</h2>
+      <div className="desktop-grid-2">
+        {/* 24-HOUR DAY TIME-BLOCKED SCHEDULE */}
+        <div className="card">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+            <div>
+              <p className="eyebrow"><span className="n">gcal</span> master time-blocked schedule</p>
+              <h2 style={{ fontSize: '16px', margin: 0 }}>24-Hour Master Google Calendar</h2>
+            </div>
+            <span className="tag-badge tag-best">TIME-BLOCKED</span>
           </div>
-          <span className="tag-badge tag-best">TIME-BLOCKED</span>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {scheduleEvents.map((ev) => {
+              const isDone = !!dayState.timeline[ev.id];
+              return (
+                <div key={ev.id} className={`task-item ${isDone ? 'done' : ''}`}>
+                  <div className="task-left">
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                        <span className="task-badge">{ev.time}</span>
+                        <span className="task-title">{ev.title}</span>
+                      </div>
+                      <div className="task-sub">{ev.sub}</div>
+                    </div>
+                  </div>
+
+                  <button
+                    className="task-btn"
+                    onClick={() => toggleTimelineEvent(ev.id)}
+                  >
+                    {isDone ? '✓ Completed' : ev.cta}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {scheduleEvents.map((ev) => {
-            const isDone = !!dayState.timeline[ev.id];
-            return (
-              <div key={ev.id} className={`task-item ${isDone ? 'done' : ''}`}>
-                <div className="task-left">
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-                      <span className="task-badge">{ev.time}</span>
-                      <span className="task-title">{ev.title}</span>
-                    </div>
-                    <div className="task-sub">{ev.sub}</div>
-                  </div>
-                </div>
+        {/* DESKTOP SIDEBAR PROTOCOL SUMMARY */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div className="card">
+            <p className="eyebrow"><span className="n">today</span> active training split</p>
+            <h2 style={{ fontSize: '16px', margin: '0 0 4px', color: 'var(--turmeric)' }}>{routine.name}</h2>
+            <p className="note" style={{ marginBottom: '10px' }}>{routine.desc}</p>
+            <div className="statline">
+              <span className="statk">Intensity Badge</span>
+              <span className="statv" style={{ color: 'var(--sage)' }}>{routine.badge}</span>
+            </div>
+            <div className="statline">
+              <span className="statk">Frequency</span>
+              <span className="statv" style={{ color: 'var(--turmeric)' }}>{routine.freq}</span>
+            </div>
+          </div>
 
-                <button
-                  className="task-btn"
-                  onClick={() => toggleTimelineEvent(ev.id)}
-                >
-                  {isDone ? '✓ Completed' : ev.cta}
-                </button>
-              </div>
-            );
-          })}
+          <div className="card">
+            <p className="eyebrow"><span className="n">pm</span> active derm protocol</p>
+            <h2 style={{ fontSize: '16px', margin: '0 0 4px', color: 'var(--rose)' }}>{rot.short}</h2>
+            <p className="note" style={{ marginBottom: '8px' }}>{rot.active}</p>
+            <div style={{ fontSize: '11px', color: 'var(--muted)', background: 'var(--surface2)', padding: '8px', borderRadius: '6px' }}>
+              💡 {rot.extra}
+            </div>
+          </div>
         </div>
       </div>
     </div>
