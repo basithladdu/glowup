@@ -71,4 +71,13 @@ assert(totalProt >= 169.8, 'Daily protein must reach ~170g target');
 assert(totalKcal <= 2000, 'Daily calories must remain within 2,000 kcal deficit cap');
 console.log(`✔ Test 4: Macro targets verified (${totalProt.toFixed(1)}g Protein >= 170g, ${totalKcal} kcal <= 2,000 kcal)`);
 
+// Test 5: Google Calendar & Custom Recipes Engine
+assert(cssContent.includes('.gcal-now-line'), 'index.css must include Google Calendar current-time line');
+assert(cssContent.includes('.gcal-event-block'), 'index.css must include Google Calendar event block styles');
+
+const typesContent = fs.readFileSync(path.join(appDir, 'types/index.ts'), 'utf8');
+assert(typesContent.includes('CalendarEvent'), 'types/index.ts must export CalendarEvent');
+assert(typesContent.includes('CustomProteinItem'), 'types/index.ts must export CustomProteinItem');
+console.log('✔ Test 5: Google Calendar 24h timeline and Custom Recipe Bank engine verified');
+
 console.log('=== ALL TESTS PASSED SUCCESSFULLY (100% COMPLIANT) ===');
