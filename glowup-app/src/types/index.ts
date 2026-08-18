@@ -22,6 +22,8 @@ export interface DayState {
   symmetry: Record<string, boolean>;
   style: Record<string, boolean>;
   workoutRoutine: string | null;
+  amSkinSteps?: Record<string, boolean>;
+  pmSkinSteps?: Record<string, boolean>;
 }
 
 export interface GoalMilestone {

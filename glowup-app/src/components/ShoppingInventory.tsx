@@ -16,9 +16,13 @@ export const ShoppingInventory: React.FC = () => {
   const [items, setItems] = useState<ShoppingItem[]>([
     { id: 'sh_chk', name: 'Raw Chicken Breast (1–2 kg)', category: 'nutrition', qty: '2 kg', estCost: '₹480', bought: true },
     { id: 'sh_eggs', name: 'Whole Eggs (Crate of 30)', category: 'nutrition', qty: '1 Crate', estCost: '₹210', bought: true },
+    { id: 'sh_dates', name: 'Lion / Kimia Medjool Dates (500g Box)', category: 'nutrition', qty: '500g', estCost: '₹280', bought: false },
     { id: 'sh_whey', name: 'Nakpro Malai Kulfi Whey Isolate', category: 'nutrition', qty: '1 kg Tub', estCost: '₹1,699', bought: true },
     { id: 'sh_soya', name: 'Fortune Soya Chunks (Pack of 500g)', category: 'nutrition', qty: '500g', estCost: '₹75', bought: true },
     { id: 'sh_milk', name: 'Fresh Buffalo Milk / Nandini Curd', category: 'nutrition', qty: '1 L', estCost: '₹70', bought: false },
+    { id: 'sh_castor', name: 'Pure Cold-Pressed Castor Oil (Lashes & Brows)', category: 'grooming', qty: '100ml', estCost: '₹180', bought: false },
+    { id: 'sh_coconut', name: 'Pure Cold-Pressed Virgin Coconut Oil (Scalp & Hair)', category: 'grooming', qty: '250ml', estCost: '₹150', bought: false },
+    { id: 'sh_lipscrub', name: 'Nicole Sugar Berry Lip Scrub (Pink Lips Exfoliator)', category: 'derm', qty: '30g', estCost: '₹220', bought: false },
     { id: 'sh_socks', name: 'Breathable Cotton Gym Socks (6-Pack)', category: 'grooming', qty: '6 Pairs', estCost: '₹299', bought: false },
     { id: 'sh_tape', name: '3M Micropore Nasal Sleep Mouth Tape', category: 'grooming', qty: '2 Rolls', estCost: '₹120', bought: true },
     { id: 'sh_spf', name: 'Lakmé Sun Expert SPF 50 PA+++ Sunscreen', category: 'derm', qty: '100ml', estCost: '₹340', bought: true },

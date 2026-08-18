@@ -27,7 +27,8 @@ export const ProteinBank: React.FC = () => {
     { n: 'Buffalo Milk (250ml)', k: 150, p: 8.0, c: 12.0, f: 6.5, cost: '₹18 · ₹2.25/g P' },
     { n: 'Heritage Paneer (240g)', k: 430, p: 60.0, c: 7.0, f: 21.6, cost: '₹130 · ₹2.16/g P' },
     { n: 'Nakpro Whey Isolate (1 Scoop)', k: 160, p: 24.0, c: 8.0, f: 2.5, cost: '₹56 · ₹2.33/g P' },
-    { n: 'Rolled Oats (70g)', k: 266, p: 9.3, c: 47.0, f: 4.8, cost: '₹12 · Carbs/Fiber' }
+    { n: 'Rolled Oats (70g)', k: 266, p: 9.3, c: 47.0, f: 4.8, cost: '₹12 · Carbs/Fiber' },
+    { n: 'Lion / Medjool Dates (50g · 3 Dates)', k: 138, p: 1.2, c: 37.0, f: 0.2, cost: '₹28 · Glycogen/Potassium' }
   ];
 
   const presetStacks = [
