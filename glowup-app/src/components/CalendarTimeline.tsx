@@ -3,9 +3,11 @@ import { useGlowUpStore } from '../store/useGlowUpStore';
 import { ROT, METALLICADPA_PPL } from '../lib/constants';
 import type { CalendarEvent } from '../types';
 import { parseFoodMacrosAI } from '../lib/gemini';
+import { triggerGoalCelebration } from '../lib/confetti';
+import { playSuccessChime } from '../lib/sound';
 
 export const CalendarTimeline: React.FC = () => {
-  const { selectedDate, setSelectedDate, state, getDayState, toggleTimelineEvent, addCalendarEvent, addFoodItems } = useGlowUpStore();
+  const { selectedDate, setSelectedDate, state, getDayState, toggleTimelineEvent, addCalendarEvent, addFoodItems, saveState } = useGlowUpStore();
   const dayState = getDayState();
   const [viewMode, setViewMode] = useState<'day' | 'week' | 'month'>('day');
   const [showEventModal, setShowEventModal] = useState(false);
@@ -44,12 +46,25 @@ export const CalendarTimeline: React.FC = () => {
     { id: 'ev_breakfast', startHour: 8.5, endHour: 9.25, time: '08:30 – 09:15', title: breakfastLogged ? `🍳 Breakfast: ${breakfastLogged.n}` : '🍳 Breakfast Window (High Protein)', sub: 'Tap to log natural language meal with Gemini AI.', color: 'sage' as const, isMeal: true, mealSlot: 'Breakfast', cta: '🤖 AI Log' },
     { id: 'ev_shopping', startHour: 11, endHour: 12.5, time: '11:00 – 12:30', title: '🛒 Nutrition & Supplies Shopping', sub: 'Chicken breast, eggs, staples, socks & gym gear replenishment.', color: 'sage' as const, cta: '✓ Shopped' },
     { id: 'ev_lunch', startHour: 13.5, endHour: 14.25, time: '13:30 – 14:15', title: '🍗 Lunch: Soya / Chicken + Rice & Dal', sub: 'Target 45g+ protein. Tap to log with Gemini AI.', color: 'sage' as const, isMeal: true, mealSlot: 'Lunch', cta: '🤖 AI Log' },
+    { id: 'ev_clickup', startHour: 15, endHour: 15.25, time: '15:00 – 15:15', title: '🎯 10m ClickUp Triage & Content Spark', sub: 'Triage oldest tasks & log rapid content ideas into matrix.', color: 'indigo' as const, cta: '✓ Triaged' },
     { id: 'ev_gym', startHour: 17.5, endHour: 18.75, time: '17:30 – 18:45', title: `🏋️ ${routine.name}`, sub: routine.desc, color: 'turmeric' as const, cta: '✓ Log Workout' },
     { id: 'ev_whey', startHour: 18.75, endHour: 19, time: '18:45 – 19:00', title: '🥛 Post-Workout Nakpro Whey Isolate', sub: '1 Scoop Nakpro Whey Isolate + 250ml Buffalo Milk (32g Protein).', color: 'sage' as const, cta: '✓ Drank Whey' },
     { id: 'ev_dinner', startHour: 20, endHour: 20.75, time: '20:00 – 20:45', title: dinnerLogged ? `🥩 Dinner: ${dinnerLogged.n}` : '🥩 Dinner Window (Beef Fry / Chicken / Eggs)', sub: 'Tap to log what you ate with Gemini AI.', color: 'sage' as const, isMeal: true, mealSlot: 'Dinner', cta: '🤖 AI Log' },
     { id: 'ev_pm_groom', startHour: 21.5, endHour: 22, time: '21:30 – 22:00', title: `💅 PM Skincare: ${rot.short}`, sub: `${rot.active} on face. ${rot.extra}.`, color: 'rose' as const, cta: '✓ Done PM' },
     { id: 'ev_sleep_pm', startHour: 23, endHour: 24, time: '23:00 – 00:00', title: '😴 Deep Sleep Mode Active', sub: 'Room pitch dark & cool. Phone outside bedroom.', color: 'indigo' as const, cta: '🛌 Slept' }
   ];
+
+  const handleCheckFullDay = () => {
+    coreEvents.forEach(ev => {
+      dayState.timeline[ev.id] = true;
+    });
+    ['h_sunlight', 'h_tongue', 'h_spf', 'h_creatine', 'h_protein', 'h_posture', 'h_minox', 'h_mouthtape'].forEach(hId => {
+      dayState.habits[hId] = true;
+    });
+    triggerGoalCelebration();
+    playSuccessChime();
+    saveState({ area: 'timeline', item: 'full-day-complete', exact_update: `Checked off full day protocols for ${selectedDate}` });
+  };
 
   // Current time position
   const now = new Date();
@@ -168,6 +183,10 @@ export const CalendarTimeline: React.FC = () => {
               Month
             </button>
           </div>
+
+          <button className="btn sage sm" onClick={handleCheckFullDay} title="Mark all of today's timeline events complete in 1-tap">
+            ✓ Full Day
+          </button>
 
           <button className="btn primary sm" onClick={() => setShowEventModal(true)}>
             + Add Event
