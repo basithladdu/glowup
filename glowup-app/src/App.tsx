@@ -21,11 +21,12 @@ import { ShoppingInventory } from './components/ShoppingInventory';
 import { HowToGuidesModal } from './components/HowToGuidesModal';
 
 export function App() {
-  const { loadState } = useGlowUpStore();
+  const { loadState, logWater, addFoodItems, toggleHabit } = useGlowUpStore();
   const [activeTab, setActiveTab] = useState<TabType>('calendar');
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [passInput, setPassInput] = useState('');
   const [passError, setPassError] = useState(false);
+  const [showQuickPill, setShowQuickPill] = useState(false);
 
   useEffect(() => {
     loadState();
@@ -103,6 +104,43 @@ export function App() {
         {activeTab === 'content' && <ContentSprint />}
         {activeTab === 'sleep' && <SleepSanctuary />}
         {activeTab === 'sync' && <AIDossierSync />}
+      </div>
+
+      {/* CALM ZERO-FRICTION FLOATING QUICK-LOG PILL */}
+      <div className="quick-fab-container">
+        {showQuickPill && (
+          <div className="quick-fab-menu">
+            <button
+              className="quick-fab-btn"
+              onClick={() => { logWater(500); setShowQuickPill(false); }}
+            >
+              💧 +500ml Water
+            </button>
+            <button
+              className="quick-fab-btn"
+              onClick={() => { toggleHabit('h_creatine'); setShowQuickPill(false); }}
+            >
+              ⚡ +5g Creatine
+            </button>
+            <button
+              className="quick-fab-btn"
+              onClick={() => {
+                addFoodItems([{ n: 'Nakpro Whey Isolate (1 Scoop)', k: 120, p: 24.0, c: 3, f: 1.5 }]);
+                setShowQuickPill(false);
+              }}
+            >
+              🥛 +1 Scoop Whey (24g P)
+            </button>
+          </div>
+        )}
+
+        <button
+          className={`quick-fab-trigger ${showQuickPill ? 'active' : ''}`}
+          onClick={() => setShowQuickPill(!showQuickPill)}
+          title="Calm Quick Actions"
+        >
+          {showQuickPill ? '×' : '⚡ 1-Tap Log'}
+        </button>
       </div>
     </div>
   );
