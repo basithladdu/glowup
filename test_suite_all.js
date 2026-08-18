@@ -93,4 +93,9 @@ const navContent = fs.readFileSync(path.join(appDir, 'components/Navigation.tsx'
 assert(navContent.includes('essentialTabs'), 'Navigation.tsx must include Calm Essentials mode');
 console.log('✔ Test 7: Shopping Inventory, How-To protocols & Calm Mode verified');
 
+// Test 8: PWA Manifest & Floating Quick-Action Pill
+assert(fs.existsSync(path.join(__dirname, 'glowup-app/public/manifest.json')), 'manifest.json must exist');
+assert(cssContent.includes('.quick-fab-trigger'), 'index.css must include .quick-fab-trigger style');
+console.log('✔ Test 8: PWA Manifest and Floating Quick-Action Pill verified');
+
 console.log('=== ALL TESTS PASSED SUCCESSFULLY (100% COMPLIANT) ===');
