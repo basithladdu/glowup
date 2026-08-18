@@ -1606,32 +1606,51 @@ const MEAL_COMBOS = [
 
 /* ---------------- symmetry action items ---------------- */
 const SYMMETRY_ACTIONS = [
-  { id:'sym_chew', cat:'Jawline Symmetry', title:'50/50 Chewing Balance Drill', sub:'Chew 15 bites on left, 15 bites on right. Over time balances masseter muscle thickness and jaw squareness.', cta:'✓ Chewed 50/50' },
-  { id:'sym_tongue', cat:'Palatal Posture', title:'Mewing & Palatal Tongue Posture', sub:'Rest entire tongue blade against roof of palate, lips sealed, breathe 100% through nose. Prevents elongated face.', cta:'✓ Posture Checked' },
-  { id:'sym_sleep', cat:'Facial Compression', title:'Back Sleeping & Cervical Alignment', sub:'Sleep on back using contoured neck support. Eliminates asymmetric cheek/eye compression and sleep lines.', cta:'✓ Back Slept' },
-  { id:'sym_unilateral', cat:'Arm & Body Symmetry', title:'Unilateral DB Lifting Protocol', sub:'Start with weaker arm/leg first. Stop dominant side as soon as weaker side reaches failure.', cta:'✓ Lifts Balanced' },
-  { id:'sym_hang', cat:'Spine & Scapula', title:'Dead Hang 2×30s Scapular Reset', sub:'Decompresses spine, squares uneven shoulder blades, and adds 1–2cm visible posture height.', cta:'✓ Hung' }
+  { id:'sym_chew', cat:'Jawline Symmetry', title:'50/50 Chewing Balance Drill', sub:'Chew 15 bites on left, 15 bites on right. Over time balances masseter muscle thickness and jaw squareness.', cta:'✓ Chewed 50/50',
+    help:{why:'<b>WHY CHEWING SYMMETRY:</b> The masseter muscle (your jaw muscle) grows hypertrophically like any other muscle. Most people chew 70–90% on one side → that side has a thicker, squarer jaw angle. Balancing chewing over 3–6 months remodels masseter volume and jaw symmetry.', desc:'At every meal: consciously alternate sides. 10 bites left → 10 bites right → repeat. Takes 2–3 weeks to become automatic. No equipment needed — just awareness.'} },
+  { id:'sym_tongue', cat:'Palatal Posture', title:'Mewing & Palatal Tongue Posture', sub:'Rest entire tongue blade against roof of palate, lips sealed, breathe 100% through nose. Prevents elongated face.', cta:'✓ Posture Checked',
+    help:{why:'<b>WHY MEWING / TONGUE POSTURE:</b> Tongue pressure against the palate determines maxillary bone growth direction. Chronic open-mouth breathing allows the maxilla to grow vertically (long face) instead of forward (wide, prominent cheekbones). This is medically documented in orthotropics literature.', desc:'Place the entire tongue blade — not just tip — flat against the roof of the mouth. Lips sealed. Breathe through nose. Practice for 10 min/day consciously until it becomes your resting default position.'} },
+  { id:'sym_sleep', cat:'Facial Compression', title:'Back Sleeping & Cervical Alignment', sub:'Sleep on back using contoured neck support. Eliminates asymmetric cheek/eye compression and sleep lines.', cta:'✓ Back Slept',
+    help:{why:'<b>WHY BACK SLEEPING:</b> Side sleeping compresses one side of your face for 6–8 hours every night. Over years this creates measurable facial asymmetry (one eye more hooded, one cheek more hollow, one side of jaw more prominent). Back sleeping is the single most impactful structural change you can make for facial symmetry.', desc:'Use a firm cervical pillow to prevent rolling. Mouth tape encourages nasal breathing (reduces back-sleep discomfort). Takes 2–4 weeks to adjust. The visual result is reduced under-eye asymmetry within 3–6 months.'} },
+  { id:'sym_unilateral', cat:'Arm & Body Symmetry', title:'Unilateral DB Lifting Protocol', sub:'Start with weaker arm/leg first. Stop dominant side as soon as weaker side reaches failure.', cta:'✓ Lifts Balanced',
+    help:{why:'<b>WHY WEAKER SIDE FIRST:</b> Your dominant arm can compensate for the weaker arm when you train them together. By starting on the weaker side when fresh, then matching reps on the dominant side, you force equal development over time. This closes the visual shoulder/arm size gap that most people carry permanently.', desc:'For all dumbbell exercises (curls, lateral raises, rows, split squats): start left (non-dominant). Count reps. When left fails at rep X, stop right at rep X too. Never do bonus reps on the stronger side. Within 8–12 weeks the gap closes significantly.'} },
+  { id:'sym_hang', cat:'Spine & Scapula', title:'Dead Hang 2×30s Scapular Reset', sub:'Decompresses spine, squares uneven shoulder blades, and adds 1–2cm visible posture height.', cta:'✓ Hung',
+    help:{why:'<b>WHY DEAD HANGS:</b> Spinal discs compress throughout the day from gravity and sitting. A 30-second dead hang applies vertical traction — allowing discs to re-expand and absorbing fluid back in. Also stretches the lats and thoracic fascia — the tight muscles responsible for forward-rounded shoulders and uneven scapular height.', desc:'Hang from a pullup bar (overhand or neutral grip) for 30 seconds × 2 sets. Do daily — ideally before gym at 16:30. If you cannot hang 30s, start with 15s and build. Results: improved posture, 1–2cm height recovery, reduced back pain.'} }
 ];
 
 /* ---------------- style & scent action items ---------------- */
 const STYLE_ACTIONS = [
-  { id:'sty_breath', cat:'Fresh Breath', title:'Copper Tongue Scrape + CPC Antibacterial Rinse', sub:'Scrape from back to front 5 times. Rinse with alcohol-free antibacterial mouthwash.', cta:'✓ Breath Pristine' },
-  { id:'sty_scent', cat:'Signature Fragrance', title:'3-Point Pulse Fragrance Application', sub:'1 spray behind each ear + 1 spray base of neck. Woody/amber base notes last 10+ hours without overwhelming.', cta:'✓ Scent Applied' },
-  { id:'sty_antipersp', cat:'Hygiene Shield', title:'Nightly Clinical Antiperspirant Application', sub:'Apply before bed so active ingredients plug sweat ducts overnight. Zero day sweat marks.', cta:'✓ Applied Nightly' },
-  { id:'sty_fit', cat:'V-Taper Styling', title:'Monochrome Fit & Exact Shoulder Seams', sub:'Ensure shirt seams hit strictly on acromion bone. Tapered pant ankles with zero bunching over shoes.', cta:'✓ Fit Locked' },
-  { id:'sty_shoes', cat:'Footwear Polish', title:'Crisp Minimalist Footwear Wipe-Down', sub:'Keep white leather sneakers or dark structured footwear spotless with a 30-second wipe.', cta:'✓ Shoes Clean' }
+  { id:'sty_breath', cat:'Fresh Breath', title:'Copper Tongue Scrape + CPC Antibacterial Rinse', sub:'Scrape from back to front 5 times. Rinse with alcohol-free antibacterial mouthwash.', cta:'✓ Breath Pristine',
+    help:{why:'<b>WHY CPC MOUTHWASH:</b> Cetylpyridinium chloride (CPC) mouthwash kills 99.9% of anaerobic bacteria (VSC producers) for 8–12 hours. Unlike alcohol-based mouthwashes which dry the mouth and worsen breath long-term, CPC maintains salivary flow while eliminating odor-causing pathogens.', desc:'After tongue scraping and brushing: 20ml CPC mouthwash, rinse for 30 full seconds, spit. Do NOT rinse with water after — destroys efficacy. Also clean the back of your tongue with the scraper before rinsing. This is your social fresh-breath shield for the day.'} },
+  { id:'sty_scent', cat:'Signature Fragrance', title:'3-Point Pulse Fragrance Application', sub:'1 spray behind each ear + 1 spray base of neck. Woody/amber base notes last 10+ hours without overwhelming.', cta:'✓ Scent Applied',
+    help:{why:'<b>WHY PULSE POINTS:</b> Pulse points (neck, wrists, behind ears) are areas where veins are close to the skin surface — generating natural warmth that activates and diffuses fragrance molecules. Applying here creates a sillage (trail) rather than a wall of scent.', desc:'Post-shower when skin is still slightly warm. 1 spray behind each ear. 1 spray at base of neck. 1 optional spray on wrist (do not rub — this breaks the top notes). Do not spray on clothes — it stains and projects differently than skin.'} },
+  { id:'sty_antipersp', cat:'Hygiene Shield', title:'Nightly Clinical Antiperspirant Application', sub:'Apply before bed so active ingredients plug sweat ducts overnight. Zero day sweat marks.', cta:'✓ Applied Nightly',
+    help:{why:'<b>WHY APPLY ANTIPERSPIRANT AT NIGHT:</b> Aluminium chloride (clinical-strength antiperspirant active) requires 6–8h of contact with dry skin to form gel plugs in sweat ducts. Applying at night while you are relaxed (minimal sweating) gives maximum contact time. Morning application on already-sweaty skin is 60% less effective.', desc:'Clean dry underarms. Apply 3–4 strokes clinical antiperspirant. Do NOT shower immediately after. Sleep. The morning shower does not remove the sub-dermal gel plugs already formed. Reapply every 2–3 nights (not daily).'} },
+  { id:'sty_fit', cat:'V-Taper Styling', title:'Monochrome Fit & Exact Shoulder Seams', sub:'Ensure shirt seams hit strictly on acromion bone. Tapered pant ankles with zero bunching over shoes.', cta:'✓ Fit Locked',
+    help:{why:'<b>WHY PROPER FIT MATTERS:</b> An oversized shirt drop-shoulder widens the visual torso at the wrong point and shrinks apparent shoulder width. A fitted shirt with seams on the acromion creates the optical illusion of a wider shoulder-to-waist ratio — even before you gain muscle. This is the cheapest physique upgrade available.', desc:'When choosing fits: shoulder seam must land exactly at the acromion (edge of shoulder). Chest should allow 2 fingers of fabric. Waist taper in (never boxy). Pants: ankle break of 0cm or slight break — no fabric puddle. Monochrome (black/charcoal/olive) extends vertical line and adds 2–3 inches of visual height.'} },
+  { id:'sty_shoes', cat:'Footwear Polish', title:'Crisp Minimalist Footwear Wipe-Down', sub:'Keep white leather sneakers or dark structured footwear spotless with a 30-second wipe.', cta:'✓ Shoes Clean',
+    help:{why:'<b>WHY CLEAN SHOES MATTER:</b> Studies show people form first impressions partially from footwear. Dirty or scuffed shoes immediately downgrade an otherwise polished outfit. Clean minimalist footwear (white leather sneakers or black chelsea/derby shoes) complete the monochrome vertical line and signal attention to detail.', desc:'30-second daily wipe with a microfiber cloth or Magic Eraser for white leather. For dark shoes: polish brush weekly. Keep a second pair — never wear the same shoes 2 days in a row (allows leather to breathe and return to shape).'} }
 ];
 
 /* ---------------- grooming action items ---------------- */
 const GROOMING_ACTIONS = [
-  { id:'ga_temples', freq:'Daily PM & Sun Roll', title:'Temple Hairline Shield & Minoxidil 5%', sub:'Target 0.5ml Tugain 5% directly at temple hairline corners. Sunday 0.5mm dermaroll to stimulate follicular density & never recede.', cta:'✓ Temples Shielded' },
-  { id:'ga_oil', freq:'Sun & Wed', title:'Rosemary + Castor Scalp Oiling & Massage', sub:'Apply warm blend to scalp roots, massage 5 mins with fingertips, leave for 45–60 mins pre-wash.', cta:'✓ Log Oiling' },
-  { id:'ga_keto', freq:'Tue & Thu', title:'Ketoconazole 2% Anti-Dandruff Scalp Treatment', sub:'Lather into scalp, leave active for 5 full minutes before rinsing. Eliminates flaking and fungal irritation.', cta:'✓ Washed Keto' },
-  { id:'ga_beard', freq:'Every 2–3 Days', title:'Beard Line & Neck Line Razor Sharp Line-up', sub:'Shave below 2 fingers above Adam\'s apple. Keep clean top cheeks and sharp sideburn taper.', cta:'✓ Beard Lined' },
-  { id:'ga_nails', freq:'Every Tue & Sat', title:'Nail Trim, File & Hand Cream', sub:'Cut straight across, smooth sharp edges with glass file, apply moisturiser on cuticles and knuckles.', cta:'✓ Nails Clean' },
-  { id:'ga_lip', freq:'Tue & Sat', title:'Nicole / WishCare Exfoliating Lip Scrub + Occlusive', sub:'Gently scrub dead skin flakes off lips for 60s, rinse, seal immediately with thick lip balm/Vaseline.', cta:'✓ Lips Scrubbed' },
-  { id:'ga_brows', freq:'Weekly', title:'Eyebrow Unibrow Pluck & Clean Taper', sub:'Pluck stray hairs between eyebrows above nasal bridge. Do not over-thin natural arch.', cta:'✓ Brows Clean' }
+  { id:'ga_temples', freq:'Daily PM & Sun Roll', title:'Temple Hairline Shield & Minoxidil 5%', sub:'Target 0.5ml Tugain 5% directly at temple hairline corners. Sunday 0.5mm dermaroll to stimulate follicular density & never recede.', cta:'✓ Temples Shielded',
+    help:{why:'<b>WHY MINOXIDIL ON TEMPLES:</b> Minoxidil (5% topical) is FDA-approved for hair regrowth. It works by opening potassium channels in follicle dermal papillae — extending anagen (growth) phase and increasing follicle size. Temples are most vulnerable to DHT-driven miniaturisation. Daily application + weekly dermaroll creates 4x deeper penetration.', desc:'Evening after skincare is dry: 0.5ml dropper of Tugain 5% directly on temple hairline corners (not crown). Massage in for 1 min. Do not wash for 4h. Sunday only: 0.5mm dermaroll temples first, wait 24h, then apply minoxidil (do not apply minoxidil on same day as dermarolling — irritation risk).'} },
+  { id:'ga_oil', freq:'Sun & Wed', title:'Rosemary + Castor Scalp Oiling & Massage', sub:'Apply warm blend to scalp roots, massage 5 mins with fingertips, leave for 45–60 mins pre-wash.', cta:'✓ Log Oiling',
+    help:{why:'<b>WHY ROSEMARY OIL:</b> A 2015 RCT (Panahi et al.) found rosemary essential oil performed equally to 2% Minoxidil for hair regrowth at 6 months — with significantly less scalp itching. Rosemary inhibits DHT binding to follicles. Castor oil improves blood circulation to hair follicles via ricinoleic acid.', desc:'Mix: 3–4 drops rosemary essential oil + 1 tsp jojoba oil + ½ tsp castor oil. Warm between palms. Section hair. Apply to scalp (not hair shaft). Massage in circular motions for 5 min. Cover with shower cap. Wait 45–60 min. Wash out with ketoconazole shampoo (leave 5 min before rinsing).'} },
+  { id:'ga_keto', freq:'Tue & Thu', title:'Ketoconazole 2% Anti-Dandruff Scalp Treatment', sub:'Lather into scalp, leave active for 5 full minutes before rinsing. Eliminates flaking and fungal irritation.', cta:'✓ Washed Keto',
+    help:{why:'<b>WHY KETOCONAZOLE SHAMPOO:</b> Ketoconazole 2% (Nizoral) is an antifungal that also weakly inhibits DHT production in the scalp by blocking 5-alpha reductase at the follicle level. A 1998 study found it increased hair growth by 17% at 6 months. It also eliminates Malassezia fungus — the cause of dandruff and scalp inflammation that worsens hair loss.', desc:'Wet hair. Apply ketoconazole 2% shampoo to scalp. Lather for 30 seconds. Leave on scalp for exactly 5 minutes (set timer). Rinse thoroughly. Use 2× per week. Do not use daily — strips natural oils and causes rebound inflammation.'} },
+  { id:'ga_beard', freq:'Every 2–3 Days', title:'Beard Line & Neck Line Razor Sharp Line-up', sub:'Shave below 2 fingers above Adam\'s apple. Keep clean top cheeks and sharp sideburn taper.', cta:'✓ Beard Lined',
+    help:{why:'<b>WHY SHARP BEARD LINES:</b> A clean neckline is the single most impactful variable in facial attractiveness for bearded men. An unclean neckline makes the jaw look undefined and adds visual weight to the lower face. A clean shave 2 fingers above the Adam\'s apple reveals the neck length and jawline definition.', desc:'Use a safety or cartridge razor (not clippers) for neckline. Place two fingers above Adam\'s apple — that is the shave line. Shave below it. Keep top cheek line clean (no stray hairs on cheekbones). Taper sideburns clean from ear to jaw. Moisturise after with B12 or beard balm.'} },
+  { id:'ga_nails', freq:'Every Tue & Sat', title:'Nail Trim, File & Hand Cream', sub:'Cut straight across, smooth sharp edges with glass file, apply moisturiser on cuticles and knuckles.', cta:'✓ Nails Clean',
+    help:{why:'<b>WHY NAIL GROOMING:</b> Hands are among the most frequently observed parts of the body in social and professional interactions. Clean, filed nails signal hygiene and self-care. Cracked cuticles and dry knuckles project neglect. Hand moisturiser is especially important in Indian climate where sun + handwashing dehydrates skin.', desc:'Trim nails straight across (not curved to prevent ingrown). Use glass nail file in one direction only (not back-and-forth sawing). Push back cuticles gently after a shower. Apply hand cream (Nivea or urea-based) on knuckles, cuticles, and back of hands. Weekly = ideal maintenance rhythm.'} },
+  { id:'ga_lip', freq:'Tue & Sat', title:'Nicole / WishCare Exfoliating Lip Scrub + Occlusive', sub:'Gently scrub dead skin flakes off lips for 60s, rinse, seal immediately with thick lip balm/Vaseline.', cta:'✓ Lips Scrubbed',
+    help:{why:'<b>WHY LIP SCRUB + OCCLUSIVE:</b> Dark, flaky, dehydrated lips are the most visually prominent detractor from facial attractiveness at close distance. Exfoliation removes dead corneocyte buildup that darkens lip color and creates texture. Immediately applying Vaseline or thick balm (occlusive) traps moisture in the fresh skin — restoring natural lip color over weeks.', desc:'Wet lips. Apply a small amount of Nicole lip scrub. Gently rub in circular motion for 60 seconds. Rinse clean. Immediately apply Vaseline (thick layer) or Carmex. Do not pick or lick lips after exfoliating — this re-darkens them. Do 2× per week minimum.'} },
+  { id:'ga_brows', freq:'Weekly', title:'Eyebrow Unibrow Pluck & Clean Taper', sub:'Pluck stray hairs between eyebrows above nasal bridge. Do not over-thin natural arch.', cta:'✓ Brows Clean',
+    help:{why:'<b>WHY EYEBROW GROOMING:</b> Eyebrows frame the eyes — the most important feature for attractiveness. A unibrow creates visual optical illusion of a smaller forehead (bad) and heavy brow ridge (outdated). Clean separation and a defined outer arch open the eye area, reduce perceived forehead size by ~15%, and project precision and hygiene. Do NOT over-pluck — sparse brows look feminine and aged.', desc:'After shower (when follicles are open). Use pointed tweezers. Pluck only hairs above the nasal bridge (between eyebrows). Pluck any hairs above the natural brow line that grow upward out of shape. Do NOT touch the arch or lower edge. Clean outer tail. Done in 2–3 minutes weekly.'} }
 ];
+
+
 
 /* ---------------- storage state ---------------- */
 const KEY='system-basith-v1';
@@ -2411,15 +2430,17 @@ function renderSymmetryTab(){
   SYMMETRY_ACTIONS.forEach(item => {
     const done = !!sym[item.id];
     const row = el('div','task-item'+(done?' done':''));
+    const helpBtnHtml = item.help ? `<button class="help-btn" title="Why?" style="margin-left:5px">?</button>` : '';
     row.innerHTML = `
       <div class="task-left">
         <div>
-          <div><span class="task-badge">${item.cat}</span><span class="task-title">${item.title}</span></div>
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px"><span class="task-badge">${item.cat}</span><span class="task-title">${item.title}</span>${helpBtnHtml}</div>
           <div class="task-sub">${item.sub}</div>
         </div>
       </div>
       <button class="task-btn">${done ? '✓ Completed' : item.cta}</button>
     `;
+    if(item.help){ const hb = row.querySelector('.help-btn'); if(hb) hb.onclick = (e) => { e.stopPropagation(); showHelp(item.title, item.help.why, item.help.desc); }; }
     const btn = row.querySelector('.task-btn');
     if(btn) btn.onclick = () => toggleSymmetryItem(item.id);
     container.appendChild(row);
@@ -2444,15 +2465,17 @@ function renderStyleTab(){
   STYLE_ACTIONS.forEach(item => {
     const done = !!sty[item.id];
     const row = el('div','task-item'+(done?' done':''));
+    const helpBtnHtml = item.help ? `<button class="help-btn" title="Why?" style="margin-left:5px">?</button>` : '';
     row.innerHTML = `
       <div class="task-left">
         <div>
-          <div><span class="task-badge">${item.cat}</span><span class="task-title">${item.title}</span></div>
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px"><span class="task-badge">${item.cat}</span><span class="task-title">${item.title}</span>${helpBtnHtml}</div>
           <div class="task-sub">${item.sub}</div>
         </div>
       </div>
       <button class="task-btn">${done ? '✓ Completed' : item.cta}</button>
     `;
+    if(item.help){ const hb = row.querySelector('.help-btn'); if(hb) hb.onclick = (e) => { e.stopPropagation(); showHelp(item.title, item.help.why, item.help.desc); }; }
     const btn = row.querySelector('.task-btn');
     if(btn) btn.onclick = () => toggleStyleItem(item.id);
     container.appendChild(row);
@@ -2474,15 +2497,17 @@ function renderGroomingActions(){
   GROOMING_ACTIONS.forEach(item=>{
     const done = !!gm[item.id];
     const row = el('div','task-item'+(done?' done':''));
+    const helpBtnHtml = item.help ? `<button class="help-btn" title="Why?" style="margin-left:5px">?</button>` : '';
     row.innerHTML = `
       <div class="task-left">
         <div>
-          <div><span class="task-badge">${item.freq}</span><span class="task-title">${item.title}</span></div>
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px"><span class="task-badge">${item.freq}</span><span class="task-title">${item.title}</span>${helpBtnHtml}</div>
           <div class="task-sub">${item.sub}</div>
         </div>
       </div>
       <button class="task-btn">${done ? '✓ Done' : item.cta}</button>
     `;
+    if(item.help){ const hb = row.querySelector('.help-btn'); if(hb) hb.onclick = (e) => { e.stopPropagation(); showHelp(item.title, item.help.why, item.help.desc); }; }
     const btn = row.querySelector('.task-btn');
     if(btn){
       btn.onclick = () => {
