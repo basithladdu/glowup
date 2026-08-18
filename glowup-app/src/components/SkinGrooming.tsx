@@ -56,19 +56,21 @@ export const SkinGrooming: React.FC = () => {
 
   const amStepList = [
     { id: 'am_cleanse', num: '1', name: 'Gentle Cleanser / Cold Splash', tip: 'Splashing cold water constricts capillaries and reduces morning facial puffiness.' },
-    { id: 'am_vitc', num: '2', name: 'Minimalist Vitamin C 10% Serum (3 Drops)', tip: 'Apply 3 drops across face and neck. Wait 60s to absorb. Fights oxidative UV free-radicals.' },
-    { id: 'am_b12', num: '3', name: 'Vitamin B12 / Ceramide Barrier Cream', tip: 'Locks in hydration and protects skin barrier from trans-epidermal water loss.' },
-    { id: 'am_spf', num: '4', name: 'Lakmé Sun Expert SPF 50 PA+++ Shield', tip: 'Crucial: 2-finger rule on Face, Neck, Ears & Hands. Blocks 98% UVA/UVB photo-aging.' },
-    { id: 'am_lip', num: '5', name: 'Hydrating Lip Balm (Nicole Lip Scrub on weekends)', tip: 'Prevents hyperpigmentation and peeling lips.' }
+    { id: 'am_khus', num: '2', name: 'Pure Khus / Rose Hydrosol Mist', tip: 'Soothes inflammation, balances natural dermal pH, and enhances active absorption.' },
+    { id: 'am_vitc', num: '3', name: 'Minimalist Vitamin C 10% Serum (3 Drops)', tip: 'Apply 3 drops across face and neck. Wait 60s to absorb. Fights oxidative UV free-radicals.' },
+    { id: 'am_b12', num: '4', name: 'Vitamin B12 / Ceramide Barrier Cream', tip: 'Locks in hydration and protects skin barrier from trans-epidermal water loss.' },
+    { id: 'am_spf', num: '5', name: 'Lakmé Sun Expert SPF 50 PA+++ Shield', tip: 'Crucial: 2-finger rule on Face, Neck, Ears & Hands. Blocks 98% UVA/UVB photo-aging.' },
+    { id: 'am_lip', num: '6', name: 'Hydrating Lip Balm (Nicole Lip Scrub on weekends)', tip: 'Prevents hyperpigmentation and peeling lips.' }
   ];
 
   const pmStepList = [
     { id: 'pm_cleanse', num: '1', name: 'Double Cleanse (Wash off SPF & Pollutants)', tip: 'Cleanse thoroughly with gentle face wash. Pat completely dry with a dedicated face towel.' },
-    { id: 'pm_active', num: '2', name: `Tonight's Active: ${tonightRot.short}`, tip: `${tonightRot.active}. ${tonightRot.extra}` },
-    { id: 'pm_barrier', num: '3', name: 'Minimalist B12 Ceramide Barrier Cream', tip: 'Soothes inflammation, prevents irritation, and rebuilds lipid matrix.' },
-    { id: 'pm_castor', num: '4', name: 'Cold-Pressed Castor Oil on Eyelashes & Brows', tip: 'Dab 1 drop of pure castor oil on lash lines & eyebrows for thickness, growth, and density.' },
-    { id: 'pm_minox', num: '5', name: 'Minoxidil 5% on Temples & Beard', tip: 'Apply 1ml with dropper directly onto scalp hairline corners and beard density zones.' },
-    { id: 'pm_slug', num: '6', name: 'Vaseline Lip Slugging & Mouth Tape Ready', tip: 'Seal lips with pure petroleum jelly to wake up with zero chapped skin.' }
+    { id: 'pm_multani', num: '2', name: 'Multani Mitti (Fuller\'s Earth Detox Mask - 2x/wk)', tip: 'Mix with rose/khus water. Draws out deep sebum plugs and minimizes pore diameter.' },
+    { id: 'pm_active', num: '3', name: `Tonight's Active: ${tonightRot.short}`, tip: `${tonightRot.active}. ${tonightRot.extra}` },
+    { id: 'pm_barrier', num: '4', name: 'Minimalist B12 Ceramide Barrier Cream', tip: 'Soothes inflammation, prevents irritation, and rebuilds lipid matrix.' },
+    { id: 'pm_castor', num: '5', name: 'Cold-Pressed Castor Oil on Eyelashes & Brows', tip: 'Dab 1 drop of pure castor oil on lash lines & eyebrows for thickness, growth, and density.' },
+    { id: 'pm_minox', num: '6', name: 'Minoxidil 5% on Temples & Beard', tip: 'Apply 1ml with dropper directly onto scalp hairline corners and beard density zones.' },
+    { id: 'pm_slug', num: '7', name: 'Vaseline Lip Slugging & Mouth Tape Ready', tip: 'Seal lips with pure petroleum jelly to wake up with zero chapped skin.' }
   ];
 
   return (

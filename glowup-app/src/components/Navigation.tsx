@@ -5,6 +5,7 @@ export type TabType =
   | 'today' 
   | 'habitkit'
   | 'food' 
+  | 'adhd'
   | 'lifts' 
   | 'goals' 
   | 'momentum' 
@@ -38,6 +39,7 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
   // Calm essential tabs (Zero Overwhelm)
   const essentialTabs: Array<{ id: TabType; label: string }> = [
     { id: 'calendar', label: '📅 24h Calendar' },
+    { id: 'adhd', label: '🧠 ADHD Focus' },
     { id: 'habitkit', label: '⚡ HabitKit' },
     { id: 'food', label: '🥪 Food & AI' },
     { id: 'shopping', label: '🛒 To Buy' },
@@ -48,6 +50,7 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
   // Full ecosystem tabs
   const allTabs: Array<{ id: TabType; label: string }> = [
     { id: 'calendar', label: '📅 24h Google Calendar' },
+    { id: 'adhd', label: '🧠 ADHD Hyper-Focus' },
     { id: 'today', label: 'Today & Flow ⚡' },
     { id: 'habitkit', label: '⚡ HabitKit Grid' },
     { id: 'food', label: '🥪 Food & AI Macros' },

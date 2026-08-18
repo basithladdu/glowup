@@ -19,6 +19,7 @@ import { AIDossierSync } from './components/AIDossierSync';
 import { HabitKitView } from './components/HabitKitView';
 import { ShoppingInventory } from './components/ShoppingInventory';
 import { HowToGuidesModal } from './components/HowToGuidesModal';
+import { ADHDExecutionFlow } from './components/ADHDExecutionFlow';
 
 export function App() {
   const { loadState, logWater, addFoodItems, toggleHabit } = useGlowUpStore();
@@ -99,6 +100,7 @@ export function App() {
 
       <div className="wrap main-content">
         {activeTab === 'calendar' && <CalendarTimeline />}
+        {activeTab === 'adhd' && <ADHDExecutionFlow />}
         {activeTab === 'today' && <TodayFlow />}
         {activeTab === 'habitkit' && <HabitKitView />}
         {activeTab === 'food' && <AIFoodAssistant />}

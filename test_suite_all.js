@@ -118,4 +118,11 @@ assert(shopContent.includes('sh_dates'), 'ShoppingInventory.tsx must include Dat
 assert(shopContent.includes('sh_coconut'), 'ShoppingInventory.tsx must include Coconut oil');
 console.log('✔ Test 10: Granular Skincare micro-steps, Castor & Coconut Oil, Dates, and Pink Lips verified');
 
+// Test 11: ADHD Execution Engine, Box Breathing & Nightly 3-Must-Dos Triage
+assert(fs.existsSync(path.join(appDir, 'components/ADHDExecutionFlow.tsx')), 'ADHDExecutionFlow.tsx must exist');
+const adhdContent = fs.readFileSync(path.join(appDir, 'components/ADHDExecutionFlow.tsx'), 'utf8');
+assert(adhdContent.includes('Box Breathing Meditation'), 'ADHD component must include Box Breathing');
+assert(adhdContent.includes('handleSaveNightPlan'), 'ADHD component must include Nightly Plan lock-in');
+console.log('✔ Test 11: ADHD Execution Engine, 10m Box Meditation & Nightly 3-Must-Dos verified');
+
 console.log('=== ALL TESTS PASSED SUCCESSFULLY (100% COMPLIANT) ===');
