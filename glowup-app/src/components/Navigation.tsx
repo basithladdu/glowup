@@ -3,10 +3,13 @@ import React from 'react';
 export type TabType = 
   | 'calendar' 
   | 'today' 
+  | 'habitkit'
   | 'food' 
   | 'lifts' 
   | 'goals' 
   | 'momentum' 
+  | 'shopping'
+  | 'howto'
   | 'skin' 
   | 'grooming' 
   | 'symmetry'
@@ -24,18 +27,21 @@ interface NavigationProps {
 
 export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
   const tabs: Array<{ id: TabType; label: string }> = [
-    { id: 'calendar', label: '📅 24h Calendar' },
+    { id: 'calendar', label: '📅 24h Google Calendar' },
     { id: 'today', label: 'Today & Flow ⚡' },
+    { id: 'habitkit', label: '⚡ HabitKit Grid' },
     { id: 'food', label: '🥪 Food & AI Macros' },
+    { id: 'shopping', label: '🛒 To Buy & Staples' },
     { id: 'lifts', label: '🏋️ Lifts & Workouts' },
     { id: 'goals', label: '🎯 Goals Matrix' },
-    { id: 'momentum', label: '🔥 Habit Graph & Momentum' },
+    { id: 'momentum', label: '🔥 Energy Vault' },
+    { id: 'howto', label: '📚 How-To Protocols' },
     { id: 'skin', label: 'Skin & Peel 💅' },
     { id: 'grooming', label: 'Grooming & Hair 💈' },
     { id: 'symmetry', label: 'Symmetry & Jaw 🪞' },
     { id: 'style', label: 'Style & Scent 👔' },
     { id: 'protein', label: 'Protein ₹/g Bank' },
-    { id: 'body', label: 'Body & Weight 📊' },
+    { id: 'body', label: 'Body & 88kg Cut 📊' },
     { id: 'content', label: 'Content ⚡' },
     { id: 'sleep', label: 'Sleep 🌙' },
     { id: 'sync', label: 'AI & Sync ☁️' },

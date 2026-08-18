@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
 import { ROT, METALLICADPA_PPL } from '../lib/constants';
 import type { CalendarEvent } from '../types';
+import { parseFoodMacrosAI } from '../lib/gemini';
 
 export const CalendarTimeline: React.FC = () => {
-  const { selectedDate, setSelectedDate, state, getDayState, toggleTimelineEvent, addCalendarEvent } = useGlowUpStore();
+  const { selectedDate, setSelectedDate, state, getDayState, toggleTimelineEvent, addCalendarEvent, addFoodItems } = useGlowUpStore();
   const dayState = getDayState();
   const [viewMode, setViewMode] = useState<'day' | 'week' | 'month'>('day');
   const [showEventModal, setShowEventModal] = useState(false);
+
+  // Meal Modal State
+  const [activeMealSlot, setActiveMealSlot] = useState<string | null>(null);
+  const [mealPrompt, setMealPrompt] = useState('');
+  const [mealLoading, setMealLoading] = useState(false);
 
   // New Event State
   const [newEventTitle, setNewEventTitle] = useState('');
@@ -24,15 +30,23 @@ export const CalendarTimeline: React.FC = () => {
   const customKey = dayState.workoutRoutine;
   const routine = METALLICADPA_PPL[customKey || autoRoutineKey] || METALLICADPA_PPL['pull_a'];
 
+  // Resolve dynamic meal titles from logged foods
+  const loggedFoods = dayState.food || [];
+  const dinnerLogged = loggedFoods.find(f => f.n.toLowerCase().includes('beef') || f.n.toLowerCase().includes('mutton') || f.n.toLowerCase().includes('curry') || f.n.toLowerCase().includes('roti') || f.n.toLowerCase().includes('dinner'));
+  const breakfastLogged = loggedFoods.find(f => f.n.toLowerCase().includes('oat') || f.n.toLowerCase().includes('egg') || f.n.toLowerCase().includes('breakfast'));
+
   const coreEvents = [
     { id: 'ev_sleep_am', startHour: 0, endHour: 7, time: '00:00 – 07:00', title: '😴 Deep Sleep Recovery Window', sub: 'Target 7.5h–8.5h uninterrupted sleep architecture. Nasal breathing.', color: 'indigo' as const, cta: '✓ Slept' },
     { id: 'ev_brush_am', startHour: 7, endHour: 7.17, time: '07:00 – 07:10', title: '🪥 AM Teeth Brushing & Tongue Scrape', sub: 'Scrape tongue 5x + brush 2 mins with fluoride paste.', color: 'sage' as const, cta: '✓ Brushed' },
     { id: 'ev_wake_water', startHour: 7.17, endHour: 7.25, time: '07:10 – 07:15', title: '💧 500ml Morning Hydration Flush', sub: 'Rehydrates cells, kickstarts motility, flushes metabolic waste.', color: 'blue' as const, cta: '✓ Drank 500ml' },
     { id: 'ev_am_skin', startHour: 7.58, endHour: 7.83, time: '07:35 – 07:50', title: '🧴 AM Skincare Shield + SPF 50', sub: 'AHA facewash → Vit C → B12 → Lakmé SPF 50 on Face, Neck, Arms & Hands.', color: 'rose' as const, cta: '✓ Applied SPF' },
     { id: 'ev_creatine', startHour: 8.25, endHour: 8.33, time: '08:15 – 08:20', title: '⚡ Creatine Monohydrate 5g', sub: 'ATP energy for compound lifts, cognitive cellular hydration.', color: 'turmeric' as const, cta: '✓ Took Creatine' },
+    { id: 'ev_breakfast', startHour: 8.5, endHour: 9.25, time: '08:30 – 09:15', title: breakfastLogged ? `🍳 Breakfast: ${breakfastLogged.n}` : '🍳 Breakfast Window (High Protein)', sub: 'Tap to log natural language meal with Gemini AI.', color: 'sage' as const, isMeal: true, mealSlot: 'Breakfast', cta: '🤖 AI Log' },
     { id: 'ev_shopping', startHour: 11, endHour: 12.5, time: '11:00 – 12:30', title: '🛒 Nutrition & Supplies Shopping', sub: 'Chicken breast, eggs, staples, socks & gym gear replenishment.', color: 'sage' as const, cta: '✓ Shopped' },
+    { id: 'ev_lunch', startHour: 13.5, endHour: 14.25, time: '13:30 – 14:15', title: '🍗 Lunch: Soya / Chicken + Rice & Dal', sub: 'Target 45g+ protein. Tap to log with Gemini AI.', color: 'sage' as const, isMeal: true, mealSlot: 'Lunch', cta: '🤖 AI Log' },
     { id: 'ev_gym', startHour: 17.5, endHour: 18.75, time: '17:30 – 18:45', title: `🏋️ ${routine.name}`, sub: routine.desc, color: 'turmeric' as const, cta: '✓ Log Workout' },
     { id: 'ev_whey', startHour: 18.75, endHour: 19, time: '18:45 – 19:00', title: '🥛 Post-Workout Nakpro Whey Isolate', sub: '1 Scoop Nakpro Whey Isolate + 250ml Buffalo Milk (32g Protein).', color: 'sage' as const, cta: '✓ Drank Whey' },
+    { id: 'ev_dinner', startHour: 20, endHour: 20.75, time: '20:00 – 20:45', title: dinnerLogged ? `🥩 Dinner: ${dinnerLogged.n}` : '🥩 Dinner Window (Beef Fry / Chicken / Eggs)', sub: 'Tap to log what you ate with Gemini AI.', color: 'sage' as const, isMeal: true, mealSlot: 'Dinner', cta: '🤖 AI Log' },
     { id: 'ev_pm_groom', startHour: 21.5, endHour: 22, time: '21:30 – 22:00', title: `💅 PM Skincare: ${rot.short}`, sub: `${rot.active} on face. ${rot.extra}.`, color: 'rose' as const, cta: '✓ Done PM' },
     { id: 'ev_sleep_pm', startHour: 23, endHour: 24, time: '23:00 – 00:00', title: '😴 Deep Sleep Mode Active', sub: 'Room pitch dark & cool. Phone outside bedroom.', color: 'indigo' as const, cta: '🛌 Slept' }
   ];
@@ -105,6 +119,24 @@ export const CalendarTimeline: React.FC = () => {
       });
     }
     return days;
+  };
+
+  const handleLogMealGemini = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!mealPrompt.trim()) return;
+    setMealLoading(true);
+    try {
+      const parsedItems = await parseFoodMacrosAI(mealPrompt);
+      if (parsedItems && parsedItems.length > 0) {
+        addFoodItems(parsedItems);
+        setActiveMealSlot(null);
+        setMealPrompt('');
+      }
+    } catch (err) {
+      alert('Gemini AI parsing failed. Please check prompt or internet connection.');
+    } finally {
+      setMealLoading(false);
+    }
   };
 
   return (
@@ -180,16 +212,33 @@ export const CalendarTimeline: React.FC = () => {
                     key={ev.id}
                     className={`gcal-event-block ${ev.color} ${isDone ? 'done' : ''}`}
                     style={{ top: `${top}px`, height: `${height}px` }}
-                    onClick={() => toggleTimelineEvent(ev.id)}
+                    onClick={() => {
+                      if (ev.isMeal) {
+                        setActiveMealSlot(ev.mealSlot || 'Meal');
+                      } else {
+                        toggleTimelineEvent(ev.id);
+                      }
+                    }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                       <div>
                         <div className="gcal-event-title">{ev.title}</div>
                         <div className="gcal-event-time">{ev.time}</div>
                       </div>
-                      <button className="gcal-check-btn" onClick={(e) => { e.stopPropagation(); toggleTimelineEvent(ev.id); }}>
-                        {isDone ? '✓' : '○'}
-                      </button>
+                      <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                        {ev.isMeal && (
+                          <button
+                            className="task-btn"
+                            style={{ fontSize: '9px', padding: '2px 5px', background: 'var(--turmeric)', color: '#1A1206' }}
+                            onClick={(e) => { e.stopPropagation(); setActiveMealSlot(ev.mealSlot || 'Meal'); }}
+                          >
+                            🤖 AI Log
+                          </button>
+                        )}
+                        <button className="gcal-check-btn" onClick={(e) => { e.stopPropagation(); toggleTimelineEvent(ev.id); }}>
+                          {isDone ? '✓' : '○'}
+                        </button>
+                      </div>
                     </div>
                     {height > 50 && <div className="gcal-event-sub">{ev.sub}</div>}
                   </div>
@@ -312,6 +361,49 @@ export const CalendarTimeline: React.FC = () => {
                 </div>
               );
             })}
+          </div>
+        </div>
+      )}
+
+      {/* INLINE GEMINI AI MEAL LOGGER MODAL */}
+      {activeMealSlot && (
+        <div className="modal-backdrop" onClick={() => setActiveMealSlot(null)}>
+          <div className="card modal-box" style={{ maxWidth: '440px' }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <h2 style={{ fontSize: '16px', margin: 0, color: 'var(--turmeric)' }}>
+                🤖 Log {activeMealSlot} with Gemini AI
+              </h2>
+              <button className="del" onClick={() => setActiveMealSlot(null)}>×</button>
+            </div>
+            <p className="note" style={{ marginBottom: '12px' }}>
+              Type or speak what you ate for {activeMealSlot}. Gemini AI will compute exact macros, log them to your day, and rename the calendar task.
+            </p>
+
+            <form onSubmit={handleLogMealGemini}>
+              <textarea
+                value={mealPrompt}
+                onChange={(e) => setMealPrompt(e.target.value)}
+                placeholder="e.g. 150g beef fry, 250g rice, and 50g dal..."
+                rows={3}
+                className="ai-textarea"
+                autoFocus
+                required
+              />
+
+              <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+                <button type="submit" className="btn primary" style={{ flex: 1 }} disabled={mealLoading}>
+                  {mealLoading ? '⏳ Calculating with AI...' : `✓ Log ${activeMealSlot} Macros`}
+                </button>
+                <button
+                  type="button"
+                  className="btn sm"
+                  style={{ background: 'var(--surface3)' }}
+                  onClick={() => setActiveMealSlot(null)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

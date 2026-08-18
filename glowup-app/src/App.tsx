@@ -16,6 +16,9 @@ import { ContentSprint } from './components/ContentSprint';
 import { ProteinBank } from './components/ProteinBank';
 import { BodyMeasurements } from './components/BodyMeasurements';
 import { AIDossierSync } from './components/AIDossierSync';
+import { HabitKitView } from './components/HabitKitView';
+import { ShoppingInventory } from './components/ShoppingInventory';
+import { HowToGuidesModal } from './components/HowToGuidesModal';
 
 export function App() {
   const { loadState } = useGlowUpStore();
@@ -84,10 +87,13 @@ export function App() {
       <div className="wrap main-content">
         {activeTab === 'calendar' && <CalendarTimeline />}
         {activeTab === 'today' && <TodayFlow />}
+        {activeTab === 'habitkit' && <HabitKitView />}
         {activeTab === 'food' && <AIFoodAssistant />}
+        {activeTab === 'shopping' && <ShoppingInventory />}
         {activeTab === 'lifts' && <LiftsWorkouts />}
         {activeTab === 'goals' && <GoalsMatrix />}
         {activeTab === 'momentum' && <HabitMomentumVault />}
+        {activeTab === 'howto' && <HowToGuidesModal />}
         {activeTab === 'skin' && <SkinGrooming />}
         {activeTab === 'grooming' && <SkinGrooming />}
         {activeTab === 'symmetry' && <SymmetryStyle />}
