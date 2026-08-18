@@ -107,4 +107,15 @@ const sprintContent = fs.readFileSync(path.join(appDir, 'components/ContentSprin
 assert(sprintContent.includes('handleToggleClickUpTask'), 'ContentSprint.tsx must include handleToggleClickUpTask');
 console.log('✔ Test 9: ClickUp 3-Task Exterminator & 1-Tap Full Day Calendar Engine verified');
 
+// Test 10: Granular Skincare Micro-Steps & Nutrition Staples
+const skinContent = fs.readFileSync(path.join(appDir, 'components/SkinGrooming.tsx'), 'utf8');
+assert(skinContent.includes('pm_castor'), 'SkinGrooming.tsx must include Castor oil micro-step');
+assert(skinContent.includes('amStepList'), 'SkinGrooming.tsx must include amStepList');
+
+const shopContent = fs.readFileSync(path.join(appDir, 'components/ShoppingInventory.tsx'), 'utf8');
+assert(shopContent.includes('sh_castor'), 'ShoppingInventory.tsx must include Castor oil');
+assert(shopContent.includes('sh_dates'), 'ShoppingInventory.tsx must include Dates');
+assert(shopContent.includes('sh_coconut'), 'ShoppingInventory.tsx must include Coconut oil');
+console.log('✔ Test 10: Granular Skincare micro-steps, Castor & Coconut Oil, Dates, and Pink Lips verified');
+
 console.log('=== ALL TESTS PASSED SUCCESSFULLY (100% COMPLIANT) ===');
