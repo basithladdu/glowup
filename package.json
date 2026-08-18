@@ -1,0 +1,22 @@
+{
+  "name": "glowup",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GlowUp Matrix · 24-Hour Circadian Schedule, 6-Day PPL + Arms, AI Food Macro Assistant, and Anti-Streak Cumulative Energy Vault",
+  "scripts": {
+    "dev": "npm run dev --prefix glowup-app",
+    "build": "npm run build --prefix glowup-app",
+    "preview": "npm run preview --prefix glowup-app",
+    "test": "node test_dom.js && node test_app_full.js"
+  },
+  "keywords": [
+    "glowup",
+    "react",
+    "typescript",
+    "zustand",
+    "supabase",
+    "gemini-ai"
+  ],
+  "author": "Basith Laddu",
+  "license": "MIT"
+}

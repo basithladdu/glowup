@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
 import { parseFoodMacrosAI } from '../lib/gemini';
 import type { MacroItem } from '../types';
+import { MacroCharts } from './MacroCharts';
 
 export const AIFoodAssistant: React.FC = () => {
   const { addFoodItems, removeFoodItem, getDayState, getDayTotals } = useGlowUpStore();
@@ -223,6 +224,9 @@ export const AIFoodAssistant: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* 14-DAY MACRO & CALORIE TRAJECTORY CHARTS */}
+      <MacroCharts />
     </div>
   );
 };
