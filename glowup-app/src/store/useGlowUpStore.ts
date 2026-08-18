@@ -3,6 +3,7 @@ import type { GlowUpState, MacroItem, LiftSet, GoalMilestone, DayState } from '.
 import { DEFAULT_GOALS } from '../lib/constants';
 import { supabase } from '../lib/supabase';
 import { playSuccessChime } from '../lib/sound';
+import { triggerConfetti, triggerGoalCelebration } from '../lib/confetti';
 
 const STORAGE_KEY = 'glowup-modular-v1';
 
@@ -227,7 +228,10 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     if (goal) {
       goal.done = !goal.done;
       set({ state });
-      if (goal.done) playSuccessChime();
+      if (goal.done) {
+        playSuccessChime();
+        triggerGoalCelebration();
+      }
       get().saveState({ area: 'goals', item: goalId, exact_update: `Toggled goal ${goal.title}: ${goal.done ? 'completed' : 'pending'}` });
     }
   },
@@ -255,6 +259,7 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     state.abstinence.lastConfirm = d;
     set({ state });
     playSuccessChime();
+    triggerConfetti();
     get().saveState({ area: 'abstinence', item: 'bank-day', exact_update: `Banked day ${state.abstinence.bankedDays} (+100 XP)` });
   },
 
