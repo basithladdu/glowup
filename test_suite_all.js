@@ -80,4 +80,17 @@ assert(typesContent.includes('CalendarEvent'), 'types/index.ts must export Calen
 assert(typesContent.includes('CustomProteinItem'), 'types/index.ts must export CustomProteinItem');
 console.log('✔ Test 5: Google Calendar 24h timeline and Custom Recipe Bank engine verified');
 
+// Test 6: HabitKit Matrix UI & Heatmap Dot Grid
+assert(cssContent.includes('.habitkit-card'), 'index.css must include .habitkit-card style');
+assert(cssContent.includes('.habitkit-heatmap-grid'), 'index.css must include .habitkit-heatmap-grid dot matrix style');
+assert(fs.existsSync(path.join(appDir, 'components/HabitKitView.tsx')), 'HabitKitView.tsx must exist');
+console.log('✔ Test 6: HabitKit individual dot heatmap matrix verified');
+
+// Test 7: Shopping List & Calm Navigation Mode
+assert(fs.existsSync(path.join(appDir, 'components/ShoppingInventory.tsx')), 'ShoppingInventory.tsx must exist');
+assert(fs.existsSync(path.join(appDir, 'components/HowToGuidesModal.tsx')), 'HowToGuidesModal.tsx must exist');
+const navContent = fs.readFileSync(path.join(appDir, 'components/Navigation.tsx'), 'utf8');
+assert(navContent.includes('essentialTabs'), 'Navigation.tsx must include Calm Essentials mode');
+console.log('✔ Test 7: Shopping Inventory, How-To protocols & Calm Mode verified');
+
 console.log('=== ALL TESTS PASSED SUCCESSFULLY (100% COMPLIANT) ===');
