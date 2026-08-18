@@ -34,6 +34,18 @@ export function App() {
     if (storedAuth === 'true') {
       setIsUnlocked(true);
     }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) return;
+      if (e.key === '1') setActiveTab('calendar');
+      if (e.key === '2') setActiveTab('habitkit');
+      if (e.key === '3') setActiveTab('food');
+      if (e.key === '4') setActiveTab('lifts');
+      if (e.key === '5') setActiveTab('shopping');
+      if (e.key === 'q' || e.key === 'Q') setShowQuickPill(prev => !prev);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [loadState]);
 
   const handleUnlock = (e: React.FormEvent) => {
