@@ -41,6 +41,27 @@ export interface AbstinenceState {
   reflections: Array<{ date: string; note: string }>;
 }
 
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  sub?: string;
+  startHour: number; // e.g. 7.5 for 07:30
+  endHour: number;   // e.g. 8.0 for 08:00
+  color: 'indigo' | 'sage' | 'turmeric' | 'rose' | 'vermilion' | 'blue';
+  category: 'sleep' | 'workout' | 'skincare' | 'nutrition' | 'habit' | 'content';
+  date?: string; // specific date or null for daily recurring
+}
+
+export interface CustomProteinItem {
+  id: string;
+  n: string;
+  k: number;
+  p: number;
+  c: number;
+  f: number;
+  cost: string;
+}
+
 export interface GlowUpState {
   days: Record<string, DayState>;
   weights: Record<string, number>;
@@ -50,6 +71,8 @@ export interface GlowUpState {
   liveSleep: string | null;
   meas: Array<{ d: string; shoulders: number; waist: number; arms?: number }>;
   milestones: GoalMilestone[];
+  customRecipes?: CustomProteinItem[];
+  customEvents?: CalendarEvent[];
   peel: string;
   start: string;
   abstinence: AbstinenceState;

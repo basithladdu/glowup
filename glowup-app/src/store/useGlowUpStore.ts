@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { GlowUpState, MacroItem, LiftSet, GoalMilestone, DayState } from '../types';
+import type { GlowUpState, MacroItem, LiftSet, GoalMilestone, DayState, CustomProteinItem, CalendarEvent } from '../types';
 import { DEFAULT_GOALS } from '../lib/constants';
 import { supabase } from '../lib/supabase';
 import { playSuccessChime } from '../lib/sound';
@@ -66,6 +66,10 @@ interface GlowUpStore {
   setLiveSleep: (timestamp: string | null) => void;
   logMorningWeight: (weight: number, date?: string) => void;
   logWater: (ml: number, date?: string) => void;
+  addCustomRecipe: (recipe: CustomProteinItem) => void;
+  deleteCustomRecipe: (id: string) => void;
+  addCalendarEvent: (event: CalendarEvent) => void;
+  deleteCalendarEvent: (id: string) => void;
 }
 
 export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
@@ -293,5 +297,37 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     state.water[d] = (state.water[d] || 0) + ml;
     set({ state });
     get().saveState({ area: 'hydration', item: 'water', exact_update: `Logged ${ml}ml water` });
+  },
+
+  addCustomRecipe: (recipe) => {
+    const state = { ...get().state };
+    state.customRecipes = state.customRecipes || [];
+    state.customRecipes.push(recipe);
+    set({ state });
+    playSuccessChime();
+    get().saveState({ area: 'nutrition', item: recipe.id, exact_update: `Added custom protein recipe ${recipe.n}` });
+  },
+
+  deleteCustomRecipe: (id) => {
+    const state = { ...get().state };
+    state.customRecipes = (state.customRecipes || []).filter(r => r.id !== id);
+    set({ state });
+    get().saveState({ area: 'nutrition', item: id, exact_update: `Deleted custom recipe ${id}` });
+  },
+
+  addCalendarEvent: (event) => {
+    const state = { ...get().state };
+    state.customEvents = state.customEvents || [];
+    state.customEvents.push(event);
+    set({ state });
+    playSuccessChime();
+    get().saveState({ area: 'calendar', item: event.id, exact_update: `Created calendar event: ${event.title}` });
+  },
+
+  deleteCalendarEvent: (id) => {
+    const state = { ...get().state };
+    state.customEvents = (state.customEvents || []).filter(e => e.id !== id);
+    set({ state });
+    get().saveState({ area: 'calendar', item: id, exact_update: `Deleted calendar event ${id}` });
   }
 }));

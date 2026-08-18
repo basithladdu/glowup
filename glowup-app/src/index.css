@@ -716,3 +716,361 @@ input:focus, select:focus, textarea:focus {
   max-width: 360px;
   text-align: center;
 }
+
+/* ==================== GOOGLE CALENDAR STYLES ==================== */
+.gcal-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface);
+  border: 0.5px solid var(--line2);
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gcal-btn-today {
+  background: var(--surface2);
+  border: 0.5px solid var(--line2);
+  color: var(--paper);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gcal-view-selector {
+  display: flex;
+  background: var(--surface2);
+  border: 0.5px solid var(--line2);
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.gcal-view-btn {
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.gcal-view-btn.active {
+  background: var(--turmeric);
+  color: #1A1206;
+  font-weight: 700;
+}
+
+/* Day Timetable */
+.gcal-day-container {
+  padding: 14px;
+}
+
+.gcal-grid-body {
+  position: relative;
+  height: 1440px; /* 24 hours * 60px */
+  margin-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.gcal-hour-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.gcal-hour-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  width: 48px;
+  margin-top: -7px;
+  flex: 0 0 48px;
+}
+
+.gcal-hour-line {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.gcal-now-line {
+  position: absolute;
+  left: 48px;
+  right: 0;
+  height: 2px;
+  background: #EA4335;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.gcal-now-dot {
+  position: absolute;
+  left: -5px;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #EA4335;
+  box-shadow: 0 0 8px #EA4335;
+}
+
+/* Event Blocks */
+.gcal-event-block {
+  position: absolute;
+  left: 54px;
+  right: 6px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  border-left: 4px solid;
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.gcal-event-block:hover {
+  transform: translateX(2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.gcal-event-block.done {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.gcal-event-block.turmeric {
+  background: rgba(232, 163, 61, 0.15);
+  border-left-color: var(--turmeric);
+}
+
+.gcal-event-block.sage {
+  background: rgba(138, 168, 95, 0.15);
+  border-left-color: var(--sage);
+}
+
+.gcal-event-block.indigo {
+  background: rgba(110, 143, 196, 0.15);
+  border-left-color: var(--indigo);
+}
+
+.gcal-event-block.rose {
+  background: rgba(201, 123, 142, 0.15);
+  border-left-color: var(--rose);
+}
+
+.gcal-event-block.blue {
+  background: rgba(66, 133, 244, 0.15);
+  border-left-color: #4285F4;
+}
+
+.gcal-event-title {
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--paper);
+}
+
+.gcal-event-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+.gcal-event-sub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+.gcal-check-btn {
+  background: var(--surface3);
+  border: 0.5px solid var(--line2);
+  color: var(--paper);
+  border-radius: 4px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+/* Week View */
+.gcal-week-card {
+  padding: 12px;
+}
+
+.gcal-week-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+.gcal-week-head-col {
+  padding: 6px 2px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.gcal-week-head-col.selected {
+  background: var(--surface2);
+}
+
+.gcal-week-dayname {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: var(--muted);
+}
+
+.gcal-week-daynum {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 2px;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  border-radius: 50%;
+}
+
+.gcal-week-daynum.today {
+  background: #EA4335;
+  color: #FFF;
+}
+
+.gcal-week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-top: 10px;
+  min-height: 380px;
+}
+
+.gcal-week-col {
+  background: var(--surface2);
+  border: 0.5px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.gcal-week-chip {
+  font-size: 9.5px;
+  padding: 3px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.gcal-week-chip.sleep { background: rgba(110, 143, 196, 0.2); color: var(--indigo); }
+.gcal-week-chip.water { background: rgba(66, 133, 244, 0.2); color: #4285F4; }
+.gcal-week-chip.skin { background: rgba(201, 123, 142, 0.2); color: var(--rose); }
+.gcal-week-chip.gym { background: rgba(232, 163, 61, 0.2); color: var(--turmeric); }
+.gcal-week-chip.food { background: rgba(138, 168, 95, 0.2); color: var(--sage); }
+.gcal-week-chip.derm { background: rgba(201, 123, 142, 0.2); color: var(--rose); }
+
+/* Month View */
+.gcal-month-card {
+  padding: 12px;
+}
+
+.gcal-month-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.gcal-month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.gcal-month-cell {
+  background: var(--surface2);
+  border: 0.5px solid var(--line);
+  border-radius: 6px;
+  padding: 6px;
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.gcal-month-cell.empty {
+  background: transparent;
+  border-color: transparent;
+  cursor: default;
+}
+
+.gcal-month-cell.selected {
+  border-color: var(--turmeric);
+  background: rgba(232, 163, 61, 0.08);
+}
+
+.gcal-month-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  align-self: flex-end;
+}
+
+.gcal-month-num.today {
+  background: #EA4335;
+  color: #FFF;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.gcal-month-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.gcal-mini-pill {
+  font-size: 8px;
+  padding: 1px 3px;
+  border-radius: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.gcal-mini-pill.food { background: rgba(138, 168, 95, 0.25); color: var(--sage); }
+.gcal-mini-pill.gym { background: rgba(232, 163, 61, 0.25); color: var(--turmeric); }
+.gcal-mini-pill.skin { background: rgba(201, 123, 142, 0.25); color: var(--rose); }

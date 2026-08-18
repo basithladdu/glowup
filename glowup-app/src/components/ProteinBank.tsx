@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
-import type { MacroItem } from '../types';
+import type { MacroItem, CustomProteinItem } from '../types';
 
 export const ProteinBank: React.FC = () => {
-  const { addFoodItems } = useGlowUpStore();
+  const { state, addFoodItems, addCustomRecipe, deleteCustomRecipe } = useGlowUpStore();
 
   const [soya, setSoya] = useState(80);
   const [eggs, setEggs] = useState(4);
@@ -11,6 +11,14 @@ export const ProteinBank: React.FC = () => {
   const [dairy, setDairy] = useState(350);
   const [pan, setPan] = useState(0);
   const [whey, setWhey] = useState(1);
+
+  // New Recipe Form State
+  const [recipeName, setRecipeName] = useState('');
+  const [recipeKcal, setRecipeKcal] = useState('250');
+  const [recipeP, setRecipeP] = useState('30.0');
+  const [recipeC, setRecipeC] = useState('10.0');
+  const [recipeF, setRecipeF] = useState('5.0');
+  const [recipeCost, setRecipeCost] = useState('₹45');
 
   const stapleBank = [
     { n: 'Soya Chunks (80g)', k: 276, p: 41.6, c: 26.4, f: 0.4, cost: '₹14 · ₹0.34/g P' },
@@ -71,80 +79,183 @@ export const ProteinBank: React.FC = () => {
     addFoodItems(items);
   };
 
+  const handleCreateCustomRecipe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!recipeName.trim()) return;
+    const newRecipe: CustomProteinItem = {
+      id: 'cr_' + Date.now(),
+      n: recipeName.trim(),
+      k: Math.round(Number(recipeKcal)) || 0,
+      p: Number(Number(recipeP).toFixed(1)) || 0,
+      c: Number(Number(recipeC).toFixed(1)) || 0,
+      f: Number(Number(recipeF).toFixed(1)) || 0,
+      cost: recipeCost || '₹0'
+    };
+    addCustomRecipe(newRecipe);
+    setRecipeName('');
+  };
+
+  const customRecipes = state.customRecipes || [];
+
   return (
     <div className="section-block">
-      {/* 4 SWAPPABLE 1-TAP MEAL STACKS */}
-      <div className="card">
-        <p className="eyebrow"><span className="n">stacks</span> 1-tap daily nutrition combos (~172g protein)</p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {presetStacks.map((stk, idx) => (
-            <div key={idx} style={{ background: 'var(--surface2)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px' }}>
-              <div style={{ fontWeight: 700, fontSize: '13.5px', color: 'var(--turmeric)' }}>{stk.name}</div>
-              <div style={{ fontSize: '11px', color: 'var(--muted)', margin: '4px 0 8px' }}>{stk.desc}</div>
-              <button className="btn sage sm" onClick={() => addFoodItems(stk.foods)}>
-                ✓ Log This Complete 172g Stack Today
-              </button>
+      <div className="desktop-grid-equal">
+        {/* LEFT COLUMN: SWAPPABLE STACKS & GRAM BALANCER */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          {/* 4 SWAPPABLE 1-TAP MEAL STACKS */}
+          <div className="card">
+            <p className="eyebrow"><span className="n">stacks</span> 1-tap daily nutrition combos (~172g protein)</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {presetStacks.map((stk, idx) => (
+                <div key={idx} style={{ background: 'var(--surface2)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px' }}>
+                  <div style={{ fontWeight: 700, fontSize: '13.5px', color: 'var(--turmeric)' }}>{stk.name}</div>
+                  <div style={{ fontSize: '11px', color: 'var(--muted)', margin: '4px 0 8px' }}>{stk.desc}</div>
+                  <button className="btn sage sm" onClick={() => addFoodItems(stk.foods)}>
+                    ✓ Log This Complete 172g Stack Today
+                  </button>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* DYNAMIC LIVE RECIPE & PRICE BALANCER */}
-      <div className="card">
-        <p className="eyebrow"><span className="n">calc</span> live recipe &amp; price balancer</p>
-        <h2>Custom Recipe Gram Balancer</h2>
-        <p className="note" style={{ marginBottom: '12px' }}>
-          Dial in grams of soya, eggs, chicken, curd &amp; milk. Live protein, calorie, and rupee breakdown.
-        </p>
-
-        <div className="frow">
-          <div><label className="fl">Soya Chunks (g)</label><input type="number" step="10" value={soya} onChange={(e) => setSoya(Number(e.target.value) || 0)} /></div>
-          <div><label className="fl">Whole Eggs</label><input type="number" step="1" value={eggs} onChange={(e) => setEggs(Number(e.target.value) || 0)} /></div>
-          <div><label className="fl">Chicken (g)</label><input type="number" step="10" value={chk} onChange={(e) => setChk(Number(e.target.value) || 0)} /></div>
-        </div>
-        <div className="frow">
-          <div><label className="fl">Milk / Curd (ml)</label><input type="number" step="50" value={dairy} onChange={(e) => setDairy(Number(e.target.value) || 0)} /></div>
-          <div><label className="fl">Paneer (g)</label><input type="number" step="10" value={pan} onChange={(e) => setPan(Number(e.target.value) || 0)} /></div>
-          <div><label className="fl">Whey Scoops</label><input type="number" step="1" value={whey} onChange={(e) => setWhey(Number(e.target.value) || 0)} /></div>
-        </div>
-
-        <div className="card" style={{ background: 'var(--surface2)', borderColor: 'var(--line2)', margin: '8px 0 10px', padding: '10px' }}>
-          <div className="statline">
-            <span className="statk">Total Protein</span>
-            <span className="statv" style={{ color: calcProt >= 170 ? 'var(--sage)' : 'var(--vermilion)' }}>{calcProt.toFixed(1)}g / 170g Floor</span>
           </div>
-          <div className="statline">
-            <span className="statk">Total Calories</span>
-            <span className="statv">{Math.round(calcKcal)} kcal ({2000 - Math.round(calcKcal) > 0 ? 'Deficit' : 'Surplus'})</span>
-          </div>
-          <div className="statline">
-            <span className="statk">Estimated Daily Cost</span>
-            <span className="statv" style={{ color: 'var(--turmeric)' }}>₹{Math.round(calcCost)} / day</span>
-          </div>
-        </div>
 
-        <button className="btn primary" style={{ width: '100%' }} onClick={handleApplyBalancer}>
-          ✓ Log This Custom Balanced Stack
-        </button>
-      </div>
+          {/* DYNAMIC LIVE RECIPE & PRICE BALANCER */}
+          <div className="card">
+            <p className="eyebrow"><span className="n">calc</span> live recipe &amp; price balancer</p>
+            <h2>Custom Recipe Gram Balancer</h2>
+            <p className="note" style={{ marginBottom: '12px' }}>
+              Dial in grams of soya, eggs, chicken, curd &amp; milk. Live protein, calorie, and rupee breakdown.
+            </p>
 
-      {/* STAPLE ADDER */}
-      <div className="card">
-        <p className="eyebrow">₹/g price-to-protein bank</p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          {stapleBank.map((s, idx) => (
-            <div key={idx} className="logrow">
-              <span className="logname">{s.n}</span>
-              <span className="logmac" style={{ color: 'var(--turmeric)' }}>{s.cost}</span>
-              <button
-                className="btn sm"
-                style={{ background: 'var(--surface3)' }}
-                onClick={() => addFoodItems([{ n: s.n, k: s.k, p: s.p, c: s.c, f: s.f }])}
-              >
-                + Add
-              </button>
+            <div className="frow">
+              <div><label className="fl">Soya Chunks (g)</label><input type="number" step="10" value={soya} onChange={(e) => setSoya(Number(e.target.value) || 0)} /></div>
+              <div><label className="fl">Whole Eggs</label><input type="number" step="1" value={eggs} onChange={(e) => setEggs(Number(e.target.value) || 0)} /></div>
+              <div><label className="fl">Chicken (g)</label><input type="number" step="10" value={chk} onChange={(e) => setChk(Number(e.target.value) || 0)} /></div>
             </div>
-          ))}
+            <div className="frow">
+              <div><label className="fl">Milk / Curd (ml)</label><input type="number" step="50" value={dairy} onChange={(e) => setDairy(Number(e.target.value) || 0)} /></div>
+              <div><label className="fl">Paneer (g)</label><input type="number" step="10" value={pan} onChange={(e) => setPan(Number(e.target.value) || 0)} /></div>
+              <div><label className="fl">Whey Scoops</label><input type="number" step="1" value={whey} onChange={(e) => setWhey(Number(e.target.value) || 0)} /></div>
+            </div>
+
+            <div className="card" style={{ background: 'var(--surface2)', borderColor: 'var(--line2)', margin: '8px 0 10px', padding: '10px' }}>
+              <div className="statline">
+                <span className="statk">Total Protein</span>
+                <span className="statv" style={{ color: calcProt >= 170 ? 'var(--sage)' : 'var(--vermilion)' }}>{calcProt.toFixed(1)}g / 170g Floor</span>
+              </div>
+              <div className="statline">
+                <span className="statk">Total Calories</span>
+                <span className="statv">{Math.round(calcKcal)} kcal ({2000 - Math.round(calcKcal) > 0 ? 'Deficit' : 'Surplus'})</span>
+              </div>
+              <div className="statline">
+                <span className="statk">Estimated Daily Cost</span>
+                <span className="statv" style={{ color: 'var(--turmeric)' }}>₹{Math.round(calcCost)} / day</span>
+              </div>
+            </div>
+
+            <button className="btn primary" style={{ width: '100%' }} onClick={handleApplyBalancer}>
+              ✓ Log This Custom Balanced Stack
+            </button>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: STAPLES BANK & CUSTOM RECIPE CREATOR */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          {/* CUSTOM USER RECIPES SAVED IN PROTEIN BANK */}
+          <div className="card">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <p className="eyebrow"><span className="n">saved</span> your custom protein bank recipes</p>
+              <span className="badge-count">{customRecipes.length}</span>
+            </div>
+            {!customRecipes.length ? (
+              <div className="empty">No custom recipes added yet. Create one below to save it permanently in your bank.</div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {customRecipes.map((r) => (
+                  <div key={r.id} className="logrow">
+                    <span className="logname">{r.n}</span>
+                    <span className="logmac" style={{ color: 'var(--sage)', fontWeight: 700 }}>
+                      {r.k} kcal · {r.p}g P
+                    </span>
+                    <div style={{ display: 'flex', gap: '4px' }}>
+                      <button
+                        className="btn sm sage"
+                        onClick={() => addFoodItems([{ n: r.n, k: r.k, p: r.p, c: r.c, f: r.f }])}
+                      >
+                        + Add
+                      </button>
+                      <button className="del" onClick={() => deleteCustomRecipe(r.id)}>×</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* ADD NEW CUSTOM RECIPE FORM */}
+          <div className="card">
+            <p className="eyebrow"><span className="n">+</span> save new recipe to protein bank</p>
+            <form onSubmit={handleCreateCustomRecipe} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div>
+                <label className="fl">Recipe Name (with portion/grams)</label>
+                <input
+                  value={recipeName}
+                  onChange={(e) => setRecipeName(e.target.value)}
+                  placeholder="e.g. 200g Grilled Chicken + 100g Rice"
+                  required
+                />
+              </div>
+
+              <div className="frow">
+                <div>
+                  <label className="fl">Calories (kcal)</label>
+                  <input type="number" value={recipeKcal} onChange={(e) => setRecipeKcal(e.target.value)} required />
+                </div>
+                <div>
+                  <label className="fl">Protein (g)</label>
+                  <input type="number" step="0.1" value={recipeP} onChange={(e) => setRecipeP(e.target.value)} required />
+                </div>
+              </div>
+
+              <div className="frow">
+                <div>
+                  <label className="fl">Carbs (g)</label>
+                  <input type="number" step="0.1" value={recipeC} onChange={(e) => setRecipeC(e.target.value)} />
+                </div>
+                <div>
+                  <label className="fl">Fat (g)</label>
+                  <input type="number" step="0.1" value={recipeF} onChange={(e) => setRecipeF(e.target.value)} />
+                </div>
+                <div>
+                  <label className="fl">Cost (₹)</label>
+                  <input value={recipeCost} onChange={(e) => setRecipeCost(e.target.value)} placeholder="₹50" />
+                </div>
+              </div>
+
+              <button type="submit" className="btn primary" style={{ width: '100%' }}>
+                ✓ Save Recipe to Permanent Protein Bank
+              </button>
+            </form>
+          </div>
+
+          {/* STAPLE ADDER */}
+          <div className="card">
+            <p className="eyebrow">₹/g price-to-protein bank</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {stapleBank.map((s, idx) => (
+                <div key={idx} className="logrow">
+                  <span className="logname">{s.n}</span>
+                  <span className="logmac" style={{ color: 'var(--turmeric)' }}>{s.cost}</span>
+                  <button
+                    className="btn sm"
+                    style={{ background: 'var(--surface3)' }}
+                    onClick={() => addFoodItems([{ n: s.n, k: s.k, p: s.p, c: s.c, f: s.f }])}
+                  >
+                    + Add
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
