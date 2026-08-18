@@ -9,6 +9,8 @@ export type TabType =
   | 'momentum' 
   | 'skin' 
   | 'grooming' 
+  | 'symmetry'
+  | 'style'
   | 'body' 
   | 'content' 
   | 'sleep';

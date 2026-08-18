@@ -10,6 +10,9 @@ import { LiftsWorkouts } from './components/LiftsWorkouts';
 import { GoalsMatrix } from './components/GoalsMatrix';
 import { HabitMomentumVault } from './components/HabitMomentumVault';
 import { SkinGrooming } from './components/SkinGrooming';
+import { SymmetryStyle } from './components/SymmetryStyle';
+import { SleepSanctuary } from './components/SleepSanctuary';
+import { ContentSprint } from './components/ContentSprint';
 
 export function App() {
   const { loadState } = useGlowUpStore();
@@ -84,9 +87,11 @@ export function App() {
         {activeTab === 'momentum' && <HabitMomentumVault />}
         {activeTab === 'skin' && <SkinGrooming />}
         {activeTab === 'grooming' && <SkinGrooming />}
+        {activeTab === 'symmetry' && <SymmetryStyle />}
+        {activeTab === 'style' && <SymmetryStyle />}
         {activeTab === 'body' && <LiftsWorkouts />}
-        {activeTab === 'content' && <TodayFlow />}
-        {activeTab === 'sleep' && <TodayFlow />}
+        {activeTab === 'content' && <ContentSprint />}
+        {activeTab === 'sleep' && <SleepSanctuary />}
       </div>
     </div>
   );
