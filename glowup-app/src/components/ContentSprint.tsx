@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
+import { triggerGoalCelebration } from '../lib/confetti';
+import { playSuccessChime } from '../lib/sound';
 
 interface PoliticalNote {
   id: string;
@@ -11,10 +13,23 @@ interface PoliticalNote {
 }
 
 export const ContentSprint: React.FC = () => {
-  const { state, selectedDate, saveState } = useGlowUpStore();
+  const { state, selectedDate, saveState, toggleHabit } = useGlowUpStore();
   const [topic, setTopic] = useState('');
   const [secondsLeft, setSecondsLeft] = useState(45 * 60);
   const [isRunning, setIsRunning] = useState(false);
+
+  // ClickUp Cleanse 3-Task State
+  const [clickUpDone, setClickUpDone] = useState({ t1: false, t2: false, t3: false });
+
+  const handleToggleClickUpTask = (key: 't1' | 't2' | 't3') => {
+    const updated = { ...clickUpDone, [key]: !clickUpDone[key] };
+    setClickUpDone(updated);
+    if (updated.t1 && updated.t2 && updated.t3) {
+      toggleHabit('h_clickup');
+      triggerGoalCelebration();
+      playSuccessChime();
+    }
+  };
 
   // Political / Congressional Daily Check-in State
   const [polTopic, setPolTopic] = useState('');
@@ -125,21 +140,59 @@ export const ContentSprint: React.FC = () => {
             )}
           </div>
 
-          {/* SPRINT HISTORY & METRICS */}
+          {/* 10-MINUTE CLICKUP BACKLOG TRIAGE & CLEANSE */}
           <div className="card">
-            <p className="eyebrow"><span className="n">cadence</span> production velocity</p>
-            <div className="statline">
-              <span className="statk">Target Frequency</span>
-              <span className="statv" style={{ color: 'var(--turmeric)' }}>1 Short / 2 Days</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <div>
+                <p className="eyebrow"><span className="n">triage</span> 10-minute backlog cleanse</p>
+                <h3 style={{ fontSize: '14px', margin: 0, color: 'var(--turmeric)' }}>🎯 ClickUp 3-Task Exterminator</h3>
+              </div>
+              <a
+                href="https://app.clickup.com"
+                target="_blank"
+                rel="noreferrer"
+                className="btn sm"
+                style={{ background: 'var(--surface3)', fontSize: '10px' }}
+              >
+                🔗 Open ClickUp ↗
+              </a>
             </div>
-            <div className="statline">
-              <span className="statk">Pillar Deep-Dive</span>
-              <span className="statv" style={{ color: 'var(--sage)' }}>1 YouTube Long / 14 Days</span>
+            <p className="note" style={{ marginBottom: '10px' }}>
+              Exterminate 3 oldest backlog tasks or delegate/archive them in 10 minutes to maintain cognitive clarity.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <label className="checkbox-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={clickUpDone.t1}
+                  onChange={() => handleToggleClickUpTask('t1')}
+                />
+                <span>🗑️ Task #1 Exterminated / Archived</span>
+              </label>
+              <label className="checkbox-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={clickUpDone.t2}
+                  onChange={() => handleToggleClickUpTask('t2')}
+                />
+                <span>🗑️ Task #2 Exterminated / Archived</span>
+              </label>
+              <label className="checkbox-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={clickUpDone.t3}
+                  onChange={() => handleToggleClickUpTask('t3')}
+                />
+                <span>🗑️ Task #3 Exterminated / Archived</span>
+              </label>
             </div>
-            <div className="statline">
-              <span className="statk">Production Block</span>
-              <span className="statv" style={{ color: 'var(--paper)' }}>45 Mins Daily Flow</span>
-            </div>
+
+            {clickUpDone.t1 && clickUpDone.t2 && clickUpDone.t3 && (
+              <div style={{ marginTop: '10px', background: 'rgba(138, 168, 95, 0.15)', border: '1px solid var(--sage)', borderRadius: '6px', padding: '6px 10px', fontSize: '11px', color: 'var(--sage)', fontWeight: 700 }}>
+                ✓ 3 Tasks Exterminated! ClickUp Habit Completed.
+              </div>
+            )}
           </div>
         </div>
 
