@@ -25,7 +25,7 @@ export const AIDossierSync: React.FC = () => {
     const avgP = loggedCount ? (totalP / loggedCount).toFixed(1) : '0';
 
     const wKeys = Object.keys(state.weights).sort();
-    const latestWeight = wKeys.length ? state.weights[wKeys[wKeys.length - 1]] : 85.0;
+    const latestWeight = wKeys.length ? state.weights[wKeys[wKeys.length - 1]] : 88.0;
 
     let md = `# GLOWUP PROGRESS REPORT & AI SYSTEM DOSSIER\n`;
     md += `**Subject:** Basith | **Age:** 22 | **Height:** 5'7" (170cm) | **Location:** Kurnool, India\n`;
