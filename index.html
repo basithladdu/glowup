@@ -528,17 +528,98 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
   padding:5px 8px;flex:1;
 }
 
-/* ---------- goal progress cards ---------- */
-.goal-card{
-  background:var(--surface2);border:.5px solid var(--line2);border-radius:10px;
-  padding:12px;margin-bottom:10px;
+/* ---------- workout routine selector & supersets ---------- */
+.routine-selector{display:flex;gap:6px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.routine-selector::-webkit-scrollbar{display:none}
+.routine-chip{
+  flex:0 0 auto;padding:6px 12px;border-radius:20px;background:var(--surface2);border:1px solid var(--line2);
+  color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;cursor:pointer;transition:.15s;
 }
-.goal-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.goal-card-title{font-size:13.5px;font-weight:700;color:var(--paper)}
-.goal-card-status{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--sage)}
-.goal-card-desc{font-size:11.5px;color:var(--muted);line-height:1.5;margin-bottom:8px}
-.goal-progress-bar{height:5px;border-radius:3px;background:var(--surface3);overflow:hidden;margin-bottom:6px}
-.goal-progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--turmeric),var(--sage));transition:width .4s ease}
+.routine-chip:hover{border-color:var(--turmeric);color:var(--paper)}
+.routine-chip.active{
+  background:rgba(232,163,61,.18);border-color:var(--turmeric);color:var(--turmeric);font-weight:700;
+}
+.superset-card{
+  background:rgba(110,143,196,.07);border:1px dashed rgba(110,143,196,.35);border-radius:8px;padding:8px;margin:3px 0;
+}
+.superset-badge{
+  display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
+  color:var(--indigo);background:rgba(110,143,196,.2);padding:2px 6px;border-radius:4px;margin-bottom:6px;letter-spacing:.05em;
+}
+.intensity-tag{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--turmeric);
+  background:rgba(232,163,61,.15);padding:2px 6px;border-radius:4px;border:.5px solid rgba(232,163,61,.3);
+}
+.ex-row{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--surface2);
+  padding:8px 10px;border-radius:6px;border:1px solid var(--line);cursor:pointer;transition:.12s;margin-bottom:4px;
+}
+.ex-row:hover{background:var(--surface3);border-color:var(--line2)}
+.ex-quick-btn{
+  background:var(--surface3);border:1px solid var(--line2);border-radius:5px;color:var(--turmeric);
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:4px 8px;cursor:pointer;white-space:nowrap;transition:.12s;
+}
+.ex-quick-btn:hover{background:var(--turmeric);color:#1A1206}
+
+/* ---------- categorized goals & milestones ---------- */
+.goal-cat-bar{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.goal-cat-bar::-webkit-scrollbar{display:none}
+.goal-cat-btn{
+  flex:0 0 auto;padding:6px 12px;border-radius:18px;background:var(--surface2);border:1px solid var(--line2);
+  color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:6px;
+}
+.goal-cat-btn:hover{border-color:var(--turmeric);color:var(--paper)}
+.goal-cat-btn.active{
+  background:var(--turmeric);color:#1A1206;border-color:var(--turmeric);font-weight:700;
+}
+.goal-cat-btn .badge-count{
+  background:rgba(0,0,0,.25);padding:1px 5px;border-radius:10px;font-size:9px;font-weight:700;
+}
+.goal-cat-btn.active .badge-count{
+  background:#1A1206;color:var(--turmeric);
+}
+.goal-metrics-summary{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;margin:8px 0 12px;
+}
+.goal-metric-box{
+  background:var(--surface2);border:.5px solid var(--line2);border-radius:8px;padding:8px 10px;
+}
+.goal-metric-box .gm-title{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--muted);font-weight:600;display:flex;justify-content:space-between}
+.goal-metric-box .gm-val{font-size:14px;font-weight:700;color:var(--paper);margin-top:2px}
+.goal-item-card{
+  background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:8px;
+  display:flex;flex-direction:column;gap:6px;transition:.15s;
+}
+.goal-item-card.done{
+  opacity:.75;background:rgba(138,168,95,.08);border-color:rgba(138,168,95,.3);
+}
+.goal-item-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.goal-tag-group{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.cat-pill{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:4px;
+}
+.cat-pill.gym{background:rgba(232,163,61,.2);color:var(--turmeric);border:.5px solid rgba(232,163,61,.4)}
+.cat-pill.skin{background:rgba(201,123,142,.2);color:var(--rose);border:.5px solid rgba(201,123,142,.4)}
+.cat-pill.grooming{background:rgba(110,143,196,.2);color:var(--indigo);border:.5px solid rgba(110,143,196,.4)}
+.cat-pill.health{background:rgba(138,168,95,.2);color:var(--sage);border:.5px solid rgba(138,168,95,.4)}
+.freq-pill{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:600;padding:2px 7px;border-radius:4px;
+  background:var(--surface3);color:var(--paper);border:.5px solid var(--line2);
+}
+.goal-item-title{font-size:13.5px;font-weight:700;color:var(--paper);line-height:1.3}
+.goal-item-card.done .goal-item-title{text-decoration:line-through;color:var(--muted)}
+.goal-item-desc{font-size:11.5px;color:var(--muted);line-height:1.35}
+.goal-item-footer{display:flex;justify-content:space-between;align-items:center;margin-top:4px;padding-top:6px;border-top:.5px solid var(--line)}
+.goal-item-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
+.goal-toggle-btn{
+  background:var(--surface3);border:1px solid var(--line2);border-radius:6px;
+  color:var(--paper);font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;
+  padding:5px 10px;cursor:pointer;transition:.12s;
+}
+.goal-toggle-btn:hover{border-color:var(--turmeric);color:var(--turmeric)}
+.goal-item-card.done .goal-toggle-btn{
+  background:var(--sage);color:#1A1206;border-color:var(--sage);
+}
 </style>
 </head>
 <body>
@@ -587,10 +668,10 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
     <button class="tab" role="tab" aria-selected="false" data-tab="content">Content ⚡</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="sleep">Sleep 🌙</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="grooming">Grooming &amp; Oil</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="milestones">Milestones</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="milestones">🎯 Goals</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="protein">Protein ₹/g</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="skin">Skin &amp; Peel</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="lifts">Lifts</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="lifts">🏋️ Lifts &amp; Workouts</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="body">Body</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="momentum">Momentum</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="sync">AI &amp; Sync</button>
@@ -885,7 +966,7 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
   </div>
 
   <div class="card">
-    <p class="eyebrow">past 14 days content streak</p>
+    <p class="eyebrow">past 14 days output history</p>
     <div id="contentHistory"></div>
   </div>
 </section>
@@ -964,22 +1045,69 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
   </div>
 </section>
 
-<!-- ============ ONE-TIME & SPECIAL MILESTONES ============ -->
+<!-- ============ GOALS & MILESTONES (CATEGORIZED) ============ -->
 <section id="p-milestones" class="hide">
   <div class="card">
-    <p class="eyebrow"><span class="n">🎯</span> milestone events &amp; appointments</p>
-    <h2>Special Milestones (One-Time &amp; Bi-Weekly)</h2>
-    <p class="note" style="margin-bottom:12px">Track one-time appointments (dermatologist, haircuts, blood panels, progress photos).</p>
+    <p class="eyebrow"><span class="n">🎯</span> categorized action targets &amp; milestones</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <h2>Master Goals &amp; Milestones</h2>
+      <span class="tag-badge tag-best" id="goalOverallBadge">Categorized System</span>
+    </div>
+    <p class="note" style="margin-bottom:12px">Track Gym &amp; Physique, Skin &amp; Derm, Grooming &amp; Hair, and Health &amp; Sleep with exact frequencies.</p>
+    
+    <!-- Category Filter Bar -->
+    <div class="goal-cat-bar" id="goalCategoryFilters">
+      <button class="goal-cat-btn active" data-cat="all">All Goals <span class="badge-count" id="countAll">0</span></button>
+      <button class="goal-cat-btn" data-cat="gym">🏋️ Gym &amp; Physique <span class="badge-count" id="countGym">0</span></button>
+      <button class="goal-cat-btn" data-cat="skin">✨ Skin &amp; Derm <span class="badge-count" id="countSkin">0</span></button>
+      <button class="goal-cat-btn" data-cat="grooming">💈 Grooming &amp; Hair <span class="badge-count" id="countGrooming">0</span></button>
+      <button class="goal-cat-btn" data-cat="health">🧬 Health &amp; Sleep <span class="badge-count" id="countHealth">0</span></button>
+    </div>
+
+    <!-- Category Summary Highlights -->
+    <div id="goalCategorySummary" class="goal-metrics-summary"></div>
+
+    <!-- Goals List Container -->
     <div id="milestonesList"></div>
   </div>
 
   <div class="card">
-    <p class="eyebrow">add custom milestone</p>
+    <p class="eyebrow">add custom categorized goal</p>
     <div class="frow">
-      <div style="flex:2"><label class="fl">Milestone Title</label><input id="newMileTitle" placeholder="e.g. Dermatologist Consultation"></div>
-      <div><label class="fl">Target Date</label><input id="newMileDate" type="date"></div>
+      <div style="flex:2">
+        <label class="fl">Goal Title</label>
+        <input id="newMileTitle" placeholder="e.g. 15.5-inch Arm Measurement / Incline DB Press 30kg">
+      </div>
+      <div>
+        <label class="fl">Category</label>
+        <select id="newMileCat" style="background:var(--surface2);border:.5px solid var(--line2);border-radius:8px;color:var(--paper);padding:8px;width:100%;font-size:12px">
+          <option value="gym">🏋️ Gym &amp; Physique</option>
+          <option value="skin">✨ Skin &amp; Derm</option>
+          <option value="grooming">💈 Grooming &amp; Hair</option>
+          <option value="health">🧬 Health &amp; Sleep</option>
+        </select>
+      </div>
     </div>
-    <button class="btn primary" style="width:100%" id="btnAddMilestone">+ Add Milestone</button>
+    <div class="frow" style="margin-top:6px">
+      <div style="flex:1">
+        <label class="fl">Execution Frequency</label>
+        <select id="newMileFreq" style="background:var(--surface2);border:.5px solid var(--line2);border-radius:8px;color:var(--paper);padding:8px;width:100%;font-size:12px">
+          <option value="Daily">Daily</option>
+          <option value="2x / Week">2x / Week</option>
+          <option value="3x / Week">3x / Week</option>
+          <option value="6x / Week (PPL+Arms)">6x / Week (PPL+Arms)</option>
+          <option value="Weekly">Weekly</option>
+          <option value="Every 14 Days">Every 14 Days (Bi-weekly)</option>
+          <option value="Monthly">Monthly</option>
+          <option value="Quarterly / Once">Quarterly / Milestone</option>
+        </select>
+      </div>
+      <div>
+        <label class="fl">Target Date</label>
+        <input id="newMileDate" type="date">
+      </div>
+    </div>
+    <button class="btn primary" style="width:100%;margin-top:10px" id="btnAddMilestone">+ Add Goal to Matrix</button>
   </div>
 </section>
 
@@ -1032,14 +1160,32 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
 
 <!-- ============ LIFTS ============ -->
 <section id="p-lifts" class="hide">
-  <!-- METALLICADPA 6-DAY PPL PROGRAM CARD -->
+  <!-- METALLICADPA 6-DAY PPL + ARMS PROGRAM CARD -->
   <div class="card">
-    <p class="eyebrow" style="color:var(--turmeric)"><span class="n">🏋️</span> r/fitness 6-day ppl program</p>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-      <h2 id="pplDayTitle">Today: Push A Workout</h2>
+    <p class="eyebrow" style="color:var(--turmeric)"><span class="n">🏋️</span> workout split &amp; routine selector</p>
+    
+    <!-- Routine Switcher Pills -->
+    <div class="routine-selector" id="workoutRoutineSelector">
+      <button class="routine-chip active" data-routine="auto">🔄 Auto (By Day)</button>
+      <button class="routine-chip" data-routine="arms">💪 Dedicated Arms Day</button>
+      <button class="routine-chip" data-routine="pull_a">Day 1 · Pull (Deadlift)</button>
+      <button class="routine-chip" data-routine="push_a">Day 2 · Push (Bench)</button>
+      <button class="routine-chip" data-routine="legs_a">Day 3 · Legs (Squat)</button>
+      <button class="routine-chip" data-routine="pull_b">Day 4 · Pull (Row)</button>
+      <button class="routine-chip" data-routine="push_b">Day 5 · Push (OHP)</button>
+      <button class="routine-chip" data-routine="legs_b">Day 6 · Legs (Progression)</button>
+      <button class="routine-chip" data-routine="rest">🚶 Rest &amp; Mobility</button>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;gap:8px">
+      <div>
+        <h2 id="pplDayTitle">Today: Push A Workout</h2>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)" id="pplDayFreq">Frequency: 6 Days / Week (PPL Split)</span>
+      </div>
       <span class="tag-badge tag-best" id="pplDayBadge">Metallicadpa Linear Progression</span>
     </div>
-    <p class="note" id="pplDayDesc" style="margin-bottom:10px">Heavy 5x5+ AMRAP main compound + 3x8–12 accessory volume. Add +2.5kg when hitting all reps.</p>
+    <p class="note" id="pplDayDesc" style="margin-bottom:10px">Heavy compound focus + accessory volume. Tap any exercise to auto-populate the log form.</p>
+    
     <div id="pplDayRoutineList" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px"></div>
   </div>
 
@@ -1097,23 +1243,23 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
 
 <!-- ============ MOMENTUM & GITHUB HEATMAP ============ -->
 <section id="p-momentum" class="hide">
-  <!-- DOPAMINE & ABSTINENCE RETENTION SHIELD -->
+  <!-- DOPAMINE & CUMULATIVE ENERGY RETENTION VAULT -->
   <div class="abstinence-card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
       <div style="display:flex;align-items:center;gap:10px">
         <span class="abstinence-fire">🔥</span>
         <div>
-          <h2 style="font-size:18px;margin:0" id="abstinenceStreakTitle">14 Days Clean &amp; Transmuted</h2>
+          <h2 style="font-size:18px;margin:0" id="abstinenceStreakTitle">14 Days Banked &amp; Transmuted</h2>
           <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--turmeric)" id="abstinenceMilestoneBadge">Phase 2: Androgen Receptor Upregulation</span>
         </div>
       </div>
-      <span class="tag-badge tag-best" id="abstinenceStatusTag">LOCKED IN</span>
+      <span class="tag-badge tag-best" id="abstinenceStatusTag">CUMULATIVE VAULT</span>
     </div>
-    <p class="note" style="margin-bottom:12px" id="abstinenceNote">Dopamine sensitivity restored, brain fog eliminated, high mental drive and magnetic confidence.</p>
+    <p class="note" style="margin-bottom:12px" id="abstinenceNote">Never resets to 0. Every disciplined day is permanently banked into your neural reward baseline.</p>
     
     <div style="display:flex;gap:8px">
-      <button class="btn sage" style="flex:2" id="btnConfirmClean">✓ Confirm Clean Today (+1 Day)</button>
-      <button class="btn sm" style="flex:1;background:var(--surface3)" id="btnResetClean">↺ Reset</button>
+      <button class="btn sage" style="flex:2" id="btnConfirmClean">✓ Bank Today's Energy (+100 XP)</button>
+      <button class="btn sm" style="flex:1;background:var(--surface3)" id="btnResetClean">🌱 Recalibrate</button>
     </div>
   </div>
 
@@ -1439,125 +1585,204 @@ if(document.getElementById('btnLockNow')){
   };
 }
 
-/* ---------------- lifts array (Metallicadpa 6-Day PPL) ---------------- */
+/* ---------------- lifts array & routines ---------------- */
 const LIFTS = [
-  'Flat Barbell Bench Press',
-  'Conventional Deadlift',
-  'Barbell Back Squat',
-  'Standing Barbell OHP',
-  'Barbell Bent-Over Row',
-  'Incline DB Bench Press',
-  'Lat Pulldowns',
-  'Chest Supported Row',
-  'Romanian Deadlift (RDL)',
-  'Bulgarian Split Squat',
+  'Deadlift (Barbell)',
+  'Lat Pulldown',
+  'Chest Supported Row (Dumbbell)',
+  'Face Pull',
+  'Hammer Curl',
+  'Bicep Curl (Dumbbell)',
+  'Bench Press (Barbell)',
+  'Overhead Press (Barbell)',
+  'Incline Bench Press (Dumbbell)',
+  'Tricep Pushdown (Cable)',
+  'Lateral Raise (Dumbbell)',
+  'Tricep Extension (Dumbbell)',
+  'Squat (Barbell)',
+  'Romanian Deadlift (Barbell)',
   'Leg Press',
-  'Face Pulls',
-  'Dumbbell Lateral Raises',
-  'Incline Bicep Curl',
-  'Dumbbell Hammer Curls',
-  'Tricep Rope Pushdowns',
-  'Overhead Tricep Extension',
-  'Hamstring Leg Curls',
+  'Leg Curl',
+  'Seated Calf Raise',
+  'Barbell Row',
+  'Incline Bicep Curl (Dumbbell)',
+  'Tricep Pushdown (Cable / V-Bar)',
+  'Hammer Curl (Dumbbell)',
+  'Overhead Tricep Extension (Dumbbell)',
+  'EZ Bar / Barbell Preacher Curl',
+  'Bench Dips / Cable Kickbacks',
+  'Wrist Curls / Reverse Curls',
+  'Bulgarian Split Squat',
   'Standing Calf Raises',
   'Farmer Carries'
 ];
 
 const METALLICADPA_PPL = {
   0: {
+    id: 'rest',
+    dayNum: 'Day 0 · Sunday',
     name: 'Active Rest & Recovery',
-    split: 'Mobility & Spinal Decompression',
+    split: 'Mobility, Spine Decompression & Sunlight Walk',
     badge: 'Rest & Decompression',
+    freq: '1x / Week (Sunday)',
     desc: 'Circadian sunlight walk (60m) + spine decompression + dead hangs. Zero heavy loading.',
     exercises: [
-      { name: 'Outdoor Sunlight Walk', sets: '1×60m', cue: 'Circadian reset & 5,000+ steps' },
-      { name: 'Dead Hangs (Scapular Decompression)', sets: '3×30s', cue: 'Reclaims spinal disc height' },
-      { name: 'Doorway Pec & Hip Flexor Stretch', sets: '3×45s', cue: 'Chest expansion & posture realignment' }
+      { name: 'Outdoor Sunlight Walk', sets: '1 set', reps: '60m', intensity: 'Low', cue: 'Circadian reset & 5,000+ steps' },
+      { name: 'Dead Hangs (Scapular Decompression)', sets: '3 sets', reps: '30s', intensity: 'Bodyweight', cue: 'Reclaims spinal disc height' },
+      { name: 'Doorway Pec & Hip Flexor Stretch', sets: '3 sets', reps: '45s', intensity: 'Gentle', cue: 'Chest expansion & posture realignment' }
     ]
   },
   1: {
-    name: 'Pull A (Deadlift Focus)',
+    id: 'pull_a',
+    dayNum: 'Day 1',
+    name: 'Day 1 · Pull (Deadlift Focus)',
     split: 'Back, Rear Delts & Biceps',
-    badge: 'Pull A · Heavy Deadlift',
-    desc: 'Heavy Deadlift (1x5+ AMRAP) + Back Hypertrophy & Bicep Volume',
+    badge: 'Day 1 · Pull',
+    freq: 'Weekly (Pull A/B Split)',
+    desc: 'Heavy Deadlift (1x5+ @ 70%) + Lat Pulldown, Chest Supported Rows & Curls',
     exercises: [
-      { name: 'Conventional Deadlift', sets: '1×5+ (AMRAP)', cue: 'Heavy top set. +5kg when hitting 5+ clean reps.' },
-      { name: 'Lat Pulldowns', sets: '3×8–12', cue: 'Full stretch at top, pull to upper chest.' },
-      { name: 'Chest Supported Row', sets: '3×8–12', cue: 'Squeeze scapulae together for 1 sec.' },
-      { name: 'Face Pulls', sets: '3×15–20', cue: 'Pull rope to eye level, externally rotate wrists.' },
-      { name: 'Incline Bicep Curl', sets: '3×8–12', cue: 'Strict form, no torso swing.' },
-      { name: 'Dumbbell Hammer Curls', sets: '3×8–12', cue: 'Brachialis & forearm thickness.' }
+      { name: 'Deadlift (Barbell)', sets: '1 set', reps: '5+ reps', intensity: '70%', cue: 'Heavy top set. +5kg progression when hitting 5+ clean reps.' },
+      { name: 'Lat Pulldown', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Full stretch at top, pull to upper chest. V-taper lat width.' },
+      { name: 'Chest Supported Row (Dumbbell)', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Squeeze scapulae together for 1 sec. Mid-back & rhomboid thickness.' },
+      { name: 'Face Pull', sets: '5 sets', reps: '15–20 reps', intensity: '—', cue: '5 high-volume sets. Pull rope to eyes, external rotation. Rear delt health.' },
+      { name: 'Hammer Curl', sets: '4 sets', reps: '8–12 reps', intensity: '—', cue: '4 sets strict form. Brachialis & forearm thickness.' },
+      { name: 'Bicep Curl (Dumbbell)', sets: '4 sets', reps: '8–12 reps', intensity: '—', cue: '4 sets supinated curl. Peak contraction, 2-sec controlled eccentric.' }
     ]
   },
   2: {
-    name: 'Push A (Bench Press Focus)',
+    id: 'push_a',
+    dayNum: 'Day 2',
+    name: 'Day 2 · Push (Bench Press Focus)',
     split: 'Chest, Shoulders & Triceps',
-    badge: 'Push A · Heavy Bench',
-    desc: 'Heavy Flat Bench (5x5+ AMRAP) + Overhead Press & Tricep Hypertrophy',
+    badge: 'Day 2 · Push',
+    freq: 'Weekly (Push A/B Split)',
+    desc: 'Heavy Bench Press (4x5 @ 70% + 1x5+ AMRAP @ 70%) + OHP & Arms Supersets',
     exercises: [
-      { name: 'Flat Barbell Bench Press', sets: '5×5+ (AMRAP)', cue: '4 sets of 5, final set AMRAP. +2.5kg when hitting 5+ reps.' },
-      { name: 'Standing Barbell OHP', sets: '3×8–12', cue: 'Full lockout overhead, tight glutes.' },
-      { name: 'Incline DB Bench Press', sets: '3×8–12', cue: 'Upper chest clavicular head emphasis.' },
-      { name: 'Dumbbell Lateral Raises', sets: '3×15–20', cue: 'Superset with triceps. Lead with elbows for side delt cap.' },
-      { name: 'Tricep Rope Pushdowns', sets: '3×8–12', cue: 'Flaring rope at bottom for lateral head.' },
-      { name: 'Overhead Tricep Extension', sets: '3×8–12', cue: 'Full long head tricep stretch behind head.' }
+      { name: 'Bench Press (Barbell)', sets: '4 sets + 1 set', reps: '5 reps / 5+ reps', intensity: '70%', cue: '4 sets of 5, final set 5+ AMRAP @ 70%. +2.5kg on clean progression.' },
+      { name: 'Overhead Press (Barbell)', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Full lockout overhead, glutes braced, core tight.' },
+      { name: 'Incline Bench Press (Dumbbell)', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Upper chest clavicular head focus. 30° bench angle.' },
+      { isSuperset: true, supersetLabel: 'SUPERSET 1', name: 'Tricep Pushdown (Cable)', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Superset with Lateral Raise. Flare rope/V-bar at lockout for lateral tricep head.' },
+      { isSuperset: true, supersetLabel: 'SUPERSET 1', name: 'Lateral Raise (Dumbbell)', sets: '3 sets', reps: '15–20 reps', intensity: '—', cue: 'Lead with elbows, slight forward tilt for side delt cap.' },
+      { isSuperset: true, supersetLabel: 'SUPERSET 2', name: 'Tricep Extension (Dumbbell)', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Superset with Lateral Raise. Full long-head tricep stretch behind neck.' },
+      { isSuperset: true, supersetLabel: 'SUPERSET 2', name: 'Lateral Raise (Dumbbell)', sets: '3 sets', reps: '15–20 reps', intensity: '—', cue: 'Strict burnout 15-20 reps with light weight & control.' }
     ]
   },
   3: {
-    name: 'Legs A (Squat Focus)',
-    split: 'Quads, Hamstrings & Calves',
-    badge: 'Legs A · Heavy Squat',
-    desc: 'Heavy Barbell Back Squat (5x5+ AMRAP) + Romanian Deadlift (RDL)',
+    id: 'legs_a',
+    dayNum: 'Day 3',
+    name: 'Day 3 · Legs (Squat Focus)',
+    split: 'Quads, Posterior Chain & Calves',
+    badge: 'Day 3 · Legs',
+    freq: 'Weekly (Legs A/B Split)',
+    desc: 'Heavy Squat (2x5 @ 70% + 1x5+ AMRAP @ 70%) + Romanian Deadlifts & Volume',
     exercises: [
-      { name: 'Barbell Back Squat', sets: '5×5+ (AMRAP)', cue: '4 sets of 5, final set AMRAP. +2.5kg progression.' },
-      { name: 'Romanian Deadlift (RDL)', sets: '3×8–12', cue: 'Hinge at hips until hamstring stretch, neutral spine.' },
-      { name: 'Leg Press', sets: '3×8–12', cue: 'Deep knee flexion, controlled eccentric.' },
-      { name: 'Hamstring Leg Curls', sets: '3×8–12', cue: 'Hamstring isolation, 2-sec eccentric.' },
-      { name: 'Standing Calf Raises', sets: '3×15–20', cue: '2-sec pause at bottom stretch, 1-sec peak squeeze.' }
+      { name: 'Squat (Barbell)', sets: '2 sets + 1 set', reps: '5 reps / 5+ reps', intensity: '70%', cue: '2 sets of 5, final set 5+ AMRAP @ 70%. Depth below parallel, chest proud.' },
+      { name: 'Romanian Deadlift (Barbell)', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Hinge at hips until deep hamstring stretch, flat back, neutral spine.' },
+      { name: 'Leg Press', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Quad focus, smooth controlled eccentric, full ROM.' },
+      { name: 'Leg Curl', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Hamstring isolation, squeeze for 1 sec at peak contraction.' },
+      { name: 'Seated Calf Raise', sets: '5 sets', reps: '8–12 reps', intensity: '—', cue: '5 sets. Deep 2-sec stretch at bottom, 1-sec peak squeeze.' }
     ]
   },
   4: {
-    name: 'Pull B (Barbell Row Focus)',
+    id: 'pull_b',
+    dayNum: 'Day 4',
+    name: 'Day 4 · Pull (Barbell Row Focus)',
     split: 'Back Thickness & Biceps',
-    badge: 'Pull B · Heavy Row',
-    desc: 'Heavy Barbell Row (5x5+ AMRAP) + High-Volume Back & Arms',
+    badge: 'Day 4 · Pull',
+    freq: 'Weekly (Pull A/B Split)',
+    desc: 'Heavy Barbell Row (4x5 @ 70% + 1x5+ AMRAP @ 70%) + Lat Pulldown & Curls',
     exercises: [
-      { name: 'Barbell Bent-Over Row', sets: '5×5+ (AMRAP)', cue: '4 sets of 5, final set AMRAP. +2.5kg progression.' },
-      { name: 'Lat Pulldowns', sets: '3×8–12', cue: 'V-taper lat width driver.' },
-      { name: 'Chest Supported Row', sets: '3×8–12', cue: 'Rhomboid and mid-trap thickness.' },
-      { name: 'Face Pulls', sets: '3×15–20', cue: 'Shoulder health, rear delt hypertrophy.' },
-      { name: 'Incline Bicep Curl', sets: '3×8–12', cue: 'Long head bicep stretch & peak.' },
-      { name: 'Dumbbell Hammer Curls', sets: '3×8–12', cue: 'Brachialis & forearm thickness.' }
+      { name: 'Barbell Row', sets: '4 sets + 1 set', reps: '5 reps / 5+ reps', intensity: '70%', cue: '4 sets of 5, final set 5+ AMRAP @ 70%. Torso locked at 45°, pull to lower rib.' },
+      { name: 'Lat Pulldown', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Full lat stretch, explosive pull to clavicle.' },
+      { name: 'Chest Supported Row (Dumbbell)', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Upper back and rhomboid thickness.' },
+      { name: 'Face Pull', sets: '5 sets', reps: '15–20 reps', intensity: '—', cue: '5 sets. Rear delts & rotator cuff integrity. External rotation.' },
+      { name: 'Hammer Curl', sets: '4 sets', reps: '8–12 reps', intensity: '—', cue: '4 sets. Brachialis & forearm thickness.' },
+      { name: 'Bicep Curl (Dumbbell)', sets: '4 sets', reps: '8–12 reps', intensity: '—', cue: '4 sets. Strict supination curl, peak contraction.' }
     ]
   },
   5: {
-    name: 'Push B (Overhead Press Focus)',
+    id: 'push_b',
+    dayNum: 'Day 5',
+    name: 'Day 5 · Push (Overhead Press Focus)',
     split: 'Delts, Chest & Triceps',
-    badge: 'Push B · Heavy OHP',
-    desc: 'Heavy Overhead Press (5x5+ AMRAP) + Flat Bench Volume (3x8-12)',
+    badge: 'Day 5 · Push',
+    freq: 'Weekly (Push A/B Split)',
+    desc: 'Heavy Overhead Press (4x5 @ 70% + 1x5+ AMRAP @ 70%) + Bench Volume & Arms',
     exercises: [
-      { name: 'Standing Barbell OHP', sets: '5×5+ (AMRAP)', cue: '4 sets of 5, final set AMRAP. +2.5kg progression.' },
-      { name: 'Flat Barbell Bench Press', sets: '3×8–12', cue: 'Controlled 2-sec eccentric tempo.' },
-      { name: 'Incline DB Bench Press', sets: '3×8–12', cue: 'Upper chest clavicular head.' },
-      { name: 'Dumbbell Lateral Raises', sets: '3×15–20', cue: 'Strict 15-20 reps with light weight & control.' },
-      { name: 'Tricep Rope Pushdowns', sets: '3×8–12', cue: 'Lockout and hold for 1 second.' },
-      { name: 'Overhead Tricep Extension', sets: '3×8–12', cue: 'Deep elbow flexion behind neck.' }
+      { name: 'Overhead Press (Barbell)', sets: '4 sets + 1 set', reps: '5 reps / 5+ reps', intensity: '70%', cue: '4 sets of 5, final set 5+ AMRAP @ 70%. Strict lockout overhead.' },
+      { name: 'Bench Press (Barbell)', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Moderate weight volume, controlled 2-sec descent.' },
+      { name: 'Incline Bench Press (Dumbbell)', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Upper pectoral development, 30° bench.' },
+      { isSuperset: true, supersetLabel: 'SUPERSET 1', name: 'Tricep Pushdown (Cable)', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Elbows pinned to sides, full tricep lockout.' },
+      { isSuperset: true, supersetLabel: 'SUPERSET 1', name: 'Lateral Raise (Dumbbell)', sets: '3 sets', reps: '15–20 reps', intensity: '—', cue: 'Shoulder cap isolation.' },
+      { isSuperset: true, supersetLabel: 'SUPERSET 2', name: 'Tricep Extension (Dumbbell)', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Deep long head elbow extension.' },
+      { isSuperset: true, supersetLabel: 'SUPERSET 2', name: 'Lateral Raise (Dumbbell)', sets: '3 sets', reps: '15–20 reps', intensity: '—', cue: 'Final delt burnout.' }
     ]
   },
   6: {
-    name: 'Legs B (Squat & Hamstring Focus)',
+    id: 'legs_b',
+    dayNum: 'Day 6',
+    name: 'Day 6 · Legs (Squat Progression Focus)',
     split: 'Quads, Posterior Chain & Calves',
-    badge: 'Legs B · Heavy Squat',
-    desc: 'Heavy Squat (5x5+ AMRAP) + Romanian Deadlifts & Isolation',
+    badge: 'Day 6 · Legs',
+    freq: 'Weekly (Legs A/B Split)',
+    desc: 'Progressive Squat (2x5 + 1x5+ @ +5 lbs) + RDLs & Calves',
     exercises: [
-      { name: 'Barbell Back Squat', sets: '5×5+ (AMRAP)', cue: 'Depth below parallel, chest tall.' },
-      { name: 'Romanian Deadlift (RDL)', sets: '3×8–12', cue: 'Deep posterior chain stretch.' },
-      { name: 'Leg Press', sets: '3×8–12', cue: 'Quad burn and glute stability.' },
-      { name: 'Hamstring Leg Curls', sets: '3×8–12', cue: 'Isolation contraction.' },
-      { name: 'Standing Calf Raises', sets: '3×15–20', cue: 'Calf muscle belly volume.' }
+      { name: 'Squat (Barbell)', sets: '2 sets + 1 set', reps: '5 reps / 5+ reps', intensity: '+5 lbs', cue: '2 sets of 5, final set 5+ reps with +5 lbs progression over Day 3.' },
+      { name: 'Romanian Deadlift (Barbell)', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Posterior chain loading, glute squeeze.' },
+      { name: 'Leg Press', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Quad pump, controlled eccentric.' },
+      { name: 'Leg Curl', sets: '3 sets', reps: '8–12 reps', intensity: '—', cue: 'Isolation hamstring pump.' },
+      { name: 'Seated Calf Raise', sets: '5 sets', reps: '8–12 reps', intensity: '—', cue: '5 sets calf belly hypertrophy.' }
+    ]
+  },
+  'arms': {
+    id: 'arms',
+    dayNum: 'Bonus / Arms Day',
+    name: '💪 Dedicated Arms & Hypertrophy Day',
+    split: 'Biceps, Triceps & Forearms Specialization',
+    badge: 'Arms Hypertrophy',
+    freq: '1–2x / Week (Hypertrophy Specialization)',
+    desc: 'Targeted arm overload: Bicep long & short heads, Tricep 3 heads, Brachialis & Forearm density',
+    exercises: [
+      { name: 'Incline Bicep Curl (Dumbbell)', sets: '4 sets', reps: '8–12 reps', intensity: '75%', cue: 'Deep long-head stretch at bottom, strict supination curl.' },
+      { name: 'Tricep Pushdown (Cable / V-Bar)', sets: '4 sets', reps: '8–12 reps', intensity: '75%', cue: 'Pin elbows to ribs, lockout and flare for 1 sec at bottom.' },
+      { name: 'Hammer Curl (Dumbbell)', sets: '4 sets', reps: '8–12 reps', intensity: '70%', cue: 'Brachialis muscle focus — pushes bicep higher for bigger arm profile.' },
+      { name: 'Overhead Tricep Extension (Dumbbell)', sets: '4 sets', reps: '8–12 reps', intensity: '70%', cue: 'Overhead long head stretch — crucial for overall tricep mass.' },
+      { isSuperset: true, supersetLabel: 'SUPERSET', name: 'EZ Bar / Barbell Preacher Curl', sets: '3 sets', reps: '10–12 reps', intensity: '—', cue: 'Zero shoulder assistance, pure bicep peak isolation.' },
+      { isSuperset: true, supersetLabel: 'SUPERSET', name: 'Bench Dips / Cable Kickbacks', sets: '3 sets', reps: '12–15 reps', intensity: '—', cue: 'High-rep tricep burnout to pump maximum blood.' },
+      { name: 'Wrist Curls / Reverse Curls', sets: '3 sets', reps: '15–20 reps', intensity: '—', cue: 'Forearm flexors and extensor vascularity + grip strength.' }
     ]
   }
 };
+
+const DEFAULT_GOALS = [
+  // 🏋️ Gym & Physique Goals
+  { id:'g_weight_72', category:'gym', title:'Reach Target Bodyweight: 72.0 kg', freq:'Daily Weigh-in', desc:'Cut from 85kg baseline to 72kg lean athletic physique @ 2,000 kcal floor', date:'2026-11-15', done:false },
+  { id:'g_vtaper_16', category:'gym', title:'Achieve 1.60 Golden V-Taper Ratio', freq:'Monthly Tape', desc:'Shoulder circumference 120cm+ / Waist 75cm (tracking in Body tab)', date:'2026-10-30', done:false },
+  { id:'g_arm_15', category:'gym', title:'Build 15"+ Arm Circumference', freq:'Monthly Tape', desc:'Direct bicep long-head stretch & heavy tricep overload arms specialization', date:'2026-11-01', done:false },
+  { id:'g_deadlift_100', category:'gym', title:'Deadlift 100kg+ for 5+ Clean Reps', freq:'Weekly (Pull A)', desc:'Progressive overload on Day 1 Conventional Deadlift top set', date:'2026-09-30', done:false },
+  { id:'g_bench_80', category:'gym', title:'Barbell Bench Press 80kg (5x5+)', freq:'Weekly (Push A)', desc:'Heavy compound pressing with strict 2-sec eccentric pause', date:'2026-10-15', done:false },
+  { id:'g_squat_100', category:'gym', title:'Barbell Back Squat 100kg Below Parallel', freq:'Weekly (Legs A/B)', desc:'Full depth knee flexion with explosive hip drive and quad drive', date:'2026-10-15', done:false },
+  { id:'g_ppl_consist', category:'gym', title:'6-Day PPL + Arms Hypertrophy Consistency', freq:'6x / Week', desc:'Execute 6 weekly training sessions with progressive overload logging', date:'2026-09-18', done:false },
+
+  // ✨ Skin & Dermatological Goals
+  { id:'g_peel_14d', category:'skin', title:'AHA 30% + BHA 2% Chemical Peel Cycle', freq:'Every 14 Days', desc:'10-minute Sunday night peel for deep epidermal exfoliation & texture clearance', date:'2026-08-29', done:false },
+  { id:'g_spf_shield', category:'skin', title:'Daily SPF 50 Broad Spectrum (AM + 1:30 PM)', freq:'Daily (2x/day)', desc:'Shield against UVA/UVB photoaging, prevent forehead & arm tan gap', date:'2026-09-01', done:false },
+  { id:'g_skin_rotation', category:'skin', title:'Night Actives Rotation (Kojic/Azelaic/Glyco)', freq:'Daily PM', desc:'Continuous skin renewal and hyperpigmentation clearing cycle', date:'2026-09-30', done:false },
+  { id:'g_lip_scrub', category:'skin', title:'Exfoliating Lip Scrub + Occlusive Barrier', freq:'2x / Week (Tue & Sat)', desc:'Nicole scrub + Vaseline seal to restore natural pink lip tone', date:'2026-09-15', done:false },
+  { id:'g_derm_eval', category:'skin', title:'Dermatologist Skin Assessment (12-Week Check)', freq:'Quarterly', desc:'Clinical evaluation of skin barrier and hyperpigmentation clearance', date:'2026-09-15', done:false },
+
+  // 💈 Grooming & Hair Growth Goals
+  { id:'g_minox_beard', category:'grooming', title:'Minoxidil 5% Temple & Beard Density Protocol', freq:'Daily PM', desc:'Consistent application on temple recession and sparse beard patches', date:'2026-09-30', done:false },
+  { id:'g_hair_fade', category:'grooming', title:'Haircut & Beard Clean Taper Fade', freq:'Every 14 Days', desc:'Maintain sharp cheek line-up, neckline taper, and clean side profile', date:'2026-08-22', done:false },
+  { id:'g_brow_pluck', category:'grooming', title:'Eyebrow Unibrow Pluck & Arch Definition', freq:'Weekly', desc:'Keep unibrow clear and open visual forehead space by 15%', date:'2026-08-23', done:false },
+  { id:'g_nail_care', category:'grooming', title:'Nail Trim, Glass File & Cuticle Hydration', freq:'2x / Week (Tue & Sat)', desc:'Neat straight-cut nails with urea/Nivea hand cream hydration', date:'2026-08-22', done:false },
+
+  // 🧬 Health, Hormones & Sleep Goals
+  { id:'g_sleep_75h', category:'health', title:'7.5h–8.5h Deep Sleep & Circadian Anchor', freq:'Daily (23:00 Bedtime)', desc:'Maximal Growth Hormone pulse & testosterone recovery window', date:'2026-09-01', done:false },
+  { id:'g_water_3l', category:'health', title:'3.0 Liters Daily Hydration & Electrolyte Flush', freq:'Daily', desc:'500ml morning flush + consistent daytime cellular hydration', date:'2026-09-01', done:false },
+  { id:'g_dopamine_clean', category:'health', title:'90-Day Dopamine Mastery & Androgen Surge', freq:'Daily Discipline', desc:'Transmute sexual energy into heavy lifts, content sprints, and focus', date:'2026-11-04', done:false },
+  { id:'g_blood_panel', category:'health', title:'Complete Blood Panel (Vit D, B12, Test, Lipids)', freq:'Every 6 Months', desc:'Quantify biomarker progress and internal hormone optimization', date:'2026-10-01', done:false }
+];
 
 /* ---------------- 4 preset swappable meal combos ---------------- */
 const MEAL_COMBOS = [
@@ -1677,17 +1902,47 @@ let S={
   water:{},
   liveSleep:null,
   meas:[],
-  milestones:[
-    { id:'m_temple_check', title:'Temple Hairline & Crown Density Macro Photos', date:'2026-08-30', done:false },
-    { id:'m_video_14d', title:'Pillar YouTube Deep-Dive Video Drop (15-Day Milestone)', date:'2026-09-01', done:false },
-    { id:'m_fade', title:'Beard & Hair Clean Taper Fade', date:'2026-08-22', done:false },
-    { id:'m_photo', title:'Fortnightly Progress Photos (Front/Side/Back)', date:'2026-08-29', done:false },
-    { id:'m_derm', title:'Dermatologist Skin Assessment (12-Week Check)', date:'2026-09-15', done:false },
-    { id:'m_blood', title:'Complete Blood Panel (Vit D, B12, Test, Lipids)', date:'2026-10-01', done:false }
-  ],
+  milestones: JSON.parse(JSON.stringify(DEFAULT_GOALS)),
   peel:'2026-08-15',
   start:'2026-08-18'
 };
+
+function migrateAndEnrichMilestones(){
+  if(!Array.isArray(S.milestones) || S.milestones.length === 0){
+    S.milestones = JSON.parse(JSON.stringify(DEFAULT_GOALS));
+    return;
+  }
+  // Ensure every milestone has category and frequency
+  S.milestones.forEach(m => {
+    if(!m.category){
+      const t = (m.title + ' ' + (m.desc||'')).toLowerCase();
+      if(t.includes('deadlift')||t.includes('bench')||t.includes('squat')||t.includes('weight')||t.includes('arm')||t.includes('v-taper')||t.includes('ppl')||t.includes('gym')) m.category = 'gym';
+      else if(t.includes('peel')||t.includes('derm')||t.includes('skin')||t.includes('spf')||t.includes('lip')||t.includes('azelaic')||t.includes('kojic')) m.category = 'skin';
+      else if(t.includes('hair')||t.includes('beard')||t.includes('fade')||t.includes('minox')||t.includes('nail')||t.includes('brow')) m.category = 'grooming';
+      else if(t.includes('sleep')||t.includes('blood')||t.includes('water')||t.includes('dopamine')) m.category = 'health';
+      else m.category = 'gym';
+    }
+    if(!m.freq){
+      const t = (m.title + ' ' + (m.desc||'')).toLowerCase();
+      if(t.includes('daily') || t.includes('sleep') || t.includes('water') || t.includes('spf')) m.freq = 'Daily';
+      else if(t.includes('2x') || t.includes('lip') || t.includes('nail')) m.freq = '2x / Week';
+      else if(t.includes('14') || t.includes('peel') || t.includes('fade') || t.includes('photo')) m.freq = 'Every 14 Days';
+      else if(t.includes('month') || t.includes('tape') || t.includes('arm') || t.includes('v-taper')) m.freq = 'Monthly';
+      else if(t.includes('blood') || t.includes('panel')) m.freq = 'Every 6 Months';
+      else if(t.includes('derm')) m.freq = 'Quarterly';
+      else m.freq = 'Milestone Target';
+    }
+    if(!m.desc) m.desc = m.title;
+  });
+
+  // Ensure default master goals exist
+  DEFAULT_GOALS.forEach(dg => {
+    const exists = S.milestones.some(m => m.id === dg.id || m.title.toLowerCase() === dg.title.toLowerCase());
+    if(!exists){
+      S.milestones.push(JSON.parse(JSON.stringify(dg)));
+    }
+  });
+}
 
 function updateSyncBadge(state, text){
   const badge = document.getElementById('syncStatus');
@@ -1710,11 +1965,13 @@ async function load(){
       if(!error && data && data.data){
         S = Object.assign(S, data.data);
         localStorage.setItem(KEY, JSON.stringify(S));
+        migrateAndEnrichMilestones();
         updateSyncBadge('online', 'Cloud Synced');
         return;
       }
     }catch(err){}
   }
+  migrateAndEnrichMilestones();
   updateSyncBadge('online', 'Local Storage');
 }
 
@@ -1764,10 +2021,11 @@ function save(eventMeta){
 }
 
 function day(d){
-  if(!S.days[d])S.days[d]={food:[],habits:{},lifts:[],grooming:{},timeline:{},symmetry:{},style:{}};
+  if(!S.days[d])S.days[d]={food:[],habits:{},lifts:[],grooming:{},timeline:{},symmetry:{},style:{},workoutRoutine:null};
   const x=S.days[d];
   x.food=x.food||[];x.habits=x.habits||{};x.lifts=x.lifts||[];x.grooming=x.grooming||{};
   x.timeline=x.timeline||{};x.symmetry=x.symmetry||{};x.style=x.style||{};
+  if(x.workoutRoutine === undefined) x.workoutRoutine = null;
   return x;
 }
 
@@ -1854,19 +2112,20 @@ function activeFor(dstr){
 /* ========================================================
    24-HOUR MASTER GOOGLE CALENDAR TIME-BLOCKED SCHEDULE
    ======================================================== */
-function get24HourCalendarSchedule(dow){
+function get24HourCalendarSchedule(dow, targetDate){
+  const dateStr = targetDate || selectedDate;
+  const customRoutineKey = (S.days[dateStr] && S.days[dateStr].workoutRoutine) || null;
   const rot = ROT[dow];
-  let gymTitle = '🏋️ Push Day Workout';
-  let gymSub = 'Incline DB Bench, Barbell OHP, Lateral Raises + Core 4 (Face pulls, Carries, Hangs)';
-  if(dow===0){
+  let routine = METALLICADPA_PPL[dow] || METALLICADPA_PPL[0];
+  if(customRoutineKey && METALLICADPA_PPL[customRoutineKey]){
+    routine = METALLICADPA_PPL[customRoutineKey];
+  }
+
+  let gymTitle = `🏋️ ${routine.name}`;
+  let gymSub = routine.desc;
+  if(routine.id === 'rest'){
     gymTitle = '🚶 Active Rest & Circadian Recovery';
     gymSub = 'Long 60-min outdoor sunlight walk + full spine & scapular decompression. No heavy lifting.';
-  } else if(dow===2||dow===5){
-    gymTitle = '🏋️ Pull Day Workout';
-    gymSub = 'Lat Pulldowns, Chest Supported Rows, Incline Bicep Curls, Face Pulls, Farmer Carries.';
-  } else if(dow===3||dow===6){
-    gymTitle = '🏋️ Legs Day Workout';
-    gymSub = 'Bulgarian Split Squats, Romanian Deadlifts (RDL), Standing Calves, Rear Delt Flyes, Dead Hangs.';
   }
 
   let pmSkinTitle = `💅 PM Actives: ${rot.short} Night`;
@@ -2554,44 +2813,161 @@ function renderGroomingActions(){
   });
 }
 
-/* ---------------- render: milestones ---------------- */
+/* ---------------- render: categorized milestones & goals ---------------- */
+let currentGoalFilter = 'all';
+
 function renderMilestones(){
-  const container = $('#milestonesList'); container.innerHTML = '';
-  S.milestones.forEach((m, idx)=>{
-    const row = el('div','task-item'+(m.done?' done':''));
-    row.innerHTML = `
-      <div class="task-left">
-        <div>
-          <div><span class="task-badge">${fmt(m.date)}</span><span class="task-title">${m.title}</span></div>
-          <div class="task-sub">Target: ${m.date}</div>
+  migrateAndEnrichMilestones();
+  const container = $('#milestonesList');
+  if(!container) return;
+  container.innerHTML = '';
+
+  const allGoals = S.milestones || [];
+  const gymGoals = allGoals.filter(g => g.category === 'gym');
+  const skinGoals = allGoals.filter(g => g.category === 'skin');
+  const groomingGoals = allGoals.filter(g => g.category === 'grooming');
+  const healthGoals = allGoals.filter(g => g.category === 'health');
+
+  // Update counts on filter buttons
+  if($('#countAll')) $('#countAll').textContent = allGoals.length;
+  if($('#countGym')) $('#countGym').textContent = gymGoals.length;
+  if($('#countSkin')) $('#countSkin').textContent = skinGoals.length;
+  if($('#countGrooming')) $('#countGrooming').textContent = groomingGoals.length;
+  if($('#countHealth')) $('#countHealth').textContent = healthGoals.length;
+
+  // Render category summary metrics
+  const summaryBox = $('#goalCategorySummary');
+  if(summaryBox){
+    const gymDone = gymGoals.filter(g => g.done).length;
+    const skinDone = skinGoals.filter(g => g.done).length;
+    const groomDone = groomingGoals.filter(g => g.done).length;
+    const healthDone = healthGoals.filter(g => g.done).length;
+
+    summaryBox.innerHTML = `
+      <div class="goal-metric-box" style="border-left:3px solid var(--turmeric)">
+        <div class="gm-title"><span>🏋️ GYM & PHYSIQUE</span><span style="color:var(--turmeric)">${gymDone}/${gymGoals.length}</span></div>
+        <div class="gm-val">${Math.round((gymDone/Math.max(1,gymGoals.length))*100)}% <span style="font-size:10px;color:var(--muted);font-weight:400">Locked In</span></div>
+      </div>
+      <div class="goal-metric-box" style="border-left:3px solid var(--rose)">
+        <div class="gm-title"><span>✨ SKIN & DERM</span><span style="color:var(--rose)">${skinDone}/${skinGoals.length}</span></div>
+        <div class="gm-val">${Math.round((skinDone/Math.max(1,skinGoals.length))*100)}% <span style="font-size:10px;color:var(--muted);font-weight:400">Compliant</span></div>
+      </div>
+      <div class="goal-metric-box" style="border-left:3px solid var(--indigo)">
+        <div class="gm-title"><span>💈 GROOMING & HAIR</span><span style="color:var(--indigo)">${groomDone}/${groomingGoals.length}</span></div>
+        <div class="gm-val">${Math.round((groomDone/Math.max(1,groomingGoals.length))*100)}% <span style="font-size:10px;color:var(--muted);font-weight:400">Refined</span></div>
+      </div>
+      <div class="goal-metric-box" style="border-left:3px solid var(--sage)">
+        <div class="gm-title"><span>🧬 HEALTH & SLEEP</span><span style="color:var(--sage)">${healthDone}/${healthGoals.length}</span></div>
+        <div class="gm-val">${Math.round((healthDone/Math.max(1,healthGoals.length))*100)}% <span style="font-size:10px;color:var(--muted);font-weight:400">Optimized</span></div>
+      </div>
+    `;
+  }
+
+  // Bind filter buttons
+  document.querySelectorAll('#goalCategoryFilters .goal-cat-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('#goalCategoryFilters .goal-cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentGoalFilter = btn.dataset.cat || 'all';
+      renderMilestones();
+    };
+  });
+
+  const filteredGoals = currentGoalFilter === 'all'
+    ? allGoals
+    : allGoals.filter(g => g.category === currentGoalFilter);
+
+  if(!filteredGoals.length){
+    container.innerHTML = `<div class="empty" style="text-align:center;padding:24px;color:var(--muted)">No goals under this category yet. Add one below!</div>`;
+    return;
+  }
+
+  filteredGoals.forEach((m) => {
+    const card = el('div', 'goal-item-card' + (m.done ? ' done' : ''));
+    
+    let catClass = 'gym';
+    let catLabel = '🏋️ GYM';
+    if(m.category === 'skin'){ catClass = 'skin'; catLabel = '✨ SKIN'; }
+    else if(m.category === 'grooming'){ catClass = 'grooming'; catLabel = '💈 GROOMING'; }
+    else if(m.category === 'health'){ catClass = 'health'; catLabel = '🧬 HEALTH'; }
+
+    card.innerHTML = `
+      <div class="goal-item-header">
+        <div class="goal-tag-group">
+          <span class="cat-pill ${catClass}">${catLabel}</span>
+          <span class="freq-pill">⏳ ${m.freq || 'Daily'}</span>
+        </div>
+        <span class="goal-item-date">${m.date ? 'Target: ' + fmt(m.date) : 'Ongoing Target'}</span>
+      </div>
+      <div>
+        <div class="goal-item-title">${m.title}</div>
+        ${m.desc ? `<div class="goal-item-desc">${m.desc}</div>` : ''}
+      </div>
+      <div class="goal-item-footer">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:${m.done ? 'var(--sage)' : 'var(--turmeric)'};font-weight:700">
+          ${m.done ? '✓ COMPLETED' : '● ACTIVE TARGET'}
+        </span>
+        <div style="display:flex;gap:6px;align-items:center">
+          ${m.id.startsWith('m_') ? `<button class="del-btn" style="background:none;border:0;color:var(--muted);cursor:pointer;font-size:14px;padding:2px 6px" title="Delete custom goal">×</button>` : ''}
+          <button class="goal-toggle-btn">${m.done ? '✓ Completed' : 'Mark Done'}</button>
         </div>
       </div>
-      <button class="task-btn">${m.done ? '✓ Completed' : 'Mark Done'}</button>
     `;
-    const btn = row.querySelector('.task-btn');
-    if(btn){
-      btn.onclick = () => {
+
+    const toggleBtn = card.querySelector('.goal-toggle-btn');
+    if(toggleBtn){
+      toggleBtn.onclick = () => {
         m.done = !m.done;
         if(m.done) playSuccessChime();
-        save({area:'milestone',item:m.id,exact_update:`Milestone ${m.title}: ${m.done?'completed':'pending'}`});
+        save({area:'milestone',item:m.id,exact_update:`Goal ${m.title}: ${m.done?'completed':'pending'}`});
         renderMilestones();
+        toast(m.done ? `✓ Goal Completed: ${m.title}` : `Reactivated: ${m.title}`);
       };
     }
-    container.appendChild(row);
+
+    const delBtn = card.querySelector('.del-btn');
+    if(delBtn){
+      delBtn.onclick = (e) => {
+        e.stopPropagation();
+        if(confirm(`Remove goal "${m.title}"?`)){
+          const idx = S.milestones.findIndex(x => x.id === m.id);
+          if(idx !== -1) S.milestones.splice(idx, 1);
+          save({area:'milestone',item:m.id,exact_update:`Deleted custom goal ${m.title}`});
+          renderMilestones();
+          toast('Goal removed');
+        }
+      };
+    }
+
+    container.appendChild(card);
   });
 }
 
-$('#btnAddMilestone').onclick = () => {
-  const title = $('#newMileTitle').value.trim();
-  const date = $('#newMileDate').value;
-  if(!title || !date){ toast('Enter title and date'); return; }
-  S.milestones.push({ id:'m_'+Date.now(), title, date, done:false });
-  save({area:'milestone',item:'new-milestone',exact_update:`Added milestone ${title} for ${date}`});
-  $('#newMileTitle').value = '';
-  $('#newMileDate').value = '';
-  renderMilestones();
-  toast('Milestone added');
-};
+const btnAddMilestoneEl = $('#btnAddMilestone');
+if(btnAddMilestoneEl){
+  btnAddMilestoneEl.onclick = () => {
+    const title = $('#newMileTitle').value.trim();
+    const date = $('#newMileDate').value;
+    const cat = ($('#newMileCat') ? $('#newMileCat').value : 'gym') || 'gym';
+    const freq = ($('#newMileFreq') ? $('#newMileFreq').value : 'Daily') || 'Daily';
+    if(!title){ toast('Enter goal title'); return; }
+    
+    S.milestones.push({
+      id: 'm_' + Date.now(),
+      category: cat,
+      title,
+      freq,
+      desc: title,
+      date: date || REAL_TODAY,
+      done: false
+    });
+    save({area:'milestone',item:'new-milestone',exact_update:`Added ${cat} goal: ${title} (${freq})`});
+    $('#newMileTitle').value = '';
+    if($('#newMileDate')) $('#newMileDate').value = '';
+    renderMilestones();
+    toast('✓ Added new goal to matrix');
+  };
+}
 
 /* ---------------- live sleep stopwatch ---------------- */
 let liveSleepInt = null;
@@ -3087,32 +3463,123 @@ function renderSkin(){
   });
 }
 
-/* ---------------- render: lifts ---------------- */
-/* ---------------- render: lifts & metallicadpa ppl ---------------- */
+/* ---------------- render: lifts & routine selector ---------------- */
 function renderMetallicadpa(){
   const dow = parse(selectedDate).getDay();
-  const routine = METALLICADPA_PPL[dow] || METALLICADPA_PPL[0];
-  if($('#pplDayTitle')) $('#pplDayTitle').textContent = `Today: ${routine.name}`;
-  if($('#pplDayBadge')) $('#pplDayBadge').textContent = routine.badge;
-  if($('#pplDayDesc')) $('#pplDayDesc').textContent = routine.desc;
+  const curDayState = day(selectedDate);
+  const customRoutineKey = curDayState.workoutRoutine;
   
+  // Active routine resolution
+  let routineKey = customRoutineKey || (dow === 0 ? 'rest' : dow === 1 ? 'pull_a' : dow === 2 ? 'push_a' : dow === 3 ? 'legs_a' : dow === 4 ? 'pull_b' : dow === 5 ? 'push_b' : 'legs_b');
+  let routine = METALLICADPA_PPL[routineKey] || METALLICADPA_PPL[dow] || METALLICADPA_PPL[0];
+
+  if($('#pplDayTitle')) $('#pplDayTitle').textContent = `Today: ${routine.name}`;
+  if($('#pplDayBadge')) $('#pplDayBadge').textContent = routine.badge || 'Metallicadpa Linear Progression';
+  if($('#pplDayDesc')) $('#pplDayDesc').textContent = routine.desc;
+  if($('#pplDayFreq')) $('#pplDayFreq').textContent = `Frequency: ${routine.freq || 'Weekly Split'}`;
+
+  // Update routine switcher chip active states
+  const routineSelector = $('#workoutRoutineSelector');
+  if(routineSelector){
+    const activeChipVal = customRoutineKey || 'auto';
+    routineSelector.querySelectorAll('.routine-chip').forEach(chip => {
+      chip.classList.toggle('active', chip.dataset.routine === activeChipVal);
+      chip.onclick = () => {
+        const sel = chip.dataset.routine;
+        if(sel === 'auto'){
+          curDayState.workoutRoutine = null;
+        } else {
+          curDayState.workoutRoutine = sel;
+        }
+        playSuccessChime();
+        save({area:'training',item:'workout-split-switch',exact_update:`Selected workout routine: ${sel}`});
+        renderMetallicadpa();
+        render24hTimeline();
+        toast(`Workout split: ${sel === 'auto' ? 'Auto Scheduled' : (METALLICADPA_PPL[sel] ? METALLICADPA_PPL[sel].name : sel)}`);
+      };
+    });
+  }
+
   const list = $('#pplDayRoutineList');
   if(!list) return;
   list.innerHTML = '';
-  routine.exercises.forEach(ex => {
-    const row = el('div', 'logrow');
-    row.style.background = 'var(--surface2)';
-    row.style.padding = '8px 10px';
-    row.style.borderRadius = '6px';
-    row.style.border = '1px solid var(--line)';
+
+  let currentSupersetGroup = null;
+  let supersetContainer = null;
+
+  routine.exercises.forEach((ex) => {
+    if(ex.isSuperset){
+      if(currentSupersetGroup !== ex.supersetLabel){
+        currentSupersetGroup = ex.supersetLabel;
+        supersetContainer = el('div', 'superset-card');
+        supersetContainer.innerHTML = `<span class="superset-badge">⚡ ${ex.supersetLabel}</span>`;
+        list.appendChild(supersetContainer);
+      }
+    } else {
+      currentSupersetGroup = null;
+      supersetContainer = null;
+    }
+
+    const row = el('div', 'ex-row');
     row.innerHTML = `
       <div style="flex:1;min-width:0">
-        <div style="font-weight:700;font-size:13px;color:var(--paper)">${ex.name}</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <span style="font-weight:700;font-size:13px;color:var(--paper)">${ex.name}</span>
+          ${ex.intensity && ex.intensity !== '—' ? `<span class="intensity-tag">${ex.intensity}</span>` : ''}
+        </div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px">${ex.cue}</div>
       </div>
-      <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--turmeric);font-size:12px">${ex.sets}</span>
+      <div style="display:flex;align-items:center;gap:8px;flex:0 0 auto">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--turmeric);font-size:12px;text-align:right">
+          ${ex.sets}<br><small style="color:var(--muted);font-weight:500;font-size:10px">${ex.reps || ''}</small>
+        </span>
+        <button class="ex-quick-btn" title="Quick-fill in log form">+ Log</button>
+      </div>
     `;
-    list.appendChild(row);
+
+    // Click handler to pre-fill log form
+    const fillLogForm = () => {
+      const pick = $('#liftPick');
+      if(pick){
+        let matched = false;
+        for(let i=0; i<pick.options.length; i++){
+          if(pick.options[i].value === ex.name || ex.name.includes(pick.options[i].value) || pick.options[i].value.includes(ex.name)){
+            pick.selectedIndex = i;
+            matched = true;
+            break;
+          }
+        }
+        if(!matched){
+          const opt = document.createElement('option');
+          opt.value = ex.name;
+          opt.textContent = ex.name;
+          pick.appendChild(opt);
+          pick.value = ex.name;
+        }
+        updateHint();
+      }
+      // Parse recommended reps if numeric
+      const repMatch = (ex.reps || ex.sets || '').match(/(\d+)/);
+      if(repMatch && !$('#liftReps').value) $('#liftReps').value = repMatch[1];
+      if(!$('#liftSets').value) $('#liftSets').value = '1';
+      
+      const kgInp = $('#liftKg');
+      if(kgInp){
+        kgInp.focus();
+        kgInp.scrollIntoView({ behavior:'smooth', block:'center' });
+      }
+      toast(`Selected ${ex.name}`);
+    };
+
+    row.onclick = fillLogForm;
+    const qb = row.querySelector('.ex-quick-btn');
+    if(qb) qb.onclick = (e) => { e.stopPropagation(); fillLogForm(); };
+
+    if(supersetContainer){
+      supersetContainer.appendChild(row);
+    } else {
+      list.appendChild(row);
+    }
   });
 }
 
@@ -3181,13 +3648,15 @@ function renderLifts(){
   });
 }
 
-/* ---------------- render: dopamine & abstinence retention ---------------- */
+/* ---------------- render: dopamine & cumulative energy vault ---------------- */
 function renderAbstinence(){
-  S.abstinence = S.abstinence || { start: '2026-08-04', lastConfirm: '2026-08-18' };
-  const cleanDays = Math.max(1, daysBetween(S.abstinence.start, selectedDate) + 1);
+  S.abstinence = S.abstinence || { start: '2026-08-04', bankedDays: 14, lastConfirm: '2026-08-18', reflections: [] };
+  const cleanDays = Math.max(1, (S.abstinence.bankedDays || daysBetween(S.abstinence.start, selectedDate) + 1));
+  const level = Math.min(5, Math.floor(cleanDays / 7) + 1);
+  const totalXp = cleanDays * 100;
   
-  let phase = 'Phase 1: Dopamine Baseline Reset (Days 1–3)';
-  let note = 'Dopamine receptor sensitivity recovering. Keep urges away with pushups and cold showers.';
+  let phase = 'Phase 1: Neural Plasticity & Dopamine Recharge (Days 1–3)';
+  let note = 'Dopamine receptor sensitivity recovering. Never resets to zero — every clean day is permanently banked.';
   if(cleanDays >= 90){
     phase = 'Phase 5: Dopamine Mastery & Unshakable Will (90+ Days)';
     note = 'Complete dopamine reboot. Unshakable internal focus, effortless discipline, elite androgen sensitivity.';
@@ -3202,27 +3671,31 @@ function renderAbstinence(){
     note = 'Natural testosterone surge and androgen receptor density peaking in brain and muscle tissue.';
   }
 
-  if($('#abstinenceStreakTitle')) $('#abstinenceStreakTitle').textContent = `${cleanDays} Days Clean & Transmuted`;
+  if($('#abstinenceStreakTitle')) $('#abstinenceStreakTitle').textContent = `${cleanDays} Days Banked · Level ${level} (${totalXp} XP)`;
   if($('#abstinenceMilestoneBadge')) $('#abstinenceMilestoneBadge').textContent = phase;
   if($('#abstinenceNote')) $('#abstinenceNote').textContent = note;
-  if($('#abstinenceStatusTag')) $('#abstinenceStatusTag').textContent = cleanDays >= 14 ? 'ELITE STREAK' : 'DISCIPLINE ACTIVE';
+  if($('#abstinenceStatusTag')) $('#abstinenceStatusTag').textContent = `LVL ${level} VAULT`;
 }
 
 function confirmCleanToday(){
-  S.abstinence = S.abstinence || { start: '2026-08-04', lastConfirm: '2026-08-18' };
+  S.abstinence = S.abstinence || { start: '2026-08-04', bankedDays: 14, lastConfirm: '2026-08-18', reflections: [] };
+  S.abstinence.bankedDays = (S.abstinence.bankedDays || 14) + 1;
   S.abstinence.lastConfirm = selectedDate;
   playSuccessChime();
-  save({area:'abstinence',item:'clean-day',exact_update:`Confirmed day ${daysBetween(S.abstinence.start, selectedDate) + 1} clean`});
+  save({area:'abstinence',item:'bank-day',exact_update:`Banked day ${S.abstinence.bankedDays} clean (+100 XP)`});
   renderAbstinence();
-  toast('🔥 Clean Day Confirmed! Energy Transmuted.');
+  toast(`🔥 Win Banked! +100 XP. Total: ${S.abstinence.bankedDays} Days Banked.`);
 }
 
 function resetAbstinence(){
-  if(confirm('Reset abstinence streak to Day 1? (Remember: Relapse is just a data point, get right back on track!)')){
-    S.abstinence = { start: selectedDate, lastConfirm: selectedDate };
-    save({area:'abstinence',item:'reset',exact_update:'Reset abstinence streak'});
+  const note = prompt('Learning reflection / checkpoint (Your banked days & XP stay safe! What will you adjust tomorrow?):', 'Focus on sleep timing & cold water reset.');
+  if(note !== null){
+    S.abstinence = S.abstinence || { start: '2026-08-04', bankedDays: 14, lastConfirm: '2026-08-18', reflections: [] };
+    S.abstinence.reflections = S.abstinence.reflections || [];
+    S.abstinence.reflections.push({ date: selectedDate, note });
+    save({area:'abstinence',item:'reflection',exact_update:`Logged reflection: ${note}`});
     renderAbstinence();
-    toast('Streak reset to Day 1. Stand tall and rebuild.');
+    toast(`🌱 Reflection saved. All ${S.abstinence.bankedDays || 14} banked days remain 100% safe! Forward momentum.`);
   }
 }
 
