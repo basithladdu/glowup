@@ -22,10 +22,15 @@ export const Header: React.FC = () => {
     <header className="header-container">
       <div className="brandrow">
         <h1 className="logo-title">GLOW<em>UP</em></h1>
-        <span className={`sync-badge ${syncStatus}`}>
-          <i className="sync-dot"></i>
-          <span>{syncText}</span>
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '9.5px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace', background: 'var(--surface2)', border: '0.5px solid var(--line)', padding: '2px 6px', borderRadius: '4px' }}>
+            Keys: 1–5 Tabs · Q Quick
+          </span>
+          <span className={`sync-badge ${syncStatus}`}>
+            <i className="sync-dot"></i>
+            <span>{syncText}</span>
+          </span>
+        </div>
       </div>
 
       <div className="date-nav">
