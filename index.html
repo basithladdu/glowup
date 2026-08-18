@@ -481,6 +481,53 @@ table.data-tbl tr:last-child td{border:0}
 .toast.show{transform:translateX(-50%) translateY(0)}
 footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--muted);letter-spacing:.08em}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+
+/* ---------- help tooltip ---------- */
+.help-btn{
+  background:none;border:1px solid var(--line2);border-radius:50%;
+  width:18px;height:18px;font-size:9px;color:var(--muted);cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+  transition:.12s;line-height:1;
+}
+.help-btn:hover{background:var(--surface3);color:var(--paper)}
+.help-overlay{
+  position:fixed;inset:0;z-index:9000;background:rgba(12,10,8,.72);
+  backdrop-filter:blur(10px);display:flex;align-items:flex-end;justify-content:center;padding:0 0 32px;
+}
+.help-sheet{
+  background:var(--surface);border:.5px solid var(--line2);border-radius:16px 16px 12px 12px;
+  padding:20px 18px 24px;max-width:480px;width:100%;box-shadow:0 -8px 40px rgba(0,0,0,.55);
+}
+.help-sheet h3{font-family:'Fraunces',serif;font-size:18px;font-weight:700;margin-bottom:8px;line-height:1.2}
+.help-sheet p{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.help-sheet .help-why{
+  background:var(--surface2);border:.5px solid var(--line2);border-radius:8px;
+  padding:10px 12px;font-size:11.5px;color:var(--paper);line-height:1.5;margin-bottom:14px;
+}
+.help-sheet .help-why b{color:var(--turmeric)}
+
+/* ---------- sleep editor ---------- */
+.sleep-edit-row{
+  display:flex;gap:8px;align-items:center;margin:10px 0 4px;
+}
+.sleep-edit-row label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.sleep-edit-row input[type=time]{
+  background:var(--surface2);border:.5px solid var(--turmeric);border-radius:6px;
+  color:var(--paper);font-family:'JetBrains Mono',monospace;font-size:13px;
+  padding:5px 8px;flex:1;
+}
+
+/* ---------- goal progress cards ---------- */
+.goal-card{
+  background:var(--surface2);border:.5px solid var(--line2);border-radius:10px;
+  padding:12px;margin-bottom:10px;
+}
+.goal-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.goal-card-title{font-size:13.5px;font-weight:700;color:var(--paper)}
+.goal-card-status{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--sage)}
+.goal-card-desc{font-size:11.5px;color:var(--muted);line-height:1.5;margin-bottom:8px}
+.goal-progress-bar{height:5px;border-radius:3px;background:var(--surface3);overflow:hidden;margin-bottom:6px}
+.goal-progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--turmeric),var(--sage));transition:width .4s ease}
 </style>
 </head>
 <body>
@@ -838,10 +885,31 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
     <p class="eyebrow" style="color:var(--indigo)"><span class="n">🌙</span> live sleep tracking</p>
     <div id="sleepLiveState">
       <h2>One-Tap Sleep Stopwatch</h2>
-      <p class="note" style="margin-bottom:10px">Tap when hitting the pillow, tap when waking up. Automatic duration calculation &amp; cloud logging.</p>
+      <p class="note" style="margin-bottom:10px">Tap when hitting the pillow, tap when waking up. Auto-logs wake time in your 24h calendar block.</p>
       <div class="sleep-clock" id="sleepStopwatch">00:00:00</div>
       <button class="btn indigo" style="width:100%;font-size:13.5px;padding:11px" id="btnToggleSleep">🛌 Going to Sleep Now</button>
     </div>
+  </div>
+
+  <!-- SLEEP TIME EDITOR – Google Calendar drag-style -->
+  <div class="card">
+    <p class="eyebrow"><span class="n">⏱️</span> adjust sleep block in calendar</p>
+    <h2>Record & Edit Sleep / Wake Times</h2>
+    <p class="note" style="margin-bottom:10px">Set the exact times you slept and woke up. This records your sleep window in the 24h calendar and calculates total duration automatically.</p>
+    <div class="sleep-edit-row">
+      <label>Fell Asleep</label>
+      <input type="time" id="sleepTimeInput" value="23:00">
+    </div>
+    <div class="sleep-edit-row">
+      <label>Woke Up</label>
+      <input type="time" id="wakeTimeInput" value="07:00">
+    </div>
+    <div style="margin:10px 0 10px;padding:10px 12px;background:var(--surface2);border-radius:8px;border:.5px solid var(--line2)">
+      <div class="statline"><span class="statk">Total Sleep Duration</span><span class="statv" id="sleepDurationCalc" style="color:var(--indigo)">8h 00m</span></div>
+      <div class="statline"><span class="statk">Sleep Quality Target</span><span class="statv">7.5 – 8.5h</span></div>
+    </div>
+    <button class="btn indigo" style="width:100%" id="btnSaveSleepTimes">✓ Log Sleep & Record in Calendar</button>
+    <p class="note" style="margin-top:8px">This will mark today's sleep block as ✓ done and log to cloud sync.</p>
   </div>
 
   <div class="card">
@@ -863,6 +931,7 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
     <p class="note" style="margin-top:8px" id="sleepAvgNote">—</p>
   </div>
 </section>
+
 
 <!-- ============ GROOMING, OIL & POLISH ============ -->
 <section id="p-grooming" class="hide">
@@ -1054,7 +1123,109 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
       <b>The 2-Day Rule:</b> Never miss two days in a row. If life happens, do not abandon the week. Complete the very next micro-task (even just 1 glass of water or 1 SPF application) to immediately restore momentum.
     </p>
   </div>
+
+  <!-- ACTIVE TRANSFORMATION GOALS -->
+  <div class="card">
+    <p class="eyebrow"><span class="n">🎯</span> active transformation goals</p>
+    <h2>Basith's Glow-Up Mission Board</h2>
+    <p class="note" style="margin-bottom:14px">Every goal below has a daily protocol. Tap any goal to see the exact science and what to do today.</p>
+
+    <!-- Goal 1: Weight / Fat Loss -->
+    <div class="goal-card">
+      <div class="goal-card-head">
+        <span class="goal-card-title">⚖️ Cut to 72 kg (from 85 kg)</span>
+        <span class="goal-card-status">IN PROGRESS</span>
+      </div>
+      <div class="goal-card-desc">500 kcal deficit daily · 2,000 kcal target · 170g protein floor. Face, neck, and jawline definition unlocks at ~72–74 kg. Every 1 kg of fat loss = visible jaw sharpness.</div>
+      <div class="goal-progress-bar"><div class="goal-progress-fill" style="width:35%"></div></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)">85 kg → 72 kg · Est. ~13 weeks at 1 kg/week</div>
+    </div>
+
+    <!-- Goal 2: Face De-Bloat -->
+    <div class="goal-card">
+      <div class="goal-card-head">
+        <span class="goal-card-title">💧 Face De-Bloat & Puffiness Reduction</span>
+        <span class="goal-card-status">ACTIVE</span>
+      </div>
+      <div class="goal-card-desc">Facial puffiness and bloat comes from water retention, high sodium, alcohol, poor sleep, and excess subcutaneous fat. Every single protocol below directly targets this.</div>
+      <div style="background:var(--surface3);border-radius:7px;padding:10px;font-size:11.5px;margin-bottom:8px;line-height:1.6">
+        <b style="color:var(--turmeric)">Daily de-bloat protocol:</b><br>
+        🧂 <b>Low sodium:</b> No added salt, avoid processed food, no restaurant meals.<br>
+        💧 <b>3L+ water daily:</b> Flushing sodium out reduces facial water retention within 48h.<br>
+        😴 <b>Head elevated 15° while sleeping:</b> Lymphatic drainage prevents morning puff.<br>
+        🏃 <b>Morning walk + Taekwondo midday:</b> Cardio = vasodilation = fat loss = facial definition.<br>
+        🧊 <b>Cold water face splash AM:</b> Constricts blood vessels, reduces puffiness instantly.<br>
+        🪥 <b>Lymphatic face massage 1 min AM:</b> Outward strokes from nose → ear to drain lymph.
+      </div>
+      <div class="goal-progress-bar"><div class="goal-progress-fill" style="width:25%;background:linear-gradient(90deg,var(--indigo),var(--sage))"></div></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)">Results visible in 2–4 weeks with consistent deficit + low sodium + hydration</div>
+    </div>
+
+    <!-- Goal 3: Forehead Reduction -->
+    <div class="goal-card">
+      <div class="goal-card-head">
+        <span class="goal-card-title">📐 Forehead Visual Reduction</span>
+        <span class="goal-card-status">ACTIVE</span>
+      </div>
+      <div class="goal-card-desc">Forehead appears large due to hairline recession, high forehead height, or thin temporal region. All three are addressable with the right protocol.</div>
+      <div style="background:var(--surface3);border-radius:7px;padding:10px;font-size:11.5px;margin-bottom:8px;line-height:1.6">
+        <b style="color:var(--turmeric)">Forehead reduction protocol:</b><br>
+        💊 <b>Minoxidil 5% (Tugain) on temples DAILY:</b> Regrow frontal hairline + temple density. Visible results in 3–6 months.<br>
+        🪡 <b>Dermaroll 0.5mm temples every 7 days (Sunday):</b> Opens collagen channels for minoxidil absorption ×4 deeper.<br>
+        🌿 <b>Rosemary + Castor Oil on temples 2x/week:</b> DHT blocking + follicle nourishment.<br>
+        ✂️ <b>Haircut strategy:</b> Textured top, low fade sides — adds visual height weight to mid-face, shrinks forehead appearance.<br>
+        💆 <b>Eyebrow grooming:</b> Well-defined brows frame face and visually reduce forehead height by ~15%.
+      </div>
+      <div class="goal-progress-bar"><div class="goal-progress-fill" style="width:20%;background:linear-gradient(90deg,var(--rose),var(--turmeric))"></div></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)">Temple regrowth visible: 3–6 months · Minoxidil + dermaroll protocol</div>
+    </div>
+
+    <!-- Goal 4: Temple Hairline & Anti-Balding -->
+    <div class="goal-card">
+      <div class="goal-card-head">
+        <span class="goal-card-title">🛡️ Temple Hairline & Crown Defense</span>
+        <span class="goal-card-status">LOCKED IN</span>
+      </div>
+      <div class="goal-card-desc">Temples and crown maintained with minoxidil daily + Sunday dermaroll + Rosemary/Castor oil massage protocol. Basith's forehead is an asset — temples must match it.</div>
+      <div class="goal-progress-bar"><div class="goal-progress-fill" style="width:40%;background:linear-gradient(90deg,var(--turmeric),var(--vermilion))"></div></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)">Maintenance + regrowth · Protocol is daily (non-negotiable)</div>
+    </div>
+
+    <!-- Goal 5: V-Taper & Gym -->
+    <div class="goal-card">
+      <div class="goal-card-head">
+        <span class="goal-card-title">🏋️ V-Taper Physique (r/Fitness 6-Day PPL)</span>
+        <span class="goal-card-status">ACTIVE</span>
+      </div>
+      <div class="goal-card-desc">Metallicadpa linear progression PPL 6-day split. Shoulder : Waist ratio target = 1.60. Broad shoulders + narrow waist creates the masculine silhouette that changes how people perceive you.</div>
+      <div class="goal-progress-bar"><div class="goal-progress-fill" style="width:30%;background:linear-gradient(90deg,var(--vermilion),var(--turmeric))"></div></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)">6-Day PPL · 5x5+ AMRAP linear progression · +2.5kg when all reps hit</div>
+    </div>
+
+    <!-- Goal 6: Skin Glow -->
+    <div class="goal-card">
+      <div class="goal-card-head">
+        <span class="goal-card-title">✨ Glass Skin & Hyperpigmentation Clear</span>
+        <span class="goal-card-status">IN PROGRESS</span>
+      </div>
+      <div class="goal-card-desc">14-day Minimalist 30% Glycolic Peel rotation + Kojic Acid (Sat Nights) + Azelaic 10% (Mon/Thu) + B12 barrier repair (Tue/Fri) + SPF 50 non-negotiable daily.</div>
+      <div class="goal-progress-bar"><div class="goal-progress-fill" style="width:50%;background:linear-gradient(90deg,var(--rose),var(--indigo))"></div></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)">Peel cycle: every 14 days · Visible tone shift: 8–12 weeks</div>
+    </div>
+
+    <!-- Goal 7: Content Growth -->
+    <div class="goal-card">
+      <div class="goal-card-head">
+        <span class="goal-card-title">📱 #basithladdu Content Creator</span>
+        <span class="goal-card-status">ACTIVE</span>
+      </div>
+      <div class="goal-card-desc">45m daily content sprint. Ship a reel every 2 days. Drop a pillar YouTube video every 14–15 days. Consistency creates the compounding audience flywheel.</div>
+      <div class="goal-progress-bar"><div class="goal-progress-fill" style="width:15%;background:linear-gradient(90deg,var(--turmeric),var(--sage))"></div></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)">Daily sprint + bi-daily reel + 14-day pillar video</div>
+    </div>
+  </div>
 </section>
+
 
 <!-- ============ AI & SYNC ============ -->
 <section id="p-sync" class="hide">
@@ -1091,6 +1262,19 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
 
 <div class="toast" id="toast"></div>
 
+<!-- HELP OVERLAY SHEET -->
+<div id="helpOverlay" class="help-overlay" style="display:none" onclick="closeHelp()">
+  <div class="help-sheet" onclick="event.stopPropagation()">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+      <h3 id="helpTitle">—</h3>
+      <button class="btn sm" onclick="closeHelp()" style="flex:0 0 auto">✕ Close</button>
+    </div>
+    <div class="help-why" id="helpWhy">—</div>
+    <p id="helpDesc">—</p>
+    <p style="font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace">💡 Tap anywhere outside to dismiss</p>
+  </div>
+</div>
+
 <script>
 'use strict';
 
@@ -1116,6 +1300,26 @@ function toast(msg, ms = 2400){
   t.classList.add('show');
   clearTimeout(t._timer);
   t._timer = setTimeout(() => t.classList.remove('show'), ms);
+}
+
+/* ---------------- Help System ---------------- */
+function showHelp(title, why, desc){
+  const overlay = document.getElementById('helpOverlay');
+  if(!overlay) return;
+  document.getElementById('helpTitle').textContent = title;
+  document.getElementById('helpWhy').innerHTML = why;
+  document.getElementById('helpDesc').textContent = desc;
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeHelp(){
+  const overlay = document.getElementById('helpOverlay');
+  if(overlay) overlay.style.display = 'none';
+  document.body.style.overflow = '';
+}
+// Close on Escape key
+if(typeof document !== 'undefined' && document.addEventListener){
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeHelp(); });
 }
 
 /* ---------------- Date Engine ---------------- */
@@ -1639,32 +1843,57 @@ function get24HourCalendarSchedule(dow){
   else if(dow===6) pmSkinSub = 'Minimalist 30% Peel (10 min) OR Aziderm + Nicole lip scrub + Sharp neckline & brows.';
 
   return [
-    { startHour:0, endHour:7, id:'ev_sleep_am', durClass:'dur-sleep', time:'00:00 – 07:00', cls:'ev-sleep', title:'😴 Deep Sleep Recovery Window', sub:'Target 7.5h–8.5h uninterrupted sleep architecture. Live sleep stopwatch active.', cta:'✓ Slept' },
-    { startHour:7, endHour:7, id:'ev_brush_am', durClass:'dur-15', time:'07:00 – 07:10', cls:'ev-morning', title:'🪥 AM Teeth Brushing & Copper Tongue Scrape', sub:'Scrape tongue 5x back-to-front + brush with fluoride paste. Eliminates volatile sulfur odor.', cta:'✓ Brushed & Scraped' },
-    { startHour:7, endHour:7, id:'ev_wake_water', durClass:'dur-15', time:'07:10 – 07:15', cls:'ev-morning', title:'💧 500ml Morning Hydration Flush', sub:'Kickstarts digestive motility, rehydrates cells, flushes overnight metabolic waste.', cta:'✓ Drank 500ml' },
-    { startHour:7, endHour:8, id:'ev_shower_am', durClass:'dur-20', time:'07:15 – 07:30', cls:'ev-morning', title:'🚿 Morning Awakening Shower', sub:'Warm-to-cool rinse. Preps skin for facewash, stimulates central nervous system alertness.', cta:'✓ Showered AM' },
-    { startHour:7, endHour:8, id:'ev_am_skin', durClass:'dur-20', time:'07:30 – 07:45', cls:'ev-skin', title:'🧴 AM Skincare Shield + SPF 50', sub:'AHA Glow facewash → Pilgrim Vit C → Minimalist B12 → Lakmé SPF 50 (Face, Neck, Arms, Hands) → Lip Balm SPF 50.', cta:'✓ Applied SPF' },
-    { startHour:7, endHour:8, id:'ev_walk', durClass:'dur-30', time:'07:45 – 08:15', cls:'ev-walk', title:'🚶 Morning Sunlight Walk Block', sub:'Circadian cortisol spike, natural Vitamin D synthesis, early 2,000 steps.', cta:'✓ Walked' },
-    { startHour:8, endHour:9, id:'ev_creatine', durClass:'dur-15', time:'08:15 – 08:20', cls:'ev-nutrition', title:'⚡ Creatine Monohydrate 5g', sub:'Cellular hydration, ATP muscle power output, and brain cognition (do not skip).', cta:'✓ Took Creatine' },
-    { startHour:8, endHour:9, id:'ev_bfast', durClass:'dur-30', time:'08:30 – 09:00', cls:'ev-nutrition', title:'🍽️ Breakfast Power Oats + Buffalo Milk', sub:'70g Oats + 250ml Milk + 2 tsp Flaxseed (17.3g P · 416 kcal).', cta:'✓ Log Breakfast', macro:{n:'Oats 70g + Milk 250ml',k:416,p:17.3,c:59,f:11.3} },
-    { startHour:9, endHour:11, id:'ev_work_am', durClass:'dur-120', time:'09:30 – 11:30', cls:'ev-work', title:'💼 Morning Deep Focus Sprint (2h)', sub:'High-energy execution sprint. Nose breathing posture, 1L hydration pacing.', cta:'✓ Focus Done' },
-    { startHour:11, endHour:12, id:'ev_taekwondo', durClass:'dur-30', time:'11:30 – 12:00', cls:'ev-posture', title:'🥋 Midday Reset: Taekwondo & Dance Mobility Drill', sub:'30-min footwork, dynamic hip openers & dance coordination. Physical and mental energizer.', cta:'✓ Reset Done' },
-    { startHour:12, endHour:13, id:'ev_water_mid', durClass:'dur-15', time:'12:00 – 12:05', cls:'ev-nutrition', title:'💧 Midday Hydration Check (750ml)', sub:'Consistent fluid intake maintains blood volume & cognitive processing speed.', cta:'✓ Drank 750ml' },
-    { startHour:13, endHour:13, id:'ev_lunch', durClass:'dur-30', time:'13:00 – 13:30', cls:'ev-nutrition', title:'🍽️ Lunch Soya Chunks + 50/50 Chewing Balance', sub:'80g Soya Chunks + 150g Rice + Dal + Curd (55.6g P · 677 kcal). Chew 50/50 on left and right for masseter symmetry.', cta:'✓ Log Lunch', macro:{n:'Soya Chunks 80g + Rice + Dal',k:677,p:55.6,c:91,f:8.6} },
-    { startHour:13, endHour:14, id:'ev_spf_mid', durClass:'dur-15', time:'13:30 – 13:45', cls:'ev-skin', title:'🧴 Midday SPF 50 Reapply Shield', sub:'Reapply Lakmé SPF 50 on face, neck, arms, and hands (closes face vs body tone gap).', cta:'✓ Reapplied SPF' },
-    { startHour:14, endHour:16, id:'ev_work_pm', durClass:'dur-120', time:'14:30 – 16:30', cls:'ev-work', title:'💼 Afternoon Strategy & Execution Sprint (2h)', sub:'Punchy, focused sprint. High-leverage deliverables with zero distractions.', cta:'✓ Sprint Done' },
-    { startHour:16, endHour:17, id:'ev_posture', durClass:'dur-30', time:'16:30 – 17:00', cls:'ev-posture', title:'🧍 Spine Decompression & Height Drill', sub:'Wall chin tucks 3×15, doorway chest stretch 3×30s, dead hang 2×30s (reclaims 1–3cm visible height).', cta:'✓ Decompressed' },
-    { startHour:17, endHour:19, id:'ev_gym', durClass:'dur-75', time:'17:30 – 18:45', cls:'ev-gym', title:gymTitle, sub:gymSub, cta:'✓ Log Workout' },
-    { startHour:18, endHour:19, id:'ev_whey', durClass:'dur-15', time:'18:45 – 19:00', cls:'ev-nutrition', title:'🥛 Post-Workout Nakpro Whey Isolate Shake', sub:'1 Scoop Nakpro Whey Isolate in cold water (24.0g P · 160 kcal).', cta:'✓ Drank Whey', macro:{n:'Nakpro Whey Isolate',k:160,p:24.0,c:8,f:2.5} },
-    { startHour:19, endHour:19, id:'ev_shower_pm', durClass:'dur-20', time:'19:00 – 19:15', cls:'ev-morning', title:'🚿 Post-Gym Recovery Shower', sub:'Wash off gym sweat, cool down core body temperature, refresh for evening deep work.', cta:'✓ Showered PM' },
-    { startHour:19, endHour:20, id:'ev_content', durClass:'dur-45', time:'19:15 – 20:00', cls:'ev-content', title:'⚡ Content Production Sprint (45m - #basithladdu)', sub:'45 min focused creative output. Phone outside room. Ship one concrete deliverable.', cta:'✓ Shipped Content' },
-    { startHour:20, endHour:21, id:'ev_dinner', durClass:'dur-30', time:'20:30 – 21:00', cls:'ev-nutrition', title:'🍽️ Dinner Eggs/Chicken + Ashwagandha 400mg', sub:'4 Whole Eggs (or 130g Chicken) + 2 Roti + 100g Curd + 400mg Ashwagandha (34.7g P · 556 kcal).', cta:'✓ Log Dinner', macro:{n:'4 Whole Eggs + 2 Roti',k:556,p:34.7,c:44,f:26.7} },
-    { startHour:21, endHour:22, id:'ev_pm_groom', durClass:'dur-30', time:'21:30 – 22:00', cls:'ev-groom', title:pmSkinTitle, sub:pmSkinSub, cta:'✓ Night Protocol Done' },
-    { startHour:22, endHour:22, id:'ev_brush_pm', durClass:'dur-15', time:'22:00 – 22:15', cls:'ev-morning', title:'🪥 PM Teeth Brushing, Floss & Antibacterial Rinse', sub:'Floss between all molars, brush for 2 full minutes, rinse with CPC mouthwash. Overnight cavity & odor shield.', cta:'✓ Brushed & Flossed' },
-    { startHour:22, endHour:23, id:'ev_lockdown', durClass:'dur-30', time:'22:30 – 23:00', cls:'ev-sleep', title:'🌙 Sleep Sanctuary Lockdown & Wind-Down', sub:'Park phone outside bedroom. Room cool & pitch dark. Nasal breathing & mouth tape check.', cta:'✓ Locked Down' },
-    { startHour:23, endHour:24, id:'ev_sleep_pm', durClass:'dur-sleep', time:'23:00 – 07:00', cls:'ev-sleep', title:'😴 Deep Sleep Mode Active', sub:'Target uninterrupted slow-wave sleep. Live sleep stopwatch active.', cta:'🛌 Slept' }
+    { startHour:0, endHour:7, id:'ev_sleep_am', durClass:'dur-sleep', time:'00:00 – 07:00', cls:'ev-sleep', title:'😴 Deep Sleep Recovery Window', sub:'Target 7.5h–8.5h uninterrupted sleep architecture. Live sleep stopwatch active.', cta:'✓ Slept',
+      help:{why:'<b>WHY SLEEP MATTERS:</b> During deep sleep (SWS), GH surges rebuild muscle tissue from the gym. REM consolidates memory and learning. 7.5h minimum for testosterone production — under 6h drops T by 15%.', desc:'Go to bed by 23:00. Pitch dark room. Nasal breathing + mouth tape. Phone outside room. Head slightly elevated for lymphatic drainage (less morning puff). Log your wake time in the Sleep tab.'} },
+    { startHour:7, endHour:7, id:'ev_brush_am', durClass:'dur-15', time:'07:00 – 07:10', cls:'ev-morning', title:'🪥 AM Teeth Brushing & Copper Tongue Scrape', sub:'Scrape tongue 5x back-to-front + brush with fluoride paste. Eliminates volatile sulfur odor.', cta:'✓ Brushed & Scraped',
+      help:{why:'<b>WHY TONGUE SCRAPING:</b> Overnight, 85% of oral bacteria responsible for VSC (volatile sulfur compounds = bad breath) colonize on the tongue dorsum. Scraping removes them in 10 seconds — more effective than mouthwash alone.', desc:'Scrape tongue 5x back-to-front with copper scraper. Brush with fluoride paste for full 2 minutes. Spit, do not rinse immediately — let fluoride sit.'} },
+    { startHour:7, endHour:7, id:'ev_wake_water', durClass:'dur-15', time:'07:10 – 07:15', cls:'ev-morning', title:'💧 500ml Morning Hydration Flush', sub:'Kickstarts digestive motility, rehydrates cells, flushes overnight metabolic waste.', cta:'✓ Drank 500ml',
+      help:{why:'<b>WHY MORNING WATER:</b> You lose ~500ml of water overnight through respiration and passive sweat. Rehydrating before eating speeds intestinal motility, raises metabolic rate by 24% for 60 minutes, and reduces cortisol spike from dehydration stress.', desc:'Drink 500ml room temperature water immediately on waking. Add a pinch of salt and squeeze of lemon to replenish electrolytes. Track in the hydration logger.'} },
+    { startHour:7, endHour:8, id:'ev_shower_am', durClass:'dur-20', time:'07:15 – 07:30', cls:'ev-morning', title:'🚿 Morning Awakening Shower', sub:'Warm-to-cool rinse. Preps skin for facewash, stimulates central nervous system alertness.', cta:'✓ Showered AM',
+      help:{why:'<b>WHY MORNING SHOWER:</b> Warm water opens skin pores and removes overnight sebum, sweat, and dead cells — preparing a clean canvas for your skincare actives (Vitamin C, SPF). Ending cold for 30s releases norepinephrine = natural focus and alertness without caffeine.', desc:'Warm shower for body wash. End with 30s cool-to-cold rinse. Pat dry gently — do not rub face. Apply skincare immediately (within 60s while skin is still slightly damp for better absorption).'} },
+    { startHour:7, endHour:8, id:'ev_am_skin', durClass:'dur-20', time:'07:30 – 07:45', cls:'ev-skin', title:'🧴 AM Skincare Shield + SPF 50', sub:'AHA Glow facewash → Pilgrim Vit C → Minimalist B12 → Lakmé SPF 50 (Face, Neck, Arms, Hands) → Lip Balm SPF 50.', cta:'✓ Applied SPF',
+      help:{why:'<b>WHY THIS EXACT ORDER:</b> Facewash removes overnight bacteria. Vitamin C (L-Ascorbic acid) neutralizes UV free radicals and brightens melanin — must be applied before SPF. B12 (cobalamin) strengthens barrier lipids. SPF 50 is your #1 anti-ageing tool — UV is 80% of premature ageing.', desc:'Step 1: AHA facewash (double cleanse neck too). Step 2: 3–5 drops Pilgrim Vit C serum on damp face. Step 3: Minimalist B12 as moisturiser. Step 4: Lakmé SPF 50 on face, neck, arms, and hands. Step 5: Lip Balm SPF 50.'} },
+    { startHour:7, endHour:8, id:'ev_walk', durClass:'dur-30', time:'07:45 – 08:15', cls:'ev-walk', title:'🚶 Morning Sunlight Walk Block', sub:'Circadian cortisol spike, natural Vitamin D synthesis, early 2,000 steps.', cta:'✓ Walked',
+      help:{why:'<b>WHY MORNING SUNLIGHT:</b> The first 30–60 minutes of outdoor light sets your circadian clock via ipRGC photoreceptors in your eyes. This determines cortisol timing, sleep quality 16h later, and dopamine baseline. Cannot be replicated by indoor light or screens.', desc:'Walk outdoors within 30 min of waking. No sunglasses (let light hit your eyes). Minimum 15 min outdoors, ideally 30 min. Also accumulates 2,000+ steps toward daily target. Also reduces morning facial puffiness through vasodilation.'} },
+    { startHour:8, endHour:9, id:'ev_creatine', durClass:'dur-15', time:'08:15 – 08:20', cls:'ev-nutrition', title:'⚡ Creatine Monohydrate 5g', sub:'Cellular hydration, ATP muscle power output, and brain cognition (do not skip).', cta:'✓ Took Creatine',
+      help:{why:'<b>WHY CREATINE DAILY:</b> Creatine is the most researched supplement in existence (300+ studies). 5g/day saturates muscle phosphocreatine stores — providing explosive ATP energy for heavy compound lifts. Also increases brain creatine stores improving short-term memory and cognitive processing by 14%.', desc:'Mix 5g creatine monohydrate in 200ml water. Timing does not matter — consistency matters. Take it every day regardless of whether you train. Do not take with caffeine (reduces absorption). Stay hydrated — creatine requires extra water.'} },
+    { startHour:8, endHour:9, id:'ev_bfast', durClass:'dur-30', time:'08:30 – 09:00', cls:'ev-nutrition', title:'🍽️ Breakfast Power Oats + Buffalo Milk', sub:'70g Oats + 250ml Milk + 2 tsp Flaxseed (17.3g P · 416 kcal).', cta:'✓ Log Breakfast', macro:{n:'Oats 70g + Milk 250ml',k:416,p:17.3,c:59,f:11.3},
+      help:{why:'<b>WHY THIS BREAKFAST:</b> 70g oats provides slow-digesting β-glucan fiber — keeps blood sugar stable for 3–4h of focused work with no energy crash. 250ml buffalo milk adds 8g casein protein and calcium. 2 tsp flaxseed provides ALA omega-3 and lignans (DHT-blocking benefit for hair).', desc:'Cook oats in milk (microwave 2.5 min). Add flaxseed. Optional: banana or berries. Do not skip — this fuels your 09:30–11:30 deep focus sprint with stable blood sugar. Log it in the Food tab.'} },
+    { startHour:9, endHour:11, id:'ev_work_am', durClass:'dur-120', time:'09:30 – 11:30', cls:'ev-work', title:'💼 Morning Deep Focus Sprint (2h)', sub:'High-energy execution sprint. Nose breathing posture, 1L hydration pacing.', cta:'✓ Focus Done',
+      help:{why:'<b>WHY MORNING WORK BLOCK:</b> Cortisol and dopamine peak 2–4h after waking — this is your highest cognitive performance window. Use it for highest-leverage tasks: writing, coding, planning. Do NOT use it for emails or social media — those are low-leverage and can wait.', desc:'Phone in another room. Website blockers on. Nose breathing to maintain focus. Set a timer (use the Content tab). 1 water refill per hour. Every 45 min: 5 min micro-break (stand, stretch, eyes-off screen). After 2h, mandatory full break.'} },
+    { startHour:11, endHour:12, id:'ev_taekwondo', durClass:'dur-30', time:'11:30 – 12:00', cls:'ev-posture', title:'🥋 Midday Reset: Taekwondo & Dance Mobility Drill', sub:'30-min footwork, dynamic hip openers & dance coordination. Physical and mental energizer.', cta:'✓ Reset Done',
+      help:{why:'<b>WHY TAEKWONDO MIDDAY:</b> After 2h of sedentary deep work, hip flexors tighten, spinal discs compress, and blood pools in legs. Taekwondo footwork + dance moves trigger BDNF (brain-derived neurotrophic factor) — literally regrows brain connections. You return to work 40% more creative and alert.', desc:'30 min of dynamic movement: TKD roundhouse kicks, front kicks, lateral shuffles, dance footwork. No rigid practice needed — just move with rhythm and intention. Ends mental fatigue, flushes lactic acid. Burns ~150–200 kcal.'} },
+    { startHour:12, endHour:13, id:'ev_water_mid', durClass:'dur-15', time:'12:00 – 12:05', cls:'ev-nutrition', title:'💧 Midday Hydration Check (750ml)', sub:'Consistent fluid intake maintains blood volume & cognitive processing speed.', cta:'✓ Drank 750ml',
+      help:{why:'<b>WHY MIDDAY WATER:</b> Even 2% dehydration drops cognitive performance by 20%. Blood volume decreases, reducing oxygen to the brain. Consistent sipping throughout the day beats drinking large amounts at once. Also helps reduce facial water retention by training kidneys not to retain fluid.', desc:'Drink 750ml around midday. Log in hydration tracker. You should be at 1.25L by noon. Total target: 3–3.5L by bedtime. Avoid drinking large volumes 1h before bed (disrupts sleep quality with bathroom trips).'} },
+    { startHour:13, endHour:13, id:'ev_lunch', durClass:'dur-30', time:'13:00 – 13:30', cls:'ev-nutrition', title:'🍽️ Lunch Soya Chunks + 50/50 Chewing Balance', sub:'80g Soya Chunks + 150g Rice + Dal + Curd (55.6g P · 677 kcal). Chew 50/50 on left and right for masseter symmetry.', cta:'✓ Log Lunch', macro:{n:'Soya Chunks 80g + Rice + Dal',k:677,p:55.6,c:91,f:8.6},
+      help:{why:'<b>WHY 50/50 CHEWING:</b> Unilateral chewing (eating always on one side) is the #1 cause of masseter asymmetry and uneven jaw development. Consciously alternating sides develops equal masseter muscle mass on both sides — leading to a more squared, symmetrical jawline over months.', desc:'80g soya chunks (boiled + spiced) + 150g rice + 1 dal katori + 100g curd. Consciously chew 5–10 bites on left, then 5–10 on right, alternating. This is a physique goal too. Log in Food tab.'} },
+    { startHour:13, endHour:14, id:'ev_spf_mid', durClass:'dur-15', time:'13:30 – 13:45', cls:'ev-skin', title:'🧴 Midday SPF 50 Reapply Shield', sub:'Reapply Lakmé SPF 50 on face, neck, arms, and hands (closes face vs body tone gap).', cta:'✓ Reapplied SPF',
+      help:{why:'<b>WHY REAPPLY SPF:</b> SPF efficacy decreases 50% within 2h of application due to UV photodegradation and sweat. Reapplying at midday is especially critical if you went outdoors for a walk. Also applying to neck, arms, and hands prevents the body tone gap that makes the face look lighter/darker.', desc:'Quick 30-second reapplication: pump SPF into palm, dot onto face, blend in. Then do same for neck, forearms, and backs of hands. The face-body tone gap closes over 3–4 weeks of consistent neck/arm SPF.'} },
+    { startHour:14, endHour:16, id:'ev_work_pm', durClass:'dur-120', time:'14:30 – 16:30', cls:'ev-work', title:'💼 Afternoon Strategy & Execution Sprint (2h)', sub:'Punchy, focused sprint. High-leverage deliverables with zero distractions.', cta:'✓ Sprint Done',
+      help:{why:'<b>WHY AFTERNOON SPRINT:</b> Alertness naturally dips after lunch (post-prandial dip, 13:00–15:00). But after the trough, there is a second ultradian peak around 15:00–17:00 — ideal for strategy, problem solving, and creative execution. Use it before gym.', desc:'Switch tasks from the morning sprint. If you coded/studied in the AM, now do content planning, strategy, or visual work. End by 16:30 — allow 30 min decompression before gym. Log any completed deliverables.'} },
+    { startHour:16, endHour:17, id:'ev_posture', durClass:'dur-30', time:'16:30 – 17:00', cls:'ev-posture', title:'🧍 Spine Decompression & Height Drill', sub:'Wall chin tucks 3×15, doorway chest stretch 3×30s, dead hang 2×30s (reclaims 1–3cm visible height).', cta:'✓ Decompressed',
+      help:{why:'<b>WHY SPINE DECOMPRESSION:</b> After a day at the desk, spinal discs compress by 1–3cm from gravity and poor posture. Dead hangs traction the spine — decompressing discs and restoring height. Also opens chest and shoulders (rounded shoulders subtract 2–3cm of apparent height and make you look smaller).', desc:'1. Wall chin tucks: Gently press head back into wall for 5s × 15 reps. 2. Doorway chest stretch: Arms at 90°, lean through doorway for 30s × 3. 3. Dead hang: Hang from pullup bar for 30s × 2. Do before gym — not after (when discs are already stressed).'} },
+    { startHour:17, endHour:19, id:'ev_gym', durClass:'dur-75', time:'17:30 – 18:45', cls:'ev-gym', title:gymTitle, sub:gymSub, cta:'✓ Log Workout',
+      help:{why:'<b>WHY 5:30 PM GYM:</b> Testosterone and muscle strength peak between 16:00–18:00 due to circadian rhythm of endocrine function. Body temperature is also highest — muscles are most pliable and injury risk is lowest. Compound heavy lifts (squats, bench, deadlift, OHP) at this time maximise hormonal response.', desc:'Follow the r/Fitness Metallicadpa PPL protocol shown in the Lifts tab. 5x5+ AMRAP on main compound. 3x8–12 on accessories. Rest 2–3 min between heavy sets. Log each set in the Lifts tab. Add +2.5kg on upper body and +5kg on lower when all reps are hit.'} },
+    { startHour:18, endHour:19, id:'ev_whey', durClass:'dur-15', time:'18:45 – 19:00', cls:'ev-nutrition', title:'🥛 Post-Workout Nakpro Whey Isolate Shake', sub:'1 Scoop Nakpro Whey Isolate in cold water (24.0g P · 160 kcal).', cta:'✓ Drank Whey', macro:{n:'Nakpro Whey Isolate',k:160,p:24.0,c:8,f:2.5},
+      help:{why:'<b>WHY POST-WORKOUT WHEY:</b> Muscle protein synthesis (MPS) is maximally elevated for 45–60 min post-training. Providing fast-absorbing whey isolate (vs concentrate) in this window provides leucine — the amino acid that triggers MPS via mTOR signalling. Do not skip this — it is the difference between muscle gain and muscle maintenance.', desc:'1 scoop Nakpro Whey Isolate in 300ml cold water. Shake well. Drink within 45 min of finishing gym. Do not use milk post-workout — it slows absorption. Save milk for breakfast where slower digestion is beneficial. Log in Food tab.'} },
+    { startHour:19, endHour:19, id:'ev_shower_pm', durClass:'dur-20', time:'19:00 – 19:15', cls:'ev-morning', title:'🚿 Post-Gym Recovery Shower', sub:'Wash off gym sweat, cool down core body temperature, refresh for evening deep work.', cta:'✓ Showered PM',
+      help:{why:'<b>WHY PM SHOWER:</b> Gym sweat contains lactic acid, urea, and bacteria — leaving it on the skin for hours leads to body acne, clogged pores, and increased skin inflammation. Also, core body temperature needs to drop for optimal recovery and content deep work performance.', desc:'Full shower with body wash. Wash hair with ketoconazole shampoo on designated days. Cold rinse finish preferred — reduces post-workout inflammation and body temperature for better cognitive state. Apply ketoconazole on days designated by skincare rotation.'} },
+    { startHour:19, endHour:20, id:'ev_content', durClass:'dur-45', time:'19:15 – 20:00', cls:'ev-content', title:'⚡ Content Production Sprint (45m - #basithladdu)', sub:'45 min focused creative output. Phone outside room. Ship one concrete deliverable.', cta:'✓ Shipped Content',
+      help:{why:'<b>WHY 45M CONTENT SPRINT:</b> Consistency beats quality in early-stage content growth. 45 min daily = 273+ hours of content creation per year. One reel shipped per 2 days = 180 pieces of content annually. This is how algorithms reward creators — volume + consistency = reach.', desc:'Use Content tab timer. Set topic before starting. 45 min: script, record, or edit. Ship something — even a rough reel. Aim for one reel every 2 days and one 8–15 min YouTube video every 14 days. Log in Content tab.'} },
+    { startHour:20, endHour:21, id:'ev_dinner', durClass:'dur-30', time:'20:30 – 21:00', cls:'ev-nutrition', title:'🍽️ Dinner Eggs/Chicken + Ashwagandha 400mg', sub:'4 Whole Eggs (or 130g Chicken) + 2 Roti + 100g Curd + 400mg Ashwagandha (34.7g P · 556 kcal).', cta:'✓ Log Dinner', macro:{n:'4 Whole Eggs + 2 Roti',k:556,p:34.7,c:44,f:26.7},
+      help:{why:'<b>WHY ASHWAGANDHA 400mg WITH DINNER:</b> Ashwagandha (KSM-66 extract) at 400–600mg reduces cortisol by 28%, increases testosterone by 17%, and reduces muscle damage markers post-workout. Taking with food increases bioavailability and reduces any gastric sensitivity.', desc:'4 whole eggs (scrambled/omelette) or 130g grilled chicken. 2 whole wheat rotis. 100g curd (probiotic for gut microbiome). 400mg Ashwagandha capsule with food. Ensure you hit 170g protein total across the day — check the Food tab ring.'} },
+    { startHour:21, endHour:22, id:'ev_pm_groom', durClass:'dur-30', time:'21:30 – 22:00', cls:'ev-groom', title:pmSkinTitle, sub:pmSkinSub, cta:'✓ Night Protocol Done',
+      help:{why:'<b>WHY NIGHT ACTIVES:</b> Skin cell renewal peaks between 23:00–03:00. Applying actives (Kojic, Azelaic, Glycolic) at night allows them to work during this peak regeneration window without UV photodegradation (UV destroys Vit C and acids). Also minimizes irritation risk compared to AM application.', desc:'Follow the skincare rotation (check Skin tab for tonight\'s active). Cleanse first — never apply actives on dirty skin. Apply thinly to face only. Wait 10 min before applying moisturizer. Minoxidil on temples and beard area after skincare is dry. Check the Skin & Peel tab for full tonight protocol.'} },
+    { startHour:22, endHour:22, id:'ev_brush_pm', durClass:'dur-15', time:'22:00 – 22:15', cls:'ev-morning', title:'🪥 PM Teeth Brushing, Floss & Antibacterial Rinse', sub:'Floss between all molars, brush for 2 full minutes, rinse with CPC mouthwash. Overnight cavity & odor shield.', cta:'✓ Brushed & Flossed',
+      help:{why:'<b>WHY NIGHT BRUSHING & FLOSSING IS CRITICAL:</b> Salivary flow drops 70% during sleep — there is no natural rinsing action. Food particles between teeth become acid for 8 hours, causing decay and gum disease. Flossing removes interdental plaque that brushing cannot reach. CPC mouthwash kills VSC-producing anaerobes for 12h.', desc:'1. Floss: Gently clean between every molar (not just front teeth). 2. Brush: Full 2 minutes with fluoride paste. 3. CPC Mouthwash: 30 seconds swish, spit — no water rinse after. The overnight fluoride coat is critical. This is the single most important nightly hygiene habit.'} },
+    { startHour:22, endHour:23, id:'ev_lockdown', durClass:'dur-30', time:'22:30 – 23:00', cls:'ev-sleep', title:'🌙 Sleep Sanctuary Lockdown & Wind-Down', sub:'Park phone outside bedroom. Room cool & pitch dark. Nasal breathing & mouth tape check.', cta:'✓ Locked Down',
+      help:{why:'<b>WHY SLEEP SANCTUARY:</b> Phone blue light suppresses melatonin for 2–3h after screen exposure. Even small amounts of light in the room reduce slow-wave sleep depth by 20–30%. Cool temperature (18–21°C) signals the brain to shift into deep sleep faster. Nasal breathing during sleep increases nitric oxide → better oxygen delivery and less sleep apnoea.', desc:'Phone charger and phone go outside the bedroom. Room temperature 18–20°C. Complete darkness (blackout curtains or eye mask). Apply mouth tape (3M micropore) for nasal breathing. Set sleep timer in the Sleep tab. Start the live sleep stopwatch.'} },
+    { startHour:23, endHour:24, id:'ev_sleep_pm', durClass:'dur-sleep', time:'23:00 – 07:00', cls:'ev-sleep', title:'😴 Deep Sleep Mode Active', sub:'Target uninterrupted slow-wave sleep. Live sleep stopwatch active.', cta:'🛌 Slept',
+      help:{why:'<b>WHY 23:00 BEDTIME:</b> Melatonin peaks between 22:00–02:00. Growth hormone (for muscle repair) pulses most strongly in the first 2–3h of sleep. Going to bed at 23:00 captures the optimal GH pulse window. Sleeping past 01:00 misses it entirely — reducing recovery and muscle synthesis.', desc:'Sleep stopwatch should already be running. This block auto-marks as complete when you log your wake time in the Sleep tab. Target: wake at 07:00 for 8h sleep. You can adjust this in the Sleep tab → "Adjust Sleep Block" section.'} }
   ];
 }
+
 
 /* ---------------- date navigator header ---------------- */
 function renderDateNavHeader(){
@@ -1783,14 +2012,19 @@ function renderMasterCalendar(){
       if(done) tickedCount++;
       const isNowActive = isViewingRealToday && hour === currentHour && !done;
       const evBox = el('div', `gcal-event ${ev.cls} ${ev.durClass || 'dur-30'}` + (done ? ' done' : '') + (isNowActive ? ' now-active' : ''));
+      const helpBtnHtml = ev.help ? `<button class="help-btn" title="Why this task?" aria-label="Why do this?">?</button>` : '';
       evBox.innerHTML = `
         <div class="gcal-ev-info">
-          <div class="gcal-ev-time">⏱️ ${ev.time}</div>
+          <div class="gcal-ev-time" style="display:flex;align-items:center;gap:5px">⏱️ ${ev.time} ${helpBtnHtml}</div>
           <div class="gcal-ev-title">${ev.title}</div>
           <div class="gcal-ev-sub">${ev.sub}</div>
         </div>
         <button class="gcal-ev-check">${done ? '✓ Done' : ev.cta}</button>
       `;
+      if(ev.help){
+        const hb = evBox.querySelector('.help-btn');
+        if(hb) hb.onclick = (e) => { e.stopPropagation(); showHelp(ev.title, ev.help.why, ev.help.desc); };
+      }
       const btn = evBox.querySelector('.gcal-ev-check');
       if(btn){
         btn.onclick = (e) => {
@@ -1800,6 +2034,7 @@ function renderMasterCalendar(){
       }
       lane.appendChild(evBox);
     });
+
 
     mount.appendChild(row);
   }
@@ -2030,15 +2265,20 @@ function renderTodayActions(){
     const done = !!tl[task.id];
     if(done) doneCount++;
     const row = el('div','task-item'+(done?' done':''));
+    const helpBtnHtml = task.help ? `<button class="help-btn" title="Why this task?" style="margin-left:6px;vertical-align:middle">?</button>` : '';
     row.innerHTML = `
       <div class="task-left">
         <div>
-          <div><span class="task-badge">${task.time}</span><span class="task-title">${task.title}</span></div>
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px"><span class="task-badge">${task.time}</span><span class="task-title">${task.title}</span>${helpBtnHtml}</div>
           <div class="task-sub">${task.sub}</div>
         </div>
       </div>
       <button class="task-btn">${done ? '✓ Completed' : task.cta}</button>
     `;
+    if(task.help){
+      const hb = row.querySelector('.help-btn');
+      if(hb) hb.onclick = (e) => { e.stopPropagation(); showHelp(task.title, task.help.why, task.help.desc); };
+    }
     const btn = row.querySelector('.task-btn');
     if(btn){
       btn.onclick = () => {
@@ -2357,6 +2597,57 @@ $('#btnSaveSleep').onclick = () => {
   renderTodayStats();
   toast('Sleep entry saved & synced');
 };
+
+/* ---------- Sleep Time Editor: calculates duration live ---------- */
+function calcSleepDuration(){
+  const bedVal = ($('#sleepTimeInput')||{}).value || '23:00';
+  const wakeVal = ($('#wakeTimeInput')||{}).value || '07:00';
+  const [bH, bM] = bedVal.split(':').map(Number);
+  const [wH, wM] = wakeVal.split(':').map(Number);
+  let bedMins = bH * 60 + bM;
+  let wakeMins = wH * 60 + wM;
+  if(wakeMins <= bedMins) wakeMins += 24 * 60; // crosses midnight
+  const totalMins = wakeMins - bedMins;
+  const h = Math.floor(totalMins / 60);
+  const m = totalMins % 60;
+  const label = `${h}h ${String(m).padStart(2,'0')}m`;
+  const el = $('#sleepDurationCalc');
+  if(el){
+    el.textContent = label;
+    el.style.color = (h >= 7.5) ? 'var(--sage)' : (h >= 6) ? 'var(--turmeric)' : 'var(--vermilion)';
+  }
+  return { bed: bedVal, wake: wakeVal, hours: +(totalMins / 60).toFixed(1) };
+}
+
+const _stiEl = $('#sleepTimeInput');
+const _wtiEl = $('#wakeTimeInput');
+if(_stiEl && typeof _stiEl.addEventListener === 'function') _stiEl.addEventListener('input', calcSleepDuration);
+if(_wtiEl && typeof _wtiEl.addEventListener === 'function') _wtiEl.addEventListener('input', calcSleepDuration);
+
+if($('#btnSaveSleepTimes')){
+  $('#btnSaveSleepTimes').onclick = () => {
+    const { bed, wake, hours } = calcSleepDuration();
+    if(hours <= 0){ toast('Check times — wake must be after sleep'); return; }
+    // Log sleep entry for selected date
+    const d = day(selectedDate);
+    d.sleep = d.sleep || {};
+    S.sleep[selectedDate] = { bed, wake, hours, qual: 8 };
+    // Also mark the sleep calendar events as done
+    d.timeline['ev_sleep_am'] = true;
+    d.timeline['ev_sleep_pm'] = true;
+    d.timeline['ev_lockdown'] = true;
+    playSuccessChime();
+    save({area:'sleep',item:'sleep-editor',value:hours,unit:'h',exact_update:`Sleep editor: slept ${bed}–${wake} = ${hours}h`});
+    renderSleepTab();
+    renderMasterCalendar();
+    renderTodayActions();
+    renderTodayStats();
+    toast(`✓ Logged! Slept ${bed} → ${wake} = ${hours}h. Calendar updated.`);
+  };
+}
+// Initialize duration display on page load (browser only)
+try { calcSleepDuration(); } catch(e) {}
+
 
 function renderSleepTab(){
   updateLiveSleepUI();
