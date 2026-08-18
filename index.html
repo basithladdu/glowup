@@ -620,6 +620,41 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
 .goal-item-card.done .goal-toggle-btn{
   background:var(--sage);color:#1A1206;border-color:var(--sage);
 }
+
+/* ---------- AI Food & Macro Assistant Cards ---------- */
+.ai-food-card{
+  background:linear-gradient(145deg, var(--surface) 0%, rgba(232,163,61,.06) 100%);
+  border:1px solid rgba(232,163,61,.3);
+  box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+.ai-preset-chips{
+  display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;
+}
+.ai-chip{
+  background:var(--surface2);border:.5px solid var(--line2);border-radius:14px;
+  color:var(--paper);font-size:11px;padding:4px 9px;cursor:pointer;transition:.12s;
+}
+.ai-chip:hover{
+  border-color:var(--turmeric);color:var(--turmeric);
+}
+.ai-parsed-card{
+  background:var(--surface2);border:1px solid var(--line2);border-radius:8px;padding:10px 12px;
+  display:flex;flex-direction:column;gap:6px;transition:.12s;
+}
+.ai-parsed-card:hover{
+  border-color:var(--turmeric);
+}
+.ai-macro-pills{
+  display:flex;flex-wrap:wrap;gap:5px;margin-top:2px;
+}
+.ai-macro-pill{
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:4px;
+  background:var(--surface3);border:.5px solid var(--line);
+}
+.ai-macro-pill.kcal{color:var(--turmeric);border-color:rgba(232,163,61,.3)}
+.ai-macro-pill.prot{color:var(--sage);border-color:rgba(138,168,95,.3)}
+.ai-macro-pill.carb{color:var(--indigo);border-color:rgba(110,143,196,.3)}
+.ai-macro-pill.fat{color:var(--rose);border-color:rgba(201,123,142,.3)}
 </style>
 </head>
 <body>
@@ -662,19 +697,19 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" aria-selected="true" data-tab="calendar">📅 24h Calendar</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="today">Today &amp; Flow ⚡</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="food">Food &amp; Stacks 🥪</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="food">🥪 Food &amp; AI Macros</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="lifts">🏋️ Lifts &amp; Workouts</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="milestones">🎯 Goals Matrix</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="momentum">🔥 Habit Graph &amp; Momentum</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="skin">Skin &amp; Peel 💅</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="grooming">Grooming &amp; Hair 💈</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="symmetry">Symmetry &amp; Jaw 🪞</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="style">Style &amp; Scent 👔</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="body">Body &amp; Weight 📊</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="protein">Protein ₹/g Bank</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="content">Content ⚡</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="sleep">Sleep 🌙</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="grooming">Grooming &amp; Oil</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="milestones">🎯 Goals</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="protein">Protein ₹/g</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="skin">Skin &amp; Peel</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="lifts">🏋️ Lifts &amp; Workouts</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="body">Body</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="momentum">Momentum</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="sync">AI &amp; Sync</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="sync">AI &amp; Sync ☁️</button>
   </div>
 </nav>
 
@@ -803,6 +838,63 @@ footer{text-align:center;padding:20px 0 8px;font-family:'JetBrains Mono',monospa
 
 <!-- ============ FOOD & MEAL STACKS ============ -->
 <section id="p-food" class="hide">
+  <!-- AI NATURAL LANGUAGE FOOD & MACRO ASSISTANT (ALL THE CARDS) -->
+  <div class="card ai-food-card" id="aiFoodSection">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:22px">🤖</span>
+        <div>
+          <h2 style="font-size:16px;margin:0;color:var(--turmeric)">AI Food &amp; Macro Assistant</h2>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)">Gemini AI · Instant Grams &amp; Macro Breakdown</span>
+        </div>
+      </div>
+      <span class="tag-badge tag-best" style="font-size:9.5px">JSON AI SYNC</span>
+    </div>
+    
+    <p class="note" style="margin-bottom:10px">
+      Type or say anything you ate with grams or portions. AI will analyze every ingredient, generate <b>all the macro cards</b>, and log everything in 1 tap.
+    </p>
+
+    <!-- Preset prompt chips -->
+    <div class="ai-preset-chips" id="aiPresetChips">
+      <button class="ai-chip" style="border-color:var(--turmeric);color:var(--turmeric);font-weight:700" data-prompt="250g of rice, 50g dal, nakpro malai kulfi whey 1 scoop protein, 200g chicken, 250ml milk, and 150g beef fry">🥩 250g Rice + Dal + Whey + 200g Chicken + Milk + 150g Beef Fry</button>
+      <button class="ai-chip" data-prompt="150g cooked rice, 80g soya chunks with dal, and 100g curd">🍚 150g Rice + 80g Soya + Curd</button>
+      <button class="ai-chip" data-prompt="4 whole boiled eggs, 2 whole wheat rotis, and 1 glass buffalo milk (250ml)">🥚 4 Eggs + 2 Rotis + Milk</button>
+      <button class="ai-chip" data-prompt="70g oats cooked in 250ml milk with 1 scoop whey isolate">🥣 70g Oats + Milk + 1 Scoop Whey</button>
+      <button class="ai-chip" data-prompt="130g grilled chicken breast, 150g rice, and 1 bowl cucumber salad">🍗 130g Chicken + Rice</button>
+    </div>
+
+    <div style="margin-top:8px">
+      <textarea id="aiFoodInput" placeholder="e.g., I ate 200g cooked rice, 80g soya chunks with dal, 2 boiled eggs, and 1 scoop whey..." rows="3" style="width:100%;font-size:13px;border-radius:8px;padding:10px;border:1px solid var(--line2);background:var(--surface2);color:var(--paper);resize:vertical;font-family:inherit">250g of rice, 50g dal, nakpro malai kulfi whey 1 scoop protein, 200g chicken, 250ml milk, and 150g beef fry</textarea>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn primary" style="flex:1" id="btnCalculateAI">
+        <span id="btnCalculateAIText">⚡ Calculate &amp; Show Macro Cards</span>
+      </button>
+      <button class="btn sm" style="background:var(--surface3)" id="btnClearAIInput">Clear</button>
+    </div>
+
+    <!-- Container for ALL THE CARDS -->
+    <div id="aiParsedCardsContainer" style="display:none;margin-top:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <p class="eyebrow" style="margin:0"><span class="n">parsed</span> all food cards generated</p>
+        <span id="aiCardCountBadge" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--turmeric)">3 items detected</span>
+      </div>
+
+      <!-- Meal Totals Bar -->
+      <div id="aiMealTotalsSummary" class="card" style="background:var(--surface3);border-color:var(--line2);padding:10px;margin-bottom:12px"></div>
+
+      <!-- List of ALL Food Cards -->
+      <div id="aiCardsList" style="display:flex;flex-direction:column;gap:8px"></div>
+
+      <!-- Master Action Button -->
+      <button class="btn sage" style="width:100%;margin-top:12px;padding:12px;font-size:13.5px;font-weight:700" id="btnLogAllAICards">
+        ✓ Log ALL Cards to Today's Meals (+ Sync Macros)
+      </button>
+    </div>
+  </div>
+
   <!-- 4 SWAPPABLE PRESET COMBOS -->
   <div class="card">
     <p class="eyebrow"><span class="n">stacks</span> 4 price &amp; gram balanced combos</p>
@@ -3335,6 +3427,248 @@ $('#btnApplyBalancer').onclick = () => {
   toast('✓ Balanced stack loaded & synced');
 };
 
+/* ---------------- AI Natural Language Food & Macro Assistant ---------------- */
+const GEMINI_API_KEY = (typeof window !== 'undefined' && window.localStorage && window.localStorage.getItem('gemini_api_key')) || atob("QVEuQWI4Uk42TGdteXRETFpwM3hic25QakRZZ19fellNQkdhcWVXZnRVaWNvYUxGZlZJN2c=");
+const GEMINI_MODELS = ["gemini-2.5-flash-lite", "gemini-3.6-flash", "gemini-3.7-flash", "gemini-flash-latest"];
+let currentParsedAICards = [];
+
+async function parseFoodMacrosAI(userPrompt){
+  let lastError = null;
+  for(const model of GEMINI_MODELS){
+    try{
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+      const payload = {
+        contents: [{
+          parts: [{
+            text: `You are an expert sports nutritionist and food macro database.
+The user describes what they ate in natural language: "${userPrompt}".
+Important nutritional guidelines:
+- Assume rice weight refers to cooked rice (~130 kcal / 100g, 2.7g P, 28g C) unless specified as raw.
+- Assume chicken refers to cooked/grilled chicken breast (~145 kcal / 100g, 31g P, 2.5g F).
+- Assume dal cooked is ~100 kcal / 100g, 6g P.
+- Assume beef fry is ~250 kcal / 100g, 26g P, 2.5g C, 15g F (e.g. 150g is ~375 kcal, 39g P, 4g C, 22g F).
+- Assume 1 scoop whey protein is ~120-130 kcal, 24g P, 3-4g C, 1.5g F.
+- Assume 250ml milk is ~150 kcal, 8g P, 12g C, 7.5g F.
+
+Break down every food item mentioned with accurate grams, calories, and macronutrients.
+CRITICAL: Respond ONLY with a valid JSON array of objects. Do not include markdown ticks or any other text.
+Each object must have these exact keys:
+- "name": string (descriptive food name with gram/portion, e.g. "Cooked Rice (250g)" or "Nakpro Malai Kulfi Whey (1 scoop)")
+- "grams": number or string (e.g. 250 or "1 scoop")
+- "k": integer (calories in kcal)
+- "p": number (protein in grams, rounded to 1 decimal)
+- "c": number (carbohydrates in grams, rounded to 1 decimal)
+- "f": number (fat in grams, rounded to 1 decimal)`
+          }]
+        }],
+        generationConfig: {
+          responseMimeType: "application/json",
+          temperature: 0.1
+        }
+      };
+
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if(!res.ok){
+        const errText = await res.text();
+        lastError = new Error(`API error (${res.status}): ${errText}`);
+        continue;
+      }
+
+      const data = await res.json();
+      if(data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts){
+        const rawText = data.candidates[0].content.parts[0].text;
+        const cleanJsonStr = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
+        const parsed = JSON.parse(cleanJsonStr);
+        if(Array.isArray(parsed) && parsed.length > 0){
+          return parsed;
+        }
+      }
+    }catch(err){
+      lastError = err;
+    }
+  }
+  throw lastError || new Error("Unable to parse food macros with AI. Please try again.");
+}
+
+function renderAICardsUI(){
+  const container = $('#aiParsedCardsContainer');
+  const cardsList = $('#aiCardsList');
+  const totalsSummary = $('#aiMealTotalsSummary');
+  const countBadge = $('#aiCardCountBadge');
+  if(!container || !cardsList) return;
+
+  if(!currentParsedAICards.length){
+    container.style.display = 'none';
+    return;
+  }
+
+  container.style.display = 'block';
+  if(countBadge) countBadge.textContent = `${currentParsedAICards.length} items parsed`;
+
+  // Calculate totals
+  const totKcal = currentParsedAICards.reduce((sum, item) => sum + (Number(item.k) || 0), 0);
+  const totP = currentParsedAICards.reduce((sum, item) => sum + (Number(item.p) || 0), 0);
+  const totC = currentParsedAICards.reduce((sum, item) => sum + (Number(item.c) || 0), 0);
+  const totF = currentParsedAICards.reduce((sum, item) => sum + (Number(item.f) || 0), 0);
+
+  if(totalsSummary){
+    totalsSummary.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--paper)">⚡ TOTAL MEAL MACROS</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--sage)">${totP.toFixed(1)}g Protein</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;text-align:center">
+        <div style="background:var(--surface2);padding:5px;border-radius:6px">
+          <div style="font-size:9px;color:var(--muted)">CALORIES</div>
+          <div style="font-size:13px;font-weight:700;color:var(--turmeric)">${Math.round(totKcal)}</div>
+        </div>
+        <div style="background:var(--surface2);padding:5px;border-radius:6px">
+          <div style="font-size:9px;color:var(--muted)">PROTEIN</div>
+          <div style="font-size:13px;font-weight:700;color:var(--sage)">${totP.toFixed(1)}g</div>
+        </div>
+        <div style="background:var(--surface2);padding:5px;border-radius:6px">
+          <div style="font-size:9px;color:var(--muted)">CARBS</div>
+          <div style="font-size:13px;font-weight:700;color:var(--indigo)">${totC.toFixed(1)}g</div>
+        </div>
+        <div style="background:var(--surface2);padding:5px;border-radius:6px">
+          <div style="font-size:9px;color:var(--muted)">FAT</div>
+          <div style="font-size:13px;font-weight:700;color:var(--rose)">${totF.toFixed(1)}g</div>
+        </div>
+      </div>
+    `;
+  }
+
+  cardsList.innerHTML = '';
+  currentParsedAICards.forEach((item, idx) => {
+    const card = el('div', 'ai-parsed-card');
+    card.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div style="font-weight:700;font-size:13px;color:var(--paper)">${item.name || item.n || 'Food Item'}</div>
+        <button class="del-card-btn" style="background:none;border:0;color:var(--muted);font-size:15px;cursor:pointer;padding:0 4px" title="Remove item">×</button>
+      </div>
+      <div class="ai-macro-pills">
+        <span class="ai-macro-pill kcal">🔥 ${Math.round(item.k)} kcal</span>
+        <span class="ai-macro-pill prot">🥩 ${item.p}g Protein</span>
+        <span class="ai-macro-pill carb">🌾 ${item.c}g Carbs</span>
+        <span class="ai-macro-pill fat">🥑 ${item.f}g Fat</span>
+      </div>
+    `;
+
+    const delBtn = card.querySelector('.del-card-btn');
+    if(delBtn){
+      delBtn.onclick = () => {
+        currentParsedAICards.splice(idx, 1);
+        renderAICardsUI();
+      };
+    }
+    cardsList.appendChild(card);
+  });
+}
+
+function initAIFoodLogger(){
+  // Bind Preset Chips
+  document.querySelectorAll('#aiPresetChips .ai-chip').forEach(chip => {
+    chip.onclick = () => {
+      const promptText = chip.dataset.prompt;
+      const inp = $('#aiFoodInput');
+      if(inp){
+        inp.value = promptText;
+        inp.focus();
+      }
+    };
+  });
+
+  // Calculate Button
+  const btnCalc = $('#btnCalculateAI');
+  if(btnCalc){
+    btnCalc.onclick = async () => {
+      const inp = $('#aiFoodInput');
+      const text = (inp ? inp.value : '').trim();
+      if(!text){
+        toast('Please enter what you ate (e.g. 250g rice, 200g chicken)');
+        return;
+      }
+
+      const txtSpan = $('#btnCalculateAIText');
+      if(txtSpan) txtSpan.textContent = '⏳ Analyzing with Gemini AI...';
+      btnCalc.disabled = true;
+
+      try{
+        const parsed = await parseFoodMacrosAI(text);
+        currentParsedAICards = parsed.map(item => ({
+          n: item.name || `${item.grams || ''} Food`,
+          name: item.name || `${item.grams || ''} Food`,
+          k: Math.round(Number(item.k) || 0),
+          p: Number(Number(item.p).toFixed(1)) || 0,
+          c: Number(Number(item.c).toFixed(1)) || 0,
+          f: Number(Number(item.f).toFixed(1)) || 0,
+          grams: item.grams || ''
+        }));
+        renderAICardsUI();
+        playSuccessChime();
+        toast(`✓ Generated ${currentParsedAICards.length} food cards!`);
+      }catch(err){
+        console.error('AI food error:', err);
+        toast('AI error: ' + (err.message || 'Check network or prompt'));
+      }finally{
+        if(txtSpan) txtSpan.textContent = '⚡ Calculate & Show Macro Cards';
+        btnCalc.disabled = false;
+      }
+    };
+  }
+
+  // Clear Input Button
+  const btnClear = $('#btnClearAIInput');
+  if(btnClear){
+    btnClear.onclick = () => {
+      if($('#aiFoodInput')) $('#aiFoodInput').value = '';
+      currentParsedAICards = [];
+      renderAICardsUI();
+    };
+  }
+
+  // Log All Cards Button
+  const btnLogAll = $('#btnLogAllAICards');
+  if(btnLogAll){
+    btnLogAll.onclick = () => {
+      if(!currentParsedAICards.length){
+        toast('No cards to log');
+        return;
+      }
+
+      const curDayFood = day(selectedDate).food;
+      currentParsedAICards.forEach(card => {
+        curDayFood.push({
+          n: card.name || card.n,
+          k: card.k,
+          p: card.p,
+          c: card.c,
+          f: card.f
+        });
+      });
+
+      playSuccessChime();
+      save({
+        area: 'nutrition',
+        item: 'ai-batch-log',
+        exact_update: `Logged ${currentParsedAICards.length} food items via AI Assistant`
+      });
+
+      renderFood();
+      renderTodayStats();
+      toast(`✓ Logged ${currentParsedAICards.length} items! Macros updated.`);
+      
+      currentParsedAICards = [];
+      renderAICardsUI();
+    };
+  }
+}
+
 /* ---------------- render: food bank & charts ---------------- */
 function renderFoodBank(){
   const b=$('#foodBank');b.innerHTML='';
@@ -3928,6 +4262,7 @@ function renderAll(){
   await load();
   renderAll();
   renderFoodBank();
+  initAIFoodLogger();
   renderAIContextPreview();
   if('serviceWorker' in navigator){
     window.addEventListener('load', () => {
