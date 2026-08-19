@@ -125,4 +125,19 @@ assert(adhdContent.includes('Box Breathing Meditation'), 'ADHD component must in
 assert(adhdContent.includes('handleSaveNightPlan'), 'ADHD component must include Nightly Plan lock-in');
 console.log('✔ Test 11: ADHD Execution Engine, 10m Box Meditation & Nightly 3-Must-Dos verified');
 
+// Test 12: CSV Food Database & Staples Verification
+assert(fs.existsSync(path.join(__dirname, 'food_database.csv')), 'food_database.csv must exist in root');
+assert(fs.existsSync(path.join(__dirname, 'glowup-app/public/food_database.csv')), 'food_database.csv must exist in public');
+const csvStr = fs.readFileSync(path.join(__dirname, 'food_database.csv'), 'utf8');
+assert(csvStr.includes('Chicken Breast (150g)'), 'CSV must contain 150g Chicken');
+assert(csvStr.includes('Nakpro Whey Isolate (2 Scoops)'), 'CSV must contain 2 Scoops Whey');
+assert(csvStr.includes('2 Whole Egg Omelette'), 'CSV must contain 2 Whole Egg Omelette');
+assert(csvStr.includes('Dark Fantasy Choco Fills'), 'CSV must contain Dark Fantasy');
+assert(csvStr.includes('Bingo Yumitos Potato Chips'), 'CSV must contain Bingo Yumitos');
+
+const proteinBankContent = fs.readFileSync(path.join(appDir, 'components/ProteinBank.tsx'), 'utf8');
+assert(proteinBankContent.includes('handleDownloadCSV'), 'ProteinBank.tsx must have CSV exporter');
+assert(proteinBankContent.includes('Dark Fantasy Choco Fills'), 'ProteinBank.tsx must have Dark Fantasy staple');
+console.log('✔ Test 12: CSV Food Database & 1-Tap Export Hub verified');
+
 console.log('=== ALL TESTS PASSED SUCCESSFULLY (100% COMPLIANT) ===');

@@ -21,6 +21,13 @@ export const ProteinBank: React.FC = () => {
   const [recipeCost, setRecipeCost] = useState('₹45');
 
   const stapleBank = [
+    { n: 'Chicken Breast (150g)', k: 245, p: 46.5, c: 0.0, f: 5.0, cost: '₹45 · High Animal Protein' },
+    { n: 'Nakpro Whey Isolate (2 Scoops)', k: 240, p: 48.0, c: 6.0, f: 3.0, cost: '₹112 · ₹2.33/g P' },
+    { n: 'Toned / Cow Milk (500ml)', k: 300, p: 16.0, c: 24.0, f: 12.0, cost: '₹32 · ₹2.00/g P' },
+    { n: '2 Whole Egg Omelette', k: 185, p: 12.0, c: 1.0, f: 15.0, cost: '₹18 · Bioavailable Choline' },
+    { n: 'Milk (150ml)', k: 90, p: 4.8, c: 7.2, f: 4.5, cost: '₹10 · Late Night Sip' },
+    { n: 'Dark Fantasy Choco Fills (₹10 Pack)', k: 135, p: 1.5, c: 18.0, f: 6.5, cost: '₹10 · Sweet Snack' },
+    { n: 'Bingo Yumitos Chips (₹10 Pack)', k: 115, p: 1.5, c: 13.0, f: 6.5, cost: '₹10 · Savory Snack' },
     { n: 'Soya Chunks (80g)', k: 276, p: 41.6, c: 26.4, f: 0.4, cost: '₹14 · ₹0.34/g P' },
     { n: 'Whole Eggs (4 Eggs)', k: 288, p: 25.2, c: 1.6, f: 19.2, cost: '₹28 · ₹1.11/g P' },
     { n: 'Chicken Breast (130g)', k: 143, p: 30.0, c: 0, f: 2.1, cost: '₹39 · ₹1.30/g P' },
@@ -30,6 +37,22 @@ export const ProteinBank: React.FC = () => {
     { n: 'Rolled Oats (70g)', k: 266, p: 9.3, c: 47.0, f: 4.8, cost: '₹12 · Carbs/Fiber' },
     { n: 'Lion / Medjool Dates (50g · 3 Dates)', k: 138, p: 1.2, c: 37.0, f: 0.2, cost: '₹28 · Glycogen/Potassium' }
   ];
+
+  const handleDownloadCSV = () => {
+    const headers = 'id,item_name,category,serving_size,calories_kcal,protein_g,carbs_g,fat_g,cost_inr,notes\n';
+    const rows = stapleBank.map((item, i) =>
+      `fd_${String(i + 1).padStart(3, '0')},"${item.n}",Staple/Snack,1 serving,${item.k},${item.p},${item.c},${item.f},"${item.cost}","Nutritional Database Record"`
+    ).join('\n');
+
+    const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'glowup_food_database.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const presetStacks = [
     {
@@ -238,9 +261,19 @@ export const ProteinBank: React.FC = () => {
             </form>
           </div>
 
-          {/* STAPLE ADDER */}
+          {/* STAPLE ADDER & CSV DATABASE */}
           <div className="card">
-            <p className="eyebrow">₹/g price-to-protein bank</p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <p className="eyebrow" style={{ margin: 0 }}>📊 CSV Food & Nutrition Database</p>
+              <button
+                className="btn sm sage"
+                onClick={handleDownloadCSV}
+                title="Download full food database CSV"
+                style={{ fontSize: '10.5px', padding: '3px 8px' }}
+              >
+                📥 Export CSV
+              </button>
+            </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               {stapleBank.map((s, idx) => (
                 <div key={idx} className="logrow">

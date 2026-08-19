@@ -1,0 +1,17 @@
+id,item_name,category,serving_size,calories_kcal,protein_g,carbs_g,fat_g,cost_inr,notes
+fd_001,Chicken Breast (150g),Lean Protein,150g,245,46.5,0.0,5.0,₹45,High-grade pure animal protein for muscle synthesis
+fd_002,Nakpro Whey Isolate (2 Scoops),Protein Shake,2 scoops (66g),240,48.0,6.0,3.0,₹112,Fast-absorbing post-workout/night recovery whey
+fd_003,Toned / Cow Milk (500ml),Dairy,500ml,300,16.0,24.0,12.0,₹32,Calcium & casein protein matrix
+fd_004,2 Whole Egg Omelette,Whole Eggs / Fats,2 eggs + 1 tsp oil,185,12.0,1.0,15.0,₹18,Choline-rich healthy bioavailable fats & protein
+fd_005,Milk (150ml),Dairy,150ml,90,4.8,7.2,4.5,₹10,Bedtime digestive micro-serving
+fd_006,Dark Fantasy Choco Fills (₹10 Pack),Treat / Snack,1 pack (~26g),135,1.5,18.0,6.5,₹10,Choco cream filled biscuit
+fd_007,Bingo Yumitos Potato Chips (₹10 Pack),Treat / Snack,1 pack (~22g),115,1.5,13.0,6.5,₹10,Savory salted snack
+fd_008,Soya Chunks (80g),Plant Protein,80g raw,276,41.6,26.4,0.4,₹14,Budget champion high-density plant protein
+fd_009,Whole Eggs (4 Eggs),Whole Eggs,4 whole eggs,288,25.2,1.6,19.2,₹28,High satiety & complete amino profile
+fd_010,Chicken Breast (130g),Lean Protein,130g,143,30.0,0.0,2.1,₹39,Classic lean cut staple
+fd_011,Heritage Paneer (240g),Dairy Protein,240g,430,60.0,7.0,21.6,₹130,Dense vegetarian casein & calcium
+fd_012,Nakpro Whey Isolate (1 Scoop),Protein Shake,1 scoop (33g),120,24.0,3.0,1.5,₹56,Single scoop whey isolate
+fd_013,Rolled Oats (70g),Complex Carbs,70g,266,9.3,47.0,4.8,₹12,Beta-glucan fiber & clean sustained energy
+fd_014,Lion / Medjool Dates (50g · 3 Dates),Pre-Workout / Glycogen,50g,138,1.2,37.0,0.2,₹28,Natural potassium & instant liver glycogen refill
+fd_015,Cooked White Rice (250g),Carb Fuel,250g cooked,325,6.8,70.0,0.8,₹15,Fast digestive clean starch
+fd_016,Cooked Yellow Moong Dal (100g),Legume,100g cooked,105,7.0,17.0,1.0,₹12,Micronutrient & folate carrier
