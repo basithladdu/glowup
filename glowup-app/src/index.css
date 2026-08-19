@@ -52,10 +52,10 @@ body {
 }
 
 .wrap {
-  max-width: 1320px;
+  max-width: 100%;
   width: 100%;
-  margin: 0 auto;
-  padding: 0 20px;
+  margin: 0;
+  padding: 0 16px;
 }
 
 .header-container {
@@ -163,9 +163,10 @@ body {
 .tabs-list {
   display: flex;
   gap: 6px;
-  padding: 10px 20px;
-  max-width: 1320px;
-  margin: 0 auto;
+  padding: 10px 16px;
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 .tab-btn {

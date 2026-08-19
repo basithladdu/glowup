@@ -4,12 +4,12 @@ const assert = require('assert');
 
 console.log('=== RUNNING GLOWUP FULL TEST SUITE ===');
 
-// Test 1: Verify index.html structure & responsive container width
+// Test 1: Verify index.html structure & responsive 100% full width fit
 const htmlContent = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
-assert(htmlContent.includes('.wrap{max-width:1320px'), 'index.html must have desktop max-width:1320px');
+assert(htmlContent.includes('.wrap{max-width:100%'), 'index.html must have 100% full width fit');
 assert(htmlContent.includes('parseFoodMacrosAI'), 'index.html must have parseFoodMacrosAI');
 assert(htmlContent.includes('ai-food-card'), 'index.html must have ai-food-card styling');
-console.log('✔ Test 1: index.html responsive 1320px desktop width & AI features verified');
+console.log('✔ Test 1: index.html responsive 100% full width fit & AI features verified');
 
 // Test 2: Verify glowup-app React components exist
 const appDir = path.join(__dirname, 'glowup-app', 'src');
@@ -47,10 +47,10 @@ console.log('✔ Test 2: All 24 modular React TypeScript components and librarie
 
 // Test 3: Verify CSS responsive rules in glowup-app/src/index.css
 const cssContent = fs.readFileSync(path.join(appDir, 'index.css'), 'utf8');
-assert(cssContent.includes('max-width: 1320px'), 'index.css must have max-width: 1320px for desktop');
+assert(cssContent.includes('max-width: 100%'), 'index.css must have max-width: 100% for full screen edge-to-edge fit');
 assert(cssContent.includes('Cinzel'), 'index.css must import Cinzel font');
 assert(cssContent.includes('JetBrains Mono'), 'index.css must import JetBrains Mono');
-console.log('✔ Test 3: Modular index.css 100% desktop expansion and typography tokens verified');
+console.log('✔ Test 3: Modular index.css 100% full width fit and typography tokens verified');
 
 // Test 4: Macro Nutrition Logic & Calculations
 const sampleMeal = [
