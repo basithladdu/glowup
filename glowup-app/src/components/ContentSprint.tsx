@@ -140,6 +140,71 @@ export const ContentSprint: React.FC = () => {
             )}
           </div>
 
+          {/* 5 PRECISION CONTENT CREATION CHECKS */}
+          <div className="card">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <div>
+                <p className="eyebrow"><span className="n">algorithm</span> 5 precision retention checks</p>
+                <h3 style={{ fontSize: '14px', margin: 0, color: 'var(--turmeric)' }}>🎬 Viral Video Retention Standards</h3>
+              </div>
+              <span className="tag-badge tag-best">Retention Protocol</span>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '8px' }}>
+              {[
+                { title: '3-Second Visual & Verbal Hook', cue: 'Zero hello/fluff. Start immediately with high-contrast curiosity gap or pattern interrupt.' },
+                { title: 'Dynamic Pacing & B-Roll Cuts (3-5s)', cue: 'Cut angle, zoom in/out, or overlay b-roll every 3–4 seconds to keep eye tracking.' },
+                { title: 'Vocal Clarity & Noise Suppression', cue: 'Crisp audio with zero background hum, peaked at -3dB with gentle compression.' },
+                { title: 'High-Contrast Animated Captions', cue: 'Bold yellow/white centered subtitles for 80% sound-off mobile viewers.' },
+                { title: 'Single Frictionless Call-To-Action', cue: 'Ask for exactly one action at the end (e.g. "Save this for your next grocery run").' }
+              ].map((chk, i) => (
+                <div key={i} style={{ background: 'var(--surface2)', padding: '8px 10px', borderRadius: '6px', border: '1px solid var(--line2)' }}>
+                  <div style={{ fontSize: '11.5px', fontWeight: 600, color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ color: 'var(--turmeric)' }}>✓</span> {chk.title}
+                  </div>
+                  <div style={{ fontSize: '10px', color: 'var(--muted)', marginTop: '2px' }}>{chk.cue}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* VIRAL HOOK & SCRIPT FRAMEWORK VAULT */}
+          <div className="card">
+            <p className="eyebrow"><span className="n">hooks</span> high-retention script vault</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {[
+                {
+                  title: 'The Autopilot 16kg Cut Hook',
+                  hook: '"Most people fail their cut because they cut carbs. Here is how I hit 170g protein on ₹118/day without hunger."'
+                },
+                {
+                  title: 'The ADHD Friction Destroyer',
+                  hook: '"If you stare at a 10-item checklist and freeze, your brain is in task overload. Do this 1-task extermination instead."'
+                },
+                {
+                  title: 'The 7-Minute Nightly GlowUp',
+                  hook: '"99% of skincare is marketing. These 3 clinical steps (Castor oil, Rose hydrosol, SPF shield) are the only ones backed by science."'
+                }
+              ].map((h, i) => (
+                <div
+                  key={i}
+                  style={{
+                    background: 'var(--surface2)',
+                    padding: '8px 10px',
+                    borderRadius: '6px',
+                    border: '1px solid var(--line2)',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => setTopic(h.title)}
+                  title="Click to load into sprint deliverable"
+                >
+                  <div style={{ fontSize: '11.5px', fontWeight: 700, color: 'var(--turmeric)' }}>💡 {h.title}</div>
+                  <div style={{ fontSize: '10.5px', color: 'var(--paper)', fontStyle: 'italic', marginTop: '2px' }}>{h.hook}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* 10-MINUTE CLICKUP BACKLOG TRIAGE & CLEANSE */}
           <div className="card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
