@@ -140,4 +140,12 @@ assert(proteinBankContent.includes('handleDownloadCSV'), 'ProteinBank.tsx must h
 assert(proteinBankContent.includes('Dark Fantasy Choco Fills'), 'ProteinBank.tsx must have Dark Fantasy staple');
 console.log('✔ Test 12: CSV Food Database & 1-Tap Export Hub verified');
 
+// Test 13: 5 Granular Micro-Checks & Product Usage Telemetry
+assert(skinContent.includes('5 Precision Technique Checks'), 'SkinGrooming.tsx must have 5 precision checks');
+assert(skinContent.includes('Product Telemetry & Zone Summary'), 'SkinGrooming.tsx must have telemetry zone summary');
+const storeContent = fs.readFileSync(path.join(appDir, 'store/useGlowUpStore.ts'), 'utf8');
+assert(storeContent.includes('toggleStepMicroCheck'), 'useGlowUpStore must have toggleStepMicroCheck');
+assert(storeContent.includes('logProductUsage'), 'useGlowUpStore must have logProductUsage');
+console.log('✔ Test 13: 5 Granular Micro-Checks, Zone Telemetry & Usage Timestamps verified');
+
 console.log('=== ALL TESTS PASSED SUCCESSFULLY (100% COMPLIANT) ===');

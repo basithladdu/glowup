@@ -150,19 +150,33 @@ export const ShoppingInventory: React.FC = () => {
             </form>
           </div>
 
-          {/* BOUGHT INVENTORY */}
+          {/* BOUGHT INVENTORY & TELEMETRY */}
           <div className="card">
-            <h3 style={{ fontSize: '13px', margin: '0 0 8px', color: 'var(--sage)' }}>✓ In Stock / Purchased ({boughtItems.length})</h3>
+            <h3 style={{ fontSize: '13px', margin: '0 0 8px', color: 'var(--sage)' }}>✓ In Stock &amp; Active Inventory ({boughtItems.length})</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              {boughtItems.map((item) => (
-                <div key={item.id} className="logrow" style={{ opacity: 0.7 }}>
-                  <span className="logname" style={{ textDecoration: 'line-through' }}>{item.name} ({item.qty})</span>
-                  <span className="logmac">{item.estCost}</span>
-                  <button className="task-btn" style={{ fontSize: '9px', padding: '2px 6px' }} onClick={() => toggleBought(item.id)}>
-                    Re-add
-                  </button>
-                </div>
-              ))}
+              {boughtItems.map((item) => {
+                const telemKey = item.id.replace('sh_', 'pm_').replace('sh_spf', 'am_spf').replace('sh_khus', 'am_khus');
+                const telemData = useGlowUpStore.getState().getDayState().productTelemetry?.[telemKey];
+                return (
+                  <div key={item.id} className="logrow" style={{ opacity: 0.85, padding: '8px 6px', background: 'var(--surface2)', borderRadius: '6px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+                      <span className="logname" style={{ fontWeight: 600 }}>{item.name}</span>
+                      <span style={{ fontSize: '10px', color: 'var(--muted)' }}>Qty: {item.qty} · Cost: {item.estCost}</span>
+                      {telemData && (
+                        <span style={{ fontSize: '9.5px', color: 'var(--turmeric)', fontFamily: 'JetBrains Mono, monospace', marginTop: '2px' }}>
+                          ⚡ Logged {telemData.count}x · Last: {telemData.lastUsed}
+                        </span>
+                      )}
+                    </div>
+                    <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                      <button className="task-btn" style={{ fontSize: '9px', padding: '3px 6px' }} onClick={() => toggleBought(item.id)}>
+                        ↩ Buy Again
+                      </button>
+                      <button className="del" onClick={() => handleDeleteItem(item.id)}>×</button>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

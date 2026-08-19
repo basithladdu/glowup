@@ -13,6 +13,13 @@ export interface LiftSet {
   d?: string;
 }
 
+export interface ProductUsageRecord {
+  timestamp: string; // ISO string
+  formattedTime: string; // e.g. "Aug 20, 01:30 AM"
+  zone: string; // anatomical target
+  checksCount: number;
+}
+
 export interface DayState {
   food: MacroItem[];
   habits: Record<string, boolean>;
@@ -24,6 +31,8 @@ export interface DayState {
   workoutRoutine: string | null;
   amSkinSteps?: Record<string, boolean>;
   pmSkinSteps?: Record<string, boolean>;
+  stepMicroChecks?: Record<string, boolean>; // key format: `stepId_checkIdx`
+  productTelemetry?: Record<string, { count: number; lastUsed: string; history: ProductUsageRecord[] }>;
 }
 
 export interface GoalMilestone {

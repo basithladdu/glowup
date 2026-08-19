@@ -70,6 +70,8 @@ interface GlowUpStore {
   deleteCustomRecipe: (id: string) => void;
   addCalendarEvent: (event: CalendarEvent) => void;
   deleteCalendarEvent: (id: string) => void;
+  toggleStepMicroCheck: (stepId: string, checkIdx: number, zone?: string, date?: string) => void;
+  logProductUsage: (productId: string, productName: string, zone: string, checksCount: number, date?: string) => void;
 }
 
 export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
@@ -329,5 +331,70 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     state.customEvents = (state.customEvents || []).filter(e => e.id !== id);
     set({ state });
     get().saveState({ area: 'calendar', item: id, exact_update: `Deleted calendar event ${id}` });
+  },
+
+  toggleStepMicroCheck: (stepId, checkIdx, zone = 'Target Zone', date) => {
+    const d = date || get().selectedDate;
+    const state = { ...get().state };
+    const day = state.days[d] || getInitialDayState();
+    day.stepMicroChecks = day.stepMicroChecks || {};
+    const key = `${stepId}_${checkIdx}`;
+    const nextVal = !day.stepMicroChecks[key];
+    day.stepMicroChecks[key] = nextVal;
+    
+    // Update telemetry if checking
+    if (nextVal) {
+      day.productTelemetry = day.productTelemetry || {};
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const dateStr = now.toLocaleDateString([], { month: 'short', day: 'numeric' });
+      const record = {
+        timestamp: now.toISOString(),
+        formattedTime: `${dateStr}, ${timeStr}`,
+        zone,
+        checksCount: Object.keys(day.stepMicroChecks).filter(k => k.startsWith(stepId) && day.stepMicroChecks?.[k]).length
+      };
+
+      const existing = day.productTelemetry[stepId] || { count: 0, lastUsed: record.formattedTime, history: [] };
+      day.productTelemetry[stepId] = {
+        count: existing.count + 1,
+        lastUsed: record.formattedTime,
+        history: [record, ...(existing.history || []).slice(0, 9)]
+      };
+      playSuccessChime();
+    }
+
+    state.days[d] = day;
+    set({ state });
+    get().saveState({ area: 'microcheck', item: key, exact_update: `Check ${checkIdx} for ${stepId}` });
+  },
+
+  logProductUsage: (productId, productName, zone, checksCount, date) => {
+    const d = date || get().selectedDate;
+    const state = { ...get().state };
+    const day = state.days[d] || getInitialDayState();
+    day.productTelemetry = day.productTelemetry || {};
+    
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const dateStr = now.toLocaleDateString([], { month: 'short', day: 'numeric' });
+    const record = {
+      timestamp: now.toISOString(),
+      formattedTime: `${dateStr}, ${timeStr}`,
+      zone,
+      checksCount
+    };
+
+    const existing = day.productTelemetry[productId] || { count: 0, lastUsed: record.formattedTime, history: [] };
+    day.productTelemetry[productId] = {
+      count: existing.count + 1,
+      lastUsed: record.formattedTime,
+      history: [record, ...(existing.history || []).slice(0, 9)]
+    };
+
+    state.days[d] = day;
+    set({ state });
+    playSuccessChime();
+    get().saveState({ area: 'telemetry', item: productId, exact_update: `Logged product ${productName} on ${zone}` });
   }
 }));
