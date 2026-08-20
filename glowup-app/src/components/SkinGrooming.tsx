@@ -614,7 +614,14 @@ export const SkinGrooming: React.FC = () => {
                 ) : (
                   <span style={{ fontSize: '10.5px', color: 'var(--muted)' }}>{lastTs ? `Last oiled: ${t!.lastUsed}` : 'Not logged yet — no reminder until you do'}</span>
                 )}
-                <button className="btn sm" style={{ marginTop: '2px' }} onClick={() => useGlowUpStore.getState().logProductUsage('hair_oil', 'Hair Oiling (Coconut/Castor)', 'Scalp', 1)}>
+                <button
+                  className="btn sm"
+                  style={{ marginTop: '2px' }}
+                  onClick={() => {
+                    useGlowUpStore.getState().logProductUsage('hair_oil', 'Hair Oiling (Coconut/Castor)', 'Scalp', 1);
+                    if (!dayState.habits?.['h_coconutoil']) toggleHabit('h_coconutoil');
+                  }}
+                >
                   ⚡ Log Oiling Now
                 </button>
               </div>
