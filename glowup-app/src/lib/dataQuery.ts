@@ -72,10 +72,37 @@ export function flattenState(state: GlowUpState): DataFact[] {
   return facts.sort((a, b) => b.date.localeCompare(a.date));
 }
 
+const toISO = (d: Date) => d.toISOString().slice(0, 10);
+
+/** Resolves relative date phrases in a query ("yesterday", "this week", "last 3 days")
+ * into a concrete date range, so "what did I miss yesterday" actually filters by date
+ * instead of just keyword-matching the literal word "yesterday" against nothing. */
+function resolveDateRange(query: string): { from: string; to: string } | null {
+  const q = query.toLowerCase();
+  const now = new Date();
+  const today = toISO(now);
+  const daysAgo = (n: number) => toISO(new Date(now.getTime() - n * 86400000));
+
+  if (/\btoday\b/.test(q)) return { from: today, to: today };
+  if (/\byesterday\b/.test(q)) return { from: daysAgo(1), to: daysAgo(1) };
+  if (/\bthis week\b/.test(q)) return { from: daysAgo(now.getDay()), to: today };
+  if (/\blast week\b/.test(q)) return { from: daysAgo(now.getDay() + 7), to: daysAgo(now.getDay() + 1) };
+  const lastNDays = q.match(/last (\d+) days?/);
+  if (lastNDays) return { from: daysAgo(Number(lastNDays[1])), to: today };
+
+  return null;
+}
+
 /** Simple keyword scoring — grounded lookup, not generative. Returns top matches. */
 export function queryLocalData(state: GlowUpState, query: string, limit = 25): DataFact[] {
-  const facts = flattenState(state);
-  const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+  let facts = flattenState(state);
+
+  const range = resolveDateRange(query);
+  if (range) facts = facts.filter(f => f.date >= range.from && f.date <= range.to);
+
+  // Strip the date phrase itself out of the keyword terms — it already did its job as a filter.
+  const strippedQuery = query.toLowerCase().replace(/\b(today|yesterday|this week|last week|last \d+ days?)\b/g, '');
+  const terms = strippedQuery.split(/\s+/).filter(Boolean);
   if (!terms.length) return facts.slice(0, limit);
 
   const scored = facts
@@ -84,7 +111,7 @@ export function queryLocalData(state: GlowUpState, query: string, limit = 25): D
       const score = terms.reduce((acc, t) => acc + (hay.includes(t) ? 1 : 0), 0);
       return { f, score };
     })
-    .filter(x => x.score > 0)
+    .filter(x => x.score > 0 || range !== null)
     .sort((a, b) => b.score - a.score || b.f.date.localeCompare(a.f.date));
 
   return scored.slice(0, limit).map(x => x.f);

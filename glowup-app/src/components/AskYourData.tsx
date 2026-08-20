@@ -42,7 +42,7 @@ export const AskYourData: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           autoFocus
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Try: castor oil, chicken, Aug 18, deadlift, sunscreen..."
+          placeholder="Try: castor oil, chicken today, deadlift this week, sunscreen yesterday..."
           style={{ marginBottom: '8px' }}
         />
 
