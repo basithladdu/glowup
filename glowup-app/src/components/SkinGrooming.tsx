@@ -648,6 +648,25 @@ export const SkinGrooming: React.FC = () => {
               </div>
             );
           })()}
+
+          {/* HAIRCUT & BEARD FADE — 14-day cadence task, silent until actually due */}
+          {(() => {
+            const t = telemetry['haircut_fade'];
+            const lastTs = t?.history?.[0]?.timestamp;
+            const daysSince = lastTs ? (Date.now() - new Date(lastTs).getTime()) / 86400000 : 999;
+            const isDue = daysSince >= 14;
+            return (
+              <div style={{ background: 'var(--surface2)', border: `1px solid ${isDue ? 'var(--turmeric)' : 'var(--line2)'}`, borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                <span style={{ fontWeight: 700, fontSize: '12.5px' }}>✂️ Haircut & Beard Fade <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(14-day task)</span></span>
+                <span style={{ fontSize: '10.5px', color: isDue ? 'var(--turmeric)' : 'var(--muted)' }}>
+                  {isDue ? '✂ Due — sharp neckline & clean taper' : `Not due yet — ${Math.floor(daysSince)}d since last, next check in ${Math.max(0, 14 - Math.floor(daysSince))}d`}
+                </span>
+                <button className="btn sm" style={{ marginTop: '2px' }} onClick={() => useGlowUpStore.getState().logProductUsage('haircut_fade', 'Haircut & Fade', 'Head/Beard', 1)}>
+                  ⚡ Log Haircut Done
+                </button>
+              </div>
+            );
+          })()}
         </div>
       </div>
 
