@@ -182,8 +182,17 @@ export const ShoppingInventory: React.FC = () => {
             <h3 style={{ fontSize: '13px', margin: '0 0 8px', color: 'var(--sage)' }}>✓ In Stock &amp; Active Inventory ({boughtItems.length})</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               {boughtItems.map((item) => {
-                const telemKey = item.id.replace('sh_', 'pm_').replace('sh_spf', 'am_spf').replace('sh_khus', 'am_khus');
-                const telemData = useGlowUpStore.getState().getDayState().productTelemetry?.[telemKey];
+                // Maps a shopping item to the telemetry id it's actually logged under in SkinGrooming
+                // (am_/pm_ step ids don't follow a fixed prefix rule, so this has to be explicit).
+                const TELEM_KEY_MAP: Record<string, string> = {
+                  sh_spf: 'am_spf',
+                  sh_khus: 'am_khus',
+                  sh_castor: 'pm_castor',
+                  sh_minox: 'pm_minox',
+                  sh_lipscrub: 'am_lip',
+                };
+                const telemKey = TELEM_KEY_MAP[item.id];
+                const telemData = telemKey ? useGlowUpStore.getState().getDayState().productTelemetry?.[telemKey] : undefined;
                 return (
                   <div key={item.id} className="logrow" style={{ opacity: 0.85, padding: '8px 6px', background: 'var(--surface2)', borderRadius: '6px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
