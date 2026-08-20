@@ -589,6 +589,68 @@ export const SkinGrooming: React.FC = () => {
         </div>
       </div>
 
+      {/* HAIR, BEARD & NAILS — SIMPLE TASK-AWARE GROOMING (routine vs one-off, owned products only, timing-aware) */}
+      <div className="card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+          <div>
+            <p className="eyebrow"><span className="n">grooming</span> hair · beard · nails — only what you actually own</p>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--sage)' }}>💇 Hair, Beard & Nails</h3>
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '10px' }}>
+          {/* HAIR OILING — single task, owned oils only, auto wash-off timing */}
+          {(() => {
+            const t = telemetry['hair_oil'];
+            const lastTs = t?.history?.[0]?.timestamp;
+            const hoursSince = lastTs ? (Date.now() - new Date(lastTs).getTime()) / 3600000 : null;
+            const washOffDue = hoursSince !== null && hoursSince < 2;
+            return (
+              <div style={{ background: 'var(--surface2)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                <span style={{ fontWeight: 700, fontSize: '12.5px' }}>🧴 Hair Oiling <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(single task)</span></span>
+                <span style={{ fontSize: '10.5px', color: 'var(--muted)' }}>Tool: coconut oil (daily) or castor oil (density) — whichever's in reach</span>
+                {washOffDue ? (
+                  <span style={{ fontSize: '10.5px', color: 'var(--turmeric)' }}>⏳ Wash off by {new Date(new Date(lastTs!).getTime() + 2 * 3600000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                ) : (
+                  <span style={{ fontSize: '10.5px', color: 'var(--muted)' }}>{lastTs ? `Last oiled: ${t!.lastUsed}` : 'Not logged yet — no reminder until you do'}</span>
+                )}
+                <button className="btn sm" style={{ marginTop: '2px' }} onClick={() => useGlowUpStore.getState().logProductUsage('hair_oil', 'Hair Oiling (Coconut/Castor)', 'Scalp', 1)}>
+                  ⚡ Log Oiling Now
+                </button>
+              </div>
+            );
+          })()}
+
+          {/* BEARD — minoxidil is primary, dermaroller only if extra needed */}
+          <div style={{ background: 'var(--surface2)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+            <span style={{ fontWeight: 700, fontSize: '12.5px' }}>🧔 Beard Density <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(nightly routine)</span></span>
+            <span style={{ fontSize: '10.5px', color: 'var(--muted)' }}>Primary tool: Minoxidil 5% (nightly). Dermaroller only on patchy zones needing extra push.</span>
+            <span style={{ fontSize: '10.5px', color: telemetry['pm_minox'] ? 'var(--sage)' : 'var(--muted)' }}>
+              {telemetry['pm_minox'] ? `✓ Minoxidil last: ${telemetry['pm_minox'].lastUsed}` : 'Log tonight in PM Skincare above'}
+            </span>
+          </div>
+
+          {/* NAILS — weekly cadence task, silent until actually due */}
+          {(() => {
+            const t = telemetry['nails_trim'];
+            const lastTs = t?.history?.[0]?.timestamp;
+            const daysSince = lastTs ? (Date.now() - new Date(lastTs).getTime()) / 86400000 : 999;
+            const isDue = daysSince >= 7;
+            return (
+              <div style={{ background: 'var(--surface2)', border: `1px solid ${isDue ? 'var(--turmeric)' : 'var(--line2)'}`, borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                <span style={{ fontWeight: 700, fontSize: '12.5px' }}>💅 Nails <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(weekly task)</span></span>
+                <span style={{ fontSize: '10.5px', color: isDue ? 'var(--turmeric)' : 'var(--muted)' }}>
+                  {isDue ? '✂ Due — trim whenever convenient today' : `Not due yet — trimmed ${Math.floor(daysSince)}d ago, next check in ${Math.max(0, 7 - Math.floor(daysSince))}d`}
+                </span>
+                <button className="btn sm" style={{ marginTop: '2px' }} onClick={() => useGlowUpStore.getState().logProductUsage('nails_trim', 'Nail Trim', 'Hands/Feet', 1)}>
+                  ⚡ Log Trim
+                </button>
+              </div>
+            );
+          })()}
+        </div>
+      </div>
+
       {/* 7-DAY ACTIVES ROTATION SCHEDULE */}
       <div className="card">
         <p className="eyebrow"><span className="n">cycle</span> 7-day clinical actives rotation</p>
