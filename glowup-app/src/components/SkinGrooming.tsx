@@ -48,7 +48,9 @@ export const SkinGrooming: React.FC = () => {
   const daysToNextPeel = Math.max(0, 14 - (diffDays % 14));
 
   const handleLogPeel = () => {
-    state.peel = selectedDate;
+    // A plain `state.peel = ...` mutates without changing the store reference, so the
+    // "days to next peel" countdown above wouldn't recompute until an unrelated re-render.
+    useGlowUpStore.setState({ state: { ...state, peel: selectedDate } });
     saveState({ area: 'skincare', item: 'peel-30', exact_update: 'Completed 30% chemical peel' });
     triggerGoalCelebration();
     playSuccessChime();

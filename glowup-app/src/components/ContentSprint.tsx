@@ -54,8 +54,9 @@ export const ContentSprint: React.FC = () => {
 
   const handleFinishSprint = () => {
     const topicText = topic.trim() || 'Content Sprint';
-    state.content = state.content || {};
-    state.content[selectedDate] = { topic: topicText, dur: 45 };
+    // Direct mutation wouldn't trigger a re-render — build a fresh state object instead.
+    const newContent = { ...(state.content || {}), [selectedDate]: { topic: topicText, dur: 45 } };
+    useGlowUpStore.setState({ state: { ...state, content: newContent } });
     saveState({ area: 'content', item: 'sprint-45', exact_update: `Shipped: ${topicText}` });
     setIsRunning(false);
     setSecondsLeft(45 * 60);

@@ -37,11 +37,16 @@ export const SleepSanctuary: React.FC = () => {
       const wakeTime = new Date();
       const hoursSlept = Number(((wakeTime.getTime() - startTime.getTime()) / (1000 * 60 * 60)).toFixed(1));
       
-      state.sleep[selectedDate] = {
-        bed: startTime.toTimeString().slice(0, 5),
-        wake: wakeTime.toTimeString().slice(0, 5),
-        dur: hoursSlept
+      // Direct mutation here wouldn't trigger a re-render — build a fresh state object instead.
+      const newSleep = {
+        ...state.sleep,
+        [selectedDate]: {
+          bed: startTime.toTimeString().slice(0, 5),
+          wake: wakeTime.toTimeString().slice(0, 5),
+          dur: hoursSlept
+        }
       };
+      useGlowUpStore.setState({ state: { ...state, sleep: newSleep } });
       setLiveSleep(null);
       saveState({ area: 'sleep', item: 'sleep-wake', exact_update: `Slept ${hoursSlept} hours` });
     }

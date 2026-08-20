@@ -77,9 +77,14 @@ export const ADHDExecutionFlow: React.FC = () => {
     };
   }, [medRunning, medSeconds, toggleHabit]);
 
+  // Both handlers below build a fresh state object instead of mutating dayState/currentPlan
+  // in place — a plain assignment doesn't change the store's object reference, so zustand
+  // never notifies subscribers and the plan UI silently goes stale until an unrelated update.
   const handleSaveNightPlan = (e: React.FormEvent) => {
     e.preventDefault();
-    (dayState as any).nightlyPlan = { t1: todo1, t2: todo2, t3: todo3, done1: false, done2: false, done3: false };
+    const newPlan = { t1: todo1, t2: todo2, t3: todo3, done1: false, done2: false, done3: false };
+    const newDay = { ...dayState, nightlyPlan: newPlan };
+    useGlowUpStore.setState({ state: { ...state, days: { ...state.days, [selectedDate]: newDay as any } } });
     saveState({ area: 'adhd', item: 'nightly-plan', exact_update: `Saved 3 Must-Dos for ${selectedDate}` });
     triggerGoalCelebration();
     playSuccessChime();
@@ -95,9 +100,11 @@ export const ADHDExecutionFlow: React.FC = () => {
   };
 
   const handleTogglePlanItem = (k: 'done1' | 'done2' | 'done3') => {
-    currentPlan[k] = !currentPlan[k];
+    const updatedPlan = { ...currentPlan, [k]: !currentPlan[k] };
+    const newDay = { ...dayState, nightlyPlan: updatedPlan };
+    useGlowUpStore.setState({ state: { ...state, days: { ...state.days, [selectedDate]: newDay as any } } });
     saveState({ area: 'adhd', item: `plan-${k}`, exact_update: `Toggled plan task ${k}` });
-    if (currentPlan.done1 && currentPlan.done2 && currentPlan.done3) {
+    if (updatedPlan.done1 && updatedPlan.done2 && updatedPlan.done3) {
       triggerGoalCelebration();
       playSuccessChime();
     }
