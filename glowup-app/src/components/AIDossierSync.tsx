@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
+import { usePokeItems } from '../lib/usePoke';
 
 export const AIDossierSync: React.FC = () => {
   const { state, selectedDate, syncStatus, syncText, saveState } = useGlowUpStore();
   const [copied, setCopied] = useState(false);
+  const pokeItems = usePokeItems();
 
   const generateDossierMarkdown = () => {
     const daysSorted = Object.keys(state.days).sort();
@@ -46,6 +48,19 @@ export const AIDossierSync: React.FC = () => {
     (state.milestones || []).forEach((m) => {
       md += `- [${m.done ? 'x' : ' '}] **[${m.category.toUpperCase()}]** ${m.title} (${m.freq})\n`;
     });
+
+    md += `\n## 4. Not Logged Yet Today (${selectedDate})\n`;
+    md += pokeItems.length
+      ? pokeItems.map((item) => `- [ ] ${item}\n`).join('')
+      : `- Everything expected today is logged.\n`;
+
+    const nailsDate = (state.cadenceLog?.['nails_trim'] || [])[0];
+    const fadeDate = (state.cadenceLog?.['haircut_fade'] || [])[0];
+    const photoDate = (state.progressPhotoDates || [])[0];
+    md += `\n## 5. Cadence Task Status\n`;
+    md += `- **Last Nail Trim:** ${nailsDate || 'never logged'}\n`;
+    md += `- **Last Haircut/Fade:** ${fadeDate || 'never logged'}\n`;
+    md += `- **Last Progress Photo:** ${photoDate || 'never logged'}\n`;
 
     return md;
   };
@@ -137,7 +152,7 @@ export const AIDossierSync: React.FC = () => {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 6px' }}>
           {[
-            'Client-Side First Architecture: LocalStorage guarantees zero lag and 100% offline availability',
+            'Client-Side First Architecture: IndexedDB guarantees zero lag and 100% offline availability',
             'Automatic Cloud Synchronization: Seamless background sync with Supabase PostgreSQL database',
             'Portable JSON Snapshot Vault: 1-tap encrypted state download with timestamped filenames',
             'Incremental Transaction Logging: Every micro-check, food card, and lift set saves instantaneously',
