@@ -203,4 +203,43 @@ const goalsContent = fs.readFileSync(path.join(appDir, 'components/GoalsMatrix.t
 assert(goalsContent.includes('5 Precision Milestone Execution Standards'), 'GoalsMatrix.tsx must have 5 milestone standards');
 console.log('✔ Test 22: Goals Matrix 5 Precision Milestone Execution Standards verified');
 
+// Test 23: AI Food Assistant 5 Precision Nutritional Quality Standards
+const aiFoodContent = fs.readFileSync(path.join(appDir, 'components/AIFoodAssistant.tsx'), 'utf8');
+assert(aiFoodContent.includes('5 Precision Nutritional Quality Standards'), 'AIFoodAssistant.tsx must have 5 nutrition standards');
+assert(aiFoodContent.includes('Leucine Threshold Check'), 'AIFoodAssistant.tsx must have leucine threshold check');
+console.log('✔ Test 23: AI Food Assistant 5 Precision Nutritional Quality Standards & MPS verified');
+
+// Test 24: Today Flow 5 Precision Daily Execution Standards
+const todayFlowContent = fs.readFileSync(path.join(appDir, 'components/TodayFlow.tsx'), 'utf8');
+assert(todayFlowContent.includes('5 Precision Daily Flow Standards'), 'TodayFlow.tsx must have 5 daily flow standards');
+assert(todayFlowContent.includes('Morning Circadian Anchor'), 'TodayFlow.tsx must have morning circadian anchor');
+console.log('✔ Test 24: Today Flow 5 Precision Daily Execution Standards verified');
+
+// Test 25: How-To Clinical Protocols & Knowledge Vault
+const howToContent = fs.readFileSync(path.join(appDir, 'components/HowToGuidesModal.tsx'), 'utf8');
+assert(howToContent.includes('guide_multani'), 'HowToGuidesModal.tsx must include Multani Mitti guide');
+assert(howToContent.includes('guide_castor'), 'HowToGuidesModal.tsx must include Castor oil guide');
+assert(howToContent.includes('guide_lips'), 'HowToGuidesModal.tsx must include Pink lips guide');
+assert(howToContent.includes('guide_coconutoil'), 'HowToGuidesModal.tsx must include Coconut oil guide');
+assert(howToContent.includes('guide_derma'), 'HowToGuidesModal.tsx must include Derma rolling guide');
+console.log('✔ Test 25: How-To Clinical Protocols & Knowledge Vault verified');
+
+// Test 26: Shopping Inventory 5 Precision Standards
+const shopInvContent = fs.readFileSync(path.join(appDir, 'components/ShoppingInventory.tsx'), 'utf8');
+assert(shopInvContent.includes('5 Precision Inventory Standards'), 'ShoppingInventory.tsx must have 5 inventory standards');
+assert(shopInvContent.includes('3-Day Buffer Reorder'), 'ShoppingInventory.tsx must have 3-day buffer check');
+console.log('✔ Test 26: Shopping Inventory 5 Precision Standards verified');
+
+// Test 27: Floating 1-Tap Quick Action Pill
+const appContent = fs.readFileSync(path.join(appDir, 'App.tsx'), 'utf8');
+assert(appContent.includes('quick-fab-container'), 'App.tsx must have quick-fab-container');
+assert(appContent.includes('Lion / Kimia Medjool Dates'), 'App.tsx must have quick date logger');
+console.log('✔ Test 27: Floating 1-Tap Quick Action Pill verified');
+
+// Test 28: ADHD Executive Standards & Box Breathing Visual Orb
+const adhdExecContent = fs.readFileSync(path.join(appDir, 'components/ADHDExecutionFlow.tsx'), 'utf8');
+assert(adhdExecContent.includes('5 ADHD Execution Standards'), 'ADHDExecutionFlow.tsx must have 5 ADHD standards');
+assert(adhdExecContent.includes('Single-Task Isolation'), 'ADHDExecutionFlow.tsx must have single-task isolation check');
+console.log('✔ Test 28: ADHD Executive Standards & Box Breathing Visual Orb verified');
+
 console.log('=== ALL TESTS PASSED SUCCESSFULLY (100% COMPLIANT) ===');

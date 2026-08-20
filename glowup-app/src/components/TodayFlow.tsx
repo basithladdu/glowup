@@ -67,6 +67,31 @@ export const TodayFlow: React.FC = () => {
         </div>
       </div>
 
+      {/* 5 PRECISION DAILY FLOW CHECKS */}
+      <div className="card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <div>
+            <p className="eyebrow"><span className="n">rhythm</span> circadian execution sequence</p>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>⚡ 5 Precision Daily Flow Standards</h3>
+          </div>
+          <span className="tag-badge tag-best">Daily Rhythm</span>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 6px' }}>
+          {[
+            'Morning Circadian Anchor: 500ml water + 15m outdoor sunlight within 45m of wake',
+            'ADHD Focus Priority: Clear top 3 ClickUp backlog cards before opening social media',
+            'Hypertrophy Training: Hit working compound sets with controlled 3-second eccentric negatives',
+            'Nutritional Integrity: Reach 170g protein floor while keeping calories under 2,000',
+            'Nocturnal Sanctuary: Blue-light cutoff + 3M nasal mouth tape for 90m REM deep sleep'
+          ].map((chk, i) => (
+            <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* DAILY HABIT EXECUTION LIST */}
       <div className="card">
         <p className="eyebrow"><span className="n">today</span> core daily habits</p>

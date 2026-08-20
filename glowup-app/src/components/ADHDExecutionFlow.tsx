@@ -136,12 +136,32 @@ export const ADHDExecutionFlow: React.FC = () => {
               Used by Navy SEALs & high performers to instantly lower cortisol and eliminate mental static.
             </p>
 
+            {/* VISUAL EXPANDING/CONTRACTING BREATH ORB */}
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '14px 0' }}>
+              <div
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '50%',
+                  background: 'radial-gradient(circle, var(--turmeric) 0%, rgba(232, 163, 61, 0.15) 70%, transparent 100%)',
+                  transform: medRunning && (breathPhase.startsWith('Inhale') || breathPhase.startsWith('Hold (4s)') && breathPhase.includes('Hold')) ? 'scale(1.25)' : 'scale(0.85)',
+                  transition: 'transform 4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: medRunning ? '0 0 24px rgba(232, 163, 61, 0.3)' : 'none'
+                }}
+              >
+                <span style={{ fontSize: '24px' }}>🧘</span>
+              </div>
+            </div>
+
             <div style={{
-              fontSize: '18px',
+              fontSize: '16px',
               fontWeight: 700,
               color: 'var(--turmeric)',
-              margin: '12px 0',
-              padding: '12px',
+              margin: '8px 0',
+              padding: '10px',
               background: 'var(--surface2)',
               borderRadius: '8px',
               border: '1px solid var(--line2)'
@@ -149,7 +169,7 @@ export const ADHDExecutionFlow: React.FC = () => {
               {medRunning ? breathPhase : 'Ready to Reset'}
             </div>
 
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '32px', fontWeight: 700, color: 'var(--paper)', margin: '8px 0' }}>
+            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '30px', fontWeight: 700, color: 'var(--paper)', margin: '6px 0' }}>
               {String(Math.floor(medSeconds / 60)).padStart(2, '0')}:{String(medSeconds % 60).padStart(2, '0')}
             </div>
 
@@ -168,6 +188,31 @@ export const ADHDExecutionFlow: React.FC = () => {
               >
                 Reset
               </button>
+            </div>
+          </div>
+
+          {/* 5 PRECISION ADHD EXECUTION STANDARDS */}
+          <div className="card">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <div>
+                <p className="eyebrow"><span className="n">neurobiology</span> executive dysfunction mastery</p>
+                <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>🧠 5 ADHD Execution Standards</h3>
+              </div>
+              <span className="tag-badge tag-best">Executive Protocol</span>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 6px' }}>
+              {[
+                'Single-Task Isolation: Never juggle multiple browser tabs or tasks; execute 1 Sprint at a time',
+                '2-Minute Initiation Rule: Count 5-4-3-2-1 and start physically typing to break task freeze',
+                'Night-Before Decision Architecture: Draft tomorrow\'s 3 Must-Dos before sleep to eliminate morning panic',
+                'Somatic Autonomic Reset: 10m Diaphragmatic Box Breathing (4-4-4-4) to quench cortisol loops',
+                'Pleasure Gating: Clear 170g protein floor & top 3 ClickUp cards before opening entertainment'
+              ].map((chk, i) => (
+                <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
+                </div>
+              ))}
             </div>
           </div>
 

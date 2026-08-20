@@ -5,16 +5,81 @@ export const HowToGuidesModal: React.FC = () => {
 
   const guides = [
     {
+      id: 'guide_multani',
+      title: '🌿 Multani Mitti + Pure Khus/Rose Hydrosol Clay Mask',
+      category: 'Deep Pore Clarification',
+      summary: 'Removes deep sebum blockages, tightens dilated pores, and calms redness (1-2x/week).',
+      steps: [
+        '1. Measure 1 tablespoon Multani Mitti (Fuller\'s Earth) in a glass or ceramic bowl.',
+        '2. Add 2–3 teaspoons pure Khus / Rose water hydrosol until a smooth, spreadable paste forms.',
+        '3. Apply evenly across T-zone, nose, forehead, and jawline with clean fingertips or brush.',
+        '4. Leave for exactly 10–12 minutes until 80% dry (never let it crack or dry 100% to protect skin moisture barrier).',
+        '5. Rinse with cool water, pat dry, and follow immediately with B12 Ceramide barrier cream.'
+      ]
+    },
+    {
+      id: 'guide_castor',
+      title: '👁️ Cold-Pressed Castor Oil Eyelashes, Brows & Beard Protocol',
+      category: 'Follicle Density & Anagen Phase',
+      summary: 'Ricinoleic acid stimulates prostaglandin receptors to thicken sparse eyelashes, brows, and beard roots.',
+      steps: [
+        '1. Cleanse face and eye area completely with gentle foaming face wash.',
+        '2. Dip a clean spoolie brush or cotton swab into 1 drop of 100% pure cold-pressed castor oil.',
+        '3. Brush gently through eyebrows from inner to outer arch.',
+        '4. Sweep carefully along upper eyelash tips (avoid direct eyeball contact).',
+        '5. Dab 2 drops across patchy beard root areas and massage for 30 seconds before sleep.'
+      ]
+    },
+    {
+      id: 'guide_lips',
+      title: '🍓 Nicole Berry Lip Scrub + Vaseline Pink Lip Slugging',
+      category: 'Lip Micro-Circulation & Slugging',
+      summary: 'Exfoliates dead keratinized cells and locks in moisture for natural pink, plump lips.',
+      steps: [
+        '1. Moisten lips with lukewarm water.',
+        '2. Apply a pea-sized amount of Nicole Berry lip scrub to lips.',
+        '3. Massage in gentle circular motions for 45–60 seconds to stimulate capillary blood flow.',
+        '4. Wipe clean with a soft damp microfiber cloth.',
+        '5. Immediately apply a thick layer of Pure Petroleum Jelly (Vaseline) for overnight slugging.'
+      ]
+    },
+    {
+      id: 'guide_coconutoil',
+      title: '🥥 Virgin Coconut Oil Scalp & Hairline Massage Protocol',
+      category: 'Hair Shaft & Follicle Rebuild',
+      summary: 'Medium-chain triglycerides penetrate the hair cortex, reducing protein loss and fortifying roots.',
+      steps: [
+        '1. Warm 1–2 teaspoons of pure virgin cold-pressed coconut oil between palms.',
+        '2. Part hair section-by-section to expose scalp surface.',
+        '3. Massage in firm circular motions with fingertips for 5 minutes to stimulate subgaleal circulation.',
+        '4. Distribute a thin protective layer through hair mid-lengths to ends.',
+        '5. Leave for 45–60 minutes or overnight before washing with gentle clarifying shampoo.'
+      ]
+    },
+    {
+      id: 'guide_derma',
+      title: '🔬 0.5mm Titanium Derma Rolling + Minoxidil 5% Protocol',
+      category: 'Hairline & Beard Growth',
+      summary: 'Creates controlled micro-channels to stimulate collagen induction and multiply Minoxidil absorption.',
+      steps: [
+        '1. Sanitize 0.5mm derma roller in 70% isopropyl alcohol for 10 minutes prior.',
+        '2. Roll across hairline temples and patchy beard areas: 4-6 passes horizontally, vertically, and diagonally with light pressure.',
+        '3. Wait at least 15–20 minutes before applying 1.0ml Minoxidil 5% solution.',
+        '4. Rinse derma roller under hot water and store in protective case.',
+        '5. Perform strictly 1–2 times per week (never on active acne or inflamed skin).'
+      ]
+    },
+    {
       id: 'guide_lymph',
       title: '💆 Lymphatic Face De-Bloat Massage (60s)',
       category: 'Facial Aesthetics',
       summary: 'Drains excess interstitial sodium fluid from cheeks and jaw to instantly sharpen facial contours.',
       steps: [
         '1. Splash face with ice-cold water to constrict blood vessels.',
-        '2. Apply a light layer of moisturizer or face wash for skin glide.',
-        '3. Knuckle strokes: Place knuckles at the chin and sweep upward along jawline to below the earlobe (10 reps per side).',
-        '4. Cheekbone drain: Use index and middle fingers from sides of nose sweeping under cheekbones outward to temples (10 reps).',
-        '5. Neck drain: Sweep both palms downward from behind the ears down the sides of the neck to collarbones (10 reps) to drain lymph nodes into venous system.'
+        '2. Mist face with pure Khus hydrosol for smooth skin glide.',
+        '3. Knuckle strokes: Place knuckles at chin and sweep upward along jawline to below earlobe (10 reps per side).',
+        '4. Cheekbone drain: Use index and middle fingers sweeping under cheekbones outward to temples (10 reps).',
+        '5. Neck drain: Sweep both palms downward from behind ears down sides of neck to collarbones (10 reps).'
       ]
     },
     {

@@ -78,8 +78,33 @@ export const ShoppingInventory: React.FC = () => {
           <span className="tag-badge tag-best">{pendingItems.length} PENDING</span>
         </div>
         <p className="note">
-          Keep your gym staples, high-protein pantry, derm actives, and grooming gear fully stocked to never break routine momentum.
+          Keep your nutritional, dermatological, and grooming arsenal 100% stocked without friction.
         </p>
+      </div>
+
+      {/* 5 PRECISION INVENTORY & REPLENISHMENT STANDARDS */}
+      <div className="card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <div>
+            <p className="eyebrow"><span className="n">supply chain</span> automated replenishment protocols</p>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>📦 5 Precision Inventory Standards</h3>
+          </div>
+          <span className="tag-badge tag-best">Supply Chain</span>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 6px' }}>
+          {[
+            '3-Day Buffer Reorder: Re-order Whey, Eggs, and Chicken when inventory reaches 3-day supply',
+            'Per-Gram Cost Efficiency: Purchase 30-egg wholesale crates and 1kg whey isolate for max ROI',
+            'Active Shelf-Life Safety: Track Vitamin C & chemical peels; replace within 6 months of opening',
+            'Nutritional Whole Food Staples: Ensure Lion Dates, Milk, and Soya are always stocked in pantry',
+            'Grooming Replenishment: Keep cold-pressed castor & coconut oils sealed in amber glass bottles'
+          ].map((chk, i) => (
+            <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="desktop-grid-equal">

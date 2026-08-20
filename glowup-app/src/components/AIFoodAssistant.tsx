@@ -210,6 +210,31 @@ export const AIFoodAssistant: React.FC = () => {
             )}
           </div>
 
+          {/* 5 PRECISION NUTRITIONAL QUALITY & MPS CHECKS */}
+          <div className="card">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <div>
+                <p className="eyebrow"><span className="n">bioavailability</span> muscle protein synthesis standards</p>
+                <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>🥩 5 Precision Nutritional Quality Standards</h3>
+              </div>
+              <span className="tag-badge tag-best">MPS Protocol</span>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 6px' }}>
+              {[
+                'Leucine Threshold Check: Minimum 2.5g–3.0g leucine per feeding to trigger mTOR and MPS',
+                'Protein Quality Score: Prioritize PDCAAS 1.0 bioavailable sources (Chicken, Eggs, Whey Isolate)',
+                'Satiety Index Anchor: High-volume fiber (Oats, Dal, Soya) to comfortably lock 500 kcal deficit',
+                'Electrolyte Balance: Match whole food potassium (Dates, Milk) with clean sodium for muscle hydration',
+                'Caloric Floor Target: 170g protein floor while capping daily intake under 2,000 kcal ceiling'
+              ].map((chk, i) => (
+                <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* LOGGED MEALS ON THIS DATE */}
           <div className="card">
             <p className="eyebrow"><span className="n">log</span> meals eaten on this date</p>

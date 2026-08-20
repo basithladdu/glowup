@@ -145,6 +145,21 @@ export function App() {
             >
               🥛 +1 Scoop Whey (24g P)
             </button>
+            <button
+              className="quick-fab-btn"
+              onClick={() => {
+                addFoodItems([{ n: 'Lion / Kimia Medjool Dates (2 Dates - 40g)', k: 110, p: 1.0, c: 28, f: 0.2 }]);
+                setShowQuickPill(false);
+              }}
+            >
+              🌴 +2 Dates (40g)
+            </button>
+            <button
+              className="quick-fab-btn"
+              onClick={() => { toggleHabit('h_castoroil'); setShowQuickPill(false); }}
+            >
+              👁️ +Castor Oil (Lashes/Brows)
+            </button>
           </div>
         )}
 
