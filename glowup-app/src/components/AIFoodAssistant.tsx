@@ -5,9 +5,10 @@ import type { MacroItem } from '../types';
 import { MacroCharts } from './MacroCharts';
 
 export const AIFoodAssistant: React.FC = () => {
-  const { addFoodItems, removeFoodItem, getDayState, getDayTotals } = useGlowUpStore();
+  const { state, addFoodItems, removeFoodItem, getDayState, getDayTotals, addCustomRecipe } = useGlowUpStore();
   const dayState = getDayState();
   const dayTotals = getDayTotals();
+  const myMeals = state.customRecipes || [];
 
   const [prompt, setPrompt] = useState(
     '250g of rice, 50g dal, nakpro malai kulfi whey 1 scoop protein, 200g chicken, 250ml milk, and 150g beef fry'
@@ -15,6 +16,8 @@ export const AIFoodAssistant: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [parsedCards, setParsedCards] = useState<MacroItem[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [showSaveMeal, setShowSaveMeal] = useState(false);
+  const [mealName, setMealName] = useState('');
 
   const presets = [
     { label: '🥩 250g Rice + Dal + Whey + 200g Chicken + Milk + 150g Beef Fry', text: '250g of rice, 50g dal, nakpro malai kulfi whey 1 scoop protein, 200g chicken, 250ml milk, and 150g beef fry' },
@@ -46,6 +49,30 @@ export const AIFoodAssistant: React.FC = () => {
 
   const handleRemoveCard = (index: number) => {
     setParsedCards(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleSaveAsMyMeal = () => {
+    if (!mealName.trim() || !parsedCards.length) return;
+    addCustomRecipe({
+      id: 'meal_' + Date.now(),
+      n: mealName.trim(),
+      k: Math.round(totKcalForSave()),
+      p: Number(totPForSave().toFixed(1)),
+      c: Number(totCForSave().toFixed(1)),
+      f: Number(totFForSave().toFixed(1)),
+      cost: ''
+    });
+    setMealName('');
+    setShowSaveMeal(false);
+  };
+
+  const totKcalForSave = () => parsedCards.reduce((sum, item) => sum + item.k, 0);
+  const totPForSave = () => parsedCards.reduce((sum, item) => sum + item.p, 0);
+  const totCForSave = () => parsedCards.reduce((sum, item) => sum + item.c, 0);
+  const totFForSave = () => parsedCards.reduce((sum, item) => sum + item.f, 0);
+
+  const handleQuickLogMyMeal = (recipe: { n: string; k: number; p: number; c: number; f: number }) => {
+    addFoodItems([{ n: recipe.n, k: recipe.k, p: recipe.p, c: recipe.c, f: recipe.f }]);
   };
 
   const totKcal = parsedCards.reduce((sum, item) => sum + item.k, 0);
@@ -93,7 +120,28 @@ export const AIFoodAssistant: React.FC = () => {
               Type or voice what you ate with grams or portions. AI will calculate accurate macros, generate <b>all the individual food cards</b>, and log them in 1 tap.
             </p>
 
+            {/* MY MEALS — custom, one-tap, no AI round-trip. Matters more than generic presets. */}
+            {myMeals.length > 0 && (
+              <div style={{ marginBottom: '10px' }}>
+                <p className="eyebrow" style={{ margin: '0 0 6px' }}><span className="n">yours</span> your saved custom meals — 1-tap log</p>
+                <div className="ai-preset-chips">
+                  {myMeals.map((m) => (
+                    <button
+                      key={m.id}
+                      className="ai-chip"
+                      style={{ borderColor: 'rgba(138,168,95,0.4)', color: 'var(--sage)' }}
+                      onClick={() => handleQuickLogMyMeal(m)}
+                      title={`${m.k}kcal · ${m.p}g P · ${m.c}g C · ${m.f}g F`}
+                    >
+                      ⚡ {m.n}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Preset Prompt Chips */}
+            <p className="eyebrow" style={{ margin: '0 0 6px' }}><span className="n">generic</span> quick-fill examples (edit the text below)</p>
             <div className="ai-preset-chips">
               {presets.map((p, idx) => (
                 <button
@@ -206,6 +254,23 @@ export const AIFoodAssistant: React.FC = () => {
                 >
                   ✓ Log ALL Cards to Today's Meals (+ Sync Macros)
                 </button>
+
+                {!showSaveMeal ? (
+                  <button className="btn sm" style={{ width: '100%', marginTop: '8px', background: 'var(--surface3)' }} onClick={() => setShowSaveMeal(true)}>
+                    💾 Save This Combo as My Meal (for 1-tap next time)
+                  </button>
+                ) : (
+                  <div style={{ display: 'flex', gap: '6px', marginTop: '8px' }}>
+                    <input
+                      autoFocus
+                      value={mealName}
+                      onChange={(e) => setMealName(e.target.value)}
+                      placeholder="Name it, e.g. My Usual Lunch"
+                    />
+                    <button className="btn sage sm" onClick={handleSaveAsMyMeal}>Save</button>
+                    <button className="btn sm" style={{ background: 'var(--surface3)' }} onClick={() => setShowSaveMeal(false)}>✕</button>
+                  </div>
+                )}
               </div>
             )}
           </div>
