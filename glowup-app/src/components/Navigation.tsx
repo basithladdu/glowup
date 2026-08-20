@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usePokeItems } from '../lib/usePoke';
 
 export type TabType = 
   | 'calendar' 
@@ -71,6 +72,7 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
   ];
 
   const visibleTabs = mode === 'calm' ? essentialTabs : allTabs;
+  const pokeCount = usePokeItems().length;
 
   return (
     <nav className="nav-strip" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -106,6 +108,22 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
             onClick={() => onTabChange(t.id)}
           >
             {t.label}
+            {t.id === 'adhd' && pokeCount > 0 && (
+              <span
+                style={{
+                  marginLeft: '5px',
+                  background: 'var(--rose)',
+                  color: '#1A1206',
+                  borderRadius: '9px',
+                  padding: '0 5px',
+                  fontSize: '9.5px',
+                  fontWeight: 700,
+                  fontFamily: 'JetBrains Mono, monospace'
+                }}
+              >
+                {pokeCount}
+              </span>
+            )}
           </button>
         ))}
       </div>
