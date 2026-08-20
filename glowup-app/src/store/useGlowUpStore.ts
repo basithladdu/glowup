@@ -73,6 +73,7 @@ interface GlowUpStore {
   deleteCalendarEvent: (id: string) => void;
   toggleStepMicroCheck: (stepId: string, checkIdx: number, zone?: string, date?: string) => void;
   logProductUsage: (productId: string, productName: string, zone: string, checksCount: number, date?: string) => void;
+  logProgressPhoto: (date?: string) => void;
 }
 
 export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
@@ -404,5 +405,18 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     set({ state });
     playSuccessChime();
     get().saveState({ area: 'telemetry', item: productId, exact_update: `Logged product ${productName} on ${zone}` });
+  },
+
+  logProgressPhoto: (date) => {
+    const d = date || get().selectedDate;
+    const state = { ...get().state };
+    state.progressPhotoDates = state.progressPhotoDates || [];
+    if (!state.progressPhotoDates.includes(d)) {
+      state.progressPhotoDates = [d, ...state.progressPhotoDates].slice(0, 60);
+    }
+    set({ state });
+    playSuccessChime();
+    triggerGoalCelebration();
+    get().saveState({ area: 'body', item: 'progress-photo', exact_update: `Logged progress photo taken on ${d}` });
   }
 }));

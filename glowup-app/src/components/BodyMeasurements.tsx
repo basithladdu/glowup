@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
 
 export const BodyMeasurements: React.FC = () => {
-  const { state, selectedDate, logMorningWeight, saveState } = useGlowUpStore();
+  const { state, selectedDate, logMorningWeight, saveState, logProgressPhoto } = useGlowUpStore();
+  const photoDates = state.progressPhotoDates || [];
+  const lastPhotoDate = photoDates[0];
+  const daysSincePhoto = lastPhotoDate ? Math.floor((Date.now() - new Date(lastPhotoDate).getTime()) / 86400000) : 999;
+  const photoDue = daysSincePhoto >= 14;
   const [weightInput, setWeightInput] = useState('88.0');
   const [shoulders, setShoulders] = useState('116');
   const [waist, setWaist] = useState('84');
@@ -54,6 +58,24 @@ export const BodyMeasurements: React.FC = () => {
 
   return (
     <div className="section-block">
+      {/* PROGRESS PHOTO CADENCE — fortnightly, tied to the peel cycle so it's one date to remember */}
+      <div className="card" style={{ borderColor: photoDue ? 'rgba(232,163,61,0.4)' : undefined }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+          <div>
+            <p className="eyebrow"><span className="n">visual</span> fortnightly progress photo</p>
+            <h3 style={{ fontSize: '15px', margin: 0, color: photoDue ? 'var(--turmeric)' : 'var(--paper)' }}>
+              📸 {photoDue ? 'Due Today — Take Your Photo' : `Next due in ${14 - daysSincePhoto}d`}
+            </h3>
+            <p className="note" style={{ margin: '4px 0 0' }}>
+              {lastPhotoDate ? `Last logged: ${lastPhotoDate} (${daysSincePhoto}d ago)` : 'Not logged yet — same lighting, same pose, front/side/back.'}
+            </p>
+          </div>
+          <button className="btn primary" onClick={() => logProgressPhoto()}>
+            ✓ I Took My Photo Today
+          </button>
+        </div>
+      </div>
+
       {/* 88kg -> 72kg CUT PROGRESS & ANALYTICS */}
       <div className="card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

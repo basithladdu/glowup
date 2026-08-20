@@ -84,6 +84,7 @@ export interface GlowUpState {
   milestones: GoalMilestone[];
   customRecipes?: CustomProteinItem[];
   customEvents?: CalendarEvent[];
+  progressPhotoDates?: string[];
   peel: string;
   start: string;
   abstinence: AbstinenceState;

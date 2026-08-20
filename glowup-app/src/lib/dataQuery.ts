@@ -57,6 +57,9 @@ export function flattenState(state: GlowUpState): DataFact[] {
   for (const [date, s] of Object.entries(state.sleep || {})) {
     facts.push({ date, area: 'sleep', text: `Slept ${s.bed} → ${s.wake} (${s.dur}h)`, done: true });
   }
+  for (const date of state.progressPhotoDates || []) {
+    facts.push({ date, area: 'photo', text: 'Progress photo taken', done: true });
+  }
   for (const g of state.milestones || []) {
     facts.push({ date: g.date, area: 'goal', text: `${g.title} — ${g.done ? 'done' : 'pending'}`, done: g.done });
   }
