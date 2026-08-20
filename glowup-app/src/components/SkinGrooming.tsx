@@ -15,13 +15,18 @@ export const SkinGrooming: React.FC = () => {
   const amSteps = dayState.amSkinSteps || {};
   const pmSteps = dayState.pmSkinSteps || {};
 
+  // Mutating dayState.amSkinSteps[id] in place never changed the store's object reference,
+  // so a single checkbox tap below the celebration threshold silently didn't re-render — the
+  // click registered in storage but the checkbox looked untouched until something else forced
+  // an update. Both handlers now commit a fresh state object.
   const handleToggleAMStep = (stepId: string) => {
-    dayState.amSkinSteps = dayState.amSkinSteps || {};
-    dayState.amSkinSteps[stepId] = !dayState.amSkinSteps[stepId];
+    const newAmSteps = { ...(dayState.amSkinSteps || {}), [stepId]: !dayState.amSkinSteps?.[stepId] };
+    const newDay = { ...dayState, amSkinSteps: newAmSteps };
+    useGlowUpStore.setState({ state: { ...state, days: { ...state.days, [selectedDate]: newDay } } });
     saveState({ area: 'skincare', item: `am-${stepId}`, exact_update: `Toggled AM skin step ${stepId}` });
-    
+
     // If all AM steps done, celebrate & mark SPF habit
-    if (Object.values(dayState.amSkinSteps).filter(Boolean).length >= 4) {
+    if (Object.values(newAmSteps).filter(Boolean).length >= 4) {
       toggleHabit('h_spf');
       triggerGoalCelebration();
       playSuccessChime();
@@ -29,12 +34,13 @@ export const SkinGrooming: React.FC = () => {
   };
 
   const handleTogglePMStep = (stepId: string) => {
-    dayState.pmSkinSteps = dayState.pmSkinSteps || {};
-    dayState.pmSkinSteps[stepId] = !dayState.pmSkinSteps[stepId];
+    const newPmSteps = { ...(dayState.pmSkinSteps || {}), [stepId]: !dayState.pmSkinSteps?.[stepId] };
+    const newDay = { ...dayState, pmSkinSteps: newPmSteps };
+    useGlowUpStore.setState({ state: { ...state, days: { ...state.days, [selectedDate]: newDay } } });
     saveState({ area: 'skincare', item: `pm-${stepId}`, exact_update: `Toggled PM skin step ${stepId}` });
-    
+
     // If all PM steps done, celebrate & mark minoxidil habit
-    if (Object.values(dayState.pmSkinSteps).filter(Boolean).length >= 5) {
+    if (Object.values(newPmSteps).filter(Boolean).length >= 5) {
       toggleHabit('h_minox');
       triggerGoalCelebration();
       playSuccessChime();

@@ -2,7 +2,7 @@ import React from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
 
 export const SymmetryStyle: React.FC = () => {
-  const { getDayState, saveState } = useGlowUpStore();
+  const { state, selectedDate, getDayState, saveState } = useGlowUpStore();
   const dayState = getDayState();
 
   const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
@@ -117,13 +117,19 @@ export const SymmetryStyle: React.FC = () => {
     }
   ];
 
+  // Direct mutation here left zustand's reference unchanged, so a checkbox tap didn't
+  // re-render until something unrelated forced it — same fix as SkinGrooming's AM/PM steps.
   const toggleSymmetry = (id: string) => {
-    dayState.symmetry[id] = !dayState.symmetry[id];
+    const newSymmetry = { ...dayState.symmetry, [id]: !dayState.symmetry[id] };
+    const newDay = { ...dayState, symmetry: newSymmetry };
+    useGlowUpStore.setState({ state: { ...state, days: { ...state.days, [selectedDate]: newDay } } });
     saveState({ area: 'symmetry', item: id, exact_update: `Toggled symmetry drill ${id}` });
   };
 
   const toggleStyle = (id: string) => {
-    dayState.style[id] = !dayState.style[id];
+    const newStyle = { ...dayState.style, [id]: !dayState.style[id] };
+    const newDay = { ...dayState, style: newStyle };
+    useGlowUpStore.setState({ state: { ...state, days: { ...state.days, [selectedDate]: newDay } } });
     saveState({ area: 'style', item: id, exact_update: `Toggled style item ${id}` });
   };
 

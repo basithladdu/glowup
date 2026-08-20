@@ -56,12 +56,17 @@ export const CalendarTimeline: React.FC = () => {
   ];
 
   const handleCheckFullDay = () => {
-    coreEvents.forEach(ev => {
-      dayState.timeline[ev.id] = true;
-    });
+    // Direct dayState mutation wouldn't change the store's reference — the "Full Day" button
+    // would persist the check-off but the timeline/habit ticks wouldn't visibly flip until an
+    // unrelated re-render happened.
+    const newTimeline = { ...dayState.timeline };
+    coreEvents.forEach(ev => { newTimeline[ev.id] = true; });
+    const newHabits = { ...dayState.habits };
     ['h_sunlight', 'h_tongue', 'h_spf', 'h_creatine', 'h_protein', 'h_posture', 'h_minox', 'h_mouthtape'].forEach(hId => {
-      dayState.habits[hId] = true;
+      newHabits[hId] = true;
     });
+    const newDay = { ...dayState, timeline: newTimeline, habits: newHabits };
+    useGlowUpStore.setState({ state: { ...state, days: { ...state.days, [selectedDate]: newDay } } });
     triggerGoalCelebration();
     playSuccessChime();
     saveState({ area: 'timeline', item: 'full-day-complete', exact_update: `Checked off full day protocols for ${selectedDate}` });
