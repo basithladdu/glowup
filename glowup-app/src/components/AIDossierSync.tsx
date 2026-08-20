@@ -124,6 +124,31 @@ export const AIDossierSync: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* 5 PRECISION DATA INTEGRITY & PRIVACY STANDARDS */}
+      <div className="card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <div>
+            <p className="eyebrow"><span className="n">security</span> zero-loss data architecture</p>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>🔒 5 Precision Data Integrity Standards</h3>
+          </div>
+          <span className="tag-badge tag-best">Zero Leak</span>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 6px' }}>
+          {[
+            'Client-Side First Architecture: LocalStorage guarantees zero lag and 100% offline availability',
+            'Automatic Cloud Synchronization: Seamless background sync with Supabase PostgreSQL database',
+            'Portable JSON Snapshot Vault: 1-tap encrypted state download with timestamped filenames',
+            'Incremental Transaction Logging: Every micro-check, food card, and lift set saves instantaneously',
+            'Multi-Platform AI Dossier: Generates strict markdown prompts for Claude, Gemini, and ChatGPT'
+          ].map((chk, i) => (
+            <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

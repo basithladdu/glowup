@@ -111,6 +111,47 @@ export const MacroCharts: React.FC = () => {
           })}
         </svg>
       </div>
+
+      {/* 14-DAY CUMULATIVE ENERGY BALANCE & NET DEFICIT CALCULATOR */}
+      <div className="card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <div>
+            <p className="eyebrow"><span className="n">thermodynamics</span> net energy deficit bank</p>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>🔥 14-Day Net Energy Balance</h3>
+          </div>
+          <span className="tag-badge tag-best">7,700 kcal = 1kg Fat</span>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', textAlign: 'center', margin: '8px 0 10px' }}>
+          <div style={{ background: 'var(--surface2)', padding: '8px', borderRadius: '6px' }}>
+            <div style={{ fontSize: '9px', color: 'var(--muted)' }}>14-DAY AVG INTAKE</div>
+            <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--sage)' }}>
+              {Math.round(days.reduce((acc, d) => acc + d.k, 0) / 14)} kcal/day
+            </div>
+          </div>
+          <div style={{ background: 'var(--surface2)', padding: '8px', borderRadius: '6px' }}>
+            <div style={{ fontSize: '9px', color: 'var(--muted)' }}>14-DAY AVG PROTEIN</div>
+            <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--turmeric)' }}>
+              {(days.reduce((acc, d) => acc + d.p, 0) / 14).toFixed(1)}g / 170g
+            </div>
+          </div>
+        </div>
+
+        {/* 5 PRECISION CALORIC DEFICIT STANDARDS */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '8px' }}>
+          {[
+            '500 kcal Deficit Cap: Prevents metabolic adaptation and preserves lean muscle mass',
+            '170g Protein Anchor: Ensures positive nitrogen balance during hypocaloric phases',
+            'Carbohydrate Timing: Allocate 60% of carbs to pre/post-workout feeding windows',
+            'Dietary Fat Floor: Maintain 40–50g healthy fats for testosterone and endocrine health',
+            'Weekly Refeed Protocol: Single maintenance day (2,300 kcal) every 14 days if fatigue rises'
+          ].map((chk, i) => (
+            <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

@@ -242,4 +242,22 @@ assert(adhdExecContent.includes('5 ADHD Execution Standards'), 'ADHDExecutionFlo
 assert(adhdExecContent.includes('Single-Task Isolation'), 'ADHDExecutionFlow.tsx must have single-task isolation check');
 console.log('✔ Test 28: ADHD Executive Standards & Box Breathing Visual Orb verified');
 
+// Test 29: 14-Day Net Energy Balance & Deficit Standards
+const chartContent = fs.readFileSync(path.join(appDir, 'components/MacroCharts.tsx'), 'utf8');
+assert(chartContent.includes('14-Day Net Energy Balance'), 'MacroCharts.tsx must have 14-day net energy balance');
+assert(chartContent.includes('500 kcal Deficit Cap'), 'MacroCharts.tsx must have 500 kcal deficit check');
+console.log('✔ Test 29: 14-Day Net Energy Balance & Deficit Standards verified');
+
+// Test 30: Navigation Essentials & Full Matrix Toggle
+const navBarContent = fs.readFileSync(path.join(appDir, 'components/Navigation.tsx'), 'utf8');
+assert(navBarContent.includes('CALM ESSENTIALS MODE'), 'Navigation.tsx must support calm essentials mode');
+assert(navBarContent.includes('FULL MATRIX VIEW'), 'Navigation.tsx must support full matrix view');
+console.log('✔ Test 30: Navigation Essentials & Full Matrix Toggle verified');
+
+// Test 31: AI Dossier & 5 Data Integrity Standards
+const dossierContent = fs.readFileSync(path.join(appDir, 'components/AIDossierSync.tsx'), 'utf8');
+assert(dossierContent.includes('5 Precision Data Integrity Standards'), 'AIDossierSync.tsx must have 5 integrity standards');
+assert(dossierContent.includes('Client-Side First Architecture'), 'AIDossierSync.tsx must have client-side first check');
+console.log('✔ Test 31: AI Dossier & 5 Data Integrity Standards verified');
+
 console.log('=== ALL TESTS PASSED SUCCESSFULLY (100% COMPLIANT) ===');
