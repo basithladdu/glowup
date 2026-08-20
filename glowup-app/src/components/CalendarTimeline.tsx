@@ -7,10 +7,11 @@ import { triggerGoalCelebration } from '../lib/confetti';
 import { playSuccessChime } from '../lib/sound';
 
 export const CalendarTimeline: React.FC = () => {
-  const { selectedDate, setSelectedDate, state, getDayState, toggleTimelineEvent, addCalendarEvent, addFoodItems, saveState } = useGlowUpStore();
+  const { selectedDate, setSelectedDate, state, getDayState, toggleTimelineEvent, addCalendarEvent, addFoodItems, saveState, setWorkoutRoutine } = useGlowUpStore();
   const dayState = getDayState();
   const [viewMode, setViewMode] = useState<'day' | 'week' | 'month'>('day');
   const [showEventModal, setShowEventModal] = useState(false);
+  const [showWorkoutPicker, setShowWorkoutPicker] = useState(false);
 
   // Meal Modal State
   const [activeMealSlot, setActiveMealSlot] = useState<string | null>(null);
@@ -47,7 +48,7 @@ export const CalendarTimeline: React.FC = () => {
     { id: 'ev_shopping', startHour: 11, endHour: 12.5, time: '11:00 – 12:30', title: '🛒 Nutrition & Supplies Shopping', sub: 'Chicken breast, eggs, staples, socks & gym gear replenishment.', color: 'sage' as const, cta: '✓ Shopped' },
     { id: 'ev_lunch', startHour: 13.5, endHour: 14.25, time: '13:30 – 14:15', title: '🍗 Lunch: Soya / Chicken + Rice & Dal', sub: 'Target 45g+ protein. Tap to log with Gemini AI.', color: 'sage' as const, isMeal: true, mealSlot: 'Lunch', cta: '🤖 AI Log' },
     { id: 'ev_clickup', startHour: 15, endHour: 15.25, time: '15:00 – 15:15', title: '🎯 10m ClickUp Triage & Content Spark', sub: 'Triage oldest tasks & log rapid content ideas into matrix.', color: 'indigo' as const, cta: '✓ Triaged' },
-    { id: 'ev_gym', startHour: 17.5, endHour: 18.75, time: '17:30 – 18:45', title: `🏋️ ${routine.name}`, sub: routine.desc, color: 'turmeric' as const, cta: '✓ Log Workout' },
+    { id: 'ev_gym', startHour: 17.5, endHour: 18.75, time: '17:30 – 18:45', title: `🏋️ ${routine.name}`, sub: routine.desc, color: 'turmeric' as const, cta: '✓ Log Workout', isWorkout: true },
     { id: 'ev_whey', startHour: 18.75, endHour: 19, time: '18:45 – 19:00', title: '🥛 Post-Workout Nakpro Whey Isolate', sub: '1 Scoop Nakpro Whey Isolate + 250ml Buffalo Milk (32g Protein).', color: 'sage' as const, cta: '✓ Drank Whey' },
     { id: 'ev_dinner', startHour: 20, endHour: 20.75, time: '20:00 – 20:45', title: dinnerLogged ? `🥩 Dinner: ${dinnerLogged.n}` : '🥩 Dinner Window (Beef Fry / Chicken / Eggs)', sub: 'Tap to log what you ate with Gemini AI.', color: 'sage' as const, isMeal: true, mealSlot: 'Dinner', cta: '🤖 AI Log' },
     { id: 'ev_pm_groom', startHour: 21.5, endHour: 22, time: '21:30 – 22:00', title: `💅 PM Skincare: ${rot.short}`, sub: `${rot.active} on face. ${rot.extra}.`, color: 'rose' as const, cta: '✓ Done PM' },
@@ -234,6 +235,8 @@ export const CalendarTimeline: React.FC = () => {
                     onClick={() => {
                       if (ev.isMeal) {
                         setActiveMealSlot(ev.mealSlot || 'Meal');
+                      } else if ((ev as any).isWorkout) {
+                        setShowWorkoutPicker(true);
                       } else {
                         toggleTimelineEvent(ev.id);
                       }
@@ -252,6 +255,15 @@ export const CalendarTimeline: React.FC = () => {
                             onClick={(e) => { e.stopPropagation(); setActiveMealSlot(ev.mealSlot || 'Meal'); }}
                           >
                             🤖 AI Log
+                          </button>
+                        )}
+                        {(ev as any).isWorkout && (
+                          <button
+                            className="task-btn"
+                            style={{ fontSize: '9px', padding: '2px 5px', background: 'var(--turmeric)', color: '#1A1206' }}
+                            onClick={(e) => { e.stopPropagation(); setShowWorkoutPicker(true); }}
+                          >
+                            🔄 Pick Workout
                           </button>
                         )}
                         <button className="gcal-check-btn" onClick={(e) => { e.stopPropagation(); toggleTimelineEvent(ev.id); }}>
@@ -423,6 +435,44 @@ export const CalendarTimeline: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* PICK WORKOUT DIRECTLY ON THE CALENDAR */}
+      {showWorkoutPicker && (
+        <div className="modal-backdrop" onClick={() => setShowWorkoutPicker(false)}>
+          <div className="card modal-box" style={{ maxWidth: '420px', textAlign: 'left' }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <h2 style={{ fontSize: '16px', margin: 0, color: 'var(--turmeric)' }}>🏋️ Pick Today's Workout</h2>
+              <button className="del" onClick={() => setShowWorkoutPicker(false)}>×</button>
+            </div>
+            <p className="note" style={{ marginBottom: '10px' }}>
+              Overrides the auto-suggested split for {dateObj.toLocaleDateString([], { month: 'short', day: 'numeric' })} only.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {[
+                { id: null, label: `🔄 Auto — ${METALLICADPA_PPL[autoRoutineKey]?.name}` },
+                { id: 'arms', label: `💪 ${METALLICADPA_PPL['arms'].name}` },
+                { id: 'pull_a', label: `${METALLICADPA_PPL['pull_a'].name}` },
+                { id: 'push_a', label: `${METALLICADPA_PPL['push_a'].name}` },
+                { id: 'legs_a', label: `${METALLICADPA_PPL['legs_a'].name}` },
+                { id: 'rest', label: `🚶 ${METALLICADPA_PPL['rest'].name}` },
+              ].map((opt) => (
+                <button
+                  key={opt.id ?? 'auto'}
+                  className="btn"
+                  style={{
+                    textAlign: 'left',
+                    background: (dayState.workoutRoutine || null) === opt.id ? 'var(--turmeric)' : 'var(--surface2)',
+                    color: (dayState.workoutRoutine || null) === opt.id ? '#1A1206' : 'var(--paper)'
+                  }}
+                  onClick={() => { setWorkoutRoutine(opt.id); setShowWorkoutPicker(false); }}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}
