@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { GlowUpState, MacroItem, LiftSet, GoalMilestone, DayState, CustomProteinItem, CalendarEvent } from '../types';
 import { DEFAULT_GOALS } from '../lib/constants';
 import { supabase } from '../lib/supabase';
+import { saveLocalSnapshot, loadLocalSnapshot } from '../lib/localDB';
 import { playSuccessChime } from '../lib/sound';
 import { triggerConfetti, triggerGoalCelebration } from '../lib/confetti';
 
@@ -84,11 +85,16 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
 
   loadState: async () => {
     set({ syncStatus: 'syncing', syncText: 'Syncing...' });
-    let localData: GlowUpState | null = null;
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) localData = JSON.parse(stored);
-    } catch (e) {}
+
+    // IndexedDB is the primary local source of truth (durable, no size cap).
+    // localStorage stays as a fallback for browsers without IndexedDB support.
+    let localData: GlowUpState | null = await loadLocalSnapshot();
+    if (!localData) {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) localData = JSON.parse(stored);
+      } catch (e) {}
+    }
 
     let merged = localData || getInitialState();
 
@@ -97,12 +103,13 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
       if (!error && data && data.data) {
         merged = { ...merged, ...data.data };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+        saveLocalSnapshot(merged);
         set({ state: merged, syncStatus: 'online', syncText: 'Cloud Synced' });
         return;
       }
     } catch (err) {}
 
-    set({ state: merged, syncStatus: 'online', syncText: 'Local Storage' });
+    set({ state: merged, syncStatus: 'online', syncText: localData ? 'Local (Offline)' : 'Local Storage' });
   },
 
   saveState: async (meta) => {
@@ -113,6 +120,7 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState));
     } catch (e) {}
+    saveLocalSnapshot(currentState);
 
     try {
       await supabase.from('glowup_state').upsert({

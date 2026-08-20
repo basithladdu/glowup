@@ -14,7 +14,7 @@ export const GEMINI_API_KEY = (typeof window !== 'undefined' && window.localStor
 export const GEMINI_MODELS = ["gemini-2.5-flash-lite", "gemini-3.6-flash", "gemini-3.7-flash", "gemini-flash-latest"];
 
 export const ROT = [
-  { d:'Sun', short:'Rest / Kojic', active:'Kojic Acid Cream', extra:'Rosemary scalp oil pre-wash + 0.5mm dermaroll AM' },
+  { d:'Sun', short:'Rest / Kojic', active:'Kojic Acid Cream', extra:'Coconut oil scalp pre-wash + 0.5mm dermaroll AM' },
   { d:'Mon', short:'Aziderm 10%', active:'Aziderm 10% (Azelaic Acid)', extra:'Drying time 10m before moisturizer' },
   { d:'Tue', short:'B12 Barrier', active:'Minimalist Vitamin B12', extra:'Ketoconazole 2% scalp + Glyco 12 Body + Nicole lip scrub' },
   { d:'Wed', short:'Glyco 6%', active:'Glyco 6% (Glycolic Acid)', extra:'Thin layer on face only' },

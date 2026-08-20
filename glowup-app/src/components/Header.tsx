@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
+import { AskYourData } from './AskYourData';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export const Header: React.FC = () => {
   const { selectedDate, setSelectedDate, syncStatus, syncText } = useGlowUpStore();
+  const [showAskData, setShowAskData] = useState(false);
   const realToday = new Date().toISOString().slice(0, 10);
   const isToday = selectedDate === realToday;
 
@@ -30,8 +32,13 @@ export const Header: React.FC = () => {
             <i className="sync-dot"></i>
             <span>{syncText}</span>
           </span>
+          <button className="btn sm" onClick={() => setShowAskData(true)} title="Search everything you've logged">
+            🔎 Ask Data
+          </button>
         </div>
       </div>
+
+      {showAskData && <AskYourData onClose={() => setShowAskData(false)} />}
 
       <div className="date-nav">
         <button onClick={() => shiftDate(-1)} title="Previous Day">‹</button>
