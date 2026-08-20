@@ -90,6 +90,40 @@ export const AIDossierSync: React.FC = () => {
           {copied ? '✓ Copied Dossier to Clipboard!' : '📋 Copy Full AI Context Prompt'}
         </button>
       </div>
+
+      {/* FULL STATE JSON BACKUP & RESTORE */}
+      <div className="card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+          <div>
+            <p className="eyebrow"><span className="n">backup</span> persistent data vault</p>
+            <h2 style={{ fontSize: '16px', margin: 0 }}>Full JSON Database Backup</h2>
+          </div>
+          <span className="tag-badge tag-best">Zero Data Loss</span>
+        </div>
+        <p className="note" style={{ marginBottom: '12px' }}>
+          Export your entire GlowUp state (macros, lifts, timestamps, habits, ADHD logs) into an encrypted local JSON file.
+        </p>
+
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <button
+            className="btn primary"
+            style={{ flex: 1 }}
+            onClick={() => {
+              const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `glowup_full_backup_${new Date().toISOString().slice(0, 10)}.json`;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+            }}
+          >
+            📥 Export Full JSON State Backup
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

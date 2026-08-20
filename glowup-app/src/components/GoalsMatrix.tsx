@@ -93,6 +93,31 @@ export const GoalsMatrix: React.FC = () => {
         </div>
       </div>
 
+      {/* 5 PRECISION MILESTONE EXECUTION CHECKS */}
+      <div className="card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <div>
+            <p className="eyebrow"><span className="n">standards</span> 5-point milestone verification</p>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>🎯 5 Precision Milestone Execution Standards</h3>
+          </div>
+          <span className="tag-badge tag-best">Outcome Protocol</span>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 12px' }}>
+          {[
+            'Binary verification criteria: Clear mathematical pass/fail (e.g. 72.0 kg scale or 100kg lift)',
+            'Anchor to a daily recurring micro-habit (e.g. 170g protein floor anchors the 72kg cut)',
+            'Realistic time-bounding with incremental milestone phases (Sep ➔ Nov ➔ Dec ➔ Feb)',
+            'Automated frictionless progress logging into daily timeline without cognitive friction',
+            'Milestone celebration trigger (confetti & dopamine sound chime upon lock-in)'
+          ].map((chk, i) => (
+            <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ color: 'var(--turmeric)', fontWeight: 700 }}>✓</span> {chk}
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* CATEGORY FILTER BUTTONS */}
       <div className="goal-cat-bar">
         <button className={`goal-cat-btn ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')}>

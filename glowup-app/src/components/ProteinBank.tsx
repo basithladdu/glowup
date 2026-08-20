@@ -290,6 +290,48 @@ export const ProteinBank: React.FC = () => {
               ))}
             </div>
           </div>
+          {/* 3.5L CELLULAR HYDRATION & ELECTROLYTE TRACKER */}
+          <div className="card">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <div>
+                <p className="eyebrow"><span className="n">hydration</span> cellular osmolarity &amp; atp delivery</p>
+                <h3 style={{ fontSize: '15px', margin: 0, color: '#06B6D4' }}>💧 3.5L Daily Water &amp; Electrolytes</h3>
+              </div>
+              <span className="tag-badge tag-best">Cellular Hydration</span>
+            </div>
+
+            {/* 5 PRECISION HYDRATION CHECKS */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 12px' }}>
+              {[
+                '500ml room temp water upon waking (activates digestion)',
+                '500ml water + 5g Creatine Monohydrate post-workout (ATP delivery)',
+                '1,000ml mid-day water with pinch of pink salt (electrolyte balance)',
+                '1,000ml afternoon hydration block (cognitive alertness)',
+                '500ml evening hydration tapered 90m before sleep (prevents nocturia)'
+              ].map((chk, i) => (
+                <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ color: '#06B6D4', fontWeight: 700 }}>✓</span> {chk}
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', gap: '6px' }}>
+              <button
+                className="btn sm"
+                style={{ flex: 1, background: 'var(--surface2)', color: '#06B6D4', border: '1px solid var(--line2)' }}
+                onClick={() => addFoodItems([{ n: 'Water + Electrolytes (250ml)', k: 0, p: 0, c: 0, f: 0 }])}
+              >
+                + 250ml Glass
+              </button>
+              <button
+                className="btn sm"
+                style={{ flex: 1, background: 'rgba(6, 182, 212, 0.15)', color: '#06B6D4', border: '1px solid #06B6D4' }}
+                onClick={() => addFoodItems([{ n: 'Water Bottle (500ml)', k: 0, p: 0, c: 0, f: 0 }])}
+              >
+                + 500ml Bottle
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

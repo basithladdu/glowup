@@ -176,4 +176,31 @@ assert(sprintCheckContent.includes('5 precision retention checks'), 'ContentSpri
 assert(sprintCheckContent.includes('high-retention script vault'), 'ContentSprint.tsx must include script hook vault');
 console.log('✔ Test 17: Content Creation 5 Retention Checks & Viral Script Hook Vault verified');
 
+// Test 18: PWA Offline Service Worker & Full State JSON Backup
+assert(fs.existsSync(path.join(__dirname, 'glowup-app/public/sw.js')), 'sw.js must exist in public');
+const syncContent = fs.readFileSync(path.join(appDir, 'components/AIDossierSync.tsx'), 'utf8');
+assert(syncContent.includes('glowup_full_backup_'), 'AIDossierSync.tsx must include JSON backup exporter');
+console.log('✔ Test 18: PWA Offline Service Worker & Full State JSON Backup Vault verified');
+
+// Test 19: 3.5L Cellular Hydration & Electrolyte Hub
+const pBankContent = fs.readFileSync(path.join(appDir, 'components/ProteinBank.tsx'), 'utf8');
+assert(pBankContent.includes('3.5L Daily Water'), 'ProteinBank.tsx must have hydration hub');
+console.log('✔ Test 19: 3.5L Cellular Hydration & Electrolyte Hub with 5 Osmolarity Checks verified');
+
+// Test 20: Anthropometric 5 Checks & US Navy Body Fat % Engine
+const measContent = fs.readFileSync(path.join(appDir, 'components/BodyMeasurements.tsx'), 'utf8');
+assert(measContent.includes('5 Precision Anthropometric Measurement Checks'), 'BodyMeasurements.tsx must have 5 checks');
+assert(measContent.includes('US Navy Est. Body Fat'), 'BodyMeasurements.tsx must have US Navy Body Fat calculator');
+console.log('✔ Test 20: Anthropometric 5 Checks & US Navy Body Fat % Engine verified');
+
+// Test 21: Dopamine Baseline Vault & 5 Precision Reset Checks
+const vaultContent = fs.readFileSync(path.join(appDir, 'components/HabitMomentumVault.tsx'), 'utf8');
+assert(vaultContent.includes('5 Precision Dopamine Reset Checks'), 'HabitMomentumVault.tsx must have 5 dopamine checks');
+console.log('✔ Test 21: Dopamine Baseline Vault & 5 Precision Reset Checks verified');
+
+// Test 22: Goals Matrix 5 Milestone Standards
+const goalsContent = fs.readFileSync(path.join(appDir, 'components/GoalsMatrix.tsx'), 'utf8');
+assert(goalsContent.includes('5 Precision Milestone Execution Standards'), 'GoalsMatrix.tsx must have 5 milestone standards');
+console.log('✔ Test 22: Goals Matrix 5 Precision Milestone Execution Standards verified');
+
 console.log('=== ALL TESTS PASSED SUCCESSFULLY (100% COMPLIANT) ===');

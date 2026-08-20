@@ -32,12 +32,25 @@ export const BodyMeasurements: React.FC = () => {
 
   const vtRatio = (parseFloat(shoulders) / (parseFloat(waist) || 1)).toFixed(2);
 
+  const [neck, setNeck] = useState('38');
+
+  // US Navy Body Fat Formula for Men:
+  // %BF = 86.010 * log10(waist - neck) - 70.041 * log10(height) + 36.76
+  const heightCm = 170; // 5'7"
+  const waistCm = parseFloat(waist) || 84;
+  const neckCm = parseFloat(neck) || 38;
+  const diff = waistCm - neckCm;
+  const estBf = diff > 0 ? Math.max(5, Math.min(40, (86.010 * Math.log10(diff) - 70.041 * Math.log10(heightCm) + 36.76))).toFixed(1) : '18.0';
+
+  const bfCategory = Number(estBf) <= 12 ? '🔥 Shredded (Abs Fully Visible)' : Number(estBf) <= 15 ? '⚡ Athletic (Upper Abs Visible)' : Number(estBf) <= 19 ? '🎯 Moderate (Lean Cut Phase)' : '⚠️ High Body Fat';
+
   const cutMilestones = [
     { title: 'Phase 1: Initial Water & Glycogen Flush', weight: '85.0 kg', status: currentWeight <= 85 ? 'Done' : 'Active Target', date: 'Sep 15, 2026' },
     { title: 'Phase 2: Submental Fat & Jawline Unlocked', weight: '80.0 kg', status: currentWeight <= 80 ? 'Done' : 'Target', date: 'Nov 01, 2026' },
     { title: 'Phase 3: Upper Abs & Clavicle Definition', weight: '76.0 kg', status: currentWeight <= 76 ? 'Done' : 'Target', date: 'Dec 15, 2026' },
     { title: 'Phase 4: Full Golden V-Taper (10–12% Shredded)', weight: '72.0 kg', status: currentWeight <= 72 ? 'Done' : 'Ultimate Goal', date: 'Feb 15, 2027' }
   ];
+
 
   return (
     <div className="section-block">
@@ -102,41 +115,73 @@ export const BodyMeasurements: React.FC = () => {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: V-TAPER & ANTHROPOMETRIC TAPE */}
-        <div className="card">
-          <p className="eyebrow"><span className="n">v-taper</span> shoulder-to-waist golden ratio</p>
-          <div style={{ background: 'var(--surface2)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px', marginBottom: '12px' }}>
-            <div className="statline">
-              <span className="statk">Golden V-Taper Ratio</span>
-              <span className="statv" style={{ color: Number(vtRatio) >= 1.6 ? 'var(--sage)' : 'var(--turmeric)' }}>
-                {vtRatio} / 1.60 Ideal
-              </span>
+        {/* RIGHT COLUMN: V-TAPER, BODY FAT CALCULATOR & 5 PRECISION CHECKS */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div className="card">
+            <p className="eyebrow"><span className="n">v-taper</span> shoulder-to-waist golden ratio</p>
+            <div style={{ background: 'var(--surface2)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px', marginBottom: '12px' }}>
+              <div className="statline">
+                <span className="statk">Golden V-Taper Ratio</span>
+                <span className="statv" style={{ color: Number(vtRatio) >= 1.6 ? 'var(--sage)' : 'var(--turmeric)' }}>
+                  {vtRatio} / 1.60 Ideal
+                </span>
+              </div>
+              <div className="statline">
+                <span className="statk">Arm Circumference</span>
+                <span className="statv" style={{ color: 'var(--paper)' }}>{arms}" / 15.0" Goal</span>
+              </div>
+              <div className="statline">
+                <span className="statk">US Navy Est. Body Fat</span>
+                <span className="statv" style={{ color: Number(estBf) <= 15 ? 'var(--sage)' : 'var(--turmeric)' }}>
+                  ~{estBf}% ({bfCategory})
+                </span>
+              </div>
             </div>
-            <div className="statline">
-              <span className="statk">Arm Circumference</span>
-              <span className="statv" style={{ color: 'var(--paper)' }}>{arms}" / 15.0" Goal</span>
-            </div>
-          </div>
 
-          <form onSubmit={handleLogMeasurements} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <div className="frow">
-              <div>
-                <label className="fl">Shoulder (cm)</label>
-                <input type="number" step="0.5" value={shoulders} onChange={(e) => setShoulders(e.target.value)} />
-              </div>
-              <div>
-                <label className="fl">Waist (cm)</label>
-                <input type="number" step="0.5" value={waist} onChange={(e) => setWaist(e.target.value)} />
-              </div>
-              <div>
-                <label className="fl">Arms (inches)</label>
-                <input type="number" step="0.1" value={arms} onChange={(e) => setArms(e.target.value)} />
+            {/* 5 PRECISION ANTHROPOMETRIC TAPE CHECKS */}
+            <div style={{ background: 'var(--surface3)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px', marginBottom: '12px' }}>
+              <p style={{ fontSize: '11px', color: 'var(--turmeric)', fontWeight: 700, margin: '0 0 6px' }}>
+                5 Precision Anthropometric Measurement Checks:
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                {[
+                  'Measure in morning fasting state immediately after urination',
+                  'Keep tape strictly parallel to floor with zero twist or slack',
+                  'Measure waist at narrowest point without sucking in abdomen',
+                  'Measure shoulders across widest lateral deltoid peaks',
+                  'Measure arm circumference flexed at peak biceps contraction'
+                ].map((chk, i) => (
+                  <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
+                  </div>
+                ))}
               </div>
             </div>
-            <button type="submit" className="btn sage" style={{ width: '100%' }}>
-              ✓ Save Anthropometric Tape Measurements
-            </button>
-          </form>
+
+            <form onSubmit={handleLogMeasurements} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div className="frow">
+                <div>
+                  <label className="fl">Shoulder (cm)</label>
+                  <input type="number" step="0.5" value={shoulders} onChange={(e) => setShoulders(e.target.value)} />
+                </div>
+                <div>
+                  <label className="fl">Waist (cm)</label>
+                  <input type="number" step="0.5" value={waist} onChange={(e) => setWaist(e.target.value)} />
+                </div>
+                <div>
+                  <label className="fl">Neck (cm)</label>
+                  <input type="number" step="0.5" value={neck} onChange={(e) => setNeck(e.target.value)} />
+                </div>
+                <div>
+                  <label className="fl">Arms (inches)</label>
+                  <input type="number" step="0.1" value={arms} onChange={(e) => setArms(e.target.value)} />
+                </div>
+              </div>
+              <button type="submit" className="btn sage" style={{ width: '100%' }}>
+                ✓ Save Anthropometric Tape Measurements
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
