@@ -29,8 +29,10 @@ export const BodyMeasurements: React.FC = () => {
     const sh = parseFloat(shoulders) || 0;
     const wa = parseFloat(waist) || 0;
     const ar = parseFloat(arms) || 0;
-    state.meas = state.meas || [];
-    state.meas.push({ d: selectedDate, shoulders: sh, waist: wa, arms: ar });
+    // Mutating state.meas.push() directly wouldn't trigger a re-render — zustand only notifies
+    // subscribers when the state reference actually changes, so this builds a fresh object.
+    const newMeas = [...(state.meas || []), { d: selectedDate, shoulders: sh, waist: wa, arms: ar }];
+    useGlowUpStore.setState({ state: { ...state, meas: newMeas } });
     saveState({ area: 'body', item: 'measurements', exact_update: `Logged tape: ${sh}cm / ${wa}cm / ${ar}in` });
   };
 
