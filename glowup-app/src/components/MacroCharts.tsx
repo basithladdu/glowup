@@ -122,20 +122,35 @@ export const MacroCharts: React.FC = () => {
           <span className="tag-badge tag-best">7,700 kcal = 1kg Fat</span>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', textAlign: 'center', margin: '8px 0 10px' }}>
-          <div style={{ background: 'var(--surface2)', padding: '8px', borderRadius: '6px' }}>
-            <div style={{ fontSize: '9px', color: 'var(--muted)' }}>14-DAY AVG INTAKE</div>
-            <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--sage)' }}>
-              {Math.round(days.reduce((acc, d) => acc + d.k, 0) / 14)} kcal/day
-            </div>
-          </div>
-          <div style={{ background: 'var(--surface2)', padding: '8px', borderRadius: '6px' }}>
-            <div style={{ fontSize: '9px', color: 'var(--muted)' }}>14-DAY AVG PROTEIN</div>
-            <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--turmeric)' }}>
-              {(days.reduce((acc, d) => acc + d.p, 0) / 14).toFixed(1)}g / 170g
-            </div>
-          </div>
-        </div>
+        {(() => {
+          // Untracked days (nothing logged at all) shouldn't count as 0 kcal in the average —
+          // that reads as a deficit when it's really just missing data. Average only tracked days.
+          const trackedDays = days.filter(d => d.k > 0 || d.p > 0);
+          const n = trackedDays.length || 1;
+          const avgK = Math.round(trackedDays.reduce((acc, d) => acc + d.k, 0) / n);
+          const avgP = (trackedDays.reduce((acc, d) => acc + d.p, 0) / n).toFixed(1);
+          return (
+            <>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', textAlign: 'center', margin: '8px 0 4px' }}>
+                <div style={{ background: 'var(--surface2)', padding: '8px', borderRadius: '6px' }}>
+                  <div style={{ fontSize: '9px', color: 'var(--muted)' }}>AVG INTAKE (TRACKED DAYS)</div>
+                  <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--sage)' }}>
+                    {trackedDays.length ? `${avgK} kcal/day` : '— No days logged'}
+                  </div>
+                </div>
+                <div style={{ background: 'var(--surface2)', padding: '8px', borderRadius: '6px' }}>
+                  <div style={{ fontSize: '9px', color: 'var(--muted)' }}>AVG PROTEIN (TRACKED DAYS)</div>
+                  <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--turmeric)' }}>
+                    {trackedDays.length ? `${avgP}g / 170g` : '— No days logged'}
+                  </div>
+                </div>
+              </div>
+              <div style={{ fontSize: '9.5px', color: 'var(--muted)', textAlign: 'center', marginBottom: '6px' }}>
+                {trackedDays.length}/14 days tracked in this window
+              </div>
+            </>
+          );
+        })()}
 
         {/* 5 PRECISION CALORIC DEFICIT STANDARDS */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '8px' }}>
