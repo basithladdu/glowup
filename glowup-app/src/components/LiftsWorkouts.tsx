@@ -160,9 +160,20 @@ export const LiftsWorkouts: React.FC = () => {
         </div>
 
         <div style={{ marginTop: '12px', borderTop: '1px solid var(--line)', paddingTop: '10px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
             <h2 style={{ fontSize: '16px', margin: 0, color: 'var(--paper)' }}>{currentRoutine.name}</h2>
             <span className="tag-badge tag-best">{currentRoutine.badge}</span>
+          </div>
+          <div style={{ marginTop: '4px' }}>
+            {!dayState.workoutRoutine ? (
+              <span className="badge-count" style={{ background: 'rgba(232,163,61,0.15)', color: 'var(--turmeric)' }}>
+                🤖 Suggested for {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][dayOfWeek]} — auto by split
+              </span>
+            ) : (
+              <span className="badge-count" style={{ background: 'rgba(110,143,196,0.15)', color: 'var(--indigo)' }}>
+                ✋ Manually picked — auto-suggests {METALLICADPA_PPL[autoRoutineKey]?.name.split('·')[0].trim()}
+              </span>
+            )}
           </div>
           <p className="note" style={{ margin: '4px 0 10px' }}>{currentRoutine.desc}</p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
