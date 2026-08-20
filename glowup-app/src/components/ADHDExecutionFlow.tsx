@@ -21,6 +21,20 @@ export const ADHDExecutionFlow: React.FC = () => {
   if (isToday && nowHour >= 10 && amStepsDone < 6) pokeItems.push(`AM Skincare (${amStepsDone}/6 steps)`);
   if (isToday && nowHour >= 21 && pmStepsDone < 7) pokeItems.push(`PM Skincare (${pmStepsDone}/7 steps)`);
 
+  // Cadence tasks (nails, fade, progress photo) — pulled in here too so this is the ONE place
+  // that lists everything overdue, not scattered across tabs you have to remember to check.
+  if (isToday) {
+    const daysSinceCadence = (id: string) => {
+      const d = (state.cadenceLog?.[id] || [])[0];
+      return d ? (Date.now() - new Date(d).getTime()) / 86400000 : 999;
+    };
+    if (daysSinceCadence('nails_trim') >= 7) pokeItems.push('Nail Trim (weekly)');
+    if (daysSinceCadence('haircut_fade') >= 14) pokeItems.push('Haircut & Fade (14-day)');
+    const lastPhoto = (state.progressPhotoDates || [])[0];
+    const daysSincePhoto = lastPhoto ? (Date.now() - new Date(lastPhoto).getTime()) / 86400000 : 999;
+    if (daysSincePhoto >= 14) pokeItems.push('Progress Photo (fortnightly)');
+  }
+
   // Box Breathing Meditation State
   const [medSeconds, setMedSeconds] = useState(10 * 60);
   const [medRunning, setMedRunning] = useState(false);

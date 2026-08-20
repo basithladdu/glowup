@@ -630,11 +630,11 @@ export const SkinGrooming: React.FC = () => {
             </span>
           </div>
 
-          {/* NAILS — weekly cadence task, silent until actually due */}
+          {/* NAILS — weekly cadence task, silent until actually due. Logged cross-day via cadenceLog
+              (NOT dayState.productTelemetry, which resets every day and can't hold a weekly cycle). */}
           {(() => {
-            const t = telemetry['nails_trim'];
-            const lastTs = t?.history?.[0]?.timestamp;
-            const daysSince = lastTs ? (Date.now() - new Date(lastTs).getTime()) / 86400000 : 999;
+            const lastDate = (state.cadenceLog?.['nails_trim'] || [])[0];
+            const daysSince = lastDate ? (Date.now() - new Date(lastDate).getTime()) / 86400000 : 999;
             const isDue = daysSince >= 7;
             return (
               <div style={{ background: 'var(--surface2)', border: `1px solid ${isDue ? 'var(--turmeric)' : 'var(--line2)'}`, borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
@@ -642,7 +642,7 @@ export const SkinGrooming: React.FC = () => {
                 <span style={{ fontSize: '10.5px', color: isDue ? 'var(--turmeric)' : 'var(--muted)' }}>
                   {isDue ? '✂ Due — trim whenever convenient today' : `Not due yet — trimmed ${Math.floor(daysSince)}d ago, next check in ${Math.max(0, 7 - Math.floor(daysSince))}d`}
                 </span>
-                <button className="btn sm" style={{ marginTop: '2px' }} onClick={() => useGlowUpStore.getState().logProductUsage('nails_trim', 'Nail Trim', 'Hands/Feet', 1)}>
+                <button className="btn sm" style={{ marginTop: '2px' }} onClick={() => useGlowUpStore.getState().logCadence('nails_trim')}>
                   ⚡ Log Trim
                 </button>
               </div>
@@ -651,9 +651,8 @@ export const SkinGrooming: React.FC = () => {
 
           {/* HAIRCUT & BEARD FADE — 14-day cadence task, silent until actually due */}
           {(() => {
-            const t = telemetry['haircut_fade'];
-            const lastTs = t?.history?.[0]?.timestamp;
-            const daysSince = lastTs ? (Date.now() - new Date(lastTs).getTime()) / 86400000 : 999;
+            const lastDate = (state.cadenceLog?.['haircut_fade'] || [])[0];
+            const daysSince = lastDate ? (Date.now() - new Date(lastDate).getTime()) / 86400000 : 999;
             const isDue = daysSince >= 14;
             return (
               <div style={{ background: 'var(--surface2)', border: `1px solid ${isDue ? 'var(--turmeric)' : 'var(--line2)'}`, borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
@@ -661,7 +660,7 @@ export const SkinGrooming: React.FC = () => {
                 <span style={{ fontSize: '10.5px', color: isDue ? 'var(--turmeric)' : 'var(--muted)' }}>
                   {isDue ? '✂ Due — sharp neckline & clean taper' : `Not due yet — ${Math.floor(daysSince)}d since last, next check in ${Math.max(0, 14 - Math.floor(daysSince))}d`}
                 </span>
-                <button className="btn sm" style={{ marginTop: '2px' }} onClick={() => useGlowUpStore.getState().logProductUsage('haircut_fade', 'Haircut & Fade', 'Head/Beard', 1)}>
+                <button className="btn sm" style={{ marginTop: '2px' }} onClick={() => useGlowUpStore.getState().logCadence('haircut_fade')}>
                   ⚡ Log Haircut Done
                 </button>
               </div>

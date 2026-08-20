@@ -74,6 +74,7 @@ interface GlowUpStore {
   toggleStepMicroCheck: (stepId: string, checkIdx: number, zone?: string, date?: string) => void;
   logProductUsage: (productId: string, productName: string, zone: string, checksCount: number, date?: string) => void;
   logProgressPhoto: (date?: string) => void;
+  logCadence: (id: string, date?: string) => void;
 }
 
 export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
@@ -418,5 +419,20 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     playSuccessChime();
     triggerGoalCelebration();
     get().saveState({ area: 'body', item: 'progress-photo', exact_update: `Logged progress photo taken on ${d}` });
+  },
+
+  // Cross-day cadence log (nail trims, haircuts, etc.) — separate from productTelemetry, which
+  // lives inside per-day DayState and resets every day, so it can't track a weekly/14-day cycle.
+  logCadence: (id, date) => {
+    const d = date || get().selectedDate;
+    const state = { ...get().state };
+    state.cadenceLog = state.cadenceLog || {};
+    state.cadenceLog[id] = state.cadenceLog[id] || [];
+    if (!state.cadenceLog[id].includes(d)) {
+      state.cadenceLog[id] = [d, ...state.cadenceLog[id]].slice(0, 30);
+    }
+    set({ state });
+    playSuccessChime();
+    get().saveState({ area: 'cadence', item: id, exact_update: `Logged cadence task ${id} on ${d}` });
   }
 }));

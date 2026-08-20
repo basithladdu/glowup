@@ -85,6 +85,7 @@ export interface GlowUpState {
   customRecipes?: CustomProteinItem[];
   customEvents?: CalendarEvent[];
   progressPhotoDates?: string[];
+  cadenceLog?: Record<string, string[]>;
   peel: string;
   start: string;
   abstinence: AbstinenceState;

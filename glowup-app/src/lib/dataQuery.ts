@@ -60,6 +60,11 @@ export function flattenState(state: GlowUpState): DataFact[] {
   for (const date of state.progressPhotoDates || []) {
     facts.push({ date, area: 'photo', text: 'Progress photo taken', done: true });
   }
+  for (const [id, dates] of Object.entries(state.cadenceLog || {})) {
+    for (const date of dates) {
+      facts.push({ date, area: 'cadence', text: id.replace(/_/g, ' '), done: true });
+    }
+  }
   for (const g of state.milestones || []) {
     facts.push({ date: g.date, area: 'goal', text: `${g.title} — ${g.done ? 'done' : 'pending'}`, done: g.done });
   }
