@@ -249,6 +249,35 @@ export const SkinGrooming: React.FC = () => {
 
   return (
     <div className="section-block">
+      {/* TAN & HYPERPIGMENTATION PREVENTION PROTOCOL — dermatologist-grounded */}
+      <div className="card" style={{ borderColor: 'rgba(232, 163, 61, 0.35)', background: 'linear-gradient(150deg, var(--surface) 0%, rgba(232, 163, 61, 0.05) 100%)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+          <div>
+            <p className="eyebrow"><span className="n">prevention</span> dermatologist-backed tan & pigmentation shield</p>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>☀️ Tan Prevention Protocol</h3>
+          </div>
+          <span className="tag-badge tag-best">SPF out of stock</span>
+        </div>
+        <p className="note" style={{ marginBottom: '10px' }}>
+          Your SPF is on the to-buy list — sunscreen every single day (even indoors) is the #1 lever against
+          both new tanning and the hyperpigmentation you're already treating. UV exposure is what deepens dark spots faster
+          than any active can fade them.
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          {[
+            'AM order: antioxidant serum (Vitamin C) → barrier moisturizer → SPF 50+ — never skip the last step',
+            'Prefer a tinted SPF 50+ with iron oxides — plain SPF misses visible light, which restarts melasma/dark spots',
+            '2-finger rule reapplication if outdoors past 2–3h; hoodie/cap on peak sun hours (11am–3pm)',
+            '3L water daily + high-protein clean whey — supports barrier repair alongside topical actives',
+            'Glutathione (1–2% topical or supplement) pairs with SPF to blunt tyrosinase-driven pigment — never as a sub for sunscreen'
+          ].map((chk, i) => (
+            <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
+              <span style={{ color: 'var(--turmeric)', fontWeight: 700 }}>☀</span> {chk}
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* TONIGHT'S CLINICAL ACTIVE ROTATION BANNER */}
       <div className="card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
