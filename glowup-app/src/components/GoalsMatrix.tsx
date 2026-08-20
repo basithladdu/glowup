@@ -34,6 +34,10 @@ export const GoalsMatrix: React.FC = () => {
     setNewTitle('');
   };
 
+  // Routine (recurring cadence) vs one-off task (a single thing to check/schedule once) — so the
+  // list reads at a glance instead of every goal looking like the same kind of commitment.
+  const isRoutine = (freq: string) => /daily|weekly|week|x\s*\/|every \d+\s*days?/i.test(freq || '');
+
   const getCatLabel = (cat: string) => {
     switch (cat) {
       case 'gym': return { label: '🏋️ GYM', cls: 'cat-pill gym' };
@@ -146,7 +150,13 @@ export const GoalsMatrix: React.FC = () => {
               <div className="goal-item-header">
                 <div className="goal-tag-group">
                   <span className={badge.cls}>{badge.label}</span>
-                  <span className="freq-pill">⏳ {m.freq || 'Daily'}</span>
+                  <span
+                    className="freq-pill"
+                    style={isRoutine(m.freq) ? undefined : { background: 'rgba(110,143,196,0.2)', color: 'var(--indigo)' }}
+                    title={isRoutine(m.freq) ? 'Recurring routine' : 'One-off task'}
+                  >
+                    {isRoutine(m.freq) ? '🔁' : '☑'} {m.freq || 'Daily'}
+                  </span>
                 </div>
                 <span className="goal-item-date">{m.date ? 'Target: ' + m.date : 'Ongoing Target'}</span>
               </div>
