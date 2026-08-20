@@ -2,10 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
 import { triggerGoalCelebration } from '../lib/confetti';
 import { playSuccessChime } from '../lib/sound';
+import { findMissedToday } from '../lib/dataQuery';
+
+const EXPECTED_HABITS = ['h_spf', 'h_minox', 'h_creatine', 'h_castoroil'];
 
 export const ADHDExecutionFlow: React.FC = () => {
-  const { selectedDate, getDayState, saveState, toggleHabit } = useGlowUpStore();
+  const { selectedDate, state, getDayState, saveState, toggleHabit } = useGlowUpStore();
   const dayState = getDayState();
+
+  // "Poke me" list — everything expected today that hasn't been logged yet.
+  // This is the ADHD-friendly nag: it never asks about things not yet due.
+  const missedHabits = findMissedToday(state, selectedDate, EXPECTED_HABITS);
+  const amStepsDone = Object.values(dayState.amSkinSteps || {}).filter(Boolean).length;
+  const pmStepsDone = Object.values(dayState.pmSkinSteps || {}).filter(Boolean).length;
+  const isToday = selectedDate === new Date().toISOString().slice(0, 10);
+  const nowHour = new Date().getHours();
+  const pokeItems: string[] = [...missedHabits];
+  if (isToday && nowHour >= 10 && amStepsDone < 6) pokeItems.push(`AM Skincare (${amStepsDone}/6 steps)`);
+  if (isToday && nowHour >= 21 && pmStepsDone < 7) pokeItems.push(`PM Skincare (${pmStepsDone}/7 steps)`);
 
   // Box Breathing Meditation State
   const [medSeconds, setMedSeconds] = useState(10 * 60);
@@ -124,6 +138,29 @@ export const ADHDExecutionFlow: React.FC = () => {
           "If you try to do 20 things at once, you freeze. If you execute ONE Call-To-Action at a time on autopilot, you will become the greatest in your city."
         </p>
       </div>
+
+      {/* POKE ME — quiet unless something's actually due, then it's blunt about it */}
+      {isToday && (
+        <div className="card" style={{ borderColor: pokeItems.length ? 'rgba(201,123,142,0.4)' : 'rgba(138,168,95,0.35)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: pokeItems.length ? '8px' : 0 }}>
+            <div>
+              <p className="eyebrow"><span className="n">poke</span> what you haven't logged yet, right now</p>
+              <h3 style={{ fontSize: '14px', margin: 0, color: pokeItems.length ? 'var(--rose)' : 'var(--sage)' }}>
+                {pokeItems.length ? `😤 ${pokeItems.length} Thing${pokeItems.length === 1 ? '' : 's'} Not Done Yet` : '✓ Nothing Overdue Right Now'}
+              </h3>
+            </div>
+          </div>
+          {pokeItems.length > 0 && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              {pokeItems.map((item, i) => (
+                <div key={i} style={{ fontSize: '11.5px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ color: 'var(--rose)', fontWeight: 700 }}>✗</span> Why haven't you done {item} yet?
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="desktop-grid-equal">
         {/* LEFT COLUMN: 10-MIN BOX BREATHING & CURRENT MUST-DOS */}
