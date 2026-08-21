@@ -1,12 +1,17 @@
-import { GEMINI_API_KEY, GEMINI_MODELS } from './constants';
+import { getGeminiApiKey, GEMINI_MODELS } from './constants';
 import type { MacroItem } from '../types';
 
 export async function parseFoodMacrosAI(userPrompt: string): Promise<MacroItem[]> {
+  const apiKey = getGeminiApiKey();
+  if (!apiKey) {
+    throw new Error('No Gemini API key set. Add one under the Data tab to use AI meal parsing.');
+  }
+
   let lastError: Error | null = null;
   
   for (const model of GEMINI_MODELS) {
     try {
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
       const payload = {
         contents: [{
           parts: [{

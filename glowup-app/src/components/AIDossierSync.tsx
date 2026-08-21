@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
 import { usePokeItems } from '../lib/usePoke';
 import { loadProgressPhotos, saveProgressPhoto } from '../lib/localDB';
+import { getGeminiApiKey } from '../lib/constants';
 
 export const AIDossierSync: React.FC = () => {
   const { state, selectedDate, syncStatus, syncText, saveState } = useGlowUpStore();
   const [copied, setCopied] = useState(false);
   const pokeItems = usePokeItems();
+  const [apiKeyInput, setApiKeyInput] = useState('');
+  const [apiKeySaved, setApiKeySaved] = useState(!!getGeminiApiKey());
   const [restoreMsg, setRestoreMsg] = useState<string | null>(null);
   const [pendingRestore, setPendingRestore] = useState<any>(null);
   const importRef = React.useRef<HTMLInputElement>(null);
@@ -159,6 +162,45 @@ export const AIDossierSync: React.FC = () => {
         <button className="btn sage" style={{ width: '100%' }} onClick={handleCopy}>
           {copied ? '✓ Copied Dossier to Clipboard!' : 'Copy Full AI Context Prompt'}
         </button>
+      </div>
+
+      {/* The key is stored per-device in localStorage and never committed or synced. */}
+      <div className="card">
+        <p className="eyebrow"><span className="n">ai</span> gemini api key</p>
+        <h2 style={{ fontSize: '16px', margin: '0 0 6px' }}>
+          {apiKeySaved ? 'API key set on this device' : 'No API key set'}
+        </h2>
+        <p className="note" style={{ marginBottom: '10px' }}>
+          Needed for AI meal parsing. Stored only in this browser — it is never committed to
+          the repo, included in a backup, or synced to Supabase.
+        </p>
+        <div style={{ display: 'flex', gap: '6px' }}>
+          <input
+            type="password"
+            value={apiKeyInput}
+            onChange={(e) => setApiKeyInput(e.target.value)}
+            placeholder={apiKeySaved ? 'Replace stored key…' : 'Paste your Gemini API key'}
+          />
+          <button
+            className="btn primary sm"
+            onClick={() => {
+              if (!apiKeyInput.trim()) return;
+              localStorage.setItem('gemini_api_key', apiKeyInput.trim());
+              setApiKeyInput('');
+              setApiKeySaved(true);
+            }}
+          >
+            Save
+          </button>
+          {apiKeySaved && (
+            <button
+              className="btn sm"
+              onClick={() => { localStorage.removeItem('gemini_api_key'); setApiKeySaved(false); }}
+            >
+              Clear
+            </button>
+          )}
+        </div>
       </div>
 
       {/* FULL STATE JSON BACKUP & RESTORE */}

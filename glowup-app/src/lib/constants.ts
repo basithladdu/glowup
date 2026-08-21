@@ -8,8 +8,17 @@ export const MAINT_KCAL = 2500;
 export const SUPABASE_URL = "https://kircxokjlqguyzlkhmop.supabase.co";
 export const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtpcmN4b2tqbHFndXl6bGtobW9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5OTI1MTQsImV4cCI6MjEwMjU2ODUxNH0.zU6f3TqyhHHGFxrMFM55JH-c8Jn7T2FbByIxDGUOZ8k";
 
-export const GEMINI_API_KEY = (typeof window !== 'undefined' && window.localStorage?.getItem('gemini_api_key')) || 
-  atob("QVEuQWI4Uk42TGdteXRETFpwM3hic25QakRZZ19fellNQkdhcWVXZnRVaWNvYUxGZlZJN2c=");
+/**
+ * Read at call time, never baked into the bundle.
+ *
+ * This previously fell back to a base64-obfuscated key committed to the repo. base64 is
+ * not encryption — the key shipped in the built JS and was readable by anyone. Supply it
+ * per-device via the Data tab (localStorage) or a VITE_GEMINI_API_KEY build env var.
+ */
+export function getGeminiApiKey(): string {
+  const stored = typeof window !== 'undefined' ? window.localStorage?.getItem('gemini_api_key') : null;
+  return stored || import.meta.env.VITE_GEMINI_API_KEY || '';
+}
 
 export const GEMINI_MODELS = ["gemini-2.5-flash-lite", "gemini-3.6-flash", "gemini-3.7-flash", "gemini-flash-latest"];
 
