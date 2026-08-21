@@ -25,7 +25,27 @@ export function App() {
   const { loadState, logWater, addFoodItems, toggleHabit } = useGlowUpStore();
   // Land on the "what's left today" screen, not the 1440px 24h timetable — the first
   // thing you see should be the short actionable list, not a wall.
-  const [activeTab, setActiveTab] = useState<TabType>('adhd');
+  // Tabs are real URLs. Previously every tab was component state, so a refresh
+  // dumped you back to the start, the back button did nothing, and no view could
+  // be linked or bookmarked.
+  const tabFromHash = (): TabType => {
+    const h = window.location.hash.replace(/^#\/?/, '').trim();
+    return (h || 'adhd') as TabType;
+  };
+  const [activeTab, setActiveTabState] = useState<TabType>(tabFromHash);
+
+  const setActiveTab = (tab: TabType) => {
+    setActiveTabState(tab);
+    if (tabFromHash() !== tab) window.location.hash = `/${tab}`;
+  };
+
+  useEffect(() => {
+    const onHashChange = () => setActiveTabState(tabFromHash());
+    window.addEventListener('hashchange', onHashChange);
+    if (!window.location.hash) window.location.replace(`#/${activeTab}`);
+    return () => window.removeEventListener('hashchange', onHashChange);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [passInput, setPassInput] = useState('');
   const [passError, setPassError] = useState(false);
