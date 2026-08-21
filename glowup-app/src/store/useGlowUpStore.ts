@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { GlowUpState, MacroItem, LiftSet, GoalMilestone, DayState, CustomProteinItem, CalendarEvent, InventoryItem } from '../types';
+import type { GlowUpState, MacroItem, LiftSet, GoalMilestone, DayState, CustomProteinItem, CalendarEvent, InventoryItem, CustomHabit } from '../types';
 import { DEFAULT_GOALS, DEFAULT_INVENTORY } from '../lib/constants';
 import { supabase } from '../lib/supabase';
 import { saveLocalSnapshot, loadLocalSnapshot } from '../lib/localDB';
@@ -80,6 +80,8 @@ interface GlowUpStore {
   addInventoryItem: (item: InventoryItem) => void;
   deleteInventoryItem: (id: string) => void;
   toggleStepEnabled: (stepId: string) => void;
+  addCustomHabit: (habit: CustomHabit) => void;
+  deleteCustomHabit: (id: string) => void;
 }
 
 export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
@@ -475,5 +477,20 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     state.disabledSteps = nowDisabled ? [...disabled, stepId] : disabled.filter(s => s !== stepId);
     set({ state });
     get().saveState({ area: 'routine', item: stepId, exact_update: `${stepId} ${nowDisabled ? 'removed from' : 'restored to'} routine` });
+  },
+
+  addCustomHabit: (habit) => {
+    const state = { ...get().state };
+    state.customHabits = [...(state.customHabits || []), habit];
+    set({ state });
+    playSuccessChime();
+    get().saveState({ area: 'habits', item: habit.id, exact_update: `Added custom habit ${habit.name}` });
+  },
+
+  deleteCustomHabit: (id) => {
+    const state = { ...get().state };
+    state.customHabits = (state.customHabits || []).filter(h => h.id !== id);
+    set({ state });
+    get().saveState({ area: 'habits', item: id, exact_update: `Deleted custom habit ${id}` });
   }
 }));

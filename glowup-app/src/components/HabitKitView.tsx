@@ -14,7 +14,9 @@ interface HabitDef {
 }
 
 export const HabitKitView: React.FC = () => {
-  const { state, selectedDate, setSelectedDate, toggleHabit, getDayState, toggleStepEnabled } = useGlowUpStore();
+  const { state, selectedDate, setSelectedDate, toggleHabit, getDayState, toggleStepEnabled, addCustomHabit, deleteCustomHabit } = useGlowUpStore();
+  const [newHabitName, setNewHabitName] = useState('');
+  const [newHabitSub, setNewHabitSub] = useState('');
 
   // Habits you've switched off vanish from the grid and stop being nagged about.
   const disabledIds = state.disabledSteps || [];
@@ -219,7 +221,31 @@ export const HabitKitView: React.FC = () => {
   };
 
   // Compute consistency score for each habit
-  const activeHabits = habits.filter(h => !disabledIds.includes(h.id));
+  // Habits you created are first-class: same card, same heatmap, same toggle.
+  const customAsHabitDefs: HabitDef[] = (state.customHabits || []).map(h => ({
+    id: h.id,
+    name: h.name,
+    sub: h.sub,
+    icon: '',
+    color: '#8AA85F',
+    bgTint: 'rgba(138, 168, 95, 0.12)',
+    category: 'health' as const,
+    checks: [],
+  }));
+  const allHabits = [...habits, ...customAsHabitDefs];
+  const activeHabits = allHabits.filter(h => !disabledIds.includes(h.id));
+
+  const handleAddHabit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newHabitName.trim()) return;
+    addCustomHabit({
+      id: 'ch_' + Date.now(),
+      name: newHabitName.trim(),
+      sub: newHabitSub.trim() || 'Custom habit',
+    });
+    setNewHabitName('');
+    setNewHabitSub('');
+  };
 
   const habitConsistency = activeHabits.map(h => {
     const dots = getHabitMiniHeatmap(h.id);
@@ -302,10 +328,30 @@ export const HabitKitView: React.FC = () => {
 
       {/* HABITKIT HABIT CARDS WITH 5 PRECISION CHECKS */}
       <div className="desktop-grid-equal">
+        <div className="card">
+          <p className="eyebrow"><span className="n">add</span> your own habit</p>
+          <form onSubmit={handleAddHabit} style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+            <input
+              value={newHabitName}
+              onChange={(e) => setNewHabitName(e.target.value)}
+              placeholder="e.g. Take vitamin D"
+              style={{ flex: 2, minWidth: '160px' }}
+              required
+            />
+            <input
+              value={newHabitSub}
+              onChange={(e) => setNewHabitSub(e.target.value)}
+              placeholder="Why it matters (optional)"
+              style={{ flex: 2, minWidth: '160px' }}
+            />
+            <button type="submit" className="btn primary sm">Add</button>
+          </form>
+        </div>
+
         <RemovedItems
           noun="habits"
           items={disabledIds
-            .map(id => habits.find(h => h.id === id))
+            .map(id => allHabits.find(h => h.id === id))
             .filter(Boolean)
             .map(h => ({ id: h!.id, label: h!.name }))}
           onRestore={toggleStepEnabled}
@@ -340,6 +386,16 @@ export const HabitKitView: React.FC = () => {
                   >
                     {isExpanded ? '▲ Hide' : 'Checks'}
                   </button>
+                  {h.id.startsWith('ch_') && (
+                    <button
+                      className="btn sm"
+                      title="Delete this custom habit permanently"
+                      style={{ fontSize: '10px', padding: '3px 6px', background: 'transparent', color: 'var(--muted)', border: 0 }}
+                      onClick={() => deleteCustomHabit(h.id)}
+                    >
+                      Delete
+                    </button>
+                  )}
                   <button
                     className="btn sm"
                     title="Remove this habit from your list"

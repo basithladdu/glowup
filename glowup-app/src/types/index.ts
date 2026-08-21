@@ -82,6 +82,12 @@ export interface InventoryItem {
   inStock: boolean;
 }
 
+export interface CustomHabit {
+  id: string;
+  name: string;
+  sub: string;
+}
+
 export interface GlowUpState {
   days: Record<string, DayState>;
   weights: Record<string, number>;
@@ -96,6 +102,9 @@ export interface GlowUpState {
   progressPhotoDates?: string[];
   cadenceLog?: Record<string, string[]>;
   inventory?: InventoryItem[];
+  /** Habits you added yourself — the built-in list can't know about your meds,
+   * your oiling schedule, or anything else personal. */
+  customHabits?: CustomHabit[];
   /** Routine steps you've switched off — they stop appearing and stop counting toward
    * "AM Skincare (n/N)", so the app never nags about a step you don't actually do. */
   disabledSteps?: string[];
