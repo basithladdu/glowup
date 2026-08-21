@@ -34,15 +34,16 @@ export function usePokeItems(): PokeItem[] {
 
   // If you've run out of the product, nagging you to apply it is useless — the
   // actionable thing is restocking, so the item points at the Buy tab instead.
+  // A habit you've removed must not keep showing up here.
+  const disabled = state.disabledSteps || [];
   const items: PokeItem[] = EXPECTED_HABITS
-    .filter((h) => !dayState.habits?.[h.id])
+    .filter((h) => !disabled.includes(h.id) && !dayState.habits?.[h.id])
     .map((h) => isOutOfStock(h.id)
       ? { label: `Buy ${h.label} — you're out`, tab: 'shopping' as PokeTab }
       : { label: h.label, tab: h.tab });
 
   // Counts derive from the steps you've actually kept, so switching a step off
   // immediately stops it counting against you.
-  const disabled = state.disabledSteps || [];
   const amSteps = AM_STEP_IDS.filter((id) => !disabled.includes(id));
   const pmSteps = PM_STEP_IDS.filter((id) => !disabled.includes(id));
   const amDone = amSteps.filter((id) => dayState.amSkinSteps?.[id]).length;

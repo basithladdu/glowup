@@ -13,7 +13,10 @@ interface HabitDef {
 }
 
 export const HabitKitView: React.FC = () => {
-  const { state, selectedDate, setSelectedDate, toggleHabit, getDayState } = useGlowUpStore();
+  const { state, selectedDate, setSelectedDate, toggleHabit, getDayState, toggleStepEnabled } = useGlowUpStore();
+
+  // Habits you've switched off vanish from the grid and stop being nagged about.
+  const disabledIds = state.disabledSteps || [];
   const dayState = getDayState();
   const [showAudit, setShowAudit] = useState(false);
   const [expandedHabit, setExpandedHabit] = useState<string | null>(null);
@@ -215,7 +218,9 @@ export const HabitKitView: React.FC = () => {
   };
 
   // Compute consistency score for each habit
-  const habitConsistency = habits.map(h => {
+  const activeHabits = habits.filter(h => !disabledIds.includes(h.id));
+
+  const habitConsistency = activeHabits.map(h => {
     const dots = getHabitMiniHeatmap(h.id);
     const doneCount = dots.filter(d => d.isDone).length;
     const score = Math.round((doneCount / dots.length) * 100);
@@ -296,7 +301,20 @@ export const HabitKitView: React.FC = () => {
 
       {/* HABITKIT HABIT CARDS WITH 5 PRECISION CHECKS */}
       <div className="desktop-grid-equal">
-        {habits.map((h) => {
+        {disabledIds.some(id => habits.find(h => h.id === id)) && (
+          <div className="card">
+            <p className="eyebrow"><span className="n">habits</span> you removed</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+              {disabledIds.map(id => habits.find(h => h.id === id)).filter(Boolean).map((h) => (
+                <button key={h!.id} className="ai-chip" onClick={() => toggleStepEnabled(h!.id)}>
+                  + {h!.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {activeHabits.map((h) => {
           const isDone = !!dayState.habits[h.id];
           const isExpanded = expandedHabit === h.id;
           const heatmapDots = getHabitMiniHeatmap(h.id);
@@ -324,6 +342,14 @@ export const HabitKitView: React.FC = () => {
                     onClick={() => setExpandedHabit(isExpanded ? null : h.id)}
                   >
                     {isExpanded ? '▲ Hide' : 'Checks'}
+                  </button>
+                  <button
+                    className="btn sm"
+                    title="Remove this habit from your list"
+                    style={{ fontSize: '10px', padding: '3px 6px', background: 'transparent', color: 'var(--muted)', border: 0 }}
+                    onClick={() => toggleStepEnabled(h.id)}
+                  >
+                    ✕
                   </button>
                   <button
                     className={`habitkit-check-btn ${isDone ? 'checked' : ''}`}
