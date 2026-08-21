@@ -86,6 +86,9 @@ export interface CustomHabit {
   id: string;
   name: string;
   sub: string;
+  /** How often this is actually due, in days. 1 = daily. A nail trim is 7, a haircut
+   * 14 — nagging about those every day is noise, not a reminder. */
+  everyDays?: number;
 }
 
 export interface GlowUpState {

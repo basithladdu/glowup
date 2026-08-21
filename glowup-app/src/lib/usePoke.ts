@@ -58,7 +58,23 @@ export function usePokeItems(): PokeItem[] {
   // otherwise creating a habit would quietly opt it out of the whole point of the app.
   const expected = [
     ...EXPECTED_HABITS,
-    ...(state.customHabits || []).map((h) => ({ id: h.id, label: h.name, tab: 'habitkit' as PokeTab })),
+    ...(state.customHabits || [])
+      // Only surface a custom habit once it's actually due again. A weekly trim
+      // logged yesterday shouldn't be on today's list.
+      .filter((h) => {
+        const every = h.everyDays ?? 1;
+        if (every <= 1) return true;
+        for (let back = 1; back < every; back++) {
+          const day = iso(new Date(Date.now() - back * DAY_MS));
+          if (state.days?.[day]?.habits?.[h.id]) return false;
+        }
+        return true;
+      })
+      .map((h) => ({
+        id: h.id,
+        label: (h.everyDays ?? 1) > 1 ? `${h.name} (every ${h.everyDays}d)` : h.name,
+        tab: 'habitkit' as PokeTab,
+      })),
   ];
 
   const items: PokeItem[] = expected

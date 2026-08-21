@@ -17,6 +17,7 @@ export const HabitKitView: React.FC = () => {
   const { state, selectedDate, setSelectedDate, toggleHabit, getDayState, toggleStepEnabled, addCustomHabit, deleteCustomHabit } = useGlowUpStore();
   const [newHabitName, setNewHabitName] = useState('');
   const [newHabitSub, setNewHabitSub] = useState('');
+  const [newHabitEvery, setNewHabitEvery] = useState('1');
 
   // Habits you've switched off vanish from the grid and stop being nagged about.
   const disabledIds = state.disabledSteps || [];
@@ -225,7 +226,7 @@ export const HabitKitView: React.FC = () => {
   const customAsHabitDefs: HabitDef[] = (state.customHabits || []).map(h => ({
     id: h.id,
     name: h.name,
-    sub: h.sub,
+    sub: (h.everyDays ?? 1) > 1 ? `${h.sub} · every ${h.everyDays}d` : h.sub,
     icon: '',
     color: '#8AA85F',
     bgTint: 'rgba(138, 168, 95, 0.12)',
@@ -242,6 +243,7 @@ export const HabitKitView: React.FC = () => {
       id: 'ch_' + Date.now(),
       name: newHabitName.trim(),
       sub: newHabitSub.trim() || 'Custom habit',
+      everyDays: Number(newHabitEvery) || 1,
     });
     setNewHabitName('');
     setNewHabitSub('');
@@ -344,6 +346,14 @@ export const HabitKitView: React.FC = () => {
               placeholder="Why it matters (optional)"
               style={{ flex: 2, minWidth: '160px' }}
             />
+            <select value={newHabitEvery} onChange={(e) => setNewHabitEvery(e.target.value)} style={{ flex: '0 0 auto', width: 'auto' }}>
+              <option value="1">Every day</option>
+              <option value="2">Every 2 days</option>
+              <option value="3">Every 3 days</option>
+              <option value="7">Weekly</option>
+              <option value="14">Every 2 weeks</option>
+              <option value="30">Monthly</option>
+            </select>
             <button type="submit" className="btn primary sm">Add</button>
           </form>
         </div>
