@@ -1,3 +1,8 @@
+-- WARNING: the "Allow all" policies below are USING (true) / WITH CHECK (true),
+-- which makes RLS a no-op — combined with the publicly published anon key, anyone
+-- on the internet can read and write these tables. Verified 2026-08-21.
+-- See supabase-hardening.sql before deploying this anywhere real.
+
 CREATE TABLE IF NOT EXISTS glowup_state (
   id text PRIMARY KEY,
   data jsonb NOT NULL,
