@@ -74,8 +74,9 @@ export const ContentSprint: React.FC = () => {
       keyArguments: polArgs.trim(),
       stance: polStance
     };
-    (state as any).politicalNotes = (state as any).politicalNotes || [];
-    (state as any).politicalNotes.unshift(newNote);
+    // Same mutation-without-reference-change bug as handleFinishSprint above.
+    const newNotes = [newNote, ...((state as any).politicalNotes || [])];
+    useGlowUpStore.setState({ state: { ...state, politicalNotes: newNotes } as any });
     saveState({ area: 'content', item: 'political-note', exact_update: `Logged political research: ${polTopic.trim()}` });
     setPolTopic('');
     setPolSummary('');
