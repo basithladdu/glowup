@@ -1,11 +1,66 @@
 import React, { useState } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
 import { usePokeItems } from '../lib/usePoke';
+import { loadProgressPhotos, saveProgressPhoto } from '../lib/localDB';
 
 export const AIDossierSync: React.FC = () => {
   const { state, selectedDate, syncStatus, syncText, saveState } = useGlowUpStore();
   const [copied, setCopied] = useState(false);
   const pokeItems = usePokeItems();
+  const [restoreMsg, setRestoreMsg] = useState<string | null>(null);
+  const [pendingRestore, setPendingRestore] = useState<any>(null);
+  const importRef = React.useRef<HTMLInputElement>(null);
+
+  // Photos live outside the synced snapshot, so a "full backup" has to pull them in
+  // explicitly or it silently isn't full.
+  const handleExport = async () => {
+    const photos = await loadProgressPhotos();
+    const payload = { schema: 'glowup-backup-v1', exportedAt: new Date().toISOString(), state, photos };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `glowup_full_backup_${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handlePickBackup = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    setRestoreMsg(null);
+    try {
+      const parsed = JSON.parse(await file.text());
+      const restoredState = parsed?.state ?? parsed;   // tolerate older bare-state exports
+      if (!restoredState || typeof restoredState !== 'object' || !('days' in restoredState)) {
+        throw new Error("That file doesn't look like a GlowUp backup");
+      }
+      const dayCount = Object.keys(restoredState.days || {}).length;
+      const photoCount = Object.keys(parsed?.photos || {}).length;
+      setPendingRestore(parsed);
+      setRestoreMsg(`Ready to restore ${dayCount} logged days and ${photoCount} photos. This replaces everything currently on this device.`);
+    } catch (err: any) {
+      setPendingRestore(null);
+      setRestoreMsg(err?.message || 'Could not read that file');
+    }
+  };
+
+  // Restoring overwrites live data, so it only ever runs after an explicit confirm.
+  const handleConfirmRestore = async () => {
+    if (!pendingRestore) return;
+    const restoredState = pendingRestore.state ?? pendingRestore;
+    for (const [date, dataUrl] of Object.entries(pendingRestore.photos || {})) {
+      await saveProgressPhoto(date, dataUrl as string);
+    }
+    useGlowUpStore.setState({ state: restoredState });
+    await useGlowUpStore.getState().saveState({ area: 'backup', item: 'restore', exact_update: 'Restored from backup file' });
+    setPendingRestore(null);
+    setRestoreMsg('Restored. Reloading…');
+    setTimeout(() => window.location.reload(), 600);
+  };
 
   const generateDossierMarkdown = () => {
     const daysSorted = Object.keys(state.days).sort();
@@ -115,28 +170,38 @@ export const AIDossierSync: React.FC = () => {
           </div>
         </div>
         <p className="note" style={{ marginBottom: '12px' }}>
-          Export your entire GlowUp state (macros, lifts, timestamps, habits, ADHD logs) into an encrypted local JSON file.
+          Everything you've logged — macros, lifts, habits, routine, inventory — plus your
+          progress photos, in one plain JSON file. It is <b>not encrypted</b>, so keep it
+          somewhere you'd be comfortable keeping the photos themselves.
         </p>
 
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          <button
-            className="btn primary"
-            style={{ flex: 1 }}
-            onClick={() => {
-              const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement('a');
-              a.href = url;
-              a.download = `glowup_full_backup_${new Date().toISOString().slice(0, 10)}.json`;
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-              URL.revokeObjectURL(url);
-            }}
-          >
-            Export Full JSON State Backup
+          <button className="btn primary" style={{ flex: 1 }} onClick={handleExport}>
+            Export backup
+          </button>
+          <input ref={importRef} type="file" accept="application/json" onChange={handlePickBackup} style={{ display: 'none' }} />
+          <button className="btn" onClick={() => importRef.current?.click()}>
+            Restore from file
           </button>
         </div>
+
+        {restoreMsg && (
+          <div style={{ marginTop: '10px' }}>
+            <p className="note" style={{ color: pendingRestore ? 'var(--turmeric)' : 'var(--vermilion)' }}>
+              {restoreMsg}
+            </p>
+            {pendingRestore && (
+              <div style={{ display: 'flex', gap: '6px', marginTop: '8px' }}>
+                <button className="btn sage sm" onClick={handleConfirmRestore}>
+                  Yes, replace my data
+                </button>
+                <button className="btn sm" onClick={() => { setPendingRestore(null); setRestoreMsg(null); }}>
+                  Cancel
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
     </div>
