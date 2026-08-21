@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
+import { downscaleImage, saveProgressPhoto, loadProgressPhotos, deleteProgressPhoto } from '../lib/localDB';
 
 export const BodyMeasurements: React.FC = () => {
   const { state, selectedDate, logMorningWeight, saveState, logProgressPhoto } = useGlowUpStore();
@@ -7,6 +8,36 @@ export const BodyMeasurements: React.FC = () => {
   const lastPhotoDate = photoDates[0];
   const daysSincePhoto = lastPhotoDate ? Math.floor((Date.now() - new Date(lastPhotoDate).getTime()) / 86400000) : 999;
   const photoDue = daysSincePhoto >= 14;
+
+  // Photos are stored locally only (IndexedDB), never in the synced snapshot — the
+  // dates sync, the JPEGs stay on the device.
+  const [photos, setPhotos] = useState<Record<string, string>>({});
+  const [photoError, setPhotoError] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => { loadProgressPhotos().then(setPhotos); }, []);
+
+  const handlePickPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    setPhotoError(null);
+    try {
+      const dataUrl = await downscaleImage(file);
+      await saveProgressPhoto(selectedDate, dataUrl);
+      setPhotos(prev => ({ ...prev, [selectedDate]: dataUrl }));
+      logProgressPhoto();
+    } catch (err: any) {
+      setPhotoError(err?.message || 'Could not save that image');
+    }
+  };
+
+  const handleDeletePhoto = async (date: string) => {
+    await deleteProgressPhoto(date);
+    setPhotos(prev => { const next = { ...prev }; delete next[date]; return next; });
+  };
+
+  const photoEntries = Object.entries(photos).sort((a, b) => b[0].localeCompare(a[0]));
   const [weightInput, setWeightInput] = useState('88.0');
   const [shoulders, setShoulders] = useState('116');
   const [waist, setWaist] = useState('84');
@@ -72,10 +103,51 @@ export const BodyMeasurements: React.FC = () => {
               {lastPhotoDate ? `Last logged: ${lastPhotoDate} (${daysSincePhoto}d ago)` : 'Not logged yet — same lighting, same pose, front/side/back.'}
             </p>
           </div>
-          <button className="btn primary" onClick={() => logProgressPhoto()}>
-            ✓ I Took My Photo Today
-          </button>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              onChange={handlePickPhoto}
+              style={{ display: 'none' }}
+            />
+            <button className="btn primary" onClick={() => fileRef.current?.click()}>
+              Add photo
+            </button>
+            <button className="btn sm" onClick={() => logProgressPhoto()} title="Log that you took one, without attaching it">
+              Just log it
+            </button>
+          </div>
         </div>
+
+        {photoError && (
+          <p className="note" style={{ color: 'var(--vermilion)', marginTop: '8px' }}>{photoError}</p>
+        )}
+
+        {photoEntries.length > 0 && (
+          <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', marginTop: '12px', paddingBottom: '4px' }}>
+            {photoEntries.map(([date, src]) => (
+              <div key={date} style={{ flex: '0 0 auto', position: 'relative' }}>
+                <img
+                  src={src}
+                  alt={`Progress ${date}`}
+                  style={{ height: '120px', borderRadius: '8px', border: '1px solid var(--line2)', display: 'block' }}
+                />
+                <span style={{ position: 'absolute', left: 4, bottom: 4, fontSize: '9px', background: 'rgba(0,0,0,0.65)', padding: '1px 5px', borderRadius: '4px', fontFamily: 'JetBrains Mono, monospace' }}>
+                  {date}
+                </span>
+                <button
+                  className="del"
+                  title="Delete this photo"
+                  style={{ position: 'absolute', top: 2, right: 2, background: 'rgba(0,0,0,0.6)', borderRadius: '4px' }}
+                  onClick={() => handleDeletePhoto(date)}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* 88kg -> 72kg CUT PROGRESS & ANALYTICS */}
