@@ -36,6 +36,22 @@ export const DEFAULT_INVENTORY: InventoryItem[] = [
   { id: 'sh_minox', name: 'Minoxidil 5%', category: 'grooming', qty: '60ml', estCost: '₹550', inStock: true }
 ];
 
+/** Which inventory item a routine step / habit consumes. Lets the app tell you to
+ * restock instead of nagging you to apply something you've marked out of stock. */
+export const PRODUCT_FOR: Record<string, string> = {
+  am_spf: 'sh_spf',
+  am_lip: 'sh_lipscrub',
+  am_b12: 'sh_nivea',
+  pm_barrier: 'sh_nivea',
+  pm_castor: 'sh_castor',
+  pm_minox: 'sh_minox',
+  h_spf: 'sh_spf',
+  h_minox: 'sh_minox',
+  h_castoroil: 'sh_castor',
+  h_coconutoil: 'sh_coconut',
+  hair_oil: 'sh_coconut',
+};
+
 export const ROT = [
   { d:'Sun', short:'Rest / Kojic', active:'Kojic Acid Cream', extra:'Coconut oil scalp pre-wash + 0.5mm dermaroll AM' },
   { d:'Mon', short:'Aziderm 10%', active:'Aziderm 10% (Azelaic Acid)', extra:'Drying time 10m before moisturizer' },

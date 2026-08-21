@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
-import { ROT, DEFAULT_INVENTORY } from '../lib/constants';
+import { ROT, DEFAULT_INVENTORY, PRODUCT_FOR } from '../lib/constants';
 import { triggerGoalCelebration } from '../lib/confetti';
 import { playSuccessChime } from '../lib/sound';
 
@@ -13,7 +13,15 @@ export const SkinGrooming: React.FC = () => {
 
   // Read SPF stock from the persisted inventory so this reflects reality after you
   // toggle it on the Buy tab — never a hardcoded status.
-  const spfInStock = (state.inventory || DEFAULT_INVENTORY).find(i => i.id === 'sh_spf')?.inStock ?? true;
+  const inventory = state.inventory || DEFAULT_INVENTORY;
+  const spfInStock = inventory.find(i => i.id === 'sh_spf')?.inStock ?? true;
+
+  /** A step whose product you've marked out of stock can't be done — say so rather
+   * than showing it as just another unchecked box. */
+  const stepOutOfStock = (stepId: string) => {
+    const prodId = PRODUCT_FOR[stepId];
+    return !!prodId && inventory.find(i => i.id === prodId)?.inStock === false;
+  };
 
   // Micro-steps state (persisted in day state)
   const amSteps = dayState.amSkinSteps || {};
@@ -362,6 +370,11 @@ export const SkinGrooming: React.FC = () => {
                         <span className="task-title" style={{ textDecoration: isDone ? 'line-through' : 'none', fontWeight: 600 }}>
                           {step.name}
                         </span>
+                        {stepOutOfStock(step.id) && (
+                          <span className="tag-badge" style={{ background: 'rgba(201,123,142,0.2)', color: 'var(--rose)' }}>
+                            out of stock
+                          </span>
+                        )}
                       </div>
                       <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '4px' }}>
                         Zone: <strong style={{ color: 'var(--paper)' }}>{step.zone}</strong>
@@ -469,6 +482,11 @@ export const SkinGrooming: React.FC = () => {
                         <span className="task-title" style={{ textDecoration: isDone ? 'line-through' : 'none', fontWeight: 600 }}>
                           {step.name}
                         </span>
+                        {stepOutOfStock(step.id) && (
+                          <span className="tag-badge" style={{ background: 'rgba(201,123,142,0.2)', color: 'var(--rose)' }}>
+                            out of stock
+                          </span>
+                        )}
                       </div>
                       <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '4px' }}>
                         Zone: <strong style={{ color: 'var(--paper)' }}>{step.zone}</strong>

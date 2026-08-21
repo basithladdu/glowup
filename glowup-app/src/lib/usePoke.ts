@@ -1,7 +1,8 @@
 import { useGlowUpStore } from '../store/useGlowUpStore';
+import { PRODUCT_FOR, DEFAULT_INVENTORY } from './constants';
 
 /** Where tapping a poke item should take you to actually do something about it. */
-export type PokeTab = 'habitkit' | 'skin' | 'body';
+export type PokeTab = 'habitkit' | 'skin' | 'body' | 'shopping';
 
 export interface PokeItem {
   label: string;
@@ -24,9 +25,20 @@ export function usePokeItems(): PokeItem[] {
   const isToday = selectedDate === new Date().toISOString().slice(0, 10);
   if (!isToday) return [];
 
+  const inventory = state.inventory || DEFAULT_INVENTORY;
+  const isOutOfStock = (key: string) => {
+    const prodId = PRODUCT_FOR[key];
+    if (!prodId) return false;
+    return inventory.find((i) => i.id === prodId)?.inStock === false;
+  };
+
+  // If you've run out of the product, nagging you to apply it is useless — the
+  // actionable thing is restocking, so the item points at the Buy tab instead.
   const items: PokeItem[] = EXPECTED_HABITS
     .filter((h) => !dayState.habits?.[h.id])
-    .map((h) => ({ label: h.label, tab: h.tab }));
+    .map((h) => isOutOfStock(h.id)
+      ? { label: `Buy ${h.label} — you're out`, tab: 'shopping' as PokeTab }
+      : { label: h.label, tab: h.tab });
 
   const amStepsDone = Object.values(dayState.amSkinSteps || {}).filter(Boolean).length;
   const pmStepsDone = Object.values(dayState.pmSkinSteps || {}).filter(Boolean).length;
