@@ -7,7 +7,12 @@ export type PokeTab = 'habitkit' | 'skin' | 'body' | 'shopping';
 export interface PokeItem {
   label: string;
   tab: PokeTab;
+  /** Consecutive days before today this went unlogged. 0 means you did it yesterday. */
+  missedStreak?: number;
 }
+
+const DAY_MS = 86400000;
+const iso = (d: Date) => d.toISOString().slice(0, 10);
 
 /** Daily habits expected every day, with the label and the tab that can tick them off. */
 const EXPECTED_HABITS: Array<{ id: string; label: string; tab: PokeTab }> = [
@@ -25,6 +30,19 @@ export function usePokeItems(): PokeItem[] {
   const isToday = selectedDate === new Date().toISOString().slice(0, 10);
   if (!isToday) return [];
 
+  /** How many consecutive days before today this went unlogged — so the nag can say
+   * "you skipped this 3 days running" rather than treating every day as the first. */
+  const missedStreakFor = (wasDoneOn: (day: string) => boolean) => {
+    let streak = 0;
+    for (let back = 1; back <= 30; back++) {
+      const day = iso(new Date(Date.now() - back * DAY_MS));
+      if (!state.days?.[day]) break;      // no record at all — stop counting, don't guess
+      if (wasDoneOn(day)) break;
+      streak++;
+    }
+    return streak;
+  };
+
   const inventory = state.inventory || DEFAULT_INVENTORY;
   const isOutOfStock = (key: string) => {
     const prodId = PRODUCT_FOR[key];
@@ -40,7 +58,11 @@ export function usePokeItems(): PokeItem[] {
     .filter((h) => !disabled.includes(h.id) && !dayState.habits?.[h.id])
     .map((h) => isOutOfStock(h.id)
       ? { label: `Buy ${h.label} — you're out`, tab: 'shopping' as PokeTab }
-      : { label: h.label, tab: h.tab });
+      : {
+          label: h.label,
+          tab: h.tab,
+          missedStreak: missedStreakFor((day) => !!state.days?.[day]?.habits?.[h.id]),
+        });
 
   // Counts derive from the steps you've actually kept, so switching a step off
   // immediately stops it counting against you.
@@ -50,10 +72,18 @@ export function usePokeItems(): PokeItem[] {
   const pmDone = pmSteps.filter((id) => dayState.pmSkinSteps?.[id]).length;
   const nowHour = new Date().getHours();
   if (nowHour >= 10 && amSteps.length && amDone < amSteps.length) {
-    items.push({ label: `AM Skincare (${amDone}/${amSteps.length} steps)`, tab: 'skin' });
+    items.push({
+      label: `AM Skincare (${amDone}/${amSteps.length} steps)`,
+      tab: 'skin',
+      missedStreak: missedStreakFor((day) => amSteps.every((id) => state.days?.[day]?.amSkinSteps?.[id])),
+    });
   }
   if (nowHour >= 21 && pmSteps.length && pmDone < pmSteps.length) {
-    items.push({ label: `PM Skincare (${pmDone}/${pmSteps.length} steps)`, tab: 'skin' });
+    items.push({
+      label: `PM Skincare (${pmDone}/${pmSteps.length} steps)`,
+      tab: 'skin',
+      missedStreak: missedStreakFor((day) => pmSteps.every((id) => state.days?.[day]?.pmSkinSteps?.[id])),
+    });
   }
 
   const daysSinceCadence = (id: string) => {

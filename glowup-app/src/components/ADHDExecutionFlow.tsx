@@ -138,14 +138,25 @@ export const ADHDExecutionFlow: React.FC<ADHDExecutionFlowProps> = ({ onNavigate
           </h3>
           {pokeItems.length > 0 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              {pokeItems.map((item, i) => (
+              {[...pokeItems]
+                .sort((a, b) => (b.missedStreak ?? 0) - (a.missedStreak ?? 0))
+                .map((item, i) => (
                 <button
                   key={i}
                   className="task-item"
                   style={{ cursor: 'pointer', textAlign: 'left', width: '100%', font: 'inherit' }}
                   onClick={() => onNavigate?.(item.tab)}
                 >
-                  <span className="task-title">{item.label}</span>
+                  <span className="task-left">
+                    <span className="task-title">{item.label}</span>
+                    {!!item.missedStreak && (
+                      <span className="task-sub" style={{ color: 'var(--rose)' }}>
+                        {item.missedStreak === 1
+                          ? 'also skipped yesterday'
+                          : `skipped ${item.missedStreak} days running`}
+                      </span>
+                    )}
+                  </span>
                   <span className="task-btn">Do it →</span>
                 </button>
               ))}
