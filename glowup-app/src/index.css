@@ -1433,3 +1433,77 @@ button.task-item {
   background: var(--surface3);
   border-color: var(--turmeric);
 }
+
+/* ---------------------------------------------------------------------------
+   Touch targets.
+   This lives on a phone and is meant to be tapped fast, often one-handed. At
+   375px the nav tabs were 30px tall, the date arrows 28x28 and the calendar
+   checkboxes 20x20 — well under the 44px WCAG 2.5.5 / Apple HIG minimum, which
+   is exactly how you end up tapping the wrong habit.
+
+   Scoped to coarse pointers so the desktop layout stays compact.
+--------------------------------------------------------------------------- */
+@media (pointer: coarse) {
+  .tab-btn {
+    min-height: 40px;
+    padding: 9px 15px;
+    font-size: var(--t-body);
+  }
+
+  .date-nav button {
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
+  }
+
+  .btn,
+  .btn.sm,
+  .task-btn,
+  .goal-toggle-btn,
+  .ex-quick-btn,
+  .routine-chip,
+  .goal-cat-btn,
+  .ai-chip,
+  .cal-mode-btn,
+  .gcal-btn-today,
+  .gcal-view-btn {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gcal-check-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+  }
+
+  .habitkit-check-btn {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    font-size: 17px;
+  }
+
+  input,
+  select,
+  textarea {
+    min-height: 42px;
+    font-size: 16px; /* under 16px, iOS Safari zooms the page on focus */
+  }
+
+  .del {
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .quick-fab-trigger {
+    min-height: 44px;
+    padding: 11px 18px;
+  }
+
+  .task-item {
+    padding: 12px;
+  }
+}
