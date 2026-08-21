@@ -1,22 +1,32 @@
 {
-  "framework": null,
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "npm install --prefix glowup-app && npm run build --prefix glowup-app",
+  "outputDirectory": "glowup-app/dist",
   "cleanUrls": true,
+  "rewrites": [
+    { "source": "/((?!assets/|sw\\.js|manifest\\.json|favicon|icons|food_database).*)", "destination": "/index.html" }
+  ],
   "headers": [
     {
-      "source": "/(.*)",
+      "comment": "The app shell must never be served stale — a cached index.html can point at hashed bundles a later deploy has already rotated away.",
+      "source": "/",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate, max-age=0"
-        },
-        {
-          "key": "Pragma",
-          "value": "no-cache"
-        },
-        {
-          "key": "Expires",
-          "value": "0"
-        }
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate, max-age=0" }
+      ]
+    },
+    {
+      "comment": "The service worker itself must not be cached, or a broken one can never be replaced.",
+      "source": "/sw.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate, max-age=0" }
+      ]
+    },
+    {
+      "comment": "Vite hashes these filenames, so they are safe to cache hard and forever.",
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     }
   ]
