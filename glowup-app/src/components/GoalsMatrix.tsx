@@ -59,7 +59,7 @@ export const GoalsMatrix: React.FC = () => {
           </div>
           <div className="gm-val">
             {Math.round((gymGoals.filter(g => g.done).length / Math.max(1, gymGoals.length)) * 100)}%{' '}
-            <span style={{ fontSize: '10px', color: 'var(--muted)', fontWeight: 400 }}>Locked In</span>
+            <span style={{ fontSize: '10.5px', color: 'var(--muted)', fontWeight: 400 }}>Locked In</span>
           </div>
         </div>
 
@@ -70,7 +70,7 @@ export const GoalsMatrix: React.FC = () => {
           </div>
           <div className="gm-val">
             {Math.round((skinGoals.filter(g => g.done).length / Math.max(1, skinGoals.length)) * 100)}%{' '}
-            <span style={{ fontSize: '10px', color: 'var(--muted)', fontWeight: 400 }}>Compliant</span>
+            <span style={{ fontSize: '10.5px', color: 'var(--muted)', fontWeight: 400 }}>Compliant</span>
           </div>
         </div>
 
@@ -81,7 +81,7 @@ export const GoalsMatrix: React.FC = () => {
           </div>
           <div className="gm-val">
             {Math.round((groomingGoals.filter(g => g.done).length / Math.max(1, groomingGoals.length)) * 100)}%{' '}
-            <span style={{ fontSize: '10px', color: 'var(--muted)', fontWeight: 400 }}>Refined</span>
+            <span style={{ fontSize: '10.5px', color: 'var(--muted)', fontWeight: 400 }}>Refined</span>
           </div>
         </div>
 
@@ -92,7 +92,7 @@ export const GoalsMatrix: React.FC = () => {
           </div>
           <div className="gm-val">
             {Math.round((healthGoals.filter(g => g.done).length / Math.max(1, healthGoals.length)) * 100)}%{' '}
-            <span style={{ fontSize: '10px', color: 'var(--muted)', fontWeight: 400 }}>Optimized</span>
+            <span style={{ fontSize: '10.5px', color: 'var(--muted)', fontWeight: 400 }}>Optimized</span>
           </div>
         </div>
       </div>
@@ -143,14 +143,14 @@ export const GoalsMatrix: React.FC = () => {
               </div>
 
               <div className="goal-item-footer">
-                <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '10px', color: m.done ? 'var(--sage)' : 'var(--turmeric)', fontWeight: 700 }}>
+                <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '10.5px', color: m.done ? 'var(--sage)' : 'var(--turmeric)', fontWeight: 600 }}>
                   {m.done ? '✓ COMPLETED' : '● ACTIVE TARGET'}
                 </span>
                 <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                   {m.id.startsWith('g_') && !['g_weight', 'g_vtaper', 'g_peel'].includes(m.id) && (
                     <button
                       onClick={() => deleteGoal(m.id)}
-                      style={{ background: 'none', border: 0, color: 'var(--muted)', cursor: 'pointer', fontSize: '16px', padding: '0 4px' }}
+                      style={{ background: 'none', border: 0, color: 'var(--muted)', cursor: 'pointer', fontSize: '15px', padding: '0 4px' }}
                       title="Delete goal"
                     >
                       ×

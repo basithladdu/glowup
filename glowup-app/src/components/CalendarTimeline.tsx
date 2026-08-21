@@ -174,7 +174,7 @@ export const CalendarTimeline: React.FC = () => {
             <span style={{ fontSize: '24px' }}></span>
             <div>
               <h2 style={{ fontSize: '17px', margin: 0, color: 'var(--paper)', fontFamily: 'Cinzel, serif' }}>Google Calendar</h2>
-              <span style={{ fontSize: '10px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>Time-Blocked Circadian Protocol</span>
+              <span style={{ fontSize: '10.5px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>Time-Blocked Circadian Protocol</span>
             </div>
           </div>
           <button className="gcal-btn-today" onClick={() => setSelectedDate(new Date().toISOString().slice(0, 10))}>
@@ -219,7 +219,7 @@ export const CalendarTimeline: React.FC = () => {
           {/* LEFT: 24-HOUR TIMETABLE */}
           <div className="card gcal-day-container">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', borderBottom: '1px solid var(--line)', paddingBottom: '8px' }}>
-              <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--turmeric)' }}>
+              <div style={{ fontWeight: 600, fontSize: '13px', color: 'var(--turmeric)' }}>
                 {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dow]}, {dateObj.getDate()} {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][dateObj.getMonth()]}
               </div>
             </div>
@@ -268,7 +268,7 @@ export const CalendarTimeline: React.FC = () => {
                         {ev.isMeal && (
                           <button
                             className="task-btn"
-                            style={{ fontSize: '9px', padding: '2px 5px', background: 'var(--turmeric)', color: '#1A1206' }}
+                            style={{ fontSize: '10.5px', padding: '2px 5px', background: 'var(--turmeric)', color: '#1A1206' }}
                             onClick={(e) => { e.stopPropagation(); setActiveMealSlot(ev.mealSlot || 'Meal'); }}
                           >
                             AI Log
@@ -277,7 +277,7 @@ export const CalendarTimeline: React.FC = () => {
                         {(ev as any).isWorkout && (
                           <button
                             className="task-btn"
-                            style={{ fontSize: '9px', padding: '2px 5px', background: 'var(--turmeric)', color: '#1A1206' }}
+                            style={{ fontSize: '10.5px', padding: '2px 5px', background: 'var(--turmeric)', color: '#1A1206' }}
                             onClick={(e) => { e.stopPropagation(); setShowWorkoutPicker(true); }}
                           >
                             Pick Workout
@@ -324,7 +324,7 @@ export const CalendarTimeline: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <div className="card">
               <p className="eyebrow"><span className="n">training</span> today's workout split</p>
-              <h2 style={{ fontSize: '16px', margin: '0 0 4px', color: 'var(--turmeric)' }}>{routine.name}</h2>
+              <h2 style={{ fontSize: '15px', margin: '0 0 4px', color: 'var(--turmeric)' }}>{routine.name}</h2>
               <p className="note" style={{ marginBottom: '10px' }}>{routine.desc}</p>
               <div className="statline">
                 <span className="statk">Intensity Badge</span>
@@ -338,9 +338,9 @@ export const CalendarTimeline: React.FC = () => {
 
             <div className="card">
               <p className="eyebrow"><span className="n">pm</span> active derm protocol</p>
-              <h2 style={{ fontSize: '16px', margin: '0 0 4px', color: 'var(--rose)' }}>{rot.short}</h2>
+              <h2 style={{ fontSize: '15px', margin: '0 0 4px', color: 'var(--rose)' }}>{rot.short}</h2>
               <p className="note" style={{ marginBottom: '8px' }}>{rot.active}</p>
-              <div style={{ fontSize: '11px', color: 'var(--muted)', background: 'var(--surface2)', padding: '8px', borderRadius: '6px' }}>
+              <div style={{ fontSize: '11.5px', color: 'var(--muted)', background: 'var(--surface2)', padding: '8px', borderRadius: '6px' }}>
                 {rot.extra}
               </div>
             </div>
@@ -426,7 +426,7 @@ export const CalendarTimeline: React.FC = () => {
         <div className="modal-backdrop" onClick={() => setActiveMealSlot(null)}>
           <div className="card modal-box" style={{ maxWidth: '440px' }} onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <h2 style={{ fontSize: '16px', margin: 0, color: 'var(--turmeric)' }}>
+              <h2 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>
                 Log {activeMealSlot} with Gemini AI
               </h2>
               <button className="del" onClick={() => setActiveMealSlot(null)}>×</button>
@@ -469,7 +469,7 @@ export const CalendarTimeline: React.FC = () => {
         <div className="modal-backdrop" onClick={() => setShowWorkoutPicker(false)}>
           <div className="card modal-box" style={{ maxWidth: '420px', textAlign: 'left' }} onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <h2 style={{ fontSize: '16px', margin: 0, color: 'var(--turmeric)' }}>Pick Today's Workout</h2>
+              <h2 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>Pick Today's Workout</h2>
               <button className="del" onClick={() => setShowWorkoutPicker(false)}>×</button>
             </div>
             <p className="note" style={{ marginBottom: '10px' }}>
@@ -506,7 +506,7 @@ export const CalendarTimeline: React.FC = () => {
       {showEventModal && (
         <div className="modal-backdrop">
           <div className="card modal-box">
-            <h2 style={{ fontSize: '16px', margin: '0 0 6px' }}>Create Google Calendar Event</h2>
+            <h2 style={{ fontSize: '15px', margin: '0 0 6px' }}>Create Google Calendar Event</h2>
             <p className="note" style={{ marginBottom: '12px' }}>
               Add custom time-blocked tasks to your schedule for {selectedDate}.
             </p>

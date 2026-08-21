@@ -161,7 +161,7 @@ export const LiftsWorkouts: React.FC = () => {
 
         <div style={{ marginTop: '12px', borderTop: '1px solid var(--line)', paddingTop: '10px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
-            <h2 style={{ fontSize: '16px', margin: 0, color: 'var(--paper)' }}>{currentRoutine.name}</h2>
+            <h2 style={{ fontSize: '15px', margin: 0, color: 'var(--paper)' }}>{currentRoutine.name}</h2>
             <span className="tag-badge tag-best">{currentRoutine.badge}</span>
           </div>
           <div style={{ marginTop: '4px' }}>
@@ -192,7 +192,7 @@ export const LiftsWorkouts: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
           <div>
             <p className="eyebrow" style={{ margin: 0 }}><span className="n">timer</span> inter-set recovery</p>
-            <div style={{ fontSize: '18px', fontWeight: 700, color: restSeconds && restSeconds > 0 ? 'var(--turmeric)' : 'var(--sage)', fontFamily: 'JetBrains Mono, monospace' }}>
+            <div style={{ fontSize: '19px', fontWeight: 600, color: restSeconds && restSeconds > 0 ? 'var(--turmeric)' : 'var(--sage)', fontFamily: 'JetBrains Mono, monospace' }}>
               {restSeconds !== null && restSeconds > 0
                 ? `⏱${Math.floor(restSeconds / 60)}:${String(restSeconds % 60).padStart(2, '0')} Rest Left`
                 : '✅ Ready for Next Working Set'}
@@ -230,17 +230,17 @@ export const LiftsWorkouts: React.FC = () => {
             >
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-                  <span style={{ fontWeight: 700, fontSize: '13px', color: 'var(--paper)' }}>{ex.name}</span>
+                  <span style={{ fontWeight: 600, fontSize: '13px', color: 'var(--paper)' }}>{ex.name}</span>
                   {ex.intensity && <span className="intensity-tag">{ex.intensity}</span>}
                   {ex.isSuperset && <span className="superset-badge">{ex.supersetLabel}</span>}
                 </div>
-                <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '2px' }}>{ex.cue}</div>
+                <div style={{ fontSize: '11.5px', color: 'var(--muted)', marginTop: '2px' }}>{ex.cue}</div>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: '0 0 auto' }}>
-                <span style={{ fontFamily: 'JetBrains Mono, monospace', fontWeight: 700, color: 'var(--turmeric)', fontSize: '12px', textAlign: 'right' }}>
+                <span style={{ fontFamily: 'JetBrains Mono, monospace', fontWeight: 600, color: 'var(--turmeric)', fontSize: '13px', textAlign: 'right' }}>
                   {ex.sets}<br />
-                  <small style={{ color: 'var(--muted)', fontWeight: 500, fontSize: '10px' }}>{ex.reps}</small>
+                  <small style={{ color: 'var(--muted)', fontWeight: 500, fontSize: '10.5px' }}>{ex.reps}</small>
                 </span>
                 <button
                   className="ex-quick-btn"
@@ -259,7 +259,7 @@ export const LiftsWorkouts: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div>
             <p className="eyebrow"><span className="n">log</span> record working set &amp; biomechanics</p>
-            <h3 style={{ fontSize: '14px', margin: 0, color: 'var(--turmeric)' }}>{liftName}</h3>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>{liftName}</h3>
           </div>
           <button
             className="btn sm"
@@ -270,19 +270,19 @@ export const LiftsWorkouts: React.FC = () => {
           </button>
         </div>
 
-        <div style={{ fontSize: '11px', color: 'var(--muted)', marginBottom: '10px' }}>
+        <div style={{ fontSize: '11.5px', color: 'var(--muted)', marginBottom: '10px' }}>
           Target Anatomical Zone: <strong style={{ color: 'var(--paper)' }}>{activeGuide.zone}</strong>
         </div>
 
         {activeFormCheck === liftName && (
           <div style={{ background: 'var(--surface2)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px', marginBottom: '12px' }}>
-            <p style={{ fontSize: '11px', color: 'var(--turmeric)', fontWeight: 700, margin: '0 0 6px' }}>
+            <p style={{ fontSize: '11.5px', color: 'var(--turmeric)', fontWeight: 600, margin: '0 0 6px' }}>
               5 Precision Hypertrophy Technique Checks:
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               {activeGuide.checks.map((chk, i) => (
-                <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
+                <div key={i} style={{ fontSize: '11.5px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ color: 'var(--sage)', fontWeight: 600 }}>✓</span> {chk}
                 </div>
               ))}
             </div>
@@ -320,7 +320,7 @@ export const LiftsWorkouts: React.FC = () => {
       <div className="card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <p className="eyebrow" style={{ margin: 0 }}>logged sets on this date ({dayState.lifts.length} sets)</p>
-          <span style={{ fontSize: '11px', color: 'var(--turmeric)', fontFamily: 'JetBrains Mono, monospace' }}>
+          <span style={{ fontSize: '11.5px', color: 'var(--turmeric)', fontFamily: 'JetBrains Mono, monospace' }}>
             {totalVolumeKg} kg Volume
           </span>
         </div>
@@ -332,9 +332,9 @@ export const LiftsWorkouts: React.FC = () => {
               <div key={idx} className="logrow" style={{ padding: '8px 10px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <span className="logname" style={{ fontWeight: 600 }}>{l.n}</span>
-                  <span style={{ fontSize: '10px', color: 'var(--muted)' }}>Set #{idx + 1}</span>
+                  <span style={{ fontSize: '10.5px', color: 'var(--muted)' }}>Set #{idx + 1}</span>
                 </div>
-                <span className="logmac" style={{ color: 'var(--turmeric)', fontWeight: 700, fontSize: '13px' }}>
+                <span className="logmac" style={{ color: 'var(--turmeric)', fontWeight: 600, fontSize: '13px' }}>
                   {l.kg} kg × {l.reps} reps ({l.kg * l.reps} kg)
                 </span>
               </div>

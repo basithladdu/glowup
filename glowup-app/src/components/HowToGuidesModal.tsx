@@ -156,7 +156,7 @@ export const HowToGuidesModal: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div>
             <p className="eyebrow"><span className="n">knowledge</span> biomechanical &amp; aesthetic protocols</p>
-            <h2 style={{ fontSize: '18px', margin: 0 }}>Protocol Guides &amp; How-To Tutorials </h2>
+            <h2 style={{ fontSize: '19px', margin: 0 }}>Protocol Guides &amp; How-To Tutorials </h2>
           </div>
         </div>
         <p className="note">
@@ -174,9 +174,9 @@ export const HowToGuidesModal: React.FC = () => {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
               <span className="cat-pill gym" style={{ background: 'rgba(232, 163, 61, 0.15)' }}>{g.category}</span>
-              <span style={{ fontSize: '11px', color: 'var(--turmeric)', fontWeight: 700 }}>View Guide →</span>
+              <span style={{ fontSize: '11.5px', color: 'var(--turmeric)', fontWeight: 600 }}>View Guide →</span>
             </div>
-            <h3 style={{ fontSize: '14px', margin: '4px 0 6px', color: 'var(--paper)' }}>{g.title}</h3>
+            <h3 style={{ fontSize: '15px', margin: '4px 0 6px', color: 'var(--paper)' }}>{g.title}</h3>
             <p className="note">{g.summary}</p>
           </div>
         ))}
@@ -198,7 +198,7 @@ export const HowToGuidesModal: React.FC = () => {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', background: 'var(--surface2)', padding: '12px', borderRadius: '8px', border: '1px solid var(--line2)' }}>
               {active.steps.map((step, idx) => (
-                <div key={idx} style={{ fontSize: '12px', lineHeight: '1.5', color: 'var(--paper)' }}>
+                <div key={idx} style={{ fontSize: '13px', lineHeight: '1.5', color: 'var(--paper)' }}>
                   {step}
                 </div>
               ))}

@@ -44,7 +44,7 @@ export const MacroCharts: React.FC = () => {
       <div className="card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <p className="eyebrow" style={{ margin: 0 }}><span className="n">calories</span> 14-day deficit trajectory</p>
-          <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '9.5px', color: 'var(--muted)' }}>
+          <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '10.5px', color: 'var(--muted)' }}>
             Target: 2,000 kcal
           </span>
         </div>
@@ -55,7 +55,7 @@ export const MacroCharts: React.FC = () => {
             y1={kcalTargetY}
             x2={W - pad}
             y2={kcalTargetY}
-            stroke="#8C8177"
+            stroke="#7A7168"
             strokeWidth="1"
             strokeDasharray="3 3"
             opacity="0.7"
@@ -63,11 +63,11 @@ export const MacroCharts: React.FC = () => {
           {days.map((d, i) => {
             const hgt = d.k ? Math.max(2, (d.k / maxKcal) * (H - 16)) : 0;
             const x = pad + i * (bw + gap);
-            const col = !d.k ? '#272220' : d.k <= KCAL_TARGET ? '#8AA85F' : '#C9503A';
+            const col = !d.k ? '#232019' : d.k <= KCAL_TARGET ? '#8B9E76' : '#C2705C';
             return (
               <g key={i}>
                 <rect x={x} y={H - hgt} width={bw} height={hgt} rx="2.5" fill={col} />
-                <text x={x + bw / 2} y={H + 13} textAnchor="middle" fill="#8C8177" fontSize="8" fontFamily="JetBrains Mono, monospace">
+                <text x={x + bw / 2} y={H + 13} textAnchor="middle" fill="#7A7168" fontSize="8" fontFamily="JetBrains Mono, monospace">
                   {d.label}
                 </text>
               </g>
@@ -80,7 +80,7 @@ export const MacroCharts: React.FC = () => {
       <div className="card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <p className="eyebrow" style={{ margin: 0 }}><span className="n">protein</span> 14-day compliance floor</p>
-          <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '9.5px', color: 'var(--muted)' }}>
+          <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '10.5px', color: 'var(--muted)' }}>
             Floor: 170g
           </span>
         </div>
@@ -91,7 +91,7 @@ export const MacroCharts: React.FC = () => {
             y1={protTargetY}
             x2={W - pad}
             y2={protTargetY}
-            stroke="#8C8177"
+            stroke="#7A7168"
             strokeWidth="1"
             strokeDasharray="3 3"
             opacity="0.7"
@@ -99,11 +99,11 @@ export const MacroCharts: React.FC = () => {
           {days.map((d, i) => {
             const hgt = d.p ? Math.max(2, (d.p / maxProt) * (H - 16)) : 0;
             const x = pad + i * (bw + gap);
-            const col = !d.p ? '#272220' : d.p >= PROT_TARGET ? '#8AA85F' : '#E8A33D';
+            const col = !d.p ? '#232019' : d.p >= PROT_TARGET ? '#8B9E76' : '#D9A05B';
             return (
               <g key={i}>
                 <rect x={x} y={H - hgt} width={bw} height={hgt} rx="2.5" fill={col} />
-                <text x={x + bw / 2} y={H + 13} textAnchor="middle" fill="#8C8177" fontSize="8" fontFamily="JetBrains Mono, monospace">
+                <text x={x + bw / 2} y={H + 13} textAnchor="middle" fill="#7A7168" fontSize="8" fontFamily="JetBrains Mono, monospace">
                   {d.label}
                 </text>
               </g>
@@ -132,19 +132,19 @@ export const MacroCharts: React.FC = () => {
             <>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', textAlign: 'center', margin: '8px 0 4px' }}>
                 <div style={{ background: 'var(--surface2)', padding: '8px', borderRadius: '6px' }}>
-                  <div style={{ fontSize: '9px', color: 'var(--muted)' }}>AVG INTAKE (TRACKED DAYS)</div>
-                  <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--sage)' }}>
+                  <div style={{ fontSize: '10.5px', color: 'var(--muted)' }}>Avg intake · tracked days</div>
+                  <div style={{ fontSize: '15px', fontWeight: 600, color: 'var(--sage)' }}>
                     {trackedDays.length ? `${avgK} kcal/day` : '— No days logged'}
                   </div>
                 </div>
                 <div style={{ background: 'var(--surface2)', padding: '8px', borderRadius: '6px' }}>
-                  <div style={{ fontSize: '9px', color: 'var(--muted)' }}>AVG PROTEIN (TRACKED DAYS)</div>
-                  <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--turmeric)' }}>
+                  <div style={{ fontSize: '10.5px', color: 'var(--muted)' }}>Avg protein · tracked days</div>
+                  <div style={{ fontSize: '15px', fontWeight: 600, color: 'var(--turmeric)' }}>
                     {trackedDays.length ? `${avgP}g / 170g` : '— No days logged'}
                   </div>
                 </div>
               </div>
-              <div style={{ fontSize: '9.5px', color: 'var(--muted)', textAlign: 'center', marginBottom: '6px' }}>
+              <div style={{ fontSize: '10.5px', color: 'var(--muted)', textAlign: 'center', marginBottom: '6px' }}>
                 {trackedDays.length}/14 days tracked in this window
               </div>
             </>
@@ -160,8 +160,8 @@ export const MacroCharts: React.FC = () => {
             'Dietary Fat Floor: Maintain 40–50g healthy fats for testosterone and endocrine health',
             'Weekly Refeed Protocol: Single maintenance day (2,300 kcal) every 14 days if fatigue rises'
           ].map((chk, i) => (
-            <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
+            <div key={i} style={{ fontSize: '11.5px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ color: 'var(--sage)', fontWeight: 600 }}>✓</span> {chk}
             </div>
           ))}
         </div>

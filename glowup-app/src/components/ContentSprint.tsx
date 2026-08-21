@@ -102,12 +102,12 @@ export const ContentSprint: React.FC = () => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <div className="card" style={{ textAlign: 'center', padding: '20px 14px' }}>
             <p className="eyebrow"><span className="n">#basithladdu</span> 45-minute daily production sprint</p>
-            <h2 style={{ fontSize: '18px', margin: '0 0 4px' }}>Content Creation Sprint</h2>
+            <h2 style={{ fontSize: '19px', margin: '0 0 4px' }}>Content Creation Sprint</h2>
             <p className="note" style={{ marginBottom: '12px' }}>
               One short / reel every 2 days. One pillar deep-dive every 14 days. Zero distractions.
             </p>
 
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '38px', fontWeight: 700, color: isRunning ? 'var(--turmeric)' : 'var(--paper)', margin: '10px 0' }}>
+            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '38px', fontWeight: 600, color: isRunning ? 'var(--turmeric)' : 'var(--paper)', margin: '10px 0' }}>
               {mins}:{secs}
             </div>
 
@@ -136,7 +136,7 @@ export const ContentSprint: React.FC = () => {
             </div>
 
             {loggedContent && (
-              <div style={{ marginTop: '12px', background: 'rgba(138, 168, 95, 0.1)', border: '1px solid var(--sage)', borderRadius: '8px', padding: '8px', fontSize: '11px', color: 'var(--sage)' }}>
+              <div style={{ marginTop: '12px', background: 'rgba(138, 168, 95, 0.1)', border: '1px solid var(--sage)', borderRadius: '8px', padding: '8px', fontSize: '11.5px', color: 'var(--sage)' }}>
                 ✓ Shipped on {selectedDate}: {loggedContent.topic} ({loggedContent.dur}m)
               </div>
             )}
@@ -173,7 +173,7 @@ export const ContentSprint: React.FC = () => {
                   onClick={() => setTopic(h.title)}
                   title="Click to load into sprint deliverable"
                 >
-                  <div style={{ fontSize: '11.5px', fontWeight: 700, color: 'var(--turmeric)' }}>{h.title}</div>
+                  <div style={{ fontSize: '11.5px', fontWeight: 600, color: 'var(--turmeric)' }}>{h.title}</div>
                   <div style={{ fontSize: '10.5px', color: 'var(--paper)', fontStyle: 'italic', marginTop: '2px' }}>{h.hook}</div>
                 </div>
               ))}
@@ -185,14 +185,14 @@ export const ContentSprint: React.FC = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
               <div>
                 <p className="eyebrow"><span className="n">triage</span> 10-minute backlog cleanse</p>
-                <h3 style={{ fontSize: '14px', margin: 0, color: 'var(--turmeric)' }}>ClickUp 3-Task Exterminator</h3>
+                <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>ClickUp 3-Task Exterminator</h3>
               </div>
               <a
                 href="https://app.clickup.com"
                 target="_blank"
                 rel="noreferrer"
                 className="btn sm"
-                style={{ background: 'var(--surface3)', fontSize: '10px' }}
+                style={{ background: 'var(--surface3)', fontSize: '10.5px' }}
               >
                 Open ClickUp ↗
               </a>
@@ -202,7 +202,7 @@ export const ContentSprint: React.FC = () => {
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label className="checkbox-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
+              <label className="checkbox-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer' }}>
                 <input
                   type="checkbox"
                   checked={clickUpDone.t1}
@@ -210,7 +210,7 @@ export const ContentSprint: React.FC = () => {
                 />
                 <span>Task #1 Exterminated / Archived</span>
               </label>
-              <label className="checkbox-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
+              <label className="checkbox-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer' }}>
                 <input
                   type="checkbox"
                   checked={clickUpDone.t2}
@@ -218,7 +218,7 @@ export const ContentSprint: React.FC = () => {
                 />
                 <span>Task #2 Exterminated / Archived</span>
               </label>
-              <label className="checkbox-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
+              <label className="checkbox-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer' }}>
                 <input
                   type="checkbox"
                   checked={clickUpDone.t3}
@@ -229,7 +229,7 @@ export const ContentSprint: React.FC = () => {
             </div>
 
             {clickUpDone.t1 && clickUpDone.t2 && clickUpDone.t3 && (
-              <div style={{ marginTop: '10px', background: 'rgba(138, 168, 95, 0.15)', border: '1px solid var(--sage)', borderRadius: '6px', padding: '6px 10px', fontSize: '11px', color: 'var(--sage)', fontWeight: 700 }}>
+              <div style={{ marginTop: '10px', background: 'rgba(138, 168, 95, 0.15)', border: '1px solid var(--sage)', borderRadius: '6px', padding: '6px 10px', fontSize: '11.5px', color: 'var(--sage)', fontWeight: 600 }}>
                 ✓ 3 Tasks Exterminated! ClickUp Habit Completed.
               </div>
             )}
@@ -243,7 +243,7 @@ export const ContentSprint: React.FC = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
               <div>
                 <p className="eyebrow"><span className="n">intellect</span> political &amp; congressional research</p>
-                <h2 style={{ fontSize: '16px', margin: 0, color: 'var(--turmeric)' }}>
+                <h2 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>
                   Daily Political &amp; Policy Briefing
                 </h2>
               </div>

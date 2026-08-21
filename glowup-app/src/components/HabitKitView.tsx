@@ -270,10 +270,10 @@ export const HabitKitView: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ fontSize: '24px' }}></span>
             <div>
-              <h2 style={{ fontSize: '18px', margin: 0, letterSpacing: '-0.02em' }}>
+              <h2 style={{ fontSize: '19px', margin: 0, letterSpacing: '-0.02em' }}>
                 Habit<span style={{ color: '#8B5CF6' }}>Kit</span> Matrix
               </h2>
-              <span style={{ fontSize: '10px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>
+              <span style={{ fontSize: '10.5px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>
                 Continuous Momentum Grid
               </span>
             </div>
@@ -282,7 +282,7 @@ export const HabitKitView: React.FC = () => {
           <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
             <button
               className={`btn sm ${showAudit ? 'primary' : ''}`}
-              style={{ background: showAudit ? undefined : 'var(--surface2)', fontSize: '10px' }}
+              style={{ background: showAudit ? undefined : 'var(--surface2)', fontSize: '10.5px' }}
               onClick={() => setShowAudit(!showAudit)}
             >
               {showAudit ? 'Hide Audit' : 'Consistency Audit'}
@@ -313,10 +313,10 @@ export const HabitKitView: React.FC = () => {
             {habitConsistency.map(hc => (
               <div key={hc.id} style={{ background: 'var(--surface)', padding: '8px 10px', borderRadius: '8px', border: '0.5px solid var(--line)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '12px', fontWeight: 700 }}>{hc.icon} {hc.name.slice(0, 18)}...</span>
-                  <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '11px', color: hc.color, fontWeight: 700 }}>{hc.score}%</span>
+                  <span style={{ fontSize: '13px', fontWeight: 600 }}>{hc.icon} {hc.name.slice(0, 18)}...</span>
+                  <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '11.5px', color: hc.color, fontWeight: 600 }}>{hc.score}%</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px', fontSize: '9.5px', color: 'var(--muted)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px', fontSize: '10.5px', color: 'var(--muted)' }}>
                   <span>{hc.doneCount} / {hc.totalCount} days</span>
                   <span style={{ color: hc.score >= 80 ? 'var(--sage)' : hc.score >= 50 ? 'var(--turmeric)' : 'var(--vermilion)' }}>
                     {hc.status}
@@ -391,7 +391,7 @@ export const HabitKitView: React.FC = () => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <button
                     className="btn sm"
-                    style={{ fontSize: '10px', padding: '3px 7px', background: 'var(--surface3)' }}
+                    style={{ fontSize: '10.5px', padding: '3px 7px', background: 'var(--surface3)' }}
                     onClick={() => setExpandedHabit(isExpanded ? null : h.id)}
                   >
                     {isExpanded ? '▲ Hide' : 'Checks'}
@@ -400,7 +400,7 @@ export const HabitKitView: React.FC = () => {
                     <button
                       className="btn sm"
                       title="Delete this custom habit permanently"
-                      style={{ fontSize: '10px', padding: '3px 6px', background: 'transparent', color: 'var(--muted)', border: 0 }}
+                      style={{ fontSize: '10.5px', padding: '3px 6px', background: 'transparent', color: 'var(--muted)', border: 0 }}
                       onClick={() => deleteCustomHabit(h.id)}
                     >
                       Delete
@@ -409,7 +409,7 @@ export const HabitKitView: React.FC = () => {
                   <button
                     className="btn sm"
                     title="Remove this habit from your list"
-                    style={{ fontSize: '10px', padding: '3px 6px', background: 'transparent', color: 'var(--muted)', border: 0 }}
+                    style={{ fontSize: '10.5px', padding: '3px 6px', background: 'transparent', color: 'var(--muted)', border: 0 }}
                     onClick={() => toggleStepEnabled(h.id)}
                   >
                     ✕
@@ -432,8 +432,8 @@ export const HabitKitView: React.FC = () => {
                     5 Precision Execution Checks:
                   </p>
                   {h.checks.map((chk, i) => (
-                    <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ color: h.color, fontWeight: 700 }}>✓</span> {chk}
+                    <div key={i} style={{ fontSize: '11.5px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ color: h.color, fontWeight: 600 }}>✓</span> {chk}
                     </div>
                   ))}
                 </div>

@@ -26,27 +26,27 @@ export const TodayFlow: React.FC = () => {
       <div className="card">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', textAlign: 'center' }}>
           <div style={{ background: 'var(--surface2)', padding: '10px 6px', borderRadius: '8px' }}>
-            <div style={{ fontSize: '9px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>PROTEIN</div>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: totals.p >= 170 ? 'var(--sage)' : 'var(--turmeric)' }}>
+            <div style={{ fontSize: '10.5px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>PROTEIN</div>
+            <div style={{ fontSize: '15px', fontWeight: 600, color: totals.p >= 170 ? 'var(--sage)' : 'var(--turmeric)' }}>
               {totals.p}g
             </div>
-            <div style={{ fontSize: '9px', color: 'var(--muted)' }}>Target: 170g</div>
+            <div style={{ fontSize: '10.5px', color: 'var(--muted)' }}>Target: 170g</div>
           </div>
 
           <div style={{ background: 'var(--surface2)', padding: '10px 6px', borderRadius: '8px' }}>
-            <div style={{ fontSize: '9px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>CALORIES</div>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: totals.k <= 2000 ? 'var(--sage)' : 'var(--vermilion)' }}>
+            <div style={{ fontSize: '10.5px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>CALORIES</div>
+            <div style={{ fontSize: '15px', fontWeight: 600, color: totals.k <= 2000 ? 'var(--sage)' : 'var(--vermilion)' }}>
               {totals.k}
             </div>
-            <div style={{ fontSize: '9px', color: 'var(--muted)' }}>Cap: 2,000</div>
+            <div style={{ fontSize: '10.5px', color: 'var(--muted)' }}>Cap: 2,000</div>
           </div>
 
           <div style={{ background: 'var(--surface2)', padding: '10px 6px', borderRadius: '8px' }}>
-            <div style={{ fontSize: '9px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>HABITS</div>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--turmeric)' }}>
+            <div style={{ fontSize: '10.5px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>HABITS</div>
+            <div style={{ fontSize: '15px', fontWeight: 600, color: 'var(--turmeric)' }}>
               {progressPct}%
             </div>
-            <div style={{ fontSize: '9px', color: 'var(--muted)' }}>{completedCount}/{dailyHabits.length} Done</div>
+            <div style={{ fontSize: '10.5px', color: 'var(--muted)' }}>{completedCount}/{dailyHabits.length} Done</div>
           </div>
         </div>
       </div>

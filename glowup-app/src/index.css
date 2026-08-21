@@ -1,22 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
+/* One accent (amber), everything else desaturated toward the paper/ink neutrals.
+   Four competing accents is what made this read as a demo rather than a tool. */
 :root {
   --bg: #100E0C;
-  --surface: #1C1815;
-  --surface2: #25201C;
-  --surface3: #2F2924;
-  --line: rgba(235, 230, 222, 0.09);
-  --line2: rgba(235, 230, 222, 0.16);
-  --paper: #F0EBE2;
-  --muted: #948879;
-  --turmeric: #EDAB47;
-  --sage: #93B569;
-  --rose: #D2879A;
-  --indigo: #7C9BD1;
-  --vermilion: #D65B44;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px 1px rgba(0, 0, 0, 0.18);
-  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
-  --radius-card: 14px;
+  --surface: #171512;
+  --surface2: #1E1B17;
+  --surface3: #26221D;
+  --line: rgba(235, 230, 222, 0.07);
+  --line2: rgba(235, 230, 222, 0.12);
+  --paper: #EDE8DF;
+  --muted: #8B8175;
+  --faint: #625B52;
+
+  --accent: #D9A05B;
+  --turmeric: #D9A05B;
+  --sage: #8B9E76;
+  --rose: #BC8A93;
+  --indigo: #7E93B8;
+  --vermilion: #C2705C;
+
+  /* Type scale — 5 steps, not 12 ad-hoc sizes. */
+  --t-micro: 10.5px;
+  --t-small: 11.5px;
+  --t-body: 13px;
+  --t-sub: 15px;
+  --t-head: 19px;
+
+  /* Spacing rhythm. */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.45);
+  --radius-card: 10px;
 }
 
 * {
@@ -80,9 +100,9 @@ body {
 .logo-title {
   font-family: 'Cinzel', serif;
   font-size: 21px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: var(--paper);
-  text-shadow: 0 0 24px rgba(232, 163, 61, 0.18);
+  font-weight: 600;
 }
 
 .logo-title em {
@@ -93,14 +113,13 @@ body {
 .sync-badge {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: var(--surface2);
-  border: 0.5px solid var(--line2);
-  border-radius: 12px;
-  padding: 3px 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
-  color: var(--muted);
+  gap: 6px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: var(--t-micro);
+  color: var(--faint);
 }
 
 .sync-dot {
@@ -188,10 +207,10 @@ body {
   color: var(--muted);
   border-radius: 20px;
   padding: 6px 13px;
-  font-size: 11.5px;
-  font-weight: 600;
+  font-size: var(--t-small);
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
   flex: 0 0 auto;
 }
 
@@ -205,10 +224,10 @@ body {
 }
 
 .tab-btn.active {
-  background: linear-gradient(160deg, rgba(232, 163, 61, 0.18), rgba(232, 163, 61, 0.06));
-  border-color: rgba(232, 163, 61, 0.4);
-  color: var(--turmeric);
-  font-weight: 700;
+  background: var(--surface3);
+  border-color: transparent;
+  color: var(--paper);
+  font-weight: 600;
 }
 
 /* Cards & Components */
@@ -241,33 +260,35 @@ body {
 
 .card {
   background: var(--surface);
-  border: 1px solid var(--line2);
+  border: 1px solid var(--line);
   border-radius: var(--radius-card);
-  padding: 16px;
-  margin-bottom: 14px;
+  padding: var(--s4) var(--s4) calc(var(--s4) + 2px);
+  margin-bottom: var(--s3);
   box-shadow: var(--shadow-sm);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.card:hover {
-  border-color: rgba(235, 230, 222, 0.22);
+.card h2,
+.card h3 {
+  letter-spacing: -0.01em;
+  font-weight: 600;
 }
 
 .eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 6px;
+  font-size: var(--t-micro);
+  letter-spacing: 0.01em;
+  color: var(--faint);
+  font-weight: 500;
+  margin-bottom: var(--s2);
 }
 
+/* The leading keyword was doing the shouting; let it recede into the sentence. */
 .eyebrow .n {
-  color: var(--turmeric);
+  color: var(--muted);
+  font-weight: 600;
 }
 
 .note {
-  font-size: 11.5px;
+  font-size: var(--t-small);
   color: var(--muted);
   line-height: 1.45;
 }
@@ -283,11 +304,11 @@ body {
 .statv { font-family: 'JetBrains Mono', monospace; font-weight: 700; }
 
 .tag-badge {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
+  font-size: var(--t-micro);
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 5px;
+  letter-spacing: 0;
 }
 
 .tag-best {
@@ -301,10 +322,10 @@ body {
   background: var(--surface2);
   border: 1px solid var(--line2);
   color: var(--paper);
-  border-radius: 8px;
+  border-radius: 7px;
   padding: 8px 14px;
-  font-size: 12.5px;
-  font-weight: 600;
+  font-size: var(--t-small);
+  font-weight: 500;
   cursor: pointer;
   transition: transform 0.1s ease, filter 0.15s ease, box-shadow 0.15s ease;
 }
@@ -318,19 +339,17 @@ body {
 }
 
 .btn.primary {
-  background: linear-gradient(160deg, #F0B559, var(--turmeric));
+  background: var(--accent);
   color: #1A1206;
-  border-color: var(--turmeric);
-  font-weight: 700;
-  box-shadow: 0 3px 12px rgba(232, 163, 61, 0.25);
+  border-color: var(--accent);
+  font-weight: 600;
 }
 
 .btn.sage {
-  background: linear-gradient(160deg, #A0C378, var(--sage));
+  background: var(--sage);
   color: #16210C;
   border-color: var(--sage);
-  font-weight: 700;
-  box-shadow: 0 3px 12px rgba(138, 168, 95, 0.22);
+  font-weight: 600;
 }
 
 .btn.sm {

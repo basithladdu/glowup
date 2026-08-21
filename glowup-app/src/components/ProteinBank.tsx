@@ -132,8 +132,8 @@ export const ProteinBank: React.FC = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {presetStacks.map((stk, idx) => (
                 <div key={idx} style={{ background: 'var(--surface2)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px' }}>
-                  <div style={{ fontWeight: 700, fontSize: '13.5px', color: 'var(--turmeric)' }}>{stk.name}</div>
-                  <div style={{ fontSize: '11px', color: 'var(--muted)', margin: '4px 0 8px' }}>{stk.desc}</div>
+                  <div style={{ fontWeight: 600, fontSize: '13px', color: 'var(--turmeric)' }}>{stk.name}</div>
+                  <div style={{ fontSize: '11.5px', color: 'var(--muted)', margin: '4px 0 8px' }}>{stk.desc}</div>
                   <button className="btn sage sm" onClick={() => addFoodItems(stk.foods)}>
                     ✓ Log This Complete 172g Stack Today
                   </button>
@@ -197,7 +197,7 @@ export const ProteinBank: React.FC = () => {
                 {customRecipes.map((r) => (
                   <div key={r.id} className="logrow">
                     <span className="logname">{r.n}</span>
-                    <span className="logmac" style={{ color: 'var(--sage)', fontWeight: 700 }}>
+                    <span className="logmac" style={{ color: 'var(--sage)', fontWeight: 600 }}>
                       {r.k} kcal · {r.p}g P
                     </span>
                     <div style={{ display: 'flex', gap: '4px' }}>
@@ -308,8 +308,8 @@ export const ProteinBank: React.FC = () => {
                 '1,000ml afternoon hydration block (cognitive alertness)',
                 '500ml evening hydration tapered 90m before sleep (prevents nocturia)'
               ].map((chk, i) => (
-                <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ color: '#06B6D4', fontWeight: 700 }}>✓</span> {chk}
+                <div key={i} style={{ fontSize: '11.5px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ color: '#06B6D4', fontWeight: 600 }}>✓</span> {chk}
                 </div>
               ))}
             </div>

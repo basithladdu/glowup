@@ -25,7 +25,7 @@ export const Header: React.FC = () => {
       <div className="brandrow">
         <h1 className="logo-title">GLOW<em>UP</em></h1>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '9.5px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace', background: 'var(--surface2)', border: '0.5px solid var(--line)', padding: '2px 6px', borderRadius: '4px' }}>
+          <span style={{ fontSize: '10.5px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace', background: 'var(--surface2)', border: '0.5px solid var(--line)', padding: '2px 6px', borderRadius: '4px' }}>
             Keys: 1–5 Tabs · Q Quick
           </span>
           <span className={`sync-badge ${syncStatus}`}>

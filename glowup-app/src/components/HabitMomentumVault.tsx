@@ -63,10 +63,10 @@ export const HabitMomentumVault: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span style={{ fontSize: '26px' }}></span>
             <div>
-              <h2 style={{ fontSize: '18px', margin: 0 }}>
+              <h2 style={{ fontSize: '19px', margin: 0 }}>
                 {bankedDays} Days Banked · Level {level} ({totalXp} XP)
               </h2>
-              <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '10px', color: 'var(--turmeric)' }}>
+              <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '10.5px', color: 'var(--turmeric)' }}>
                 Phase {level}: Neural Reward Baseline Restored
               </span>
             </div>
@@ -143,7 +143,7 @@ export const HabitMomentumVault: React.FC = () => {
       {showReflectionModal && (
         <div className="modal-backdrop">
           <div className="card modal-box">
-            <h2 style={{ fontSize: '16px', margin: '0 0 6px' }}>Gentle Checkpoint / Reflection</h2>
+            <h2 style={{ fontSize: '15px', margin: '0 0 6px' }}>Gentle Checkpoint / Reflection</h2>
             <p className="note" style={{ marginBottom: '10px' }}>
               Your {bankedDays} banked days and XP remain 100% safe. What micro-adjustment will you make tomorrow?
             </p>

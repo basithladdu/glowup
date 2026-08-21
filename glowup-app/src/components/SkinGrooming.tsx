@@ -301,8 +301,8 @@ export const SkinGrooming: React.FC = () => {
             '3L water daily + high-protein clean whey — supports barrier repair alongside topical actives',
             'Glutathione (1–2% topical or supplement) pairs with SPF to blunt tyrosinase-driven pigment — never as a sub for sunscreen'
           ].map((chk, i) => (
-            <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
-              <span style={{ color: 'var(--turmeric)', fontWeight: 700 }}></span> {chk}
+            <div key={i} style={{ fontSize: '11.5px', color: 'var(--paper)', display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
+              <span style={{ color: 'var(--turmeric)', fontWeight: 600 }}></span> {chk}
             </div>
           ))}
         </div>
@@ -313,7 +313,7 @@ export const SkinGrooming: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
           <div>
             <p className="eyebrow"><span className="n">clinical</span> tonight's active skincare rotation</p>
-            <h2 style={{ fontSize: '18px', margin: 0, color: 'var(--turmeric)' }}>{tonightRot.active}</h2>
+            <h2 style={{ fontSize: '19px', margin: 0, color: 'var(--turmeric)' }}>{tonightRot.active}</h2>
           </div>
           <span className="tag-badge tag-best">{tonightRot.short}</span>
         </div>
@@ -386,11 +386,11 @@ export const SkinGrooming: React.FC = () => {
                           </span>
                         )}
                       </div>
-                      <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '4px' }}>
+                      <div style={{ fontSize: '11.5px', color: 'var(--muted)', marginTop: '4px' }}>
                         Zone: <strong style={{ color: 'var(--paper)' }}>{step.zone}</strong>
                       </div>
                       {stepTelem && (
-                        <div style={{ fontSize: '10px', color: 'var(--turmeric)', marginTop: '2px', fontFamily: 'JetBrains Mono, monospace' }}>
+                        <div style={{ fontSize: '10.5px', color: 'var(--turmeric)', marginTop: '2px', fontFamily: 'JetBrains Mono, monospace' }}>
                           Used {stepTelem.count}x · Last: {stepTelem.lastUsed}
                         </div>
                       )}
@@ -399,7 +399,7 @@ export const SkinGrooming: React.FC = () => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <button
                         className="btn sm"
-                        style={{ fontSize: '10px', padding: '3px 7px', background: 'var(--surface3)' }}
+                        style={{ fontSize: '10.5px', padding: '3px 7px', background: 'var(--surface3)' }}
                         onClick={() => setExpandedStep(isExpanded ? null : step.id)}
                       >
                         {isExpanded ? '▲ Hide' : `▼ ${checkedCount}/${step.checks.length} Checks`}
@@ -444,10 +444,10 @@ export const SkinGrooming: React.FC = () => {
                             }}
                             onClick={() => useGlowUpStore.getState().toggleStepMicroCheck(step.id, idx, step.zone)}
                           >
-                            <span style={{ color: isChkDone ? 'var(--sage)' : 'var(--muted)', fontSize: '12px', fontWeight: 700 }}>
+                            <span style={{ color: isChkDone ? 'var(--sage)' : 'var(--muted)', fontSize: '13px', fontWeight: 600 }}>
                               {isChkDone ? '☑' : '☐'}
                             </span>
-                            <span style={{ fontSize: '11px', color: isChkDone ? 'var(--paper)' : 'var(--muted)', textDecoration: isChkDone ? 'line-through' : 'none' }}>
+                            <span style={{ fontSize: '11.5px', color: isChkDone ? 'var(--paper)' : 'var(--muted)', textDecoration: isChkDone ? 'line-through' : 'none' }}>
                               {chk}
                             </span>
                           </div>
@@ -506,11 +506,11 @@ export const SkinGrooming: React.FC = () => {
                           </span>
                         )}
                       </div>
-                      <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '4px' }}>
+                      <div style={{ fontSize: '11.5px', color: 'var(--muted)', marginTop: '4px' }}>
                         Zone: <strong style={{ color: 'var(--paper)' }}>{step.zone}</strong>
                       </div>
                       {stepTelem && (
-                        <div style={{ fontSize: '10px', color: 'var(--turmeric)', marginTop: '2px', fontFamily: 'JetBrains Mono, monospace' }}>
+                        <div style={{ fontSize: '10.5px', color: 'var(--turmeric)', marginTop: '2px', fontFamily: 'JetBrains Mono, monospace' }}>
                           Used {stepTelem.count}x · Last: {stepTelem.lastUsed}
                         </div>
                       )}
@@ -519,7 +519,7 @@ export const SkinGrooming: React.FC = () => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <button
                         className="btn sm"
-                        style={{ fontSize: '10px', padding: '3px 7px', background: 'var(--surface3)' }}
+                        style={{ fontSize: '10.5px', padding: '3px 7px', background: 'var(--surface3)' }}
                         onClick={() => setExpandedStep(isExpanded ? null : step.id)}
                       >
                         {isExpanded ? '▲ Hide' : `▼ ${checkedCount}/${step.checks.length} Checks`}
@@ -564,10 +564,10 @@ export const SkinGrooming: React.FC = () => {
                             }}
                             onClick={() => useGlowUpStore.getState().toggleStepMicroCheck(step.id, idx, step.zone)}
                           >
-                            <span style={{ color: isChkDone ? 'var(--sage)' : 'var(--muted)', fontSize: '12px', fontWeight: 700 }}>
+                            <span style={{ color: isChkDone ? 'var(--sage)' : 'var(--muted)', fontSize: '13px', fontWeight: 600 }}>
                               {isChkDone ? '☑' : '☐'}
                             </span>
-                            <span style={{ fontSize: '11px', color: isChkDone ? 'var(--paper)' : 'var(--muted)', textDecoration: isChkDone ? 'line-through' : 'none' }}>
+                            <span style={{ fontSize: '11.5px', color: isChkDone ? 'var(--paper)' : 'var(--muted)', textDecoration: isChkDone ? 'line-through' : 'none' }}>
                               {chk}
                             </span>
                           </div>
@@ -615,20 +615,20 @@ export const SkinGrooming: React.FC = () => {
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontWeight: 700, fontSize: '12.5px', color: 'var(--paper)' }}>
+                  <span style={{ fontWeight: 600, fontSize: '13px', color: 'var(--paper)' }}>
                     {item.icon} {item.name}
                   </span>
                   <span className="badge-count" style={{ background: 'var(--surface3)', color: 'var(--turmeric)' }}>
                     {data?.count || 0} Uses
                   </span>
                 </div>
-                <div style={{ fontSize: '11px', color: 'var(--muted)' }}>
+                <div style={{ fontSize: '11.5px', color: 'var(--muted)' }}>
                   Application Zone: <strong style={{ color: 'var(--paper)' }}>{item.zone}</strong>
                 </div>
                 <div style={{ fontSize: '10.5px', color: 'var(--sage)' }}>
                   Frequency: {item.rec}
                 </div>
-                <div style={{ fontSize: '10px', color: 'var(--turmeric)', fontFamily: 'JetBrains Mono, monospace', marginTop: '2px' }}>
+                <div style={{ fontSize: '10.5px', color: 'var(--turmeric)', fontFamily: 'JetBrains Mono, monospace', marginTop: '2px' }}>
                   Last Logged: {data?.lastUsed || 'Not logged yet'}
                 </div>
                 <button
@@ -662,7 +662,7 @@ export const SkinGrooming: React.FC = () => {
             const washOffDue = hoursSince !== null && hoursSince < 2;
             return (
               <div style={{ background: 'var(--surface2)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                <span style={{ fontWeight: 700, fontSize: '12.5px' }}>Hair Oiling <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(single task)</span></span>
+                <span style={{ fontWeight: 600, fontSize: '13px' }}>Hair Oiling <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(single task)</span></span>
                 <span style={{ fontSize: '10.5px', color: 'var(--muted)' }}>Tool: coconut oil (daily) or castor oil (density) — whichever's in reach</span>
                 {washOffDue ? (
                   <span style={{ fontSize: '10.5px', color: 'var(--turmeric)' }}>⏳ Wash off by {new Date(new Date(lastTs!).getTime() + 2 * 3600000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
@@ -685,7 +685,7 @@ export const SkinGrooming: React.FC = () => {
 
           {/* BEARD — minoxidil is primary, dermaroller only if extra needed */}
           <div style={{ background: 'var(--surface2)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <span style={{ fontWeight: 700, fontSize: '12.5px' }}>Beard Density <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(nightly routine)</span></span>
+            <span style={{ fontWeight: 600, fontSize: '13px' }}>Beard Density <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(nightly routine)</span></span>
             <span style={{ fontSize: '10.5px', color: 'var(--muted)' }}>Primary tool: Minoxidil 5% (nightly). Dermaroller only on patchy zones needing extra push.</span>
             <span style={{ fontSize: '10.5px', color: telemetry['pm_minox'] ? 'var(--sage)' : 'var(--muted)' }}>
               {telemetry['pm_minox'] ? `✓ Minoxidil last: ${telemetry['pm_minox'].lastUsed}` : 'Log tonight in PM Skincare above'}
@@ -700,7 +700,7 @@ export const SkinGrooming: React.FC = () => {
             const isDue = daysSince >= 7;
             return (
               <div style={{ background: 'var(--surface2)', border: `1px solid ${isDue ? 'var(--turmeric)' : 'var(--line2)'}`, borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                <span style={{ fontWeight: 700, fontSize: '12.5px' }}>Nails <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(weekly task)</span></span>
+                <span style={{ fontWeight: 600, fontSize: '13px' }}>Nails <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(weekly task)</span></span>
                 <span style={{ fontSize: '10.5px', color: isDue ? 'var(--turmeric)' : 'var(--muted)' }}>
                   {isDue ? '✂ Due — trim whenever convenient today' : `Not due yet — trimmed ${Math.floor(daysSince)}d ago, next check in ${Math.max(0, 7 - Math.floor(daysSince))}d`}
                 </span>
@@ -718,7 +718,7 @@ export const SkinGrooming: React.FC = () => {
             const isDue = daysSince >= 14;
             return (
               <div style={{ background: 'var(--surface2)', border: `1px solid ${isDue ? 'var(--turmeric)' : 'var(--line2)'}`, borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                <span style={{ fontWeight: 700, fontSize: '12.5px' }}>✂Haircut & Beard Fade <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(14-day task)</span></span>
+                <span style={{ fontWeight: 600, fontSize: '13px' }}>✂Haircut & Beard Fade <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(14-day task)</span></span>
                 <span style={{ fontSize: '10.5px', color: isDue ? 'var(--turmeric)' : 'var(--muted)' }}>
                   {isDue ? '✂ Due — sharp neckline & clean taper' : `Not due yet — ${Math.floor(daysSince)}d since last, next check in ${Math.max(0, 14 - Math.floor(daysSince))}d`}
                 </span>

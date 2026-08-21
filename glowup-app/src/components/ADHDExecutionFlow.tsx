@@ -171,7 +171,7 @@ export const ADHDExecutionFlow: React.FC<ADHDExecutionFlowProps> = ({ onNavigate
           {/* 10-MIN BOX BREATHING MEDITATION */}
           <div className="card" style={{ textAlign: 'center', padding: '16px' }}>
             <p className="eyebrow"><span className="n">calm</span> 10-minute nervous system reset</p>
-            <h3 style={{ fontSize: '16px', margin: '0 0 4px', color: 'var(--sage)' }}>Box Breathing Meditation</h3>
+            <h3 style={{ fontSize: '15px', margin: '0 0 4px', color: 'var(--sage)' }}>Box Breathing Meditation</h3>
             <p className="note" style={{ marginBottom: '10px' }}>
               Used by Navy SEALs & high performers to instantly lower cortisol and eliminate mental static.
             </p>
@@ -197,8 +197,8 @@ export const ADHDExecutionFlow: React.FC<ADHDExecutionFlowProps> = ({ onNavigate
             </div>
 
             <div style={{
-              fontSize: '16px',
-              fontWeight: 700,
+              fontSize: '15px',
+              fontWeight: 600,
               color: 'var(--turmeric)',
               margin: '8px 0',
               padding: '10px',
@@ -209,7 +209,7 @@ export const ADHDExecutionFlow: React.FC<ADHDExecutionFlowProps> = ({ onNavigate
               {medRunning ? breathPhase : 'Ready to Reset'}
             </div>
 
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '30px', fontWeight: 700, color: 'var(--paper)', margin: '6px 0' }}>
+            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '30px', fontWeight: 600, color: 'var(--paper)', margin: '6px 0' }}>
               {String(Math.floor(medSeconds / 60)).padStart(2, '0')}:{String(medSeconds % 60).padStart(2, '0')}
             </div>
 
@@ -346,13 +346,13 @@ export const ADHDExecutionFlow: React.FC<ADHDExecutionFlowProps> = ({ onNavigate
               {adhdTimelineSteps.map((s, idx) => (
                 <div key={idx} className="task-item" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '3px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
-                    <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--paper)' }}>{s.phase}</span>
+                    <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--paper)' }}>{s.phase}</span>
                     <span className="cat-pill gym" style={{ background: 'rgba(232, 163, 61, 0.15)', color: 'var(--turmeric)', fontSize: '8.5px' }}>
                       {s.tag}
                     </span>
                   </div>
-                  <div style={{ fontSize: '11px', color: 'var(--turmeric)', fontWeight: 600 }}>{s.action}</div>
-                  <div style={{ fontSize: '10px', color: 'var(--muted)' }}>{s.why}</div>
+                  <div style={{ fontSize: '11.5px', color: 'var(--turmeric)', fontWeight: 600 }}>{s.action}</div>
+                  <div style={{ fontSize: '10.5px', color: 'var(--muted)' }}>{s.why}</div>
                 </div>
               ))}
             </div>

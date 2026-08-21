@@ -102,18 +102,18 @@ export const SleepSanctuary: React.FC = () => {
       {/* LIVE SLEEP STOPWATCH */}
       <div className="card" style={{ textAlign: 'center', padding: '24px 14px', background: 'linear-gradient(180deg, var(--surface), var(--surface2))' }}>
         <p className="eyebrow" style={{ color: 'var(--indigo)' }}>live sleep tracking</p>
-        <h2 style={{ fontSize: '20px', margin: '0 0 8px' }}>One-Tap Sleep Stopwatch </h2>
+        <h2 style={{ fontSize: '19px', margin: '0 0 8px' }}>One-Tap Sleep Stopwatch </h2>
         <p className="note" style={{ marginBottom: '16px' }}>
           Tap when hitting the pillow, tap when waking up. Automatically logs sleep duration in your 24h timeline.
         </p>
 
-        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '38px', fontWeight: 700, color: isSleeping ? 'var(--sage)' : 'var(--indigo)', margin: '14px 0' }}>
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '38px', fontWeight: 600, color: isSleeping ? 'var(--sage)' : 'var(--indigo)', margin: '14px 0' }}>
           {elapsed}
         </div>
 
         <button
           className={`btn ${isSleeping ? 'sage' : 'primary'}`}
-          style={{ width: '100%', padding: '12px', fontSize: '14px', fontWeight: 700 }}
+          style={{ width: '100%', padding: '12px', fontSize: '15px', fontWeight: 600 }}
           onClick={handleToggleSleep}
         >
           {isSleeping ? "Good Morning, I'm Awake!" : "Going to Sleep Now"}
@@ -144,7 +144,7 @@ export const SleepSanctuary: React.FC = () => {
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '18px', fontWeight: 700, fontFamily: 'JetBrains Mono, monospace', color: idx === 1 ? 'var(--turmeric)' : 'var(--paper)' }}>
+                <span style={{ fontSize: '19px', fontWeight: 600, fontFamily: 'JetBrains Mono, monospace', color: idx === 1 ? 'var(--turmeric)' : 'var(--paper)' }}>
                   {c.formatted}
                 </span>
                 <span className="badge-count" style={{ background: 'var(--surface3)' }}>{c.hours}</span>
@@ -164,7 +164,7 @@ export const SleepSanctuary: React.FC = () => {
           </div>
           <button
             className="btn sm"
-            style={{ fontSize: '10px', background: 'var(--surface3)' }}
+            style={{ fontSize: '10.5px', background: 'var(--surface3)' }}
             onClick={() => setExpandedChecks(!expandedChecks)}
           >
             {expandedChecks ? '▲ Hide' : '▼ View Checks'}
@@ -190,10 +190,10 @@ export const SleepSanctuary: React.FC = () => {
                   }}
                   onClick={() => toggleCheck(chk.id)}
                 >
-                  <span style={{ color: isDone ? 'var(--sage)' : 'var(--muted)', fontSize: '13px', fontWeight: 700 }}>
+                  <span style={{ color: isDone ? 'var(--sage)' : 'var(--muted)', fontSize: '13px', fontWeight: 600 }}>
                     {isDone ? '☑' : '☐'}
                   </span>
-                  <span style={{ fontSize: '12px', color: isDone ? 'var(--paper)' : 'var(--muted)', textDecoration: isDone ? 'line-through' : 'none' }}>
+                  <span style={{ fontSize: '13px', color: isDone ? 'var(--paper)' : 'var(--muted)', textDecoration: isDone ? 'line-through' : 'none' }}>
                     {chk.text}
                   </span>
                 </div>
@@ -211,7 +211,7 @@ export const SleepSanctuary: React.FC = () => {
             {sleepHistory.map((s, idx) => (
               <div key={idx} className="logrow">
                 <span className="logname">{s.date} · Bed: {s.bed} ➔ Wake: {s.wake}</span>
-                <span className="logmac" style={{ color: s.dur >= 7.5 ? 'var(--sage)' : 'var(--turmeric)', fontWeight: 700 }}>
+                <span className="logmac" style={{ color: s.dur >= 7.5 ? 'var(--sage)' : 'var(--turmeric)', fontWeight: 600 }}>
                   {s.dur} hrs ({s.rating})
                 </span>
               </div>

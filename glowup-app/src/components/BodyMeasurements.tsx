@@ -133,7 +133,7 @@ export const BodyMeasurements: React.FC = () => {
                   alt={`Progress ${date}`}
                   style={{ height: '120px', borderRadius: '8px', border: '1px solid var(--line2)', display: 'block' }}
                 />
-                <span style={{ position: 'absolute', left: 4, bottom: 4, fontSize: '9px', background: 'rgba(0,0,0,0.65)', padding: '1px 5px', borderRadius: '4px', fontFamily: 'JetBrains Mono, monospace' }}>
+                <span style={{ position: 'absolute', left: 4, bottom: 4, fontSize: '10.5px', background: 'rgba(0,0,0,0.65)', padding: '1px 5px', borderRadius: '4px', fontFamily: 'JetBrains Mono, monospace' }}>
                   {date}
                 </span>
                 <button
@@ -155,7 +155,7 @@ export const BodyMeasurements: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <p className="eyebrow"><span className="n">fat loss</span> cut trajectory (88.0 kg ➔ 72.0 kg)</p>
-            <h2 style={{ fontSize: '20px', margin: 0 }}>Current: {currentWeight} kg</h2>
+            <h2 style={{ fontSize: '19px', margin: 0 }}>Current: {currentWeight} kg</h2>
           </div>
           <span className="tag-badge tag-best">{weightToLose.toFixed(1)} KG TO GO</span>
         </div>
@@ -236,7 +236,7 @@ export const BodyMeasurements: React.FC = () => {
 
             {/* 5 PRECISION ANTHROPOMETRIC TAPE CHECKS */}
             <div style={{ background: 'var(--surface3)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px', marginBottom: '12px' }}>
-              <p style={{ fontSize: '11px', color: 'var(--turmeric)', fontWeight: 700, margin: '0 0 6px' }}>
+              <p style={{ fontSize: '11.5px', color: 'var(--turmeric)', fontWeight: 600, margin: '0 0 6px' }}>
                 5 Precision Anthropometric Measurement Checks:
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -247,8 +247,8 @@ export const BodyMeasurements: React.FC = () => {
                   'Measure shoulders across widest lateral deltoid peaks',
                   'Measure arm circumference flexed at peak biceps contraction'
                 ].map((chk, i) => (
-                  <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
+                  <div key={i} style={{ fontSize: '11.5px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ color: 'var(--sage)', fontWeight: 600 }}>✓</span> {chk}
                   </div>
                 ))}
               </div>

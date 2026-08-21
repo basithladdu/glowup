@@ -47,7 +47,7 @@ export const ShoppingInventory: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div>
             <p className="eyebrow"><span className="n">inventory</span> shopping list &amp; replenishment</p>
-            <h2 style={{ fontSize: '18px', margin: 0 }}>Things I Have To Buy </h2>
+            <h2 style={{ fontSize: '19px', margin: 0 }}>Things I Have To Buy </h2>
           </div>
           <span className="tag-badge tag-best">{pendingItems.length} PENDING</span>
         </div>
@@ -61,7 +61,7 @@ export const ShoppingInventory: React.FC = () => {
         {/* LEFT COLUMN: PENDING ITEMS */}
         <div className="card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-            <h3 style={{ fontSize: '14px', margin: 0, color: 'var(--turmeric)' }}>⏳ Needs Replenishment ({pendingItems.length})</h3>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>⏳ Needs Replenishment ({pendingItems.length})</h3>
           </div>
 
           {!pendingItems.length ? (
@@ -145,15 +145,15 @@ export const ShoppingInventory: React.FC = () => {
                   <div key={item.id} className="logrow" style={{ opacity: 0.85, padding: '8px 6px', background: 'var(--surface2)', borderRadius: '6px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
                       <span className="logname" style={{ fontWeight: 600 }}>{item.name}</span>
-                      <span style={{ fontSize: '10px', color: 'var(--muted)' }}>Qty: {item.qty} · Cost: {item.estCost}</span>
+                      <span style={{ fontSize: '10.5px', color: 'var(--muted)' }}>Qty: {item.qty} · Cost: {item.estCost}</span>
                       {telemData && (
-                        <span style={{ fontSize: '9.5px', color: 'var(--turmeric)', fontFamily: 'JetBrains Mono, monospace', marginTop: '2px' }}>
+                        <span style={{ fontSize: '10.5px', color: 'var(--turmeric)', fontFamily: 'JetBrains Mono, monospace', marginTop: '2px' }}>
                           Logged {telemData.count}x · Last: {telemData.lastUsed}
                         </span>
                       )}
                     </div>
                     <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                      <button className="task-btn" style={{ fontSize: '9px', padding: '3px 6px' }} onClick={() => toggleBought(item.id)}>
+                      <button className="task-btn" style={{ fontSize: '10.5px', padding: '3px 6px' }} onClick={() => toggleBought(item.id)}>
                         ↩ Buy Again
                       </button>
                       <button className="del" onClick={() => handleDeleteItem(item.id)}>×</button>

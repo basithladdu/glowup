@@ -74,18 +74,18 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
   return (
     <nav className="nav-strip" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 4px' }}>
-        <span style={{ fontSize: '10px', color: 'var(--muted)' }} />
+        <span style={{ fontSize: '10.5px', color: 'var(--muted)' }} />
         <div style={{ display: 'flex', gap: '4px' }}>
           <button
             className={`tab-btn ${mode === 'calm' ? 'active' : ''}`}
-            style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '4px' }}
+            style={{ fontSize: '10.5px', padding: '2px 8px', borderRadius: '4px' }}
             onClick={() => handleToggleMode('calm')}
           >
             Essentials
           </button>
           <button
             className={`tab-btn ${mode === 'all' ? 'active' : ''}`}
-            style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '4px' }}
+            style={{ fontSize: '10.5px', padding: '2px 8px', borderRadius: '4px' }}
             onClick={() => handleToggleMode('all')}
           >
             Everything
@@ -111,8 +111,8 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
                   color: '#1A1206',
                   borderRadius: '9px',
                   padding: '0 5px',
-                  fontSize: '9.5px',
-                  fontWeight: 700,
+                  fontSize: '10.5px',
+                  fontWeight: 600,
                   fontFamily: 'JetBrains Mono, monospace'
                 }}
               >

@@ -90,15 +90,15 @@ export const AIFoodAssistant: React.FC = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
                 <p className="eyebrow" style={{ color: 'var(--turmeric)' }}>daily macro totals</p>
-                <h2 style={{ fontSize: '20px', margin: 0 }}>
-                  {dayTotals.p}g / 170g <small style={{ fontSize: '12px', color: dayTotals.p >= 170 ? 'var(--sage)' : 'var(--muted)' }}>Protein Floor</small>
+                <h2 style={{ fontSize: '19px', margin: 0 }}>
+                  {dayTotals.p}g / 170g <small style={{ fontSize: '13px', color: dayTotals.p >= 170 ? 'var(--sage)' : 'var(--muted)' }}>Protein Floor</small>
                 </h2>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <span style={{ fontSize: '18px', fontWeight: 700, color: dayTotals.k <= 2000 ? 'var(--sage)' : 'var(--vermilion)' }}>
+                <span style={{ fontSize: '19px', fontWeight: 600, color: dayTotals.k <= 2000 ? 'var(--sage)' : 'var(--vermilion)' }}>
                   {dayTotals.k} / 2,000 kcal
                 </span>
-                <div style={{ fontSize: '10px', color: 'var(--muted)' }}>500 kcal Deficit Cap</div>
+                <div style={{ fontSize: '10.5px', color: 'var(--muted)' }}>500 kcal Deficit Cap</div>
               </div>
             </div>
           </div>
@@ -107,10 +107,10 @@ export const AIFoodAssistant: React.FC = () => {
           <div className="card ai-food-card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '22px' }}></span>
+                <span style={{ fontSize: '19px' }}></span>
                 <div>
-                  <h2 style={{ fontSize: '16px', margin: 0, color: 'var(--turmeric)' }}>AI Food &amp; Macro Assistant</h2>
-                  <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '10px', color: 'var(--muted)' }}>Gemini AI · Strict JSON Schema</span>
+                  <h2 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>AI Food &amp; Macro Assistant</h2>
+                  <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '10.5px', color: 'var(--muted)' }}>Gemini AI · Strict JSON Schema</span>
                 </div>
               </div>
             </div>
@@ -188,7 +188,7 @@ export const AIFoodAssistant: React.FC = () => {
               <div style={{ marginTop: '14px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                   <p className="eyebrow" style={{ margin: 0 }}><span className="n">parsed</span> all food cards generated</p>
-                  <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '10px', color: 'var(--turmeric)' }}>
+                  <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '10.5px', color: 'var(--turmeric)' }}>
                     {parsedCards.length} items detected
                   </span>
                 </div>
@@ -196,29 +196,29 @@ export const AIFoodAssistant: React.FC = () => {
                 {/* Total Meal Macros Bar */}
                 <div className="card" style={{ background: 'var(--surface3)', borderColor: 'var(--line2)', padding: '10px', marginBottom: '12px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                    <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '11px', fontWeight: 700, color: 'var(--paper)' }}>
+                    <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '11.5px', fontWeight: 600, color: 'var(--paper)' }}>
                       TOTAL MEAL MACROS
                     </span>
-                    <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '11px', fontWeight: 700, color: 'var(--sage)' }}>
+                    <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '11.5px', fontWeight: 600, color: 'var(--sage)' }}>
                       {totP.toFixed(1)}g Protein
                     </span>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '4px', textAlign: 'center' }}>
                     <div style={{ background: 'var(--surface2)', padding: '5px', borderRadius: '6px' }}>
-                      <div style={{ fontSize: '9px', color: 'var(--muted)' }}>CALORIES</div>
-                      <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--turmeric)' }}>{Math.round(totKcal)}</div>
+                      <div style={{ fontSize: '10.5px', color: 'var(--muted)' }}>CALORIES</div>
+                      <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--turmeric)' }}>{Math.round(totKcal)}</div>
                     </div>
                     <div style={{ background: 'var(--surface2)', padding: '5px', borderRadius: '6px' }}>
-                      <div style={{ fontSize: '9px', color: 'var(--muted)' }}>PROTEIN</div>
-                      <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--sage)' }}>{totP.toFixed(1)}g</div>
+                      <div style={{ fontSize: '10.5px', color: 'var(--muted)' }}>PROTEIN</div>
+                      <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--sage)' }}>{totP.toFixed(1)}g</div>
                     </div>
                     <div style={{ background: 'var(--surface2)', padding: '5px', borderRadius: '6px' }}>
-                      <div style={{ fontSize: '9px', color: 'var(--muted)' }}>CARBS</div>
-                      <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--indigo)' }}>{totC.toFixed(1)}g</div>
+                      <div style={{ fontSize: '10.5px', color: 'var(--muted)' }}>CARBS</div>
+                      <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--indigo)' }}>{totC.toFixed(1)}g</div>
                     </div>
                     <div style={{ background: 'var(--surface2)', padding: '5px', borderRadius: '6px' }}>
-                      <div style={{ fontSize: '9px', color: 'var(--muted)' }}>FAT</div>
-                      <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--rose)' }}>{totF.toFixed(1)}g</div>
+                      <div style={{ fontSize: '10.5px', color: 'var(--muted)' }}>FAT</div>
+                      <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--rose)' }}>{totF.toFixed(1)}g</div>
                     </div>
                   </div>
                 </div>
@@ -228,10 +228,10 @@ export const AIFoodAssistant: React.FC = () => {
                   {parsedCards.map((card, idx) => (
                     <div key={idx} className="ai-parsed-card">
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                        <span style={{ fontWeight: 700, fontSize: '13.5px', color: 'var(--paper)' }}>{card.n}</span>
+                        <span style={{ fontWeight: 600, fontSize: '13px', color: 'var(--paper)' }}>{card.n}</span>
                         <button
                           onClick={() => handleRemoveCard(idx)}
-                          style={{ background: 'none', border: 0, color: 'var(--muted)', fontSize: '16px', cursor: 'pointer' }}
+                          style={{ background: 'none', border: 0, color: 'var(--muted)', fontSize: '15px', cursor: 'pointer' }}
                         >
                           ×
                         </button>
@@ -248,7 +248,7 @@ export const AIFoodAssistant: React.FC = () => {
 
                 <button
                   className="btn sage"
-                  style={{ width: '100%', marginTop: '12px', padding: '12px', fontSize: '13.5px', fontWeight: 700 }}
+                  style={{ width: '100%', marginTop: '12px', padding: '12px', fontSize: '13px', fontWeight: 600 }}
                   onClick={handleLogAll}
                 >
                   ✓ Log ALL Cards to Today's Meals (+ Sync Macros)

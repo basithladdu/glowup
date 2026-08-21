@@ -137,7 +137,7 @@ export const AIDossierSync: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <p className="eyebrow"><span className="n">cloud</span> supabase live connection</p>
-            <h2 style={{ fontSize: '16px', margin: 0 }}>Cloud Database Status</h2>
+            <h2 style={{ fontSize: '15px', margin: 0 }}>Cloud Database Status</h2>
           </div>
           <span className={`sync-badge ${syncStatus}`}>
             <i className="sync-dot"></i>
@@ -155,7 +155,7 @@ export const AIDossierSync: React.FC = () => {
       {/* AI SYSTEM PROMPT DOSSIER EXPORT */}
       <div className="card">
         <p className="eyebrow"><span className="n">export</span> ai audit system dossier</p>
-        <h2 style={{ fontSize: '16px', margin: '0 0 6px' }}>Export AI System Context Prompt</h2>
+        <h2 style={{ fontSize: '15px', margin: '0 0 6px' }}>Export AI System Context Prompt</h2>
         <p className="note" style={{ marginBottom: '12px' }}>
           Copy this formatted dossier and paste it into ChatGPT, Claude, or Gemini for instant contextual advice tailored to your real metrics.
         </p>
@@ -167,7 +167,7 @@ export const AIDossierSync: React.FC = () => {
       {/* The key is stored per-device in localStorage and never committed or synced. */}
       <div className="card">
         <p className="eyebrow"><span className="n">ai</span> gemini api key</p>
-        <h2 style={{ fontSize: '16px', margin: '0 0 6px' }}>
+        <h2 style={{ fontSize: '15px', margin: '0 0 6px' }}>
           {apiKeySaved ? 'API key set on this device' : 'No API key set'}
         </h2>
         <p className="note" style={{ marginBottom: '10px' }}>
@@ -208,7 +208,7 @@ export const AIDossierSync: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
           <div>
             <p className="eyebrow"><span className="n">backup</span> persistent data vault</p>
-            <h2 style={{ fontSize: '16px', margin: 0 }}>Full JSON Database Backup</h2>
+            <h2 style={{ fontSize: '15px', margin: 0 }}>Full JSON Database Backup</h2>
           </div>
         </div>
         <p className="note" style={{ marginBottom: '12px' }}>

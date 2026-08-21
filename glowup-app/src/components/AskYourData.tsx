@@ -58,7 +58,7 @@ export const AskYourData: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             <div key={i} className="logrow" style={{ textAlign: 'left' }}>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <span className="logname">{AREA_ICON[f.area] || '•'} {f.text}</span>
-                <span style={{ fontSize: '9.5px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>
+                <span style={{ fontSize: '10.5px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>
                   {f.date} · {f.area}
                 </span>
               </div>

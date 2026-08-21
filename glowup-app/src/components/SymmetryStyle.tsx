@@ -176,7 +176,7 @@ export const SymmetryStyle: React.FC = () => {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <button
                       className="btn sm"
-                      style={{ fontSize: '10px', padding: '3px 7px', background: 'var(--surface3)' }}
+                      style={{ fontSize: '10.5px', padding: '3px 7px', background: 'var(--surface3)' }}
                       onClick={() => setExpandedItem(isExpanded ? null : d.id)}
                     >
                       {isExpanded ? '▲ Hide' : '5 Checks'}
@@ -198,8 +198,8 @@ export const SymmetryStyle: React.FC = () => {
                       5 Precision Biomechanical Checks:
                     </p>
                     {d.checks.map((chk, i) => (
-                      <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
+                      <div key={i} style={{ fontSize: '11.5px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{ color: 'var(--sage)', fontWeight: 600 }}>✓</span> {chk}
                       </div>
                     ))}
                   </div>
@@ -245,7 +245,7 @@ export const SymmetryStyle: React.FC = () => {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <button
                       className="btn sm"
-                      style={{ fontSize: '10px', padding: '3px 7px', background: 'var(--surface3)' }}
+                      style={{ fontSize: '10.5px', padding: '3px 7px', background: 'var(--surface3)' }}
                       onClick={() => setExpandedItem(isExpanded ? null : s.id)}
                     >
                       {isExpanded ? '▲ Hide' : '5 Checks'}
@@ -267,8 +267,8 @@ export const SymmetryStyle: React.FC = () => {
                       5 Aesthetic Quality Standards:
                     </p>
                     {s.checks.map((chk, i) => (
-                      <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span style={{ color: 'var(--rose)', fontWeight: 700 }}>✓</span> {chk}
+                      <div key={i} style={{ fontSize: '11.5px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{ color: 'var(--rose)', fontWeight: 600 }}>✓</span> {chk}
                       </div>
                     ))}
                   </div>
