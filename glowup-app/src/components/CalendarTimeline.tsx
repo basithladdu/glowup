@@ -7,7 +7,11 @@ import { triggerGoalCelebration } from '../lib/confetti';
 import { playSuccessChime } from '../lib/sound';
 
 export const CalendarTimeline: React.FC = () => {
-  const { selectedDate, setSelectedDate, state, getDayState, toggleTimelineEvent, addCalendarEvent, addFoodItems, saveState, setWorkoutRoutine } = useGlowUpStore();
+  const { selectedDate, setSelectedDate, state, getDayState, toggleTimelineEvent, addCalendarEvent, addFoodItems, saveState, setWorkoutRoutine, toggleStepEnabled } = useGlowUpStore();
+
+  // Built-in schedule blocks you've switched off — the daily timetable is a starting
+  // point, not a fixture, so anything that doesn't apply to you can be dropped.
+  const disabledIds = state.disabledSteps || [];
   const dayState = getDayState();
   const [viewMode, setViewMode] = useState<'day' | 'week' | 'month'>('day');
   const [showEventModal, setShowEventModal] = useState(false);
@@ -60,7 +64,7 @@ export const CalendarTimeline: React.FC = () => {
     // would persist the check-off but the timeline/habit ticks wouldn't visibly flip until an
     // unrelated re-render happened.
     const newTimeline = { ...dayState.timeline };
-    coreEvents.forEach(ev => { newTimeline[ev.id] = true; });
+    coreEvents.filter(ev => !disabledIds.includes(ev.id)).forEach(ev => { newTimeline[ev.id] = true; });
     const newHabits = { ...dayState.habits };
     ['h_sunlight', 'h_tongue', 'h_spf', 'h_creatine', 'h_protein', 'h_posture', 'h_minox', 'h_mouthtape'].forEach(hId => {
       newHabits[hId] = true;
@@ -201,6 +205,20 @@ export const CalendarTimeline: React.FC = () => {
       </div>
 
       {/* VIEW: 24-HOUR DAY TIME-GRID (REAL GOOGLE CALENDAR GRID) */}
+      {/* Removing a schedule block must be reversible. */}
+      {coreEvents.some(ev => disabledIds.includes(ev.id)) && (
+        <div className="card">
+          <p className="eyebrow"><span className="n">schedule</span> blocks you removed</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+            {coreEvents.filter(ev => disabledIds.includes(ev.id)).map((ev) => (
+              <button key={ev.id} className="ai-chip" onClick={() => toggleStepEnabled(ev.id)}>
+                + {ev.title}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {viewMode === 'day' && (
         <div className="desktop-grid-2">
           {/* LEFT: 24-HOUR TIMETABLE */}
@@ -226,7 +244,7 @@ export const CalendarTimeline: React.FC = () => {
               </div>
 
               {/* Event Time Blocks */}
-              {coreEvents.map((ev) => {
+              {coreEvents.filter(ev => !disabledIds.includes(ev.id)).map((ev) => {
                 const top = ev.startHour * 60;
                 const height = Math.max(32, (ev.endHour - ev.startHour) * 60 - 4);
                 const isDone = !!dayState.timeline[ev.id];
@@ -270,6 +288,14 @@ export const CalendarTimeline: React.FC = () => {
                             Pick Workout
                           </button>
                         )}
+                        <button
+                          className="gcal-check-btn"
+                          title="Remove this block from your schedule"
+                          style={{ background: 'transparent', border: 0, color: 'var(--muted)' }}
+                          onClick={(e) => { e.stopPropagation(); toggleStepEnabled(ev.id); }}
+                        >
+                          ✕
+                        </button>
                         <button className="gcal-check-btn" onClick={(e) => { e.stopPropagation(); toggleTimelineEvent(ev.id); }}>
                           {isDone ? '✓' : '○'}
                         </button>
