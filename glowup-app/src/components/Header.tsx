@@ -33,7 +33,7 @@ export const Header: React.FC = () => {
             <span>{syncText}</span>
           </span>
           <button className="btn sm" onClick={() => setShowAskData(true)} title="Search everything you've logged">
-            🔎 Ask Data
+            Ask Data
           </button>
         </div>
       </div>

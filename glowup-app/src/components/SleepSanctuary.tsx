@@ -94,7 +94,7 @@ export const SleepSanctuary: React.FC = () => {
     dur: val.dur,
     bed: val.bed,
     wake: val.wake,
-    rating: val.dur >= 7.5 ? '⭐ Optimal' : val.dur >= 6.0 ? '⚡ Decent' : '⚠️ Sub-optimal'
+    rating: val.dur >= 7.5 ? 'Optimal' : val.dur >= 6.0 ? 'Decent' : '⚠Sub-optimal'
   })).slice(-5);
 
   return (
@@ -102,7 +102,7 @@ export const SleepSanctuary: React.FC = () => {
       {/* LIVE SLEEP STOPWATCH */}
       <div className="card" style={{ textAlign: 'center', padding: '24px 14px', background: 'linear-gradient(180deg, var(--surface), var(--surface2))' }}>
         <p className="eyebrow" style={{ color: 'var(--indigo)' }}>live sleep tracking</p>
-        <h2 style={{ fontSize: '20px', margin: '0 0 8px' }}>One-Tap Sleep Stopwatch 🛌</h2>
+        <h2 style={{ fontSize: '20px', margin: '0 0 8px' }}>One-Tap Sleep Stopwatch </h2>
         <p className="note" style={{ marginBottom: '16px' }}>
           Tap when hitting the pillow, tap when waking up. Automatically logs sleep duration in your 24h timeline.
         </p>
@@ -116,7 +116,7 @@ export const SleepSanctuary: React.FC = () => {
           style={{ width: '100%', padding: '12px', fontSize: '14px', fontWeight: 700 }}
           onClick={handleToggleSleep}
         >
-          {isSleeping ? "☀️ Good Morning, I'm Awake!" : "🛌 Going to Sleep Now"}
+          {isSleeping ? "Good Morning, I'm Awake!" : "Going to Sleep Now"}
         </button>
       </div>
 
@@ -127,7 +127,6 @@ export const SleepSanctuary: React.FC = () => {
             <p className="eyebrow"><span className="n">circadian</span> 90-min sleep cycle calculator</p>
             <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>⏰ Optimal Wake-Up Times (If Sleeping Now)</h3>
           </div>
-          <span className="tag-badge tag-best">90m REM Cycles</span>
         </div>
         <p className="note" style={{ marginBottom: '12px' }}>
           Waking up at the end of a 90-minute sleep cycle prevents sleep inertia and morning brain fog.
@@ -161,7 +160,7 @@ export const SleepSanctuary: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div>
             <p className="eyebrow"><span className="n">protocol</span> nocturnal nervous system reset</p>
-            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--indigo)' }}>🌙 5 Pre-Bed Wind-Down Checks</h3>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--indigo)' }}>5 Pre-Bed Wind-Down Checks</h3>
           </div>
           <button
             className="btn sm"

@@ -4,9 +4,9 @@ import { queryLocalData, type DataFact } from '../lib/dataQuery';
 import { stateToExportBlob } from '../lib/localDB';
 
 const AREA_ICON: Record<string, string> = {
-  habit: '⚡', 'skincare-am': '☀️', 'skincare-pm': '🌙', grooming: '🧴',
-  food: '🥪', lift: '🏋️', product: '🔍', workout: '💪', weight: '⚖️',
-  water: '💧', sleep: '😴', goal: '🎯',
+  habit: '', 'skincare-am': '', 'skincare-pm': '', grooming: '',
+  food: '', lift: '', product: '', workout: '', weight: '⚖',
+  water: '', sleep: '', goal: '',
 };
 
 export const AskYourData: React.FC<{ onClose: () => void }> = ({ onClose }) => {
@@ -33,7 +33,7 @@ export const AskYourData: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
           <div style={{ textAlign: 'left' }}>
             <p className="eyebrow" style={{ margin: 0 }}><span className="n">local-first</span> ask your data</p>
-            <h3 style={{ fontSize: '15px', margin: 0 }}>🔎 Search Everything You've Logged</h3>
+            <h3 style={{ fontSize: '15px', margin: 0 }}>Search Everything You've Logged</h3>
           </div>
           <button className="btn sm" onClick={onClose}>✕</button>
         </div>

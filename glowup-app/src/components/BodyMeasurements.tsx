@@ -48,7 +48,7 @@ export const BodyMeasurements: React.FC = () => {
   const diff = waistCm - neckCm;
   const estBf = diff > 0 ? Math.max(5, Math.min(40, (86.010 * Math.log10(diff) - 70.041 * Math.log10(heightCm) + 36.76))).toFixed(1) : '18.0';
 
-  const bfCategory = Number(estBf) <= 12 ? '🔥 Shredded (Abs Fully Visible)' : Number(estBf) <= 15 ? '⚡ Athletic (Upper Abs Visible)' : Number(estBf) <= 19 ? '🎯 Moderate (Lean Cut Phase)' : '⚠️ High Body Fat';
+  const bfCategory = Number(estBf) <= 12 ? 'Shredded (Abs Fully Visible)' : Number(estBf) <= 15 ? 'Athletic (Upper Abs Visible)' : Number(estBf) <= 19 ? 'Moderate (Lean Cut Phase)' : '⚠High Body Fat';
 
   const cutMilestones = [
     { title: 'Phase 1: Initial Water & Glycogen Flush', weight: '85.0 kg', status: currentWeight <= 85 ? 'Done' : 'Active Target', date: 'Sep 15, 2026' },
@@ -66,7 +66,7 @@ export const BodyMeasurements: React.FC = () => {
           <div>
             <p className="eyebrow"><span className="n">visual</span> fortnightly progress photo</p>
             <h3 style={{ fontSize: '15px', margin: 0, color: photoDue ? 'var(--turmeric)' : 'var(--paper)' }}>
-              📸 {photoDue ? 'Due Today — Take Your Photo' : `Next due in ${14 - daysSincePhoto}d`}
+              {photoDue ? 'Due Today — Take Your Photo' : `Next due in ${14 - daysSincePhoto}d`}
             </h3>
             <p className="note" style={{ margin: '4px 0 0' }}>
               {lastPhotoDate ? `Last logged: ${lastPhotoDate} (${daysSincePhoto}d ago)` : 'Not logged yet — same lighting, same pose, front/side/back.'}

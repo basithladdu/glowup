@@ -7,14 +7,14 @@ export const TodayFlow: React.FC = () => {
   const totals = getDayTotals();
 
   const dailyHabits = [
-    { id: 'h_sunlight', label: '🚶 30-Min Sunlight Walk', desc: 'Circadian cortisol spike & 3,000 steps' },
-    { id: 'h_tongue', label: '🪥 Copper Tongue Scraping', desc: 'Eliminates 85% of oral volatile sulfur compounds' },
-    { id: 'h_spf', label: '🧴 SPF 50 Shield (Face, Neck, Arms, Hands)', desc: 'Blocks 98% of UVA/UVB photo-aging rays' },
-    { id: 'h_creatine', label: '⚡ 5g Creatine Monohydrate', desc: 'Cellular ATP energy & brain memory output' },
-    { id: 'h_chew', label: '🍽️ 50/50 Chewing Balance', desc: 'Symmetrical masseter hypertrophy & jaw development' },
-    { id: 'h_posture', label: '🧍 Spine Decompression & Dead Hangs', desc: 'Reclaims 1–3cm visible height & opens shoulders' },
-    { id: 'h_minox', label: '💧 Minoxidil 5% on Temples & Beard', desc: 'Anagen hair growth stimulation' },
-    { id: 'h_mouthtape', label: '🌙 Nasal Mouth Tape for Sleep', desc: '100% nasal breathing and zero sleep apnoea' }
+    { id: 'h_sunlight', label: '30-Min Sunlight Walk', desc: 'Circadian cortisol spike & 3,000 steps' },
+    { id: 'h_tongue', label: 'Copper Tongue Scraping', desc: 'Eliminates 85% of oral volatile sulfur compounds' },
+    { id: 'h_spf', label: 'SPF 50 Shield (Face, Neck, Arms, Hands)', desc: 'Blocks 98% of UVA/UVB photo-aging rays' },
+    { id: 'h_creatine', label: '5g Creatine Monohydrate', desc: 'Cellular ATP energy & brain memory output' },
+    { id: 'h_chew', label: '50/50 Chewing Balance', desc: 'Symmetrical masseter hypertrophy & jaw development' },
+    { id: 'h_posture', label: 'Spine Decompression & Dead Hangs', desc: 'Reclaims 1–3cm visible height & opens shoulders' },
+    { id: 'h_minox', label: 'Minoxidil 5% on Temples & Beard', desc: 'Anagen hair growth stimulation' },
+    { id: 'h_mouthtape', label: 'Nasal Mouth Tape for Sleep', desc: '100% nasal breathing and zero sleep apnoea' }
   ];
 
   const completedCount = dailyHabits.filter(h => dayState.habits[h.id]).length;
@@ -67,30 +67,6 @@ export const TodayFlow: React.FC = () => {
         </div>
       </div>
 
-      {/* 5 PRECISION DAILY FLOW CHECKS */}
-      <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-          <div>
-            <p className="eyebrow"><span className="n">rhythm</span> circadian execution sequence</p>
-            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>⚡ 5 Precision Daily Flow Standards</h3>
-          </div>
-          <span className="tag-badge tag-best">Daily Rhythm</span>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 6px' }}>
-          {[
-            'Morning Circadian Anchor: 500ml water + 15m outdoor sunlight within 45m of wake',
-            'ADHD Focus Priority: Clear top 3 ClickUp backlog cards before opening social media',
-            'Hypertrophy Training: Hit working compound sets with controlled 3-second eccentric negatives',
-            'Nutritional Integrity: Reach 170g protein floor while keeping calories under 2,000',
-            'Nocturnal Sanctuary: Blue-light cutoff + 3M nasal mouth tape for 90m REM deep sleep'
-          ].map((chk, i) => (
-            <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* DAILY HABIT EXECUTION LIST */}
       <div className="card">

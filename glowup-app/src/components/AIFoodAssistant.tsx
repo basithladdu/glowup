@@ -20,11 +20,11 @@ export const AIFoodAssistant: React.FC = () => {
   const [mealName, setMealName] = useState('');
 
   const presets = [
-    { label: '🥩 250g Rice + Dal + Whey + 200g Chicken + Milk + 150g Beef Fry', text: '250g of rice, 50g dal, nakpro malai kulfi whey 1 scoop protein, 200g chicken, 250ml milk, and 150g beef fry' },
-    { label: '🍚 150g Rice + 80g Soya + Curd', text: '150g cooked rice, 80g soya chunks with dal, and 100g curd' },
-    { label: '🥚 4 Eggs + 2 Rotis + Milk', text: '4 whole boiled eggs, 2 whole wheat rotis, and 1 glass buffalo milk (250ml)' },
-    { label: '🥣 70g Oats + Milk + 1 Scoop Whey', text: '70g oats cooked in 250ml milk with 1 scoop whey isolate' },
-    { label: '🍗 130g Chicken + Rice', text: '130g grilled chicken breast, 150g rice, and 1 bowl cucumber salad' },
+    { label: '250g Rice + Dal + Whey + 200g Chicken + Milk + 150g Beef Fry', text: '250g of rice, 50g dal, nakpro malai kulfi whey 1 scoop protein, 200g chicken, 250ml milk, and 150g beef fry' },
+    { label: '150g Rice + 80g Soya + Curd', text: '150g cooked rice, 80g soya chunks with dal, and 100g curd' },
+    { label: '4 Eggs + 2 Rotis + Milk', text: '4 whole boiled eggs, 2 whole wheat rotis, and 1 glass buffalo milk (250ml)' },
+    { label: '70g Oats + Milk + 1 Scoop Whey', text: '70g oats cooked in 250ml milk with 1 scoop whey isolate' },
+    { label: '130g Chicken + Rice', text: '130g grilled chicken breast, 150g rice, and 1 bowl cucumber salad' },
   ];
 
   const handleCalculate = async () => {
@@ -107,13 +107,12 @@ export const AIFoodAssistant: React.FC = () => {
           <div className="card ai-food-card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '22px' }}>🤖</span>
+                <span style={{ fontSize: '22px' }}></span>
                 <div>
                   <h2 style={{ fontSize: '16px', margin: 0, color: 'var(--turmeric)' }}>AI Food &amp; Macro Assistant</h2>
                   <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '10px', color: 'var(--muted)' }}>Gemini AI · Strict JSON Schema</span>
                 </div>
               </div>
-              <span className="tag-badge tag-best">JSON AI SYNC</span>
             </div>
 
             <p className="note" style={{ marginBottom: '10px' }}>
@@ -133,7 +132,7 @@ export const AIFoodAssistant: React.FC = () => {
                       onClick={() => handleQuickLogMyMeal(m)}
                       title={`${m.k}kcal · ${m.p}g P · ${m.c}g C · ${m.f}g F`}
                     >
-                      ⚡ {m.n}
+                      {m.n}
                     </button>
                   ))}
                 </div>
@@ -171,7 +170,7 @@ export const AIFoodAssistant: React.FC = () => {
                 disabled={loading}
                 onClick={handleCalculate}
               >
-                {loading ? '⏳ Calculating with Gemini AI...' : '⚡ Calculate & Show Macro Cards'}
+                {loading ? '⏳ Calculating with Gemini AI...' : 'Calculate & Show Macro Cards'}
               </button>
               <button className="btn sm" style={{ background: 'var(--surface3)' }} onClick={() => { setPrompt(''); setParsedCards([]); }}>
                 Clear
@@ -180,7 +179,7 @@ export const AIFoodAssistant: React.FC = () => {
 
             {error && (
               <div className="note" style={{ color: 'var(--vermilion)', marginTop: '8px' }}>
-                ⚠️ {error}
+                ⚠{error}
               </div>
             )}
 
@@ -198,7 +197,7 @@ export const AIFoodAssistant: React.FC = () => {
                 <div className="card" style={{ background: 'var(--surface3)', borderColor: 'var(--line2)', padding: '10px', marginBottom: '12px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                     <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '11px', fontWeight: 700, color: 'var(--paper)' }}>
-                      ⚡ TOTAL MEAL MACROS
+                      TOTAL MEAL MACROS
                     </span>
                     <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '11px', fontWeight: 700, color: 'var(--sage)' }}>
                       {totP.toFixed(1)}g Protein
@@ -238,10 +237,10 @@ export const AIFoodAssistant: React.FC = () => {
                         </button>
                       </div>
                       <div className="ai-macro-pills">
-                        <span className="ai-macro-pill kcal">🔥 {Math.round(card.k)} kcal</span>
-                        <span className="ai-macro-pill prot">🥩 {card.p}g Protein</span>
-                        <span className="ai-macro-pill carb">🌾 {card.c}g Carbs</span>
-                        <span className="ai-macro-pill fat">🥑 {card.f}g Fat</span>
+                        <span className="ai-macro-pill kcal">{Math.round(card.k)} kcal</span>
+                        <span className="ai-macro-pill prot">{card.p}g Protein</span>
+                        <span className="ai-macro-pill carb">{card.c}g Carbs</span>
+                        <span className="ai-macro-pill fat">{card.f}g Fat</span>
                       </div>
                     </div>
                   ))}
@@ -257,7 +256,7 @@ export const AIFoodAssistant: React.FC = () => {
 
                 {!showSaveMeal ? (
                   <button className="btn sm" style={{ width: '100%', marginTop: '8px', background: 'var(--surface3)' }} onClick={() => setShowSaveMeal(true)}>
-                    💾 Save This Combo as My Meal (for 1-tap next time)
+                    Save This Combo as My Meal (for 1-tap next time)
                   </button>
                 ) : (
                   <div style={{ display: 'flex', gap: '6px', marginTop: '8px' }}>
@@ -275,30 +274,6 @@ export const AIFoodAssistant: React.FC = () => {
             )}
           </div>
 
-          {/* 5 PRECISION NUTRITIONAL QUALITY & MPS CHECKS */}
-          <div className="card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <div>
-                <p className="eyebrow"><span className="n">bioavailability</span> muscle protein synthesis standards</p>
-                <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>🥩 5 Precision Nutritional Quality Standards</h3>
-              </div>
-              <span className="tag-badge tag-best">MPS Protocol</span>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 6px' }}>
-              {[
-                'Leucine Threshold Check: Minimum 2.5g–3.0g leucine per feeding to trigger mTOR and MPS',
-                'Protein Quality Score: Prioritize PDCAAS 1.0 bioavailable sources (Chicken, Eggs, Whey Isolate)',
-                'Satiety Index Anchor: High-volume fiber (Oats, Dal, Soya) to comfortably lock 500 kcal deficit',
-                'Electrolyte Balance: Match whole food potassium (Dates, Milk) with clean sodium for muscle hydration',
-                'Caloric Floor Target: 170g protein floor while capping daily intake under 2,000 kcal ceiling'
-              ].map((chk, i) => (
-                <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
-                </div>
-              ))}
-            </div>
-          </div>
 
           {/* LOGGED MEALS ON THIS DATE */}
           <div className="card">

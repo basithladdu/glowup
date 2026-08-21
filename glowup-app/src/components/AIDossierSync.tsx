@@ -102,7 +102,7 @@ export const AIDossierSync: React.FC = () => {
           Copy this formatted dossier and paste it into ChatGPT, Claude, or Gemini for instant contextual advice tailored to your real metrics.
         </p>
         <button className="btn sage" style={{ width: '100%' }} onClick={handleCopy}>
-          {copied ? '✓ Copied Dossier to Clipboard!' : '📋 Copy Full AI Context Prompt'}
+          {copied ? '✓ Copied Dossier to Clipboard!' : 'Copy Full AI Context Prompt'}
         </button>
       </div>
 
@@ -113,7 +113,6 @@ export const AIDossierSync: React.FC = () => {
             <p className="eyebrow"><span className="n">backup</span> persistent data vault</p>
             <h2 style={{ fontSize: '16px', margin: 0 }}>Full JSON Database Backup</h2>
           </div>
-          <span className="tag-badge tag-best">Zero Data Loss</span>
         </div>
         <p className="note" style={{ marginBottom: '12px' }}>
           Export your entire GlowUp state (macros, lifts, timestamps, habits, ADHD logs) into an encrypted local JSON file.
@@ -135,35 +134,11 @@ export const AIDossierSync: React.FC = () => {
               URL.revokeObjectURL(url);
             }}
           >
-            📥 Export Full JSON State Backup
+            Export Full JSON State Backup
           </button>
         </div>
       </div>
 
-      {/* 5 PRECISION DATA INTEGRITY & PRIVACY STANDARDS */}
-      <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-          <div>
-            <p className="eyebrow"><span className="n">security</span> zero-loss data architecture</p>
-            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>🔒 5 Precision Data Integrity Standards</h3>
-          </div>
-          <span className="tag-badge tag-best">Zero Leak</span>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 6px' }}>
-          {[
-            'Client-Side First Architecture: IndexedDB guarantees zero lag and 100% offline availability',
-            'Automatic Cloud Synchronization: Seamless background sync with Supabase PostgreSQL database',
-            'Portable JSON Snapshot Vault: 1-tap encrypted state download with timestamped filenames',
-            'Incremental Transaction Logging: Every micro-check, food card, and lift set saves instantaneously',
-            'Multi-Platform AI Dossier: Generates strict markdown prompts for Claude, Gemini, and ChatGPT'
-          ].map((chk, i) => (
-            <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 };

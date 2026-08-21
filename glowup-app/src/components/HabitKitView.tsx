@@ -23,7 +23,7 @@ export const HabitKitView: React.FC = () => {
       id: 'h_sunlight',
       name: 'Walk 7,000 steps & Morning Sunlight',
       sub: 'Cortisol spike, circadian anchor & fat burn',
-      icon: '🚶',
+      icon: '',
       color: '#10B981',
       bgTint: 'rgba(16, 185, 129, 0.12)',
       category: 'health',
@@ -39,7 +39,7 @@ export const HabitKitView: React.FC = () => {
       id: 'h_tongue',
       name: 'Copper Tongue Scraping & Dental Floss',
       sub: 'Eliminates morning oral sulfur compounds & plaque',
-      icon: '🪥',
+      icon: '',
       color: '#06B6D4',
       bgTint: 'rgba(6, 182, 212, 0.12)',
       category: 'hygiene',
@@ -55,7 +55,7 @@ export const HabitKitView: React.FC = () => {
       id: 'h_spf',
       name: 'SPF 50 Shield (Face, Neck, Arms & Hands)',
       sub: 'Blocks 98% UVA/UVB photo-aging & pigmentation',
-      icon: '🧴',
+      icon: '',
       color: '#F43F5E',
       bgTint: 'rgba(244, 63, 94, 0.12)',
       category: 'derm',
@@ -71,7 +71,7 @@ export const HabitKitView: React.FC = () => {
       id: 'h_creatine',
       name: '5g Creatine Monohydrate & 500ml Water',
       sub: 'Cellular ATP output & cognitive hydration',
-      icon: '⚡',
+      icon: '',
       color: '#F59E0B',
       bgTint: 'rgba(245, 158, 11, 0.12)',
       category: 'health',
@@ -87,7 +87,7 @@ export const HabitKitView: React.FC = () => {
       id: 'h_coconutoil',
       name: 'Virgin Coconut Oil Scalp & Hairline Massage',
       sub: 'Penetrates hair cortex, reduces protein loss & strengthens roots',
-      icon: '🥥',
+      icon: '',
       color: '#14B8A6',
       bgTint: 'rgba(20, 184, 166, 0.12)',
       category: 'derm',
@@ -103,7 +103,7 @@ export const HabitKitView: React.FC = () => {
       id: 'h_clickup',
       name: '10m ClickUp Triage & Content Spark',
       sub: 'Triage 3 oldest backlog tasks & capture video notes',
-      icon: '🎯',
+      icon: '',
       color: '#6366F1',
       bgTint: 'rgba(99, 102, 241, 0.12)',
       category: 'productivity',
@@ -119,7 +119,7 @@ export const HabitKitView: React.FC = () => {
       id: 'h_protein',
       name: '170g Protein Floor & 50/50 Jaw Chewing',
       sub: 'Muscle synthesis & symmetrical masseter jaw development',
-      icon: '🥩',
+      icon: '',
       color: '#8B5CF6',
       bgTint: 'rgba(139, 92, 246, 0.12)',
       category: 'health',
@@ -135,7 +135,7 @@ export const HabitKitView: React.FC = () => {
       id: 'h_posture',
       name: 'Spine Decompression & Dead Hangs',
       sub: 'Opens chest, improves posture & reclaims 1–3cm height',
-      icon: '🧍',
+      icon: '',
       color: '#EAB308',
       bgTint: 'rgba(234, 179, 8, 0.12)',
       category: 'health',
@@ -151,7 +151,7 @@ export const HabitKitView: React.FC = () => {
       id: 'h_minox',
       name: 'Minoxidil 5% on Temples & Beard',
       sub: 'Nightly follicle stimulation for hairline & density',
-      icon: '💧',
+      icon: '',
       color: '#3B82F6',
       bgTint: 'rgba(59, 130, 246, 0.12)',
       category: 'derm',
@@ -167,7 +167,7 @@ export const HabitKitView: React.FC = () => {
       id: 'h_mouthtape',
       name: 'Nasal Mouth Tape for Deep Sleep',
       sub: '100% nasal breathing, raises nitric oxide & prevents snoring',
-      icon: '🌙',
+      icon: '',
       color: '#4F46E5',
       bgTint: 'rgba(79, 70, 229, 0.12)',
       category: 'hygiene',
@@ -224,7 +224,7 @@ export const HabitKitView: React.FC = () => {
       doneCount,
       totalCount: dots.length,
       score,
-      status: score >= 80 ? '🔥 Locked In' : score >= 50 ? '⚡ Good Momentum' : '⚠️ Needs Focus'
+      status: score >= 80 ? 'Locked In' : score >= 50 ? 'Good Momentum' : '⚠Needs Focus'
     };
   });
 
@@ -234,7 +234,7 @@ export const HabitKitView: React.FC = () => {
       <div className="card habitkit-header-card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '24px' }}>⚡</span>
+            <span style={{ fontSize: '24px' }}></span>
             <div>
               <h2 style={{ fontSize: '18px', margin: 0, letterSpacing: '-0.02em' }}>
                 Habit<span style={{ color: '#8B5CF6' }}>Kit</span> Matrix
@@ -251,9 +251,8 @@ export const HabitKitView: React.FC = () => {
               style={{ background: showAudit ? undefined : 'var(--surface2)', fontSize: '10px' }}
               onClick={() => setShowAudit(!showAudit)}
             >
-              📊 {showAudit ? 'Hide Audit' : 'Consistency Audit'}
+              {showAudit ? 'Hide Audit' : 'Consistency Audit'}
             </button>
-            <span className="tag-badge tag-best">NEVER-ZERO</span>
           </div>
         </div>
 
@@ -324,7 +323,7 @@ export const HabitKitView: React.FC = () => {
                     style={{ fontSize: '10px', padding: '3px 7px', background: 'var(--surface3)' }}
                     onClick={() => setExpandedHabit(isExpanded ? null : h.id)}
                   >
-                    {isExpanded ? '▲ Hide' : '🔬 Checks'}
+                    {isExpanded ? '▲ Hide' : 'Checks'}
                   </button>
                   <button
                     className={`habitkit-check-btn ${isDone ? 'checked' : ''}`}

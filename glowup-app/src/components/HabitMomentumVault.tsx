@@ -61,7 +61,7 @@ export const HabitMomentumVault: React.FC = () => {
       <div className="abstinence-card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ fontSize: '26px' }}>🔥</span>
+            <span style={{ fontSize: '26px' }}></span>
             <div>
               <h2 style={{ fontSize: '18px', margin: 0 }}>
                 {bankedDays} Days Banked · Level {level} ({totalXp} XP)
@@ -87,35 +87,11 @@ export const HabitMomentumVault: React.FC = () => {
             style={{ flex: 1, background: 'var(--surface3)' }}
             onClick={() => setShowReflectionModal(true)}
           >
-            🌱 Recalibrate
+            Recalibrate
           </button>
         </div>
       </div>
 
-      {/* 5 PRECISION DOPAMINE RESET CHECKS */}
-      <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-          <div>
-            <p className="eyebrow"><span className="n">neurobiology</span> tonic dopamine baseline protection</p>
-            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>🧠 5 Precision Dopamine Reset Checks</h3>
-          </div>
-          <span className="tag-badge tag-best">Dopamine Architecture</span>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 12px' }}>
-          {[
-            'Zero short-form social feed scrolling before 12:00 PM (anchors baseline dopamine)',
-            'Grayscale/monochrome screen tint enabled during 90m deep work blocks',
-            'Pleasure gating: Clear 170g protein floor & 3 ClickUp tasks before entertainment',
-            '10-Minute Box Breathing reset (4-4-4-4) when experiencing urge or distraction spikes',
-            'Confirm & bank clean streak daily at 10:00 PM evening shutdown review'
-          ].map((chk, i) => (
-            <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ color: 'var(--turmeric)', fontWeight: 700 }}>✓</span> {chk}
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* 12-WEEK NEVER-ZERO HABIT HEATMAP GRAPH */}
       <div className="card">
@@ -167,7 +143,7 @@ export const HabitMomentumVault: React.FC = () => {
       {showReflectionModal && (
         <div className="modal-backdrop">
           <div className="card modal-box">
-            <h2 style={{ fontSize: '16px', margin: '0 0 6px' }}>🌱 Gentle Checkpoint / Reflection</h2>
+            <h2 style={{ fontSize: '16px', margin: '0 0 6px' }}>Gentle Checkpoint / Reflection</h2>
             <p className="note" style={{ marginBottom: '10px' }}>
               Your {bankedDays} banked days and XP remain 100% safe. What micro-adjustment will you make tomorrow?
             </p>

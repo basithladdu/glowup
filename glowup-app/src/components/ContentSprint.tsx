@@ -142,33 +142,6 @@ export const ContentSprint: React.FC = () => {
             )}
           </div>
 
-          {/* 5 PRECISION CONTENT CREATION CHECKS */}
-          <div className="card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <div>
-                <p className="eyebrow"><span className="n">algorithm</span> 5 precision retention checks</p>
-                <h3 style={{ fontSize: '14px', margin: 0, color: 'var(--turmeric)' }}>🎬 Viral Video Retention Standards</h3>
-              </div>
-              <span className="tag-badge tag-best">Retention Protocol</span>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '8px' }}>
-              {[
-                { title: '3-Second Visual & Verbal Hook', cue: 'Zero hello/fluff. Start immediately with high-contrast curiosity gap or pattern interrupt.' },
-                { title: 'Dynamic Pacing & B-Roll Cuts (3-5s)', cue: 'Cut angle, zoom in/out, or overlay b-roll every 3–4 seconds to keep eye tracking.' },
-                { title: 'Vocal Clarity & Noise Suppression', cue: 'Crisp audio with zero background hum, peaked at -3dB with gentle compression.' },
-                { title: 'High-Contrast Animated Captions', cue: 'Bold yellow/white centered subtitles for 80% sound-off mobile viewers.' },
-                { title: 'Single Frictionless Call-To-Action', cue: 'Ask for exactly one action at the end (e.g. "Save this for your next grocery run").' }
-              ].map((chk, i) => (
-                <div key={i} style={{ background: 'var(--surface2)', padding: '8px 10px', borderRadius: '6px', border: '1px solid var(--line2)' }}>
-                  <div style={{ fontSize: '11.5px', fontWeight: 600, color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ color: 'var(--turmeric)' }}>✓</span> {chk.title}
-                  </div>
-                  <div style={{ fontSize: '10px', color: 'var(--muted)', marginTop: '2px' }}>{chk.cue}</div>
-                </div>
-              ))}
-            </div>
-          </div>
 
           {/* VIRAL HOOK & SCRIPT FRAMEWORK VAULT */}
           <div className="card">
@@ -200,7 +173,7 @@ export const ContentSprint: React.FC = () => {
                   onClick={() => setTopic(h.title)}
                   title="Click to load into sprint deliverable"
                 >
-                  <div style={{ fontSize: '11.5px', fontWeight: 700, color: 'var(--turmeric)' }}>💡 {h.title}</div>
+                  <div style={{ fontSize: '11.5px', fontWeight: 700, color: 'var(--turmeric)' }}>{h.title}</div>
                   <div style={{ fontSize: '10.5px', color: 'var(--paper)', fontStyle: 'italic', marginTop: '2px' }}>{h.hook}</div>
                 </div>
               ))}
@@ -212,7 +185,7 @@ export const ContentSprint: React.FC = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
               <div>
                 <p className="eyebrow"><span className="n">triage</span> 10-minute backlog cleanse</p>
-                <h3 style={{ fontSize: '14px', margin: 0, color: 'var(--turmeric)' }}>🎯 ClickUp 3-Task Exterminator</h3>
+                <h3 style={{ fontSize: '14px', margin: 0, color: 'var(--turmeric)' }}>ClickUp 3-Task Exterminator</h3>
               </div>
               <a
                 href="https://app.clickup.com"
@@ -221,7 +194,7 @@ export const ContentSprint: React.FC = () => {
                 className="btn sm"
                 style={{ background: 'var(--surface3)', fontSize: '10px' }}
               >
-                🔗 Open ClickUp ↗
+                Open ClickUp ↗
               </a>
             </div>
             <p className="note" style={{ marginBottom: '10px' }}>
@@ -235,7 +208,7 @@ export const ContentSprint: React.FC = () => {
                   checked={clickUpDone.t1}
                   onChange={() => handleToggleClickUpTask('t1')}
                 />
-                <span>🗑️ Task #1 Exterminated / Archived</span>
+                <span>Task #1 Exterminated / Archived</span>
               </label>
               <label className="checkbox-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
                 <input
@@ -243,7 +216,7 @@ export const ContentSprint: React.FC = () => {
                   checked={clickUpDone.t2}
                   onChange={() => handleToggleClickUpTask('t2')}
                 />
-                <span>🗑️ Task #2 Exterminated / Archived</span>
+                <span>Task #2 Exterminated / Archived</span>
               </label>
               <label className="checkbox-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
                 <input
@@ -251,7 +224,7 @@ export const ContentSprint: React.FC = () => {
                   checked={clickUpDone.t3}
                   onChange={() => handleToggleClickUpTask('t3')}
                 />
-                <span>🗑️ Task #3 Exterminated / Archived</span>
+                <span>Task #3 Exterminated / Archived</span>
               </label>
             </div>
 
@@ -271,10 +244,9 @@ export const ContentSprint: React.FC = () => {
               <div>
                 <p className="eyebrow"><span className="n">intellect</span> political &amp; congressional research</p>
                 <h2 style={{ fontSize: '16px', margin: 0, color: 'var(--turmeric)' }}>
-                  🏛️ Daily Political &amp; Policy Briefing
+                  Daily Political &amp; Policy Briefing
                 </h2>
               </div>
-              <span className="tag-badge tag-best">HABIT CHECK-IN</span>
             </div>
             <p className="note" style={{ marginBottom: '10px' }}>
               Synthesize real congressional debates, policy changes, and political arguments to maintain sharp intellectual habits and fuel content topics.
@@ -330,7 +302,7 @@ export const ContentSprint: React.FC = () => {
           {/* RECENT POLITICAL RESEARCH ARCHIVE */}
           <div className="card">
             <h3 style={{ fontSize: '13px', margin: '0 0 8px', color: 'var(--paper)' }}>
-              📜 Political Synthesis Archive ({politicalNotes.length})
+              Political Synthesis Archive ({politicalNotes.length})
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {politicalNotes.map((pn) => (

@@ -23,7 +23,9 @@ import { ADHDExecutionFlow } from './components/ADHDExecutionFlow';
 
 export function App() {
   const { loadState, logWater, addFoodItems, toggleHabit } = useGlowUpStore();
-  const [activeTab, setActiveTab] = useState<TabType>('calendar');
+  // Land on the "what's left today" screen, not the 1440px 24h timetable — the first
+  // thing you see should be the short actionable list, not a wall.
+  const [activeTab, setActiveTab] = useState<TabType>('adhd');
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [passInput, setPassInput] = useState('');
   const [passError, setPassError] = useState(false);
@@ -100,7 +102,7 @@ export function App() {
 
       <div className="wrap main-content">
         {activeTab === 'calendar' && <CalendarTimeline />}
-        {activeTab === 'adhd' && <ADHDExecutionFlow />}
+        {activeTab === 'adhd' && <ADHDExecutionFlow onNavigate={setActiveTab} />}
         {activeTab === 'today' && <TodayFlow />}
         {activeTab === 'habitkit' && <HabitKitView />}
         {activeTab === 'food' && <AIFoodAssistant />}

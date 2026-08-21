@@ -35,12 +35,12 @@ export const LiftsWorkouts: React.FC = () => {
   const currentRoutine = METALLICADPA_PPL[activeRoutineKey] || METALLICADPA_PPL['pull_a'];
 
   const routineOptions = [
-    { id: 'auto', label: '🔄 Auto (by Day)' },
-    { id: 'arms', label: '💪 Dedicated Arms Day' },
+    { id: 'auto', label: 'Auto (by Day)' },
+    { id: 'arms', label: 'Dedicated Arms Day' },
     { id: 'pull_a', label: 'Day 1 Pull' },
     { id: 'push_a', label: 'Day 2 Push' },
     { id: 'legs_a', label: 'Day 3 Legs' },
-    { id: 'rest', label: '🚶 Active Rest' },
+    { id: 'rest', label: 'Active Rest' },
   ];
 
   const exerciseFormGuides: Record<string, { zone: string; checks: string[] }> = {
@@ -167,7 +167,7 @@ export const LiftsWorkouts: React.FC = () => {
           <div style={{ marginTop: '4px' }}>
             {!dayState.workoutRoutine ? (
               <span className="badge-count" style={{ background: 'rgba(232,163,61,0.15)', color: 'var(--turmeric)' }}>
-                🤖 Suggested for {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][dayOfWeek]} — auto by split
+                Suggested for {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][dayOfWeek]} — auto by split
               </span>
             ) : (
               <span className="badge-count" style={{ background: 'rgba(110,143,196,0.15)', color: 'var(--indigo)' }}>
@@ -181,7 +181,7 @@ export const LiftsWorkouts: React.FC = () => {
               Frequency: {currentRoutine.freq}
             </span>
             <span className="badge-count" style={{ background: 'var(--surface2)', color: 'var(--sage)' }}>
-              🏋️ Total Volume: {totalVolumeKg.toLocaleString()} kg
+              Total Volume: {totalVolumeKg.toLocaleString()} kg
             </span>
           </div>
         </div>
@@ -194,7 +194,7 @@ export const LiftsWorkouts: React.FC = () => {
             <p className="eyebrow" style={{ margin: 0 }}><span className="n">timer</span> inter-set recovery</p>
             <div style={{ fontSize: '18px', fontWeight: 700, color: restSeconds && restSeconds > 0 ? 'var(--turmeric)' : 'var(--sage)', fontFamily: 'JetBrains Mono, monospace' }}>
               {restSeconds !== null && restSeconds > 0
-                ? `⏱️ ${Math.floor(restSeconds / 60)}:${String(restSeconds % 60).padStart(2, '0')} Rest Left`
+                ? `⏱${Math.floor(restSeconds / 60)}:${String(restSeconds % 60).padStart(2, '0')} Rest Left`
                 : '✅ Ready for Next Working Set'}
             </div>
           </div>
@@ -232,7 +232,7 @@ export const LiftsWorkouts: React.FC = () => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
                   <span style={{ fontWeight: 700, fontSize: '13px', color: 'var(--paper)' }}>{ex.name}</span>
                   {ex.intensity && <span className="intensity-tag">{ex.intensity}</span>}
-                  {ex.isSuperset && <span className="superset-badge">⚡ {ex.supersetLabel}</span>}
+                  {ex.isSuperset && <span className="superset-badge">{ex.supersetLabel}</span>}
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '2px' }}>{ex.cue}</div>
               </div>
@@ -259,19 +259,19 @@ export const LiftsWorkouts: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div>
             <p className="eyebrow"><span className="n">log</span> record working set &amp; biomechanics</p>
-            <h3 style={{ fontSize: '14px', margin: 0, color: 'var(--turmeric)' }}>⚡ {liftName}</h3>
+            <h3 style={{ fontSize: '14px', margin: 0, color: 'var(--turmeric)' }}>{liftName}</h3>
           </div>
           <button
             className="btn sm"
             style={{ fontSize: '10.5px', background: 'var(--surface3)' }}
             onClick={() => setActiveFormCheck(activeFormCheck === liftName ? null : liftName)}
           >
-            {activeFormCheck === liftName ? '▲ Hide Form Guide' : '🔬 5 Form Checks'}
+            {activeFormCheck === liftName ? '▲ Hide Form Guide' : '5 Form Checks'}
           </button>
         </div>
 
         <div style={{ fontSize: '11px', color: 'var(--muted)', marginBottom: '10px' }}>
-          🎯 Target Anatomical Zone: <strong style={{ color: 'var(--paper)' }}>{activeGuide.zone}</strong>
+          Target Anatomical Zone: <strong style={{ color: 'var(--paper)' }}>{activeGuide.zone}</strong>
         </div>
 
         {activeFormCheck === liftName && (

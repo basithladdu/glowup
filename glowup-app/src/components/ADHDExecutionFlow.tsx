@@ -2,9 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
 import { triggerGoalCelebration } from '../lib/confetti';
 import { playSuccessChime } from '../lib/sound';
-import { usePokeItems } from '../lib/usePoke';
+import { usePokeItems, type PokeTab } from '../lib/usePoke';
 
-export const ADHDExecutionFlow: React.FC = () => {
+interface ADHDExecutionFlowProps {
+  /** Lets a poke item jump straight to the tab where it can be ticked off. */
+  onNavigate?: (tab: PokeTab) => void;
+}
+
+export const ADHDExecutionFlow: React.FC<ADHDExecutionFlowProps> = ({ onNavigate }) => {
   const { selectedDate, state, getDayState, saveState, toggleHabit } = useGlowUpStore();
   const dayState = getDayState();
 
@@ -91,31 +96,31 @@ export const ADHDExecutionFlow: React.FC = () => {
   // ADHD Phase Protocol Cards
   const adhdTimelineSteps = [
     {
-      phase: '🌅 07:00 AM Ignition',
+      phase: '07:00 AM Ignition',
       action: 'NO PHONE. Drink 500ml water + Splash Cold Face.',
       why: 'Prevents morning dopamine hijacking. Cold water activates vagus nerve.',
       tag: 'IMMEDIATE'
     },
     {
-      phase: '🧘 07:20 AM Mental Quiet',
+      phase: '07:20 AM Mental Quiet',
       action: '10-Minute Box Breathing or Outdoor Sunlight Walk.',
       why: 'Quiets amygdala panic and resets prefrontal dopamine baseline.',
       tag: 'CALM BASELINE'
     },
     {
-      phase: '🎯 09:30 AM Deep Work',
+      phase: '09:30 AM Deep Work',
       action: 'Single-Task Sprint (45m Timer). Phone in drawer.',
       why: 'ADHD brain thrives in hyper-focus sprints, dies in multitasking.',
       tag: 'MONK MODE'
     },
     {
-      phase: '🏋️ 17:30 PM Physical Discharge',
+      phase: '17:30 PM Physical Discharge',
       action: 'Metallicadpa PPL Compound Lifting.',
       why: 'Heavy loading triggers massive BDNF, serotonin & dopamine release.',
       tag: 'DOPAMINE SURGE'
     },
     {
-      phase: '🌙 22:30 PM Night Shutdown',
+      phase: '22:30 PM Night Shutdown',
       action: 'Write tomorrow’s 3 Must-Dos + Multani Mitti / Castor Oil + Mouth Tape.',
       why: 'Never wake up wondering what to do. You execute tomorrow on autopilot.',
       tag: 'AUTOPILOT'
@@ -124,37 +129,25 @@ export const ADHDExecutionFlow: React.FC = () => {
 
   return (
     <div className="section-block">
-      {/* HEADER: ADHD EXECUTIVE ENGINE */}
-      <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-          <div>
-            <p className="eyebrow"><span className="n">adhd</span> executive dysfunction slayer</p>
-            <h2 style={{ fontSize: '18px', margin: 0 }}>🧠 ADHD Hyper-Focus Protocol &amp; Flow</h2>
-          </div>
-          <span className="tag-badge tag-best">ZERO-OVERWHELM</span>
-        </div>
-        <p className="note">
-          "If you try to do 20 things at once, you freeze. If you execute ONE Call-To-Action at a time on autopilot, you will become the greatest in your city."
-        </p>
-      </div>
-
-      {/* POKE ME — quiet unless something's actually due, then it's blunt about it */}
+      {/* What's left today — first thing on the first screen. Quiet when nothing's due;
+          every row is tappable and jumps to where you can actually tick it off. */}
       {isToday && (
         <div className="card" style={{ borderColor: pokeItems.length ? 'rgba(201,123,142,0.4)' : 'rgba(138,168,95,0.35)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: pokeItems.length ? '8px' : 0 }}>
-            <div>
-              <p className="eyebrow"><span className="n">poke</span> what you haven't logged yet, right now</p>
-              <h3 style={{ fontSize: '14px', margin: 0, color: pokeItems.length ? 'var(--rose)' : 'var(--sage)' }}>
-                {pokeItems.length ? `😤 ${pokeItems.length} Thing${pokeItems.length === 1 ? '' : 's'} Not Done Yet` : '✓ Nothing Overdue Right Now'}
-              </h3>
-            </div>
-          </div>
+          <h3 style={{ fontSize: '15px', margin: `0 0 ${pokeItems.length ? '10px' : '0'}`, color: pokeItems.length ? 'var(--rose)' : 'var(--sage)' }}>
+            {pokeItems.length ? `${pokeItems.length} thing${pokeItems.length === 1 ? '' : 's'} left today` : 'All done for today'}
+          </h3>
           {pokeItems.length > 0 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               {pokeItems.map((item, i) => (
-                <div key={i} style={{ fontSize: '11.5px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ color: 'var(--rose)', fontWeight: 700 }}>✗</span> Why haven't you done {item} yet?
-                </div>
+                <button
+                  key={i}
+                  className="task-item"
+                  style={{ cursor: 'pointer', textAlign: 'left', width: '100%', font: 'inherit' }}
+                  onClick={() => onNavigate?.(item.tab)}
+                >
+                  <span className="task-title">{item.label}</span>
+                  <span className="task-btn">Do it →</span>
+                </button>
               ))}
             </div>
           )}
@@ -188,7 +181,7 @@ export const ADHDExecutionFlow: React.FC = () => {
                   boxShadow: medRunning ? '0 0 24px rgba(232, 163, 61, 0.3)' : 'none'
                 }}
               >
-                <span style={{ fontSize: '24px' }}>🧘</span>
+                <span style={{ fontSize: '24px' }}></span>
               </div>
             </div>
 
@@ -227,30 +220,6 @@ export const ADHDExecutionFlow: React.FC = () => {
             </div>
           </div>
 
-          {/* 5 PRECISION ADHD EXECUTION STANDARDS */}
-          <div className="card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <div>
-                <p className="eyebrow"><span className="n">neurobiology</span> executive dysfunction mastery</p>
-                <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>🧠 5 ADHD Execution Standards</h3>
-              </div>
-              <span className="tag-badge tag-best">Executive Protocol</span>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 6px' }}>
-              {[
-                'Single-Task Isolation: Never juggle multiple browser tabs or tasks; execute 1 Sprint at a time',
-                '2-Minute Initiation Rule: Count 5-4-3-2-1 and start physically typing to break task freeze',
-                'Night-Before Decision Architecture: Draft tomorrow\'s 3 Must-Dos before sleep to eliminate morning panic',
-                'Somatic Autonomic Reset: 10m Diaphragmatic Box Breathing (4-4-4-4) to quench cortisol loops',
-                'Pleasure Gating: Clear 170g protein floor & top 3 ClickUp cards before opening entertainment'
-              ].map((chk, i) => (
-                <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
-                </div>
-              ))}
-            </div>
-          </div>
 
           {/* TODAY'S 3 NON-NEGOTIABLE CALLS-TO-ACTION */}
           <div className="card">
@@ -316,7 +285,7 @@ export const ADHDExecutionFlow: React.FC = () => {
           <div className="card">
             <p className="eyebrow"><span className="n">night</span> plan tomorrow before sleep (3 mins)</p>
             <h3 style={{ fontSize: '15px', margin: '0 0 6px', color: 'var(--indigo)' }}>
-              🌙 Nightly Autopilot Lock-In
+              Nightly Autopilot Lock-In
             </h3>
             <p className="note" style={{ marginBottom: '10px' }}>
               Never wake up and plan. Plan tonight so tomorrow morning your brain wakes up knowing exactly what to execute with zero hesitation.

@@ -6,7 +6,7 @@ export const HowToGuidesModal: React.FC = () => {
   const guides = [
     {
       id: 'guide_multani',
-      title: '🌿 Multani Mitti + Pure Khus/Rose Hydrosol Clay Mask',
+      title: 'Multani Mitti + Pure Khus/Rose Hydrosol Clay Mask',
       category: 'Deep Pore Clarification',
       summary: 'Removes deep sebum blockages, tightens dilated pores, and calms redness (1-2x/week).',
       steps: [
@@ -19,7 +19,7 @@ export const HowToGuidesModal: React.FC = () => {
     },
     {
       id: 'guide_castor',
-      title: '👁️ Cold-Pressed Castor Oil Eyelashes, Brows & Beard Protocol',
+      title: 'Cold-Pressed Castor Oil Eyelashes, Brows & Beard Protocol',
       category: 'Follicle Density & Anagen Phase',
       summary: 'Ricinoleic acid stimulates prostaglandin receptors to thicken sparse eyelashes, brows, and beard roots.',
       steps: [
@@ -32,7 +32,7 @@ export const HowToGuidesModal: React.FC = () => {
     },
     {
       id: 'guide_lips',
-      title: '🍓 Nicole Berry Lip Scrub + Vaseline Pink Lip Slugging',
+      title: 'Nicole Berry Lip Scrub + Vaseline Pink Lip Slugging',
       category: 'Lip Micro-Circulation & Slugging',
       summary: 'Exfoliates dead keratinized cells and locks in moisture for natural pink, plump lips.',
       steps: [
@@ -45,7 +45,7 @@ export const HowToGuidesModal: React.FC = () => {
     },
     {
       id: 'guide_coconutoil',
-      title: '🥥 Virgin Coconut Oil Scalp & Hairline Massage Protocol',
+      title: 'Virgin Coconut Oil Scalp & Hairline Massage Protocol',
       category: 'Hair Shaft & Follicle Rebuild',
       summary: 'Medium-chain triglycerides penetrate the hair cortex, reducing protein loss and fortifying roots.',
       steps: [
@@ -58,7 +58,7 @@ export const HowToGuidesModal: React.FC = () => {
     },
     {
       id: 'guide_derma',
-      title: '🔬 0.5mm Titanium Derma Rolling + Minoxidil 5% Protocol',
+      title: '0.5mm Titanium Derma Rolling + Minoxidil 5% Protocol',
       category: 'Hairline & Beard Growth',
       summary: 'Creates controlled micro-channels to stimulate collagen induction and multiply Minoxidil absorption.',
       steps: [
@@ -71,7 +71,7 @@ export const HowToGuidesModal: React.FC = () => {
     },
     {
       id: 'guide_lymph',
-      title: '💆 Lymphatic Face De-Bloat Massage (60s)',
+      title: 'Lymphatic Face De-Bloat Massage (60s)',
       category: 'Facial Aesthetics',
       summary: 'Drains excess interstitial sodium fluid from cheeks and jaw to instantly sharpen facial contours.',
       steps: [
@@ -84,7 +84,7 @@ export const HowToGuidesModal: React.FC = () => {
     },
     {
       id: 'guide_tuck',
-      title: '🧍 Wall Chin Tucks (Posture & Submental Angle)',
+      title: 'Wall Chin Tucks (Posture & Submental Angle)',
       category: 'Symmetry & Posture',
       summary: 'Strengthens deep neck flexors (longus capitis/colli) and eliminates "nerd neck" / double chin effect.',
       steps: [
@@ -97,7 +97,7 @@ export const HowToGuidesModal: React.FC = () => {
     },
     {
       id: 'guide_chew',
-      title: '🍽️ 50/50 Chewing Balance & Masseter Drill',
+      title: '50/50 Chewing Balance & Masseter Drill',
       category: 'Jaw Symmetry',
       summary: 'Equalizes unilateral masseter muscle hypertrophy to fix facial asymmetry.',
       steps: [
@@ -109,7 +109,7 @@ export const HowToGuidesModal: React.FC = () => {
     },
     {
       id: 'guide_hang',
-      title: '🏋️ Dead Hangs & Spinal Decompression',
+      title: 'Dead Hangs & Spinal Decompression',
       category: 'Height & Spine',
       summary: 'Relieves intervertebral disc compression, widens shoulder carriage, and reclaims 1–3cm visible height.',
       steps: [
@@ -121,7 +121,7 @@ export const HowToGuidesModal: React.FC = () => {
     },
     {
       id: 'guide_peel',
-      title: '💅 The Minimalist AHA 30% + BHA 2% Peel Protocol',
+      title: 'The Minimalist AHA 30% + BHA 2% Peel Protocol',
       category: 'Chemical Exfoliation',
       summary: 'Deep chemical peel for hyperpigmentation, acne marks, and rapid epidermal turnover.',
       steps: [
@@ -135,7 +135,7 @@ export const HowToGuidesModal: React.FC = () => {
     },
     {
       id: 'guide_mouthtape',
-      title: '🌙 Nasal Mouth Taping (Sleep Architecture)',
+      title: 'Nasal Mouth Taping (Sleep Architecture)',
       category: 'Sleep & Nitric Oxide',
       summary: 'Guarantees 100% nasal breathing throughout 8 hours of sleep.',
       steps: [
@@ -156,9 +156,8 @@ export const HowToGuidesModal: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div>
             <p className="eyebrow"><span className="n">knowledge</span> biomechanical &amp; aesthetic protocols</p>
-            <h2 style={{ fontSize: '18px', margin: 0 }}>Protocol Guides &amp; How-To Tutorials 📚</h2>
+            <h2 style={{ fontSize: '18px', margin: 0 }}>Protocol Guides &amp; How-To Tutorials </h2>
           </div>
-          <span className="tag-badge tag-best">EVIDENCE-BASED</span>
         </div>
         <p className="note">
           Tap any protocol below to view step-by-step scientific instructions, anatomical cues, and execution guidelines.

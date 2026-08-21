@@ -73,6 +73,15 @@ export interface CustomProteinItem {
   cost: string;
 }
 
+export interface InventoryItem {
+  id: string;
+  name: string;
+  category: 'nutrition' | 'derm' | 'grooming';
+  qty: string;
+  estCost: string;
+  inStock: boolean;
+}
+
 export interface GlowUpState {
   days: Record<string, DayState>;
   weights: Record<string, number>;
@@ -86,6 +95,7 @@ export interface GlowUpState {
   customEvents?: CalendarEvent[];
   progressPhotoDates?: string[];
   cadenceLog?: Record<string, string[]>;
+  inventory?: InventoryItem[];
   peel: string;
   start: string;
   abstinence: AbstinenceState;

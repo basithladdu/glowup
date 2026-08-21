@@ -264,14 +264,14 @@ export const ProteinBank: React.FC = () => {
           {/* STAPLE ADDER & CSV DATABASE */}
           <div className="card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <p className="eyebrow" style={{ margin: 0 }}>📊 CSV Food & Nutrition Database</p>
+              <p className="eyebrow" style={{ margin: 0 }}>CSV Food & Nutrition Database</p>
               <button
                 className="btn sm sage"
                 onClick={handleDownloadCSV}
                 title="Download full food database CSV"
                 style={{ fontSize: '10.5px', padding: '3px 8px' }}
               >
-                📥 Export CSV
+                Export CSV
               </button>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -295,9 +295,8 @@ export const ProteinBank: React.FC = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
               <div>
                 <p className="eyebrow"><span className="n">hydration</span> cellular osmolarity &amp; atp delivery</p>
-                <h3 style={{ fontSize: '15px', margin: 0, color: '#06B6D4' }}>💧 3.5L Daily Water &amp; Electrolytes</h3>
+                <h3 style={{ fontSize: '15px', margin: 0, color: '#06B6D4' }}>3.5L Daily Water &amp; Electrolytes</h3>
               </div>
-              <span className="tag-badge tag-best">Cellular Hydration</span>
             </div>
 
             {/* 5 PRECISION HYDRATION CHECKS */}

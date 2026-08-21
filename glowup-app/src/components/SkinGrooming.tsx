@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
-import { ROT } from '../lib/constants';
+import { ROT, DEFAULT_INVENTORY } from '../lib/constants';
 import { triggerGoalCelebration } from '../lib/confetti';
 import { playSuccessChime } from '../lib/sound';
 
@@ -10,6 +10,10 @@ export const SkinGrooming: React.FC = () => {
   const dateObj = new Date(selectedDate);
   const dow = dateObj.getDay();
   const tonightRot = ROT[dow];
+
+  // Read SPF stock from the persisted inventory so this reflects reality after you
+  // toggle it on the Buy tab — never a hardcoded status.
+  const spfInStock = (state.inventory || DEFAULT_INVENTORY).find(i => i.id === 'sh_spf')?.inStock ?? true;
 
   // Micro-steps state (persisted in day state)
   const amSteps = dayState.amSkinSteps || {};
@@ -262,14 +266,14 @@ export const SkinGrooming: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
           <div>
             <p className="eyebrow"><span className="n">prevention</span> dermatologist-backed tan & pigmentation shield</p>
-            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>☀️ Tan Prevention Protocol</h3>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>Tan Prevention Protocol</h3>
           </div>
-          <span className="tag-badge tag-best">SPF out of stock</span>
+          {!spfInStock && <span className="tag-badge tag-best">SPF out of stock</span>}
         </div>
         <p className="note" style={{ marginBottom: '10px' }}>
-          Your SPF is on the to-buy list — sunscreen every single day (even indoors) is the #1 lever against
-          both new tanning and the hyperpigmentation you're already treating. UV exposure is what deepens dark spots faster
-          than any active can fade them.
+          {spfInStock
+            ? "Sunscreen every single day, even indoors — it's the #1 lever against both new tanning and the hyperpigmentation you're already treating. UV is what deepens dark spots faster than any active can fade them."
+            : "Your SPF has run out and is on the to-buy list. Until you restock, every day outdoors is undoing the actives below — UV deepens dark spots faster than any treatment can fade them."}
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
           {[
@@ -280,7 +284,7 @@ export const SkinGrooming: React.FC = () => {
             'Glutathione (1–2% topical or supplement) pairs with SPF to blunt tyrosinase-driven pigment — never as a sub for sunscreen'
           ].map((chk, i) => (
             <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
-              <span style={{ color: 'var(--turmeric)', fontWeight: 700 }}>☀</span> {chk}
+              <span style={{ color: 'var(--turmeric)', fontWeight: 700 }}></span> {chk}
             </div>
           ))}
         </div>
@@ -324,7 +328,7 @@ export const SkinGrooming: React.FC = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
             <div>
               <p className="eyebrow"><span className="n">am</span> morning shield sequence</p>
-              <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--rose)' }}>☀️ AM Skincare Micro-Steps</h3>
+              <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--rose)' }}>AM Skincare Micro-Steps</h3>
             </div>
             <span className="badge-count">
               {Object.values(amSteps).filter(Boolean).length} / {amStepList.length}
@@ -360,11 +364,11 @@ export const SkinGrooming: React.FC = () => {
                         </span>
                       </div>
                       <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '4px' }}>
-                        🎯 Zone: <strong style={{ color: 'var(--paper)' }}>{step.zone}</strong>
+                        Zone: <strong style={{ color: 'var(--paper)' }}>{step.zone}</strong>
                       </div>
                       {stepTelem && (
                         <div style={{ fontSize: '10px', color: 'var(--turmeric)', marginTop: '2px', fontFamily: 'JetBrains Mono, monospace' }}>
-                          ⚡ Used {stepTelem.count}x · Last: {stepTelem.lastUsed}
+                          Used {stepTelem.count}x · Last: {stepTelem.lastUsed}
                         </div>
                       )}
                     </div>
@@ -431,7 +435,7 @@ export const SkinGrooming: React.FC = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
             <div>
               <p className="eyebrow"><span className="n">pm</span> nocturnal renewal sequence</p>
-              <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--indigo)' }}>🌙 PM Night Repair Micro-Steps</h3>
+              <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--indigo)' }}>PM Night Repair Micro-Steps</h3>
             </div>
             <span className="badge-count">
               {Object.values(pmSteps).filter(Boolean).length} / {pmStepList.length}
@@ -467,11 +471,11 @@ export const SkinGrooming: React.FC = () => {
                         </span>
                       </div>
                       <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '4px' }}>
-                        🎯 Zone: <strong style={{ color: 'var(--paper)' }}>{step.zone}</strong>
+                        Zone: <strong style={{ color: 'var(--paper)' }}>{step.zone}</strong>
                       </div>
                       {stepTelem && (
                         <div style={{ fontSize: '10px', color: 'var(--turmeric)', marginTop: '2px', fontFamily: 'JetBrains Mono, monospace' }}>
-                          ⚡ Used {stepTelem.count}x · Last: {stepTelem.lastUsed}
+                          Used {stepTelem.count}x · Last: {stepTelem.lastUsed}
                         </div>
                       )}
                     </div>
@@ -539,19 +543,18 @@ export const SkinGrooming: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div>
             <p className="eyebrow"><span className="n">telemetry</span> product application & timestamp audit</p>
-            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>🔍 Product Telemetry & Zone Summary</h3>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>Product Telemetry & Zone Summary</h3>
           </div>
-          <span className="tag-badge tag-best">Live Timestamps</span>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '10px', marginTop: '10px' }}>
           {[
-            { id: 'pm_castor', name: 'Cold-Pressed Castor Oil', zone: 'Eyelashes & Eyebrows', icon: '👁️', rec: 'Nightly PM' },
-            { id: 'pm_minox', name: 'Minoxidil 5% Solution', zone: 'Temples & Beard Density', icon: '🧔', rec: 'Nightly PM (1ml)' },
-            { id: 'am_khus', name: 'Pure Khus Hydrosol Mist', zone: 'Face, Forehead & Neck', icon: '🌿', rec: 'Morning & Post-Workout' },
-            { id: 'pm_multani', name: 'Multani Mitti Clay Mask', zone: 'T-Zone & Oily Contours', icon: '🏺', rec: '2x / Week (Mon/Thu)' },
-            { id: 'am_vitc', name: 'Minimalist Vitamin C 10%', zone: 'Full Face & Anterior Neck', icon: '🍊', rec: 'Every Morning (3 drops)' },
-            { id: 'pm_slug', name: 'Vaseline Lip Slugging', zone: 'Vermilion Lip Border', icon: '👄', rec: 'Nightly Bedtime' }
+            { id: 'pm_castor', name: 'Cold-Pressed Castor Oil', zone: 'Eyelashes & Eyebrows', icon: '', rec: 'Nightly PM' },
+            { id: 'pm_minox', name: 'Minoxidil 5% Solution', zone: 'Temples & Beard Density', icon: '', rec: 'Nightly PM (1ml)' },
+            { id: 'am_khus', name: 'Pure Khus Hydrosol Mist', zone: 'Face, Forehead & Neck', icon: '', rec: 'Morning & Post-Workout' },
+            { id: 'pm_multani', name: 'Multani Mitti Clay Mask', zone: 'T-Zone & Oily Contours', icon: '', rec: '2x / Week (Mon/Thu)' },
+            { id: 'am_vitc', name: 'Minimalist Vitamin C 10%', zone: 'Full Face & Anterior Neck', icon: '', rec: 'Every Morning (3 drops)' },
+            { id: 'pm_slug', name: 'Vaseline Lip Slugging', zone: 'Vermilion Lip Border', icon: '', rec: 'Nightly Bedtime' }
           ].map((item) => {
             const data = telemetry[item.id];
             return (
@@ -576,20 +579,20 @@ export const SkinGrooming: React.FC = () => {
                   </span>
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--muted)' }}>
-                  🎯 Application Zone: <strong style={{ color: 'var(--paper)' }}>{item.zone}</strong>
+                  Application Zone: <strong style={{ color: 'var(--paper)' }}>{item.zone}</strong>
                 </div>
                 <div style={{ fontSize: '10.5px', color: 'var(--sage)' }}>
-                  📅 Frequency: {item.rec}
+                  Frequency: {item.rec}
                 </div>
                 <div style={{ fontSize: '10px', color: 'var(--turmeric)', fontFamily: 'JetBrains Mono, monospace', marginTop: '2px' }}>
-                  🕒 Last Logged: {data?.lastUsed || 'Not logged yet'}
+                  Last Logged: {data?.lastUsed || 'Not logged yet'}
                 </div>
                 <button
                   className="btn sm"
                   style={{ marginTop: '6px', background: 'var(--surface3)', fontSize: '10.5px', padding: '4px' }}
                   onClick={() => useGlowUpStore.getState().logProductUsage(item.id, item.name, item.zone, 5)}
                 >
-                  ⚡ +1 Quick Spot Application
+                  +1 Quick Spot Application
                 </button>
               </div>
             );
@@ -602,7 +605,7 @@ export const SkinGrooming: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
           <div>
             <p className="eyebrow"><span className="n">grooming</span> hair · beard · nails — only what you actually own</p>
-            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--sage)' }}>💇 Hair, Beard & Nails</h3>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--sage)' }}>Hair, Beard & Nails</h3>
           </div>
         </div>
 
@@ -615,7 +618,7 @@ export const SkinGrooming: React.FC = () => {
             const washOffDue = hoursSince !== null && hoursSince < 2;
             return (
               <div style={{ background: 'var(--surface2)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                <span style={{ fontWeight: 700, fontSize: '12.5px' }}>🧴 Hair Oiling <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(single task)</span></span>
+                <span style={{ fontWeight: 700, fontSize: '12.5px' }}>Hair Oiling <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(single task)</span></span>
                 <span style={{ fontSize: '10.5px', color: 'var(--muted)' }}>Tool: coconut oil (daily) or castor oil (density) — whichever's in reach</span>
                 {washOffDue ? (
                   <span style={{ fontSize: '10.5px', color: 'var(--turmeric)' }}>⏳ Wash off by {new Date(new Date(lastTs!).getTime() + 2 * 3600000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
@@ -630,7 +633,7 @@ export const SkinGrooming: React.FC = () => {
                     if (!dayState.habits?.['h_coconutoil']) toggleHabit('h_coconutoil');
                   }}
                 >
-                  ⚡ Log Oiling Now
+                  Log Oiling Now
                 </button>
               </div>
             );
@@ -638,7 +641,7 @@ export const SkinGrooming: React.FC = () => {
 
           {/* BEARD — minoxidil is primary, dermaroller only if extra needed */}
           <div style={{ background: 'var(--surface2)', border: '1px solid var(--line2)', borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <span style={{ fontWeight: 700, fontSize: '12.5px' }}>🧔 Beard Density <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(nightly routine)</span></span>
+            <span style={{ fontWeight: 700, fontSize: '12.5px' }}>Beard Density <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(nightly routine)</span></span>
             <span style={{ fontSize: '10.5px', color: 'var(--muted)' }}>Primary tool: Minoxidil 5% (nightly). Dermaroller only on patchy zones needing extra push.</span>
             <span style={{ fontSize: '10.5px', color: telemetry['pm_minox'] ? 'var(--sage)' : 'var(--muted)' }}>
               {telemetry['pm_minox'] ? `✓ Minoxidil last: ${telemetry['pm_minox'].lastUsed}` : 'Log tonight in PM Skincare above'}
@@ -653,12 +656,12 @@ export const SkinGrooming: React.FC = () => {
             const isDue = daysSince >= 7;
             return (
               <div style={{ background: 'var(--surface2)', border: `1px solid ${isDue ? 'var(--turmeric)' : 'var(--line2)'}`, borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                <span style={{ fontWeight: 700, fontSize: '12.5px' }}>💅 Nails <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(weekly task)</span></span>
+                <span style={{ fontWeight: 700, fontSize: '12.5px' }}>Nails <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(weekly task)</span></span>
                 <span style={{ fontSize: '10.5px', color: isDue ? 'var(--turmeric)' : 'var(--muted)' }}>
                   {isDue ? '✂ Due — trim whenever convenient today' : `Not due yet — trimmed ${Math.floor(daysSince)}d ago, next check in ${Math.max(0, 7 - Math.floor(daysSince))}d`}
                 </span>
                 <button className="btn sm" style={{ marginTop: '2px' }} onClick={() => useGlowUpStore.getState().logCadence('nails_trim')}>
-                  ⚡ Log Trim
+                  Log Trim
                 </button>
               </div>
             );
@@ -671,12 +674,12 @@ export const SkinGrooming: React.FC = () => {
             const isDue = daysSince >= 14;
             return (
               <div style={{ background: 'var(--surface2)', border: `1px solid ${isDue ? 'var(--turmeric)' : 'var(--line2)'}`, borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                <span style={{ fontWeight: 700, fontSize: '12.5px' }}>✂️ Haircut & Beard Fade <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(14-day task)</span></span>
+                <span style={{ fontWeight: 700, fontSize: '12.5px' }}>✂Haircut & Beard Fade <span style={{ fontWeight: 400, color: 'var(--muted)' }}>(14-day task)</span></span>
                 <span style={{ fontSize: '10.5px', color: isDue ? 'var(--turmeric)' : 'var(--muted)' }}>
                   {isDue ? '✂ Due — sharp neckline & clean taper' : `Not due yet — ${Math.floor(daysSince)}d since last, next check in ${Math.max(0, 14 - Math.floor(daysSince))}d`}
                 </span>
                 <button className="btn sm" style={{ marginTop: '2px' }} onClick={() => useGlowUpStore.getState().logCadence('haircut_fade')}>
-                  ⚡ Log Haircut Done
+                  Log Haircut Done
                 </button>
               </div>
             );

@@ -117,9 +117,8 @@ export const MacroCharts: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div>
             <p className="eyebrow"><span className="n">thermodynamics</span> net energy deficit bank</p>
-            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>🔥 14-Day Net Energy Balance</h3>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>14-Day Net Energy Balance</h3>
           </div>
-          <span className="tag-badge tag-best">7,700 kcal = 1kg Fat</span>
         </div>
 
         {(() => {

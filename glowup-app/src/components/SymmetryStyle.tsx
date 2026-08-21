@@ -140,9 +140,8 @@ export const SymmetryStyle: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div>
             <p className="eyebrow"><span className="n">jaw</span> facial symmetry &amp; posture drills</p>
-            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>🏛️ Facial Symmetry &amp; Masseter Architecture</h3>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>Facial Symmetry &amp; Masseter Architecture</h3>
           </div>
-          <span className="tag-badge tag-best">Bone &amp; Muscle Structure</span>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
@@ -170,7 +169,7 @@ export const SymmetryStyle: React.FC = () => {
                     </div>
                     <div className="task-sub" style={{ marginTop: '2px' }}>{d.desc}</div>
                     <div style={{ fontSize: '10.5px', color: 'var(--muted)', marginTop: '4px' }}>
-                      🎯 Zone: <strong style={{ color: 'var(--paper)' }}>{d.zone}</strong>
+                      Zone: <strong style={{ color: 'var(--paper)' }}>{d.zone}</strong>
                     </div>
                   </div>
 
@@ -180,7 +179,7 @@ export const SymmetryStyle: React.FC = () => {
                       style={{ fontSize: '10px', padding: '3px 7px', background: 'var(--surface3)' }}
                       onClick={() => setExpandedItem(isExpanded ? null : d.id)}
                     >
-                      {isExpanded ? '▲ Hide' : '🔬 5 Checks'}
+                      {isExpanded ? '▲ Hide' : '5 Checks'}
                     </button>
                     <button
                       className="task-btn"
@@ -216,9 +215,8 @@ export const SymmetryStyle: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div>
             <p className="eyebrow"><span className="n">style</span> personal aesthetic &amp; grooming</p>
-            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--rose)' }}>👔 Personal Aesthetic &amp; Presence Standards</h3>
+            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--rose)' }}>Personal Aesthetic &amp; Presence Standards</h3>
           </div>
-          <span className="tag-badge tag-best">High Status Visuals</span>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
@@ -250,7 +248,7 @@ export const SymmetryStyle: React.FC = () => {
                       style={{ fontSize: '10px', padding: '3px 7px', background: 'var(--surface3)' }}
                       onClick={() => setExpandedItem(isExpanded ? null : s.id)}
                     >
-                      {isExpanded ? '▲ Hide' : '🔬 5 Checks'}
+                      {isExpanded ? '▲ Hide' : '5 Checks'}
                     </button>
                     <button
                       className="task-btn"

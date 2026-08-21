@@ -37,38 +37,35 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
     localStorage.setItem('glowup_nav_mode', newMode);
   };
 
-  // Calm essential tabs (Zero Overwhelm)
   const essentialTabs: Array<{ id: TabType; label: string }> = [
-    { id: 'calendar', label: '📅 24h Calendar' },
-    { id: 'adhd', label: '🧠 ADHD Focus' },
-    { id: 'habitkit', label: '⚡ HabitKit' },
-    { id: 'food', label: '🥪 Food & AI' },
-    { id: 'shopping', label: '🛒 To Buy' },
-    { id: 'lifts', label: '🏋️ Lifts' },
-    { id: 'body', label: '📊 88kg Cut' }
+    { id: 'adhd', label: 'Today' },
+    { id: 'calendar', label: 'Schedule' },
+    { id: 'habitkit', label: 'Habits' },
+    { id: 'food', label: 'Food' },
+    { id: 'lifts', label: 'Training' },
+    { id: 'shopping', label: 'Buy' },
   ];
 
-  // Full ecosystem tabs
   const allTabs: Array<{ id: TabType; label: string }> = [
-    { id: 'calendar', label: '📅 24h Google Calendar' },
-    { id: 'adhd', label: '🧠 ADHD Hyper-Focus' },
-    { id: 'today', label: 'Today & Flow ⚡' },
-    { id: 'habitkit', label: '⚡ HabitKit Grid' },
-    { id: 'food', label: '🥪 Food & AI Macros' },
-    { id: 'shopping', label: '🛒 To Buy & Staples' },
-    { id: 'lifts', label: '🏋️ Lifts & Workouts' },
-    { id: 'goals', label: '🎯 Goals Matrix' },
-    { id: 'momentum', label: '🔥 Energy Vault' },
-    { id: 'howto', label: '📚 How-To Protocols' },
-    { id: 'skin', label: 'Skin & Peel 💅' },
-    { id: 'grooming', label: 'Grooming & Hair 💈' },
-    { id: 'symmetry', label: 'Symmetry & Jaw 🪞' },
-    { id: 'style', label: 'Style & Scent 👔' },
-    { id: 'protein', label: 'Protein ₹/g Bank' },
-    { id: 'body', label: 'Body & 88kg Cut 📊' },
-    { id: 'content', label: 'Content ⚡' },
-    { id: 'sleep', label: 'Sleep 🌙' },
-    { id: 'sync', label: 'AI & Sync ☁️' },
+    { id: 'adhd', label: 'Today' },
+    { id: 'calendar', label: 'Schedule' },
+    { id: 'habitkit', label: 'Habits' },
+    { id: 'food', label: 'Food' },
+    { id: 'lifts', label: 'Training' },
+    { id: 'shopping', label: 'Buy' },
+    { id: 'skin', label: 'Skin' },
+    { id: 'grooming', label: 'Hair & Beard' },
+    { id: 'body', label: 'Body' },
+    { id: 'sleep', label: 'Sleep' },
+    { id: 'goals', label: 'Goals' },
+    { id: 'momentum', label: 'Streaks' },
+    { id: 'protein', label: 'Protein Costs' },
+    { id: 'symmetry', label: 'Posture' },
+    { id: 'style', label: 'Style' },
+    { id: 'content', label: 'Content' },
+    { id: 'today', label: 'Flow' },
+    { id: 'howto', label: 'Guides' },
+    { id: 'sync', label: 'Data' },
   ];
 
   const visibleTabs = mode === 'calm' ? essentialTabs : allTabs;
@@ -77,23 +74,21 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
   return (
     <nav className="nav-strip" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 4px' }}>
-        <span style={{ fontSize: '10px', color: 'var(--muted)', fontFamily: 'JetBrains Mono, monospace' }}>
-          {mode === 'calm' ? '🧘 CALM ESSENTIALS MODE' : '✨ FULL MATRIX VIEW'}
-        </span>
+        <span style={{ fontSize: '10px', color: 'var(--muted)' }} />
         <div style={{ display: 'flex', gap: '4px' }}>
           <button
             className={`tab-btn ${mode === 'calm' ? 'active' : ''}`}
-            style={{ fontSize: '9.5px', padding: '2px 8px', borderRadius: '4px' }}
+            style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '4px' }}
             onClick={() => handleToggleMode('calm')}
           >
-            🧘 Essentials
+            Essentials
           </button>
           <button
             className={`tab-btn ${mode === 'all' ? 'active' : ''}`}
-            style={{ fontSize: '9.5px', padding: '2px 8px', borderRadius: '4px' }}
+            style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '4px' }}
             onClick={() => handleToggleMode('all')}
           >
-            ✨ All Tools
+            Everything
           </button>
         </div>
       </div>

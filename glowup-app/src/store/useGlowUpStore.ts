@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import type { GlowUpState, MacroItem, LiftSet, GoalMilestone, DayState, CustomProteinItem, CalendarEvent } from '../types';
-import { DEFAULT_GOALS } from '../lib/constants';
+import type { GlowUpState, MacroItem, LiftSet, GoalMilestone, DayState, CustomProteinItem, CalendarEvent, InventoryItem } from '../types';
+import { DEFAULT_GOALS, DEFAULT_INVENTORY } from '../lib/constants';
 import { supabase } from '../lib/supabase';
 import { saveLocalSnapshot, loadLocalSnapshot } from '../lib/localDB';
 import { playSuccessChime } from '../lib/sound';
@@ -28,6 +28,7 @@ const getInitialState = (): GlowUpState => ({
   liveSleep: null,
   meas: [],
   milestones: JSON.parse(JSON.stringify(DEFAULT_GOALS)),
+  inventory: JSON.parse(JSON.stringify(DEFAULT_INVENTORY)),
   peel: '2026-08-15',
   start: '2026-08-18',
   abstinence: {
@@ -75,6 +76,9 @@ interface GlowUpStore {
   logProductUsage: (productId: string, productName: string, zone: string, checksCount: number, date?: string) => void;
   logProgressPhoto: (date?: string) => void;
   logCadence: (id: string, date?: string) => void;
+  setInventoryStock: (id: string, inStock: boolean) => void;
+  addInventoryItem: (item: InventoryItem) => void;
+  deleteInventoryItem: (id: string) => void;
 }
 
 export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
@@ -434,5 +438,32 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     set({ state });
     playSuccessChime();
     get().saveState({ area: 'cadence', item: id, exact_update: `Logged cadence task ${id} on ${d}` });
+  },
+
+  // Inventory lives in the persisted store (not component state) so marking something
+  // in/out of stock survives a reload and syncs across devices.
+  setInventoryStock: (id, inStock) => {
+    const state = { ...get().state };
+    state.inventory = (state.inventory || DEFAULT_INVENTORY).map(i =>
+      i.id === id ? { ...i, inStock } : i
+    );
+    set({ state });
+    if (inStock) playSuccessChime();
+    get().saveState({ area: 'inventory', item: id, exact_update: `${id} marked ${inStock ? 'in stock' : 'out of stock'}` });
+  },
+
+  addInventoryItem: (item) => {
+    const state = { ...get().state };
+    state.inventory = [item, ...(state.inventory || DEFAULT_INVENTORY)];
+    set({ state });
+    playSuccessChime();
+    get().saveState({ area: 'inventory', item: item.id, exact_update: `Added ${item.name} to inventory` });
+  },
+
+  deleteInventoryItem: (id) => {
+    const state = { ...get().state };
+    state.inventory = (state.inventory || DEFAULT_INVENTORY).filter(i => i.id !== id);
+    set({ state });
+    get().saveState({ area: 'inventory', item: id, exact_update: `Removed ${id} from inventory` });
   }
 }));

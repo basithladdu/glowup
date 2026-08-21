@@ -1,38 +1,13 @@
 import React, { useState } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
-
-interface ShoppingItem {
-  id: string;
-  name: string;
-  category: 'nutrition' | 'derm' | 'grooming';
-  qty: string;
-  estCost: string;
-  bought: boolean;
-}
+import { DEFAULT_INVENTORY } from '../lib/constants';
+import type { InventoryItem } from '../types';
 
 export const ShoppingInventory: React.FC = () => {
-  const { saveState } = useGlowUpStore();
-
-  const [items, setItems] = useState<ShoppingItem[]>([
-    { id: 'sh_chk', name: 'Raw Chicken Breast (1–2 kg)', category: 'nutrition', qty: '2 kg', estCost: '₹480', bought: true },
-    { id: 'sh_eggs', name: 'Whole Eggs (Crate of 30)', category: 'nutrition', qty: '1 Crate', estCost: '₹210', bought: true },
-    { id: 'sh_dates', name: 'Lion / Kimia Medjool Dates (500g Box)', category: 'nutrition', qty: '500g', estCost: '₹280', bought: false },
-    { id: 'sh_whey', name: 'Nakpro Malai Kulfi Whey Isolate', category: 'nutrition', qty: '1 kg Tub', estCost: '₹1,699', bought: true },
-    { id: 'sh_soya', name: 'Fortune Soya Chunks (Pack of 500g)', category: 'nutrition', qty: '500g', estCost: '₹75', bought: true },
-    { id: 'sh_milk', name: 'Fresh Buffalo Milk / Nandini Curd', category: 'nutrition', qty: '1 L', estCost: '₹70', bought: false },
-    { id: 'sh_castor', name: 'Pure Cold-Pressed Castor Oil (Lashes & Brows)', category: 'grooming', qty: '100ml', estCost: '₹180', bought: true },
-    { id: 'sh_coconut', name: 'Pure Cold-Pressed Virgin Coconut Oil (Scalp & Hair)', category: 'grooming', qty: '250ml', estCost: '₹150', bought: true },
-    { id: 'sh_lipscrub', name: 'Nicole Sugar Berry Lip Scrub (Pink Lips Exfoliator)', category: 'derm', qty: '30g', estCost: '₹220', bought: false },
-    { id: 'sh_socks', name: 'Breathable Cotton Gym Socks (6-Pack)', category: 'grooming', qty: '6 Pairs', estCost: '₹299', bought: false },
-    { id: 'sh_tape', name: '3M Micropore Nasal Sleep Mouth Tape', category: 'grooming', qty: '2 Rolls', estCost: '₹120', bought: true },
-    { id: 'sh_spf', name: 'Lakmé Sun Expert SPF 50 PA+++ Sunscreen', category: 'derm', qty: '100ml', estCost: '₹340', bought: false },
-    { id: 'sh_nivea', name: 'Nivea Soft Light Moisturizing Cream', category: 'derm', qty: '100ml Jar', estCost: '₹199', bought: false },
-    { id: 'sh_pilgrim', name: 'Pilgrim 2% Retinol Face Serum', category: 'derm', qty: '30ml', estCost: '₹449', bought: true },
-    { id: 'sh_peel', name: 'The Minimalist AHA 30% + BHA 2% Peel', category: 'derm', qty: '30ml', estCost: '₹599', bought: true },
-    { id: 'sh_aziderm', name: 'Aziderm 10% Azelaic Acid Gel', category: 'derm', qty: '15g Tube', estCost: '₹280', bought: true },
-    { id: 'sh_glyco', name: 'Glyco 6% / Glyco 12% Glycolic Acid', category: 'derm', qty: '30g', estCost: '₹210', bought: true },
-    { id: 'sh_minox', name: 'Minoxidil 5% Topical Solution', category: 'grooming', qty: '60ml', estCost: '₹550', bought: true }
-  ]);
+  // Inventory comes from the persisted store, so toggling stock sticks across reloads
+  // and devices instead of resetting to a hardcoded list.
+  const { state, setInventoryStock, addInventoryItem, deleteInventoryItem } = useGlowUpStore();
+  const items: InventoryItem[] = state.inventory || DEFAULT_INVENTORY;
 
   const [newName, setNewName] = useState('');
   const [newCat, setNewCat] = useState<'nutrition' | 'derm' | 'grooming'>('nutrition');
@@ -40,33 +15,30 @@ export const ShoppingInventory: React.FC = () => {
   const [newCost, setNewCost] = useState('');
 
   const toggleBought = (id: string) => {
-    setItems(prev => prev.map(item => item.id === id ? { ...item, bought: !item.bought } : item));
-    saveState({ area: 'shopping', item: id, exact_update: `Toggled shopping item ${id}` });
+    const item = items.find(i => i.id === id);
+    if (item) setInventoryStock(id, !item.inStock);
   };
 
   const handleAddItem = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newName.trim()) return;
-    const newItem: ShoppingItem = {
+    addInventoryItem({
       id: 'sh_' + Date.now(),
       name: newName.trim(),
       category: newCat,
       qty: newQty.trim() || '1 item',
       estCost: newCost.trim() ? `₹${newCost}` : '₹0',
-      bought: false
-    };
-    setItems(prev => [newItem, ...prev]);
+      inStock: false
+    });
     setNewName('');
     setNewQty('');
     setNewCost('');
   };
 
-  const handleDeleteItem = (id: string) => {
-    setItems(prev => prev.filter(item => item.id !== id));
-  };
+  const handleDeleteItem = (id: string) => deleteInventoryItem(id);
 
-  const pendingItems = items.filter(i => !i.bought);
-  const boughtItems = items.filter(i => i.bought);
+  const pendingItems = items.filter(i => !i.inStock);
+  const boughtItems = items.filter(i => i.inStock);
 
   return (
     <div className="section-block">
@@ -75,7 +47,7 @@ export const ShoppingInventory: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <div>
             <p className="eyebrow"><span className="n">inventory</span> shopping list &amp; replenishment</p>
-            <h2 style={{ fontSize: '18px', margin: 0 }}>Things I Have To Buy 🛒</h2>
+            <h2 style={{ fontSize: '18px', margin: 0 }}>Things I Have To Buy </h2>
           </div>
           <span className="tag-badge tag-best">{pendingItems.length} PENDING</span>
         </div>
@@ -84,30 +56,6 @@ export const ShoppingInventory: React.FC = () => {
         </p>
       </div>
 
-      {/* 5 PRECISION INVENTORY & REPLENISHMENT STANDARDS */}
-      <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-          <div>
-            <p className="eyebrow"><span className="n">supply chain</span> automated replenishment protocols</p>
-            <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--turmeric)' }}>📦 5 Precision Inventory Standards</h3>
-          </div>
-          <span className="tag-badge tag-best">Supply Chain</span>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '8px 0 6px' }}>
-          {[
-            '3-Day Buffer Reorder: Re-order Whey, Eggs, and Chicken when inventory reaches 3-day supply',
-            'Per-Gram Cost Efficiency: Purchase 30-egg wholesale crates and 1kg whey isolate for max ROI',
-            'Active Shelf-Life Safety: Track Vitamin C & chemical peels; replace within 6 months of opening',
-            'Nutritional Whole Food Staples: Ensure Lion Dates, Milk, and Soya are always stocked in pantry',
-            'Grooming Replenishment: Keep cold-pressed castor & coconut oils sealed in amber glass bottles'
-          ].map((chk, i) => (
-            <div key={i} style={{ fontSize: '11px', color: 'var(--paper)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ color: 'var(--sage)', fontWeight: 700 }}>✓</span> {chk}
-            </div>
-          ))}
-        </div>
-      </div>
 
       <div className="desktop-grid-equal">
         {/* LEFT COLUMN: PENDING ITEMS */}
@@ -157,9 +105,9 @@ export const ShoppingInventory: React.FC = () => {
                 <div>
                   <label className="fl">Category</label>
                   <select value={newCat} onChange={(e: any) => setNewCat(e.target.value)}>
-                    <option value="nutrition">🍗 Nutrition / Food</option>
-                    <option value="derm">🧴 Derm / Skincare</option>
-                    <option value="grooming">🧦 Grooming / Gear</option>
+                    <option value="nutrition">Nutrition / Food</option>
+                    <option value="derm">Derm / Skincare</option>
+                    <option value="grooming">Grooming / Gear</option>
                   </select>
                 </div>
                 <div>
@@ -200,7 +148,7 @@ export const ShoppingInventory: React.FC = () => {
                       <span style={{ fontSize: '10px', color: 'var(--muted)' }}>Qty: {item.qty} · Cost: {item.estCost}</span>
                       {telemData && (
                         <span style={{ fontSize: '9.5px', color: 'var(--turmeric)', fontFamily: 'JetBrains Mono, monospace', marginTop: '2px' }}>
-                          ⚡ Logged {telemData.count}x · Last: {telemData.lastUsed}
+                          Logged {telemData.count}x · Last: {telemData.lastUsed}
                         </span>
                       )}
                     </div>

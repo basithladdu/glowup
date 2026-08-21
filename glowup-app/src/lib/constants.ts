@@ -1,4 +1,4 @@
-import type { GoalMilestone, WorkoutRoutine } from '../types';
+import type { GoalMilestone, WorkoutRoutine, InventoryItem } from '../types';
 
 export const PASSCODE = 'laddu';
 export const KCAL_TARGET = 2000;
@@ -12,6 +12,29 @@ export const GEMINI_API_KEY = (typeof window !== 'undefined' && window.localStor
   atob("QVEuQWI4Uk42TGdteXRETFpwM3hic25QakRZZ19fellNQkdhcWVXZnRVaWNvYUxGZlZJN2c=");
 
 export const GEMINI_MODELS = ["gemini-2.5-flash-lite", "gemini-3.6-flash", "gemini-3.7-flash", "gemini-flash-latest"];
+
+/** Seed inventory, used only the first time — after that the persisted store is the
+ * source of truth, so toggling stock in the UI sticks across reloads and devices. */
+export const DEFAULT_INVENTORY: InventoryItem[] = [
+  { id: 'sh_chk', name: 'Raw Chicken Breast', category: 'nutrition', qty: '2 kg', estCost: '₹480', inStock: true },
+  { id: 'sh_eggs', name: 'Whole Eggs (Crate of 30)', category: 'nutrition', qty: '1 Crate', estCost: '₹210', inStock: true },
+  { id: 'sh_dates', name: 'Medjool Dates', category: 'nutrition', qty: '500g', estCost: '₹280', inStock: false },
+  { id: 'sh_whey', name: 'Nakpro Whey Isolate', category: 'nutrition', qty: '1 kg Tub', estCost: '₹1,699', inStock: true },
+  { id: 'sh_soya', name: 'Soya Chunks', category: 'nutrition', qty: '500g', estCost: '₹75', inStock: true },
+  { id: 'sh_milk', name: 'Milk / Curd', category: 'nutrition', qty: '1 L', estCost: '₹70', inStock: false },
+  { id: 'sh_castor', name: 'Castor Oil (lashes & brows)', category: 'grooming', qty: '100ml', estCost: '₹180', inStock: true },
+  { id: 'sh_coconut', name: 'Virgin Coconut Oil (scalp)', category: 'grooming', qty: '250ml', estCost: '₹150', inStock: true },
+  { id: 'sh_lipscrub', name: 'Lip Scrub', category: 'derm', qty: '30g', estCost: '₹220', inStock: false },
+  { id: 'sh_socks', name: 'Cotton Gym Socks (6-pack)', category: 'grooming', qty: '6 Pairs', estCost: '₹299', inStock: false },
+  { id: 'sh_tape', name: 'Micropore Mouth Tape', category: 'grooming', qty: '2 Rolls', estCost: '₹120', inStock: true },
+  { id: 'sh_spf', name: 'Sunscreen SPF 50', category: 'derm', qty: '100ml', estCost: '₹340', inStock: false },
+  { id: 'sh_nivea', name: 'Moisturising Cream', category: 'derm', qty: '100ml Jar', estCost: '₹199', inStock: false },
+  { id: 'sh_pilgrim', name: 'Retinol Serum', category: 'derm', qty: '30ml', estCost: '₹449', inStock: true },
+  { id: 'sh_peel', name: 'AHA 30% + BHA 2% Peel', category: 'derm', qty: '30ml', estCost: '₹599', inStock: true },
+  { id: 'sh_aziderm', name: 'Aziderm 10% (Azelaic Acid)', category: 'derm', qty: '15g Tube', estCost: '₹280', inStock: true },
+  { id: 'sh_glyco', name: 'Glyco 6% / 12% (Glycolic Acid)', category: 'derm', qty: '30g', estCost: '₹210', inStock: true },
+  { id: 'sh_minox', name: 'Minoxidil 5%', category: 'grooming', qty: '60ml', estCost: '₹550', inStock: true }
+];
 
 export const ROT = [
   { d:'Sun', short:'Rest / Kojic', active:'Kojic Acid Cream', extra:'Coconut oil scalp pre-wash + 0.5mm dermaroll AM' },
