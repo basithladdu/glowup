@@ -54,7 +54,14 @@ export function usePokeItems(): PokeItem[] {
   // actionable thing is restocking, so the item points at the Buy tab instead.
   // A habit you've removed must not keep showing up here.
   const disabled = state.disabledSteps || [];
-  const items: PokeItem[] = EXPECTED_HABITS
+  // Habits you added yourself are nagged about exactly like the built-in ones —
+  // otherwise creating a habit would quietly opt it out of the whole point of the app.
+  const expected = [
+    ...EXPECTED_HABITS,
+    ...(state.customHabits || []).map((h) => ({ id: h.id, label: h.name, tab: 'habitkit' as PokeTab })),
+  ];
+
+  const items: PokeItem[] = expected
     .filter((h) => !disabled.includes(h.id) && !dayState.habits?.[h.id])
     .map((h) => isOutOfStock(h.id)
       ? { label: `Buy ${h.label} — you're out`, tab: 'shopping' as PokeTab }
