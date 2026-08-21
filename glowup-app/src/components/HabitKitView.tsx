@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
+import { RemovedItems } from './RemovedItems';
 
 interface HabitDef {
   id: string;
@@ -301,18 +302,14 @@ export const HabitKitView: React.FC = () => {
 
       {/* HABITKIT HABIT CARDS WITH 5 PRECISION CHECKS */}
       <div className="desktop-grid-equal">
-        {disabledIds.some(id => habits.find(h => h.id === id)) && (
-          <div className="card">
-            <p className="eyebrow"><span className="n">habits</span> you removed</p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-              {disabledIds.map(id => habits.find(h => h.id === id)).filter(Boolean).map((h) => (
-                <button key={h!.id} className="ai-chip" onClick={() => toggleStepEnabled(h!.id)}>
-                  + {h!.name}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        <RemovedItems
+          noun="habits"
+          items={disabledIds
+            .map(id => habits.find(h => h.id === id))
+            .filter(Boolean)
+            .map(h => ({ id: h!.id, label: h!.name }))}
+          onRestore={toggleStepEnabled}
+        />
 
         {activeHabits.map((h) => {
           const isDone = !!dayState.habits[h.id];

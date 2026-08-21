@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
+import { RemovedItems } from './RemovedItems';
 import { ROT, METALLICADPA_PPL } from '../lib/constants';
 import type { CalendarEvent } from '../types';
 import { parseFoodMacrosAI } from '../lib/gemini';
@@ -205,19 +206,13 @@ export const CalendarTimeline: React.FC = () => {
       </div>
 
       {/* VIEW: 24-HOUR DAY TIME-GRID (REAL GOOGLE CALENDAR GRID) */}
-      {/* Removing a schedule block must be reversible. */}
-      {coreEvents.some(ev => disabledIds.includes(ev.id)) && (
-        <div className="card">
-          <p className="eyebrow"><span className="n">schedule</span> blocks you removed</p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-            {coreEvents.filter(ev => disabledIds.includes(ev.id)).map((ev) => (
-              <button key={ev.id} className="ai-chip" onClick={() => toggleStepEnabled(ev.id)}>
-                + {ev.title}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+      <RemovedItems
+        noun="schedule blocks"
+        items={coreEvents
+          .filter(ev => disabledIds.includes(ev.id))
+          .map(ev => ({ id: ev.id, label: ev.title }))}
+        onRestore={toggleStepEnabled}
+      />
 
       {viewMode === 'day' && (
         <div className="desktop-grid-2">

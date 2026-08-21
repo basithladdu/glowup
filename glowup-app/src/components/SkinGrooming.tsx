@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGlowUpStore } from '../store/useGlowUpStore';
+import { RemovedItems } from './RemovedItems';
 import { ROT, DEFAULT_INVENTORY, PRODUCT_FOR } from '../lib/constants';
 import { triggerGoalCelebration } from '../lib/confetti';
 import { playSuccessChime } from '../lib/sound';
@@ -730,23 +731,14 @@ export const SkinGrooming: React.FC = () => {
         </div>
       </div>
 
-      {/* Removing a step must not be a one-way door — anything switched off is listed
-          here so it can be put back. */}
-      {disabledSteps.length > 0 && (
-        <div className="card">
-          <p className="eyebrow"><span className="n">routine</span> steps you removed</p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-            {disabledSteps.map((id) => {
-              const step = [...amStepList, ...pmStepList].find(st => st.id === id);
-              return (
-                <button key={id} className="ai-chip" onClick={() => toggleStepEnabled(id)}>
-                  + {step ? step.name : id}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      <RemovedItems
+        noun="steps"
+        items={disabledSteps
+          .map(id => [...amStepList, ...pmStepList].find(st => st.id === id))
+          .filter(Boolean)
+          .map(st => ({ id: st!.id, label: st!.name }))}
+        onRestore={toggleStepEnabled}
+      />
 
       {/* 7-DAY ACTIVES ROTATION SCHEDULE */}
       <div className="card">
