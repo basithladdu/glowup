@@ -79,6 +79,7 @@ interface GlowUpStore {
   setInventoryStock: (id: string, inStock: boolean) => void;
   addInventoryItem: (item: InventoryItem) => void;
   deleteInventoryItem: (id: string) => void;
+  toggleStepEnabled: (stepId: string) => void;
 }
 
 export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
@@ -465,5 +466,14 @@ export const useGlowUpStore = create<GlowUpStore>((set, get) => ({
     state.inventory = (state.inventory || DEFAULT_INVENTORY).filter(i => i.id !== id);
     set({ state });
     get().saveState({ area: 'inventory', item: id, exact_update: `Removed ${id} from inventory` });
+  },
+
+  toggleStepEnabled: (stepId) => {
+    const state = { ...get().state };
+    const disabled = state.disabledSteps || [];
+    const nowDisabled = !disabled.includes(stepId);
+    state.disabledSteps = nowDisabled ? [...disabled, stepId] : disabled.filter(s => s !== stepId);
+    set({ state });
+    get().saveState({ area: 'routine', item: stepId, exact_update: `${stepId} ${nowDisabled ? 'removed from' : 'restored to'} routine` });
   }
 }));

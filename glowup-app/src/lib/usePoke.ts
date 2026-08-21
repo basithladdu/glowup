@@ -1,5 +1,5 @@
 import { useGlowUpStore } from '../store/useGlowUpStore';
-import { PRODUCT_FOR, DEFAULT_INVENTORY } from './constants';
+import { PRODUCT_FOR, DEFAULT_INVENTORY, AM_STEP_IDS, PM_STEP_IDS } from './constants';
 
 /** Where tapping a poke item should take you to actually do something about it. */
 export type PokeTab = 'habitkit' | 'skin' | 'body' | 'shopping';
@@ -40,11 +40,20 @@ export function usePokeItems(): PokeItem[] {
       ? { label: `Buy ${h.label} — you're out`, tab: 'shopping' as PokeTab }
       : { label: h.label, tab: h.tab });
 
-  const amStepsDone = Object.values(dayState.amSkinSteps || {}).filter(Boolean).length;
-  const pmStepsDone = Object.values(dayState.pmSkinSteps || {}).filter(Boolean).length;
+  // Counts derive from the steps you've actually kept, so switching a step off
+  // immediately stops it counting against you.
+  const disabled = state.disabledSteps || [];
+  const amSteps = AM_STEP_IDS.filter((id) => !disabled.includes(id));
+  const pmSteps = PM_STEP_IDS.filter((id) => !disabled.includes(id));
+  const amDone = amSteps.filter((id) => dayState.amSkinSteps?.[id]).length;
+  const pmDone = pmSteps.filter((id) => dayState.pmSkinSteps?.[id]).length;
   const nowHour = new Date().getHours();
-  if (nowHour >= 10 && amStepsDone < 6) items.push({ label: `AM Skincare (${amStepsDone}/6 steps)`, tab: 'skin' });
-  if (nowHour >= 21 && pmStepsDone < 7) items.push({ label: `PM Skincare (${pmStepsDone}/7 steps)`, tab: 'skin' });
+  if (nowHour >= 10 && amSteps.length && amDone < amSteps.length) {
+    items.push({ label: `AM Skincare (${amDone}/${amSteps.length} steps)`, tab: 'skin' });
+  }
+  if (nowHour >= 21 && pmSteps.length && pmDone < pmSteps.length) {
+    items.push({ label: `PM Skincare (${pmDone}/${pmSteps.length} steps)`, tab: 'skin' });
+  }
 
   const daysSinceCadence = (id: string) => {
     const d = (state.cadenceLog?.[id] || [])[0];

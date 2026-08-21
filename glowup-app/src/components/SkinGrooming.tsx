@@ -5,7 +5,7 @@ import { triggerGoalCelebration } from '../lib/confetti';
 import { playSuccessChime } from '../lib/sound';
 
 export const SkinGrooming: React.FC = () => {
-  const { selectedDate, state, saveState, getDayState, toggleHabit } = useGlowUpStore();
+  const { selectedDate, state, saveState, getDayState, toggleHabit, toggleStepEnabled } = useGlowUpStore();
   const dayState = getDayState();
   const dateObj = new Date(selectedDate);
   const dow = dateObj.getDay();
@@ -18,6 +18,10 @@ export const SkinGrooming: React.FC = () => {
 
   /** A step whose product you've marked out of stock can't be done — say so rather
    * than showing it as just another unchecked box. */
+  // Steps you've switched off disappear from the routine and stop counting.
+  const disabledSteps = state.disabledSteps || [];
+  const isEnabled = (id: string) => !disabledSteps.includes(id);
+
   const stepOutOfStock = (stepId: string) => {
     const prodId = PRODUCT_FOR[stepId];
     return !!prodId && inventory.find(i => i.id === prodId)?.inStock === false;
@@ -38,7 +42,7 @@ export const SkinGrooming: React.FC = () => {
     saveState({ area: 'skincare', item: `am-${stepId}`, exact_update: `Toggled AM skin step ${stepId}` });
 
     // If all AM steps done, celebrate & mark SPF habit
-    if (Object.values(newAmSteps).filter(Boolean).length >= 4) {
+    if (amEnabled.length && amEnabled.every(st => newAmSteps[st.id])) {
       toggleHabit('h_spf');
       triggerGoalCelebration();
       playSuccessChime();
@@ -52,7 +56,7 @@ export const SkinGrooming: React.FC = () => {
     saveState({ area: 'skincare', item: `pm-${stepId}`, exact_update: `Toggled PM skin step ${stepId}` });
 
     // If all PM steps done, celebrate & mark minoxidil habit
-    if (Object.values(newPmSteps).filter(Boolean).length >= 5) {
+    if (pmEnabled.length && pmEnabled.every(st => newPmSteps[st.id])) {
       toggleHabit('h_minox');
       triggerGoalCelebration();
       playSuccessChime();
@@ -267,6 +271,11 @@ export const SkinGrooming: React.FC = () => {
     }
   ];
 
+  // The routine you actually kept — everything downstream (headers, completion,
+  // celebration) counts against these, not the full canonical lists.
+  const amEnabled = amStepList.filter(st => isEnabled(st.id));
+  const pmEnabled = pmStepList.filter(st => isEnabled(st.id));
+
   return (
     <div className="section-block">
       {/* TAN & HYPERPIGMENTATION PREVENTION PROTOCOL — dermatologist-grounded */}
@@ -339,12 +348,12 @@ export const SkinGrooming: React.FC = () => {
               <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--rose)' }}>AM Skincare Micro-Steps</h3>
             </div>
             <span className="badge-count">
-              {Object.values(amSteps).filter(Boolean).length} / {amStepList.length}
+              {amEnabled.filter(st => amSteps[st.id]).length} / {amEnabled.length}
             </span>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {amStepList.map((step) => {
+            {amEnabled.map((step) => {
               const isDone = !!amSteps[step.id];
               const isExpanded = expandedStep === step.id;
               const stepTelem = telemetry[step.id];
@@ -393,6 +402,14 @@ export const SkinGrooming: React.FC = () => {
                         onClick={() => setExpandedStep(isExpanded ? null : step.id)}
                       >
                         {isExpanded ? '▲ Hide' : `▼ ${checkedCount}/${step.checks.length} Checks`}
+                      </button>
+                      <button
+                        className="task-btn"
+                        title="Remove this step from your routine"
+                        style={{ background: 'transparent', color: 'var(--muted)', border: 0, padding: '3px 5px' }}
+                        onClick={() => toggleStepEnabled(step.id)}
+                      >
+                        ✕
                       </button>
                       <button
                         className="task-btn"
@@ -451,12 +468,12 @@ export const SkinGrooming: React.FC = () => {
               <h3 style={{ fontSize: '15px', margin: 0, color: 'var(--indigo)' }}>PM Night Repair Micro-Steps</h3>
             </div>
             <span className="badge-count">
-              {Object.values(pmSteps).filter(Boolean).length} / {pmStepList.length}
+              {pmEnabled.filter(st => pmSteps[st.id]).length} / {pmEnabled.length}
             </span>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {pmStepList.map((step) => {
+            {pmEnabled.map((step) => {
               const isDone = !!pmSteps[step.id];
               const isExpanded = expandedStep === step.id;
               const stepTelem = telemetry[step.id];
@@ -505,6 +522,14 @@ export const SkinGrooming: React.FC = () => {
                         onClick={() => setExpandedStep(isExpanded ? null : step.id)}
                       >
                         {isExpanded ? '▲ Hide' : `▼ ${checkedCount}/${step.checks.length} Checks`}
+                      </button>
+                      <button
+                        className="task-btn"
+                        title="Remove this step from your routine"
+                        style={{ background: 'transparent', color: 'var(--muted)', border: 0, padding: '3px 5px' }}
+                        onClick={() => toggleStepEnabled(step.id)}
+                      >
+                        ✕
                       </button>
                       <button
                         className="task-btn"
@@ -704,6 +729,24 @@ export const SkinGrooming: React.FC = () => {
           })()}
         </div>
       </div>
+
+      {/* Removing a step must not be a one-way door — anything switched off is listed
+          here so it can be put back. */}
+      {disabledSteps.length > 0 && (
+        <div className="card">
+          <p className="eyebrow"><span className="n">routine</span> steps you removed</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+            {disabledSteps.map((id) => {
+              const step = [...amStepList, ...pmStepList].find(st => st.id === id);
+              return (
+                <button key={id} className="ai-chip" onClick={() => toggleStepEnabled(id)}>
+                  + {step ? step.name : id}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* 7-DAY ACTIVES ROTATION SCHEDULE */}
       <div className="card">

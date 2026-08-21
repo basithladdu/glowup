@@ -96,6 +96,9 @@ export interface GlowUpState {
   progressPhotoDates?: string[];
   cadenceLog?: Record<string, string[]>;
   inventory?: InventoryItem[];
+  /** Routine steps you've switched off — they stop appearing and stop counting toward
+   * "AM Skincare (n/N)", so the app never nags about a step you don't actually do. */
+  disabledSteps?: string[];
   peel: string;
   start: string;
   abstinence: AbstinenceState;

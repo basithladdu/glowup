@@ -36,6 +36,11 @@ export const DEFAULT_INVENTORY: InventoryItem[] = [
   { id: 'sh_minox', name: 'Minoxidil 5%', category: 'grooming', qty: '60ml', estCost: '₹550', inStock: true }
 ];
 
+/** Canonical routine step order. Kept here (not inside the component) so the poke list
+ * can count enabled steps without duplicating the routine definition. */
+export const AM_STEP_IDS = ['am_cleanse', 'am_khus', 'am_vitc', 'am_b12', 'am_spf', 'am_lip'];
+export const PM_STEP_IDS = ['pm_cleanse', 'pm_multani', 'pm_active', 'pm_barrier', 'pm_castor', 'pm_minox', 'pm_slug'];
+
 /** Which inventory item a routine step / habit consumes. Lets the app tell you to
  * restock instead of nagging you to apply something you've marked out of stock. */
 export const PRODUCT_FOR: Record<string, string> = {
